@@ -3,7 +3,7 @@
 ===========================================================================
 
 Set up:
-DAQ #0: Chopper clock
+DAQ#0: Chopper clock
 DAQ#1: Current Integrator
 DAQ#2: TADEO1 @ -1500 V
 DAQ#3: TADEO2 @ -1360 V
@@ -13,10 +13,10 @@ DAQ#6: LaBr(1) @ +xxxx V
 DAQ#7: LaBr(2) @ +xxx xV
 
 StylD2 PSD settings: 
-350 & 27 ns. g/n @0.52/0.75 => 
-        350 & 29 ns. g/n @0.37/0.62 => 
-350 & 31 ns. g/n @0.28/0.55 => 
-350 & 33 ns. g/n @0.20/0.5 =>  nos quedamos esta
+	350 & 27 ns. g/n @0.52/0.75 => 
+	350 & 29 ns. g/n @0.37/0.62 => 
+	350 & 31 ns. g/n @0.28/0.55 => 
+	350 & 33 ns. g/n @0.20/0.5  =>  nos quedamos esta
 
 
 
