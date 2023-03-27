@@ -39,7 +39,11 @@
 #include "Riostream.h"
 #include <TSystemDirectory.h>
 
+//Necesarias
+#include "ROOT/RDataFrame.hxx"
+
 using namespace std;
+using namespace ROOT;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// GLOBAL PARAMETERS AND ROUTINES ////////////////////////////////////////////////// 
@@ -60,33 +64,42 @@ int number_files = 0;
 
 void process_filelist();
 void createToF(Char_t filename[500]); //The original ROOT file from CAEN digitizer and crate a new one names "*_ToF"
-
-/************************************************************************************************************
-************************************************************************************************************* 
- Runs the createToF routine over a entire project folder                                                     
-*************************************************************************************************************
-************************************************************************************************************/
+void add_histograms(Char_t filepath[500]);
 
 void process_filelist(){
 	Char_t filepath[500];
+	Char_t new_filepath[500];
 
 	ifstream read("filelist");
 	
 	while (!read.eof()){
 		read >>filepath;
 		createToF(filepath);
+		sprintf(new_filepath,"with_ToF_PSD/%s", filepath);
+		add_histograms(new_filepath);
+		cout << endl;
 	}
 
 	cout << "That's all folks!" <<endl;
 	return;
 }
 
-/**************************************************************************************************************
-*************************************************************************************************************** 
- Takes the original ROOT file from CAEN digitizer and crate a new one with ToF and PSD branches named "ToF_*"
-***************************************************************************************************************
-**************************************************************************************************************/
+//add histograms to root file. Assumes tree with ToF and PSD
+void add_histograms(Char_t filepath[500]){
+	EnableImplicitMT();	//multithreading
+	RDataFrame d("Data", filepath);
 
+	auto activation = d.Filter("Channel==4 && Energy>0").Histo1D("Timestamp");
+
+	TFile f(filepath, "UPDATE");
+	activation->Write();
+	f.Close();
+
+	DisableImplicitMT();	//multithreading
+	cout << "Created histograms." <<endl;
+}
+
+//Takes the original ROOT file from CAEN digitizer and crate a new one with ToF and PSD branches named "ToF_*"
 void createToF(Char_t filename[500]){
 	gStyle->SetOptStat(0);
 	int i;
@@ -108,11 +121,11 @@ void createToF(Char_t filename[500]){
 	UShort_t Elong;                                          
 	Data->SetBranchAddress("Energy", &Elong);       
 	UShort_t Eshort;                                          
-	Data->SetBranchAddress("EnergyShort", &Eshort);       
-    Double_t tof;
-    TBranch *BTOF = Data->Branch("tof", &tof, "tof/D");
+	Data->SetBranchAddress("EnergyShort", &Eshort);
+	Double_t tof;
+	TBranch *BTOF = Data->Branch("tof", &tof, "tof/D");
 	Double_t psd;
-    TBranch *BPSD = Data->Branch("psd", &psd, "psd/D");
+	TBranch *BPSD = Data->Branch("psd", &psd, "psd/D");
 
 //	TH1F *htof[channelsused];
 //	TH2F *hamplitudetof[channelsused];
