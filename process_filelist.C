@@ -114,16 +114,16 @@ void createToF(Char_t filename[500]){
 	Double_t psd;
     TBranch *BPSD = Data->Branch("psd", &psd, "psd/D");
 
-	TH1F *htof[channelsused];
-	TH2F *hamplitudetof[channelsused];
-	Char_t hname[20];
-	for(i=0; i<channelsused; i++)
-	{
-		sprintf(hname,"htof%d",i);
-		htof[i] = new TH1F(hname,";time-of-flight (ns); counts",6000,0,6000.);
-	 	sprintf(hname,"hamplitudetof%d",i);
-	 	hamplitudetof[i]= new TH2F(hname,";time-of-flight (ns); Signal integral (channels);  counts",6000,0,6000.,4192,0,4192);		
- 	}
+//	TH1F *htof[channelsused];
+//	TH2F *hamplitudetof[channelsused];
+//	Char_t hname[20];
+//	for(i=0; i<channelsused; i++)
+//	{
+//		sprintf(hname,"htof%d",i);
+//		htof[i] = new TH1F(hname,";time-of-flight (ns); counts",6000,0,6000.);
+//	 	sprintf(hname,"hamplitudetof%d",i);
+//	 	hamplitudetof[i]= new TH2F(hname,";time-of-flight (ns); Signal integral (channels);  counts",6000,0,6000.,4192,0,4192);		
+// 	}
 
 	int nentries = Data->GetEntries();
 	cout<< "Numero señales: "<<nentries<< endl;
@@ -158,28 +158,28 @@ void createToF(Char_t filename[500]){
 			}
 			//cout<<"Filling tof="<<tof<<"---------------"<<endl<<endl;
 			//if(abs(tof)<CoincWindow){getchar();}
-			htof[nchannel]->Fill(tof);
-			hamplitudetof[nchannel]->Fill(tof, Elong);
+//			htof[nchannel]->Fill(tof);
+//			hamplitudetof[nchannel]->Fill(tof, Elong);
 		}
 		BTOF->Fill();	
 		BPSD->Fill();
 	}
 	
-	TCanvas *ctof = new TCanvas("ctof","", 1600,900);
-	ctof->Divide(4,2);
-	TCanvas *camplitudetof = new TCanvas("camplitudetof","", 1600,900);
-	camplitudetof->Divide(4,2);
+//	TCanvas *ctof = new TCanvas("ctof","", 1600,900);
+//	ctof->Divide(4,2);
+//	TCanvas *camplitudetof = new TCanvas("camplitudetof","", 1600,900);
+//	camplitudetof->Divide(4,2);
 	
-	for(i=0; i<channelsused; i++)
-	{	
-		ctof->cd(i+1);
-		gPad->SetTicks();
-		htof[i]->DrawCopy();
-		camplitudetof->cd(i+1);
-		gPad->SetTicks();
-		gPad->SetLogy(1);
-		hamplitudetof[i]->DrawCopy("zcol");
-	}
+//	for(i=0; i<channelsused; i++)
+//	{	
+//		ctof->cd(i+1);
+//		gPad->SetTicks();
+//		htof[i]->DrawCopy();
+//		camplitudetof->cd(i+1);
+//		gPad->SetTicks();
+//		gPad->SetLogy(1);
+//		hamplitudetof[i]->DrawCopy("zcol");
+//	}
 
 
 	Data->Write("", TObject::kOverwrite);
