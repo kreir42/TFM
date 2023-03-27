@@ -66,17 +66,43 @@ void process_filelist();
 void createToF(Char_t filename[500]); //The original ROOT file from CAEN digitizer and crate a new one names "*_ToF"
 void add_histograms(Char_t filepath[500]);
 
+//process all files with filepaths in "filelist" file
 void process_filelist(){
 	Char_t filepath[500];
 	Char_t new_filepath[500];
 
 	ifstream read("filelist");
 	
+	signed char tof_flag = 1;
+	signed char histo_flag = 1;
+	char answer;
+	cout << "Add ToF? (y/n): ";
+	cin >> answer;	//TBD:unsafe?
+	if(answer=='n'||answer=='N'){
+		tof_flag = -1;
+	}else if(answer!='y'&&answer!='Y'){
+		cout << "Invalid answer. Returning." << endl;
+		return;
+	}
+	cout << "Add histograms? (y/n): ";
+	cin >> answer;	//TBD:unsafe?
+	if(answer=='n'||answer=='N'){
+		histo_flag = -1;
+	}else if(answer!='y'&&answer!='Y'){
+		cout << "Invalid answer. Returning." << endl;
+		return;
+	}
+
+
 	while (!read.eof()){
 		read >>filepath;
-		createToF(filepath);
+		if(tof_flag==1){
+			createToF(filepath);
+		}
 		sprintf(new_filepath,"with_ToF_PSD/%s", filepath);
-		add_histograms(new_filepath);
+		if(histo_flag==1){
+			add_histograms(new_filepath);
+		}
 		cout << endl;
 	}
 
@@ -89,7 +115,7 @@ void add_histograms(Char_t filepath[500]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
-	auto activation = d.Filter("Channel==4 && Energy>0").Histo1D("Timestamp");
+	auto activation = d.Filter("Channel==7 && Energy>0").Histo1D({"activation", "Activation; Timestamp; Counts", 100, 0, 2500E12}, "Timestamp");
 
 	TFile f(filepath, "UPDATE");
 	activation->Write();
