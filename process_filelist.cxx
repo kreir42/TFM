@@ -76,7 +76,7 @@ void process_filelist(){
 	signed char tof_flag = 1;
 	signed char histo_flag = 1;
 	char answer;
-	cout << "Add ToF? (y/n): ";
+	cout << "Add ToF and PSD? (y/n): ";
 	cin >> answer;	//TBD:unsafe?
 	if(answer=='n'||answer=='N'){
 		tof_flag = -1;
@@ -115,7 +115,7 @@ void add_histograms(Char_t filepath[500]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
-	auto activation = d.Filter("Channel==7 && Energy>0").Histo1D({"activation", "Activation; Timestamp; Counts", 100, 0, 2500E12}, "Timestamp");
+	auto activation = d.Filter("Channel==7 && Energy>0").Histo1D({"activation", "Activation; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
 
 	TFile f(filepath, "UPDATE");
 	activation->Write();
