@@ -115,10 +115,33 @@ void add_histograms(Char_t filepath[500]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
-	auto activation = d.Filter("Channel==7 && Energy>0").Histo1D({"activation", "Activation; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	//Histograms
+	auto tadeo_1_time = d.Filter("Channel==2 && Energy>0").Histo1D({"tadeo_1_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	auto tadeo_1_spectrum = d.Filter("Channel==2 && Energy>0").Histo1D({"tadeo_1_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
+	auto tadeo_2_time = d.Filter("Channel==3 && Energy>0").Histo1D({"tadeo_2_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	auto tadeo_2_spectrum = d.Filter("Channel==3 && Energy>0").Histo1D({"tadeo_2_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
+	auto monster_2_time = d.Filter("Channel==4 && Energy>0").Histo1D({"monster_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	auto monster_2_spectrum = d.Filter("Channel==4 && Energy>0").Histo1D({"monster_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
+	auto stylbeno_2_time = d.Filter("Channel==5 && Energy>0").Histo1D({"stylbeno_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	auto stylbeno_2_spectrum = d.Filter("Channel==5 && Energy>0").Histo1D({"stylbeno_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
+	auto labr_1_time = d.Filter("Channel==6 && Energy>0").Histo1D({"labr_1_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	auto labr_1_spectrum = d.Filter("Channel==6 && Energy>0").Histo1D({"labr_1_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
+	auto labr_2_time = d.Filter("Channel==7 && Energy>0").Histo1D({"labr_2_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
+	auto labr_2_spectrum = d.Filter("Channel==7 && Energy>0").Histo1D({"labr_2_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
 
 	TFile f(filepath, "UPDATE");
-	activation->Write();
+	tadeo_1_time->Write();
+	tadeo_1_spectrum->Write();
+	tadeo_2_time->Write();
+	tadeo_2_spectrum->Write();
+	monster_2_time->Write();
+	monster_2_spectrum->Write();
+	stylbeno_2_time->Write();
+	stylbeno_2_spectrum->Write();
+	labr_1_time->Write();
+	labr_1_spectrum->Write();
+	labr_2_time->Write();
+	labr_2_spectrum->Write();
 	f.Close();
 
 	DisableImplicitMT();	//multithreading
