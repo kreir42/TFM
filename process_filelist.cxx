@@ -66,7 +66,7 @@ void process_filelist();
 void createToF(Char_t filename[500]); //The original ROOT file from CAEN digitizer and crate a new one names "*_ToF"
 void add_histograms(Char_t filepath[500]);
 
-//process all files with filepaths in "filelist" file
+//process all files inside "input" folder with relative filepaths in "filelist" file
 void process_filelist(){
 	Char_t filepath[500];
 	Char_t new_filepath[500];
@@ -99,7 +99,7 @@ void process_filelist(){
 		if(tof_flag==1){
 			createToF(filepath);
 		}
-		sprintf(new_filepath,"with_ToF_PSD/%s", filepath);
+		sprintf(new_filepath,"output/%s", filepath);
 		if(histo_flag==1){
 			add_histograms(new_filepath);
 		}
@@ -155,9 +155,9 @@ void createToF(Char_t filename[500]){
 	Char_t commandline[1000];
 	Char_t newfilename[500];
 
-	sprintf(commandline,"install -Dv %s with_ToF_PSD/%s", filename, filename);
+	sprintf(commandline,"install -Dv input/%s output/%s", filename, filename);
 	system(commandline);
-	sprintf(newfilename,"with_ToF_PSD/%s", filename);
+	sprintf(newfilename,"output/%s", filename);
 	
 	TFile* f = TFile::Open(newfilename,"Update");
 
