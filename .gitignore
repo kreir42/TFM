@@ -1,3 +1,5 @@
 *.root
 *.pdf
-DAQ/
+raw_data/
+output/
+input/
