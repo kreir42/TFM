@@ -42,6 +42,9 @@
 //Necesarias
 #include "ROOT/RDataFrame.hxx"
 
+#include "create_output_file.cxx"
+#include "activation.cxx"
+
 using namespace std;
 using namespace ROOT;
 
@@ -105,6 +108,9 @@ void process_filelist(){
 		}
 		cout << endl;
 	}
+
+	create_output_file();
+	activation();
 
 	cout << "That's all folks!" <<endl;
 	return;
