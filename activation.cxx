@@ -65,17 +65,20 @@ static void per_file(Char_t filepath[500], Double_t* results){
 	decay->SetParNames("Background activity", "Exponential constant", "Decay constant");
 
 	cout << "Decay fittings" << endl;
+	TCanvas* myCanvas = new TCanvas("myCanvas");
 	labr_1_decay->Fit("decay");
+	myCanvas->Write();
 	labr_2_decay->Fit("decay");
 
 	//rise
 	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*x[0]))");
-	rise->SetParameters(15, 1E3, 4.6E-15);
+	rise->SetParameters(15, 1E4, 4.6E-15);
 	rise->SetParNames("Background activity", "Constant creation", "Decay constant");
 
 	cout << "Rise fittings" << endl;
 	labr_1_rise->Fit("rise");
 	labr_2_rise->Fit("rise");
+
 
 	DisableImplicitMT();	//multithreading
 }
