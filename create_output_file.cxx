@@ -26,10 +26,28 @@ void create_output_file(){
 	gDirectory->WriteObject(activation_2.Get("labr_2_time"), "labr_2_time");
 	gDirectory->cd("..");
 
+	gDirectory->mkdir("activation_3");
+	gDirectory->cd("activation_3");
+	gDirectory->WriteObject(activation_3.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_3.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_3.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_3.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("activation_4");
+	gDirectory->cd("activation_4");
+	gDirectory->WriteObject(activation_4.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_4.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_4.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_4.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
 	gDirectory->cd("..");
 
 	f.Close();
 	activation_1.Close();
 	activation_2.Close();
+	activation_3.Close();
+	activation_4.Close();
 	cout << "Archivo output.root creado" << endl;
 }
