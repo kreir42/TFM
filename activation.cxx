@@ -54,10 +54,10 @@ static void per_file(Char_t filepath[500]){
 	auto rise_filter = [&](ULong64_t Timestamp){return Timestamp>=activation_start && Timestamp<=activation_end;};
 	auto decay_filter = [&](ULong64_t Timestamp){return Timestamp>activation_end;};
 
-	auto labr_1_rise = d.Filter("Channel==6 && Energy>525 && Energy<650").Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
-	auto labr_1_decay = d.Filter("Channel==6 && Energy>525 && Energy<650").Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
-	auto labr_2_rise = d.Filter("Channel==7 && Energy>525 && Energy<650").Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
-	auto labr_2_decay = d.Filter("Channel==7 && Energy>525 && Energy<650").Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
+	auto labr_1_rise = d.Filter("Channel==6 && Energy>525 && Energy<650").Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
+	auto labr_1_decay = d.Filter("Channel==6 && Energy>525 && Energy<650").Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
+	auto labr_2_rise = d.Filter("Channel==7 && Energy>525 && Energy<650").Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
+	auto labr_2_decay = d.Filter("Channel==7 && Energy>525 && Energy<650").Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
 
 	cout << "Rise/decay histograms" << endl;
 	labr_1_rise->Write();
@@ -67,12 +67,12 @@ static void per_file(Char_t filepath[500]){
 
 	//fittings
 	TF1* decay = new TF1("decay","pol0(0)+expo(1)");
-	decay->SetParameters(250, 14, 4E-15);
+	decay->SetParameters(15, 14, 4E-15);
 	decay->SetParNames("Background activity", "Exponential constant", "Decay constant");
 
 	cout << "Decay fittings" << endl;
-	labr_1_decay->Fit("decay", "", "", activation_end, measurement_end);
-	labr_2_decay->Fit("decay", "", "", activation_end, measurement_end);
+	labr_1_decay->Fit("decay");
+	labr_2_decay->Fit("decay");
 
 	DisableImplicitMT();	//multithreading
 }
