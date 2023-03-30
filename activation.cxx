@@ -1,4 +1,4 @@
-static void per_file(Char_t filepath[500]);
+static void per_file(Char_t filepath[500], Double_t* results);
 
 void activation(){
 	cout << "Activation" << endl;
@@ -7,42 +7,35 @@ void activation(){
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
-//	Double_t activation1_decay_start = 1350E12;
-//	Double_t activation1_decay_end = 2240E12;
-//	Double_t activation2_decay_start = 1440E12;
-//	Double_t activation2_decay_end = 2305E12;
-//	Double_t activation3_decay_start = 1180E12;
-//	Double_t activation3_decay_end = 2060E12;
-//	Double_t activation4_decay_start = 1290E12;
-//	Double_t activation4_decay_end = 2480E12;
-
 	TFile f("output/output.root", "UPDATE");
 	gDirectory->cd("Activation");
+	Double_t results[8];
+	Double_t activation_energies[8];
 
 	gDirectory->cd("activation_1");
 	cout << "activation_1" << endl;
-	per_file(filepath_1);
+	per_file(filepath_1, results);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_2");
 	cout << "activation_2" << endl;
-	per_file(filepath_2);
+	per_file(filepath_2, results+1*2);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_3");
 	cout << "activation_3" << endl;
-	per_file(filepath_3);
+	per_file(filepath_3, results+2*2);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_4");
 	cout << "activation_4" << endl;
-	per_file(filepath_4);
+	per_file(filepath_4, results+3*2);
 	gDirectory->cd("..");
 
 	f.Close();
 }
 
-static void per_file(Char_t filepath[500]){
+static void per_file(Char_t filepath[500], Double_t* results){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
@@ -66,13 +59,23 @@ static void per_file(Char_t filepath[500]){
 	labr_2_decay->Write();
 
 	//fittings
+	//decay
 	TF1* decay = new TF1("decay","pol0(0)+expo(1)");
-	decay->SetParameters(15, 14, 4E-15);
+	decay->SetParameters(15, 14, 4.6E-15);
 	decay->SetParNames("Background activity", "Exponential constant", "Decay constant");
 
 	cout << "Decay fittings" << endl;
 	labr_1_decay->Fit("decay");
 	labr_2_decay->Fit("decay");
+
+	//rise
+	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*x[0]))");
+	rise->SetParameters(15, 1E3, 4.6E-15);
+	rise->SetParNames("Background activity", "Constant creation", "Decay constant");
+
+	cout << "Rise fittings" << endl;
+	labr_1_rise->Fit("rise");
+	labr_2_rise->Fit("rise");
 
 	DisableImplicitMT();	//multithreading
 }
