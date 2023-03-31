@@ -67,8 +67,11 @@ static void per_file(Char_t filepath[500], Double_t* results){
 	cout << "Decay fittings" << endl;
 	TCanvas* myCanvas = new TCanvas("myCanvas");
 	labr_1_decay->Fit("decay");
+	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 	labr_2_decay->Fit("decay");
+	myCanvas->SetName("labr_2_decay");
+	myCanvas->Write();
 
 	//rise
 	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*x[0]))");
@@ -77,8 +80,11 @@ static void per_file(Char_t filepath[500], Double_t* results){
 
 	cout << "Rise fittings" << endl;
 	labr_1_rise->Fit("rise");
+	myCanvas->SetName("labr_1_rise");
+	myCanvas->Write();
 	labr_2_rise->Fit("rise");
-
+	myCanvas->SetName("labr_2_rise");
+	myCanvas->Write();
 
 	DisableImplicitMT();	//multithreading
 }
