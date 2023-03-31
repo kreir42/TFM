@@ -10,7 +10,7 @@ void activation(){
 	TFile f("output/output.root", "UPDATE");
 	gDirectory->cd("Activation");
 	Double_t results[4][2][4];
-	Double_t activation_energies[8];
+	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV
 
 	gDirectory->cd("activation_1");
 	cout << "activation_1" << endl;
@@ -32,6 +32,26 @@ void activation(){
 	per_file(filepath_4, results[3]);
 	gDirectory->cd("..");
 
+	//graficas
+	Double_t x[8];
+	Double_t y[8];
+	Double_t yerr[8];
+	for(short i=0; i<4; i++){
+		x[2*i] = activation_energies[i];
+		x[2*i+1] = x[i];
+		y[2*i] = results[i][0][2];
+		y[2*i+1] = results[i][1][2];
+		yerr[2*i] = results[i][0][3];
+		yerr[2*i+1] = results[i][1][3];
+	}
+	TCanvas* myCanvas = new TCanvas("reactions_v_energy");
+	TGraph* rectionsvenergy = new TGraphErrors(8, x, y, NULL, yerr);
+	rectionsvenergy->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy->SetMarkerStyle(20);
+	rectionsvenergy->Draw("ap");
+	myCanvas->Write();
+
+	myCanvas->Close();
 	f.Close();
 }
 
@@ -43,7 +63,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
-	ULong64_t number_of_alphas = integrator_signals.Count().GetValue();
+	ULong64_t number_of_alphas = integrator_signals.Count().GetValue()/(2*1.60217646E-10);
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t Timestamp){return Timestamp>=activation_start && Timestamp<=activation_end;};
@@ -100,5 +120,6 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	myCanvas->SetName("labr_2_rise");
 	myCanvas->Write();
 
+	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
 }
