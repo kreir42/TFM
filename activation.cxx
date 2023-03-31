@@ -86,9 +86,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 
 	//decay
 	cout << "Decay fittings" << endl;
-	TF1* decay = new TF1("decay","pol0(0)+expo(1)");
-	decay->SetParameters(15, 14, 4.6E-15);
-	decay->SetParNames("Background activity", "Exponential constant", "Decay constant");
+	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
+	decay->SetParLimits(0, 0, 100);
+	decay->SetParLimits(2, 4E-15, 5E-15);
+	decay->SetParameters(15, 1000, 4.6E-15, activation_end);
+	decay->FixParameter(3, activation_end);
+	decay->FixParameter(2, 4.6E-15);
+	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "S");
 	results[0][0] = exp(fitresult->Parameter(1)+fitresult->Parameter(2)*activation_end);
@@ -97,16 +101,21 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	myCanvas->Write();
 
 	fitresult = labr_2_decay->Fit("decay", "S");
-	results[1][0] = exp(fitresult->Parameter(1)+fitresult->Parameter(2)*activation_end);
-	results[1][1] = exp(fitresult->ParError(1));	//TBD:error no completo
+	results[1][0] = fitresult->Parameter(1);
+	results[1][1] = fitresult->ParError(1);	//TBD:error no completo
 	myCanvas->SetName("labr_2_decay");
 	myCanvas->Write();
 
 	//rise
 	cout << "Rise fittings" << endl;
-	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*x[0]))");
-	rise->SetParameters(15, 1E4, 4.6E-15);
-	rise->SetParNames("Background activity", "Constant creation", "Decay constant");
+	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*(x[0]-[3])))");
+	rise->SetParLimits(0, 0, 100);
+	rise->SetParLimits(1, 0, 1E5);
+	rise->SetParLimits(2, 4E-15, 5E-15);
+	rise->SetParameters(15, 5E3, 4.6E-15, activation_start);
+	rise->FixParameter(3, activation_start);
+	rise->FixParameter(2, 4.6E-15);
+	rise->SetParNames("Background activity", "Constant creation", "Decay constant", "activation_start");
 
 	fitresult = labr_1_rise->Fit("rise", "S");
 	results[0][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
