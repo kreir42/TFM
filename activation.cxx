@@ -38,7 +38,7 @@ void activation(){
 	Double_t yerr[8];
 	for(short i=0; i<4; i++){
 		x[2*i] = activation_energies[i];
-		x[2*i+1] = x[i];
+		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][2];
 		y[2*i+1] = results[i][1][2];
 		yerr[2*i] = results[i][0][3];
@@ -95,14 +95,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "S");
-	results[0][0] = exp(fitresult->Parameter(1)+fitresult->Parameter(2)*activation_end);
-	results[0][1] = exp(fitresult->ParError(1));	//TBD:error no completo
+	results[0][0] = fitresult->Parameter(1);
+	results[0][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 
 	fitresult = labr_2_decay->Fit("decay", "S");
 	results[1][0] = fitresult->Parameter(1);
-	results[1][1] = fitresult->ParError(1);	//TBD:error no completo
+	results[1][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_2_decay");
 	myCanvas->Write();
 
