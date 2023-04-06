@@ -55,6 +55,24 @@ void activation(){
 	f.Close();
 }
 
+class unified_fit{
+	public:
+		TH1F* current_histogram;
+		Double_t stepsize;
+		unified_fit(TH1F* histo):current_histogram(histo){
+			stepsize = current_histogram->GetBinWidth(1);
+		}
+		Double_t operator()(Double_t* x, Double_t* p){
+			Double_t n = 0;	//number of nuclei
+			Double_t decay = exp(-p[2]*stepsize);
+			unsigned long steps = x[0]/stepsize;
+			for(unsigned long i=0; i<=steps; i++){
+				n = n + (current_histogram->GetBinContent(i))*p[1] - n*decay;
+			}
+			return p[0] + n*decay;
+		}
+};
+
 static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
@@ -66,6 +84,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	ULong64_t number_of_alphas = integrator_signals.Count().GetValue()/(2*1.60217646E-10);
 
 	//histogramas
+
+	TH1F* current_integrator = (TH1F*) gDirectory->Get("current_integrator");
+	TH1F* labr_1 = (TH1F*) gDirectory->Get("labr_1_time");
+	TH1F* labr_2 = (TH1F*) gDirectory->Get("labr_2_time");
+
 	auto rise_filter = [&](ULong64_t Timestamp){return Timestamp>=activation_start && Timestamp<=activation_end;};
 	auto decay_filter = [&](ULong64_t Timestamp){return Timestamp>activation_end;};
 
@@ -127,6 +150,24 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	results[1][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[1][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_2_rise");
+	myCanvas->Write();
+
+	//unified
+	cout << "Unified rise/decay fittings" << endl;
+	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 3);
+	unified->SetParLimits(0, 0, 1E5);
+	unified->SetParLimits(1, 0, 1E10);
+	unified->SetParLimits(2, 4E-15, 5E-15);
+	unified->SetParameters(15, 1E3, 4.6E-15);
+	unified->FixParameter(2, 4.6E-15);
+	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
+
+	fitresult = labr_1->Fit("unified_fit", "RS");
+	myCanvas->SetName("labr_1_unified_fit");
+	myCanvas->Write();
+
+	fitresult = labr_2->Fit("unified_fit", "RS");
+	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
 	myCanvas->Close();

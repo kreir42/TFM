@@ -123,6 +123,7 @@ void add_histograms(Char_t filepath[500]){
 	RDataFrame d("Data", filepath);
 
 	//Histograms
+	auto current_integrator = d.Filter("Channel==1 && Energy>0").Histo1D({"current_integrator", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
 	auto tadeo_1_time = d.Filter("Channel==2 && Energy>0").Histo1D({"tadeo_1_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
 	auto tadeo_1_spectrum = d.Filter("Channel==2 && Energy>0").Histo1D({"tadeo_1_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
 	auto tadeo_2_time = d.Filter("Channel==3 && Energy>0").Histo1D({"tadeo_2_time", "; Timestamp; Counts", 500, 0, 2500E12}, "Timestamp");
@@ -137,6 +138,7 @@ void add_histograms(Char_t filepath[500]){
 	auto labr_2_spectrum = d.Filter("Channel==7 && Energy>0").Histo1D({"labr_2_spectrum", "; Energy; Counts", 4096, 0, 4096}, "Energy");
 
 	TFile f(filepath, "UPDATE");
+	current_integrator->Write();
 	tadeo_1_time->Write();
 	tadeo_1_spectrum->Write();
 	tadeo_2_time->Write();
