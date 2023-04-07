@@ -67,9 +67,9 @@ class unified_fit{
 			Double_t decay = exp(-p[2]*stepsize);
 			unsigned long steps = x[0]/stepsize;
 			for(unsigned long i=0; i<=steps; i++){
-				n = n + (current_histogram->GetBinContent(i))*p[1] - n*decay;
+				n = n*decay + (current_histogram->GetBinContent(i))*p[1];
 			}
-			return p[0] + n*decay;
+			return p[0] + n*(1-decay);
 		}
 };
 
@@ -84,24 +84,28 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	ULong64_t number_of_alphas = integrator_signals.Count().GetValue()/(2*1.60217646E-10);
 
 	//histogramas
-
-	TH1F* current_integrator = (TH1F*) gDirectory->Get("current_integrator");
-	TH1F* labr_1 = (TH1F*) gDirectory->Get("labr_1_time");
-	TH1F* labr_2 = (TH1F*) gDirectory->Get("labr_2_time");
-
 	auto rise_filter = [&](ULong64_t Timestamp){return Timestamp>=activation_start && Timestamp<=activation_end;};
 	auto decay_filter = [&](ULong64_t Timestamp){return Timestamp>activation_end;};
+	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<650");
+	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<650");
 
-	auto labr_1_rise = d.Filter("Channel==6 && Energy>525 && Energy<650").Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
-	auto labr_1_decay = d.Filter("Channel==6 && Energy>525 && Energy<650").Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
-	auto labr_2_rise = d.Filter("Channel==7 && Energy>525 && Energy<650").Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
-	auto labr_2_decay = d.Filter("Channel==7 && Energy>525 && Energy<650").Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
+	auto labr_1 = labr_1_filter.Histo1D({"labr_1", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
+	auto labr_2 = labr_2_filter.Histo1D({"labr_2", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
+
+	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
+	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
+	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
+	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
 
 	cout << "Rise/decay histograms" << endl;
+	labr_1->Write();
+	labr_2->Write();
 	labr_1_rise->Write();
 	labr_1_decay->Write();
 	labr_2_rise->Write();
 	labr_2_decay->Write();
+
+	TH1F* current_integrator = (TH1F*) gDirectory->Get("current_integrator");
 
 	//fittings
 	TCanvas* myCanvas = new TCanvas("myCanvas");
@@ -162,11 +166,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->FixParameter(2, 4.6E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
 
-	fitresult = labr_1->Fit("unified_fit", "RS");
+	fitresult = labr_1->Fit("unified_fit", "S");
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
-	fitresult = labr_2->Fit("unified_fit", "RS");
+	fitresult = labr_2->Fit("unified_fit", "S");
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
