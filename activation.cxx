@@ -89,6 +89,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<650");
 	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<650");
 
+	auto current_integrator = integrator_signals.Histo1D({"current_integrator", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
 	auto labr_1 = labr_1_filter.Histo1D({"labr_1", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
 	auto labr_2 = labr_2_filter.Histo1D({"labr_2", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
 
@@ -98,14 +99,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
 
 	cout << "Rise/decay histograms" << endl;
+	current_integrator->Write();
 	labr_1->Write();
 	labr_2->Write();
 	labr_1_rise->Write();
 	labr_1_decay->Write();
 	labr_2_rise->Write();
 	labr_2_decay->Write();
-
-	TH1F* current_integrator = (TH1F*) gDirectory->Get("current_integrator");
 
 	//fittings
 	TCanvas* myCanvas = new TCanvas("myCanvas");
