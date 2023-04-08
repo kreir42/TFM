@@ -121,13 +121,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	decay->FixParameter(2, 4.6E-15);
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
-	fitresult = labr_1_decay->Fit("decay", "S");
+	fitresult = labr_1_decay->Fit("decay", "SL");
 	results[0][0] = fitresult->Parameter(1);
 	results[0][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 
-	fitresult = labr_2_decay->Fit("decay", "S");
+	fitresult = labr_2_decay->Fit("decay", "SL");
 	results[1][0] = fitresult->Parameter(1);
 	results[1][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_2_decay");
@@ -144,13 +144,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	rise->FixParameter(2, 4.6E-15);
 	rise->SetParNames("Background activity", "Constant creation", "Decay constant", "activation_start");
 
-	fitresult = labr_1_rise->Fit("rise", "S");
+	fitresult = labr_1_rise->Fit("rise", "SL");
 	results[0][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[0][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_1_rise");
 	myCanvas->Write();
 
-	fitresult = labr_2_rise->Fit("rise", "S");
+	fitresult = labr_2_rise->Fit("rise", "SL");
 	results[1][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[1][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_2_rise");
@@ -166,11 +166,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->FixParameter(2, 4.6E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
 
-	fitresult = labr_1->Fit("unified_fit", "S");
+	fitresult = labr_1->Fit("unified_fit", "SL");
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
-	fitresult = labr_2->Fit("unified_fit", "S");
+	fitresult = labr_2->Fit("unified_fit", "SL");
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
