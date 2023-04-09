@@ -1,3 +1,5 @@
+#define ACTIVATION_NBINS 1000
+
 static void per_file(Char_t filepath[500], Double_t results[2][4]);
 
 void activation(){
@@ -65,9 +67,13 @@ class unified_fit{
 		Double_t operator()(Double_t* x, Double_t* p){
 			Double_t n = 0;	//number of nuclei
 			Double_t decay = exp(-p[2]*stepsize);
+			Double_t helper_ratio = p[1]/(p[2]*stepsize);
+			Double_t I = 0;	//created nuclei per time over lambda
 			unsigned long steps = x[0]/stepsize;
 			for(unsigned long i=0; i<=steps; i++){
-				n = n*decay + (current_histogram->GetBinContent(i))*p[1];
+				//n = n*decay + (current_histogram->GetBinContent(i))*p[1];
+				I = (current_histogram->GetBinContent(i))*helper_ratio;
+				n = I + (n-I)*decay;
 			}
 			return p[0] + n*(1-decay);
 		}
@@ -89,14 +95,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<650");
 	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<650");
 
-	auto current_integrator = integrator_signals.Histo1D({"current_integrator", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
-	auto labr_1 = labr_1_filter.Histo1D({"labr_1", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
-	auto labr_2 = labr_2_filter.Histo1D({"labr_2", "; Timestamp; Counts", 500, 0, measurement_end}, "Timestamp");
+	auto current_integrator = integrator_signals.Histo1D({"current_integrator", "; Timestamp; Counts", ACTIVATION_NBINS, 0, measurement_end}, "Timestamp");
+	auto labr_1 = labr_1_filter.Histo1D({"labr_1", "; Timestamp; Counts", ACTIVATION_NBINS, 0, measurement_end}, "Timestamp");
+	auto labr_2 = labr_2_filter.Histo1D({"labr_2", "; Timestamp; Counts", ACTIVATION_NBINS, 0, measurement_end}, "Timestamp");
 
-	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
-	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
-	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", "; Timestamp; Counts", 500, activation_start, activation_end}, "Timestamp");
-	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", 500, activation_end, measurement_end}, "Timestamp");
+	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", "; Timestamp; Counts", ACTIVATION_NBINS, activation_start, activation_end}, "Timestamp");
+	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", "; Timestamp; Counts", ACTIVATION_NBINS, activation_end, measurement_end}, "Timestamp");
+	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", "; Timestamp; Counts", ACTIVATION_NBINS, activation_start, activation_end}, "Timestamp");
+	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", "; Timestamp; Counts", ACTIVATION_NBINS, activation_end, measurement_end}, "Timestamp");
 
 	cout << "Rise/decay histograms" << endl;
 	current_integrator->Write();
@@ -114,13 +120,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//decay
 	cout << "Decay fittings" << endl;
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
-	decay->SetNpx(500);
-	decay->SetNumberFitPoints(500);
+	decay->SetNpx(ACTIVATION_NBINS);
+	decay->SetNumberFitPoints(ACTIVATION_NBINS);
 	decay->SetParLimits(0, 0, 100);
 	decay->SetParLimits(2, 4E-15, 5E-15);
-	decay->SetParameters(15, 1000, 4.6E-15, activation_end);
+	decay->SetParameters(15, 1000, 4.62406E-15, activation_end);
 	decay->FixParameter(3, activation_end);
-	decay->FixParameter(2, 4.6E-15);
+	decay->FixParameter(2, 4.62406E-15);
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SL");
@@ -138,14 +144,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//rise
 	cout << "Rise fittings" << endl;
 	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*(x[0]-[3])))");
-	rise->SetNpx(500);
-	rise->SetNumberFitPoints(500);
+	rise->SetNpx(ACTIVATION_NBINS);
+	rise->SetNumberFitPoints(ACTIVATION_NBINS);
 	rise->SetParLimits(0, 0, 100);
 	rise->SetParLimits(1, 0, 1E5);
 	rise->SetParLimits(2, 4E-15, 5E-15);
-	rise->SetParameters(15, 5E3, 4.6E-15, activation_start);
+	rise->SetParameters(15, 5E3, 4.62406E-15, activation_start);
 	rise->FixParameter(3, activation_start);
-	rise->FixParameter(2, 4.6E-15);
+	rise->FixParameter(2, 4.62406E-15);
 	rise->SetParNames("Background activity", "Constant creation", "Decay constant", "activation_start");
 
 	fitresult = labr_1_rise->Fit("rise", "SL");
@@ -163,13 +169,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//unified
 	cout << "Unified rise/decay fittings" << endl;
 	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 3);
-	unified->SetNpx(500);
-	unified->SetNumberFitPoints(500);
+	unified->SetNpx(ACTIVATION_NBINS);
+	unified->SetNumberFitPoints(ACTIVATION_NBINS);
 	unified->SetParLimits(0, 0, 1E5);
 	unified->SetParLimits(1, 0, 1E10);
 	unified->SetParLimits(2, 4E-15, 5E-15);
-	unified->SetParameters(15, 1E3, 4.6E-15);
-	unified->FixParameter(2, 4.6E-15);
+	unified->SetParameters(15, 1E3, 4.62406E-15);
+	unified->FixParameter(2, 4.62406E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
 
 	fitresult = labr_1->Fit("unified_fit", "SLN");
