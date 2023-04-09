@@ -117,28 +117,28 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	TCanvas* myCanvas = new TCanvas("myCanvas");
 	TFitResultPtr fitresult;
 
-	//decay
-	cout << "Decay fittings" << endl;
-	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
-	decay->SetNpx(ACTIVATION_NBINS);
-	decay->SetNumberFitPoints(ACTIVATION_NBINS);
-	decay->SetParLimits(0, 0, 100);
-	decay->SetParLimits(2, 4E-15, 5E-15);
-	decay->SetParameters(15, 1000, 4.62406E-15, activation_end);
-	decay->FixParameter(3, activation_end);
-	decay->FixParameter(2, 4.62406E-15);
-	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
+	//unified
+	cout << "Unified rise/decay fittings" << endl;
+	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 3);
+	unified->SetNpx(ACTIVATION_NBINS);
+	unified->SetNumberFitPoints(ACTIVATION_NBINS);
+	unified->SetParLimits(0, 0, 1E5);
+	unified->SetParLimits(1, 0, 1E10);
+	unified->SetParLimits(2, 4E-15, 5E-15);
+	unified->SetParameters(15, 1E3, 4.62406E-15);
+	unified->FixParameter(2, 4.62406E-15);
+	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
 
-	fitresult = labr_1_decay->Fit("decay", "SL");
-	results[0][0] = fitresult->Parameter(1);
-	results[0][1] = fitresult->ParError(1);		//TBD:error no completo
-	myCanvas->SetName("labr_1_decay");
+	fitresult = labr_1->Fit("unified_fit", "SLN");
+	labr_1->Draw();
+	unified->Draw("CSAME");
+	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
-	fitresult = labr_2_decay->Fit("decay", "SL");
-	results[1][0] = fitresult->Parameter(1);
-	results[1][1] = fitresult->ParError(1);		//TBD:error no completo
-	myCanvas->SetName("labr_2_decay");
+	fitresult = labr_2->Fit("unified_fit", "SLN");
+	labr_2->Draw();
+	unified->Draw("CSAME");
+	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
 	//rise
@@ -166,28 +166,28 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	myCanvas->SetName("labr_2_rise");
 	myCanvas->Write();
 
-	//unified
-	cout << "Unified rise/decay fittings" << endl;
-	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 3);
-	unified->SetNpx(ACTIVATION_NBINS);
-	unified->SetNumberFitPoints(ACTIVATION_NBINS);
-	unified->SetParLimits(0, 0, 1E5);
-	unified->SetParLimits(1, 0, 1E10);
-	unified->SetParLimits(2, 4E-15, 5E-15);
-	unified->SetParameters(15, 1E3, 4.62406E-15);
-	unified->FixParameter(2, 4.62406E-15);
-	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
+	//decay
+	cout << "Decay fittings" << endl;
+	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
+	decay->SetNpx(ACTIVATION_NBINS);
+	decay->SetNumberFitPoints(ACTIVATION_NBINS);
+	decay->SetParLimits(0, 0, 100);
+	decay->SetParLimits(2, 4E-15, 5E-15);
+	decay->SetParameters(15, 1000, 4.62406E-15, activation_end);
+	decay->FixParameter(3, activation_end);
+	decay->FixParameter(2, 4.62406E-15);
+	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
-	fitresult = labr_1->Fit("unified_fit", "SLN");
-	labr_1->Draw();
-	unified->Draw("CSAME");
-	myCanvas->SetName("labr_1_unified_fit");
+	fitresult = labr_1_decay->Fit("decay", "SL");
+	results[0][0] = fitresult->Parameter(1);
+	results[0][1] = fitresult->ParError(1);		//TBD:error no completo
+	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 
-	fitresult = labr_2->Fit("unified_fit", "SLN");
-	labr_2->Draw();
-	unified->Draw("CSAME");
-	myCanvas->SetName("labr_2_unified_fit");
+	fitresult = labr_2_decay->Fit("decay", "SL");
+	results[1][0] = fitresult->Parameter(1);
+	results[1][1] = fitresult->ParError(1);		//TBD:error no completo
+	myCanvas->SetName("labr_2_decay");
 	myCanvas->Write();
 
 	myCanvas->Close();
