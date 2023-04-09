@@ -143,24 +143,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 
 	//rise
 	cout << "Rise fittings" << endl;
-	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*(x[0]-[3])))");
-	rise->SetNpx(ACTIVATION_NBINS);
-	rise->SetNumberFitPoints(ACTIVATION_NBINS);
-	rise->SetParLimits(0, 0, 100);
-	rise->SetParLimits(1, 0, 1E5);
-	rise->SetParLimits(2, 4E-15, 5E-15);
-	rise->SetParameters(15, 5E3, 4.62406E-15, activation_start);
-	rise->FixParameter(3, activation_start);
-	rise->FixParameter(2, 4.62406E-15);
-	rise->SetParNames("Background activity", "Constant creation", "Decay constant", "activation_start");
 
-	fitresult = labr_1_rise->Fit("rise", "SL");
+	fitresult = labr_1_rise->Fit("unified_fit", "SL");
 	results[0][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[0][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_1_rise");
 	myCanvas->Write();
 
-	fitresult = labr_2_rise->Fit("rise", "SL");
+	fitresult = labr_2_rise->Fit("unified_fit", "SL");
 	results[1][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[1][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_2_rise");
