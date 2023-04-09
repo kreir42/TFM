@@ -114,6 +114,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//decay
 	cout << "Decay fittings" << endl;
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
+	decay->SetNpx(500);
+	decay->SetNumberFitPoints(500);
 	decay->SetParLimits(0, 0, 100);
 	decay->SetParLimits(2, 4E-15, 5E-15);
 	decay->SetParameters(15, 1000, 4.6E-15, activation_end);
@@ -136,6 +138,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//rise
 	cout << "Rise fittings" << endl;
 	TF1* rise = new TF1("rise","[0]+[1]*(1-exp(-[2]*(x[0]-[3])))");
+	rise->SetNpx(500);
+	rise->SetNumberFitPoints(500);
 	rise->SetParLimits(0, 0, 100);
 	rise->SetParLimits(1, 0, 1E5);
 	rise->SetParLimits(2, 4E-15, 5E-15);
@@ -159,6 +163,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//unified
 	cout << "Unified rise/decay fittings" << endl;
 	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 3);
+	unified->SetNpx(500);
+	unified->SetNumberFitPoints(500);
 	unified->SetParLimits(0, 0, 1E5);
 	unified->SetParLimits(1, 0, 1E10);
 	unified->SetParLimits(2, 4E-15, 5E-15);
@@ -166,11 +172,15 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->FixParameter(2, 4.6E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
 
-	fitresult = labr_1->Fit("unified_fit", "SL");
+	fitresult = labr_1->Fit("unified_fit", "SLN");
+	labr_1->Draw();
+	unified->Draw("CSAME");
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
-	fitresult = labr_2->Fit("unified_fit", "SL");
+	fitresult = labr_2->Fit("unified_fit", "SLN");
+	labr_2->Draw();
+	unified->Draw("CSAME");
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
