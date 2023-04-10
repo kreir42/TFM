@@ -1,6 +1,6 @@
 #define ACTIVATION_NBINS 1000
 
-static void per_file(Char_t filepath[500], Double_t results[2][4]);
+static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation(){
 	cout << "Activation" << endl;
@@ -11,7 +11,7 @@ void activation(){
 
 	TFile f("output/output.root", "UPDATE");
 	gDirectory->cd("Activation");
-	Double_t results[4][2][4];
+	Double_t results[4][2][6];
 	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV
 
 	Double_t exfor_energies[] = {3700, 3800, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900};	//TBD:hardcoded, read .txt
@@ -89,6 +89,23 @@ void activation(){
 	rectionsvenergy_exfor->Draw("same");
 	myCanvas->Write();
 
+	//decay fit
+	for(short i=0; i<4; i++){
+		x[2*i] = activation_energies[i];
+		x[2*i+1] = activation_energies[i];
+		y[2*i] = results[i][0][4];
+		y[2*i+1] = results[i][1][4];
+		yerr[2*i] = results[i][0][5];
+		yerr[2*i+1] = results[i][1][5];
+	}
+	TGraph* rectionsvenergy_decay = new TGraphErrors(8, x, y, NULL, yerr);
+	rectionsvenergy_decay->SetTitle("(a,n) reactions v a energy (decay fit);Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_decay->SetMarkerStyle(20);
+	myCanvas->SetName("reactions_v_energy_decay");
+	rectionsvenergy_decay->Draw("ap");
+	rectionsvenergy_exfor->Draw("same");
+	myCanvas->Write();
+
 	myCanvas->Close();
 	f.Close();
 }
@@ -114,7 +131,7 @@ class unified_fit{
 		}
 };
 
-static void per_file(Char_t filepath[500], Double_t results[2][4]){
+static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
@@ -205,10 +222,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLE");
+	results[0][4] = fitresult->Parameter(1);	//TBD:falta más
+	results[0][5] = fitresult->ParError(1);
 	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 
 	fitresult = labr_2_decay->Fit("decay", "SLE");
+	results[1][4] = fitresult->Parameter(1);	//TBD:falta más
+	results[1][5] = fitresult->ParError(1);
 	myCanvas->SetName("labr_2_decay");
 	myCanvas->Write();
 
