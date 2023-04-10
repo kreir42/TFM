@@ -75,7 +75,7 @@ class unified_fit{
 				I = (current_histogram->GetBinContent(i))*helper_ratio;
 				n = I + (n-I)*decay;
 			}
-			return p[0] + n*(1-decay);
+			return p[0] + n*(1-decay) + p[3]*current_histogram->GetBinContent(steps);
 		}
 };
 
@@ -119,15 +119,16 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 
 	//unified
 	cout << "Unified rise/decay fittings" << endl;
-	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 3);
+	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 4);
 	unified->SetNpx(ACTIVATION_NBINS);
 	unified->SetNumberFitPoints(ACTIVATION_NBINS);
 	unified->SetParLimits(0, 0, 1E5);
 	unified->SetParLimits(1, 0, 1E10);
 	unified->SetParLimits(2, 4E-15, 5E-15);
-	unified->SetParameters(15, 1E3, 4.62406E-15);
+	unified->SetParLimits(3, 0, 1E9);
+	unified->SetParameters(15, 1E3, 4.62406E-15, 0);
 	unified->FixParameter(2, 4.62406E-15);
-	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant");
+	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
 	fitresult = labr_1->Fit("unified_fit", "SLN");
 	labr_1->Draw();
