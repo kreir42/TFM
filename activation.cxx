@@ -66,7 +66,7 @@ void activation(){
 		yerr[2*i+1] = results[i][1][1];
 	}
 	TGraph* rectionsvenergy_unified = new TGraphErrors(8, x, y, NULL, yerr);
-	rectionsvenergy_unified->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_unified->SetTitle("(a,n) reactions v a energy (unified fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_unified->SetMarkerStyle(20);
 	rectionsvenergy_unified->Draw("ap");
 	rectionsvenergy_exfor->Draw("same");
@@ -82,7 +82,7 @@ void activation(){
 		yerr[2*i+1] = results[i][1][3];
 	}
 	TGraph* rectionsvenergy_rise = new TGraphErrors(8, x, y, NULL, yerr);
-	rectionsvenergy_rise->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_rise->SetTitle("(a,n) reactions v a energy (rise fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise->SetMarkerStyle(20);
 	myCanvas->SetName("reactions_v_energy_rise");
 	rectionsvenergy_rise->Draw("ap");
