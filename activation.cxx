@@ -86,7 +86,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
-	ULong64_t number_of_alphas = integrator_signals.Count().GetValue()/(2*1.60217646E-10);
+	Double_t number_of_alphas = integrator_signals.Count().GetValue()/(2*1.60217646E-10);
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t Timestamp){return Timestamp>=activation_start && Timestamp<=activation_end;};
@@ -122,31 +122,31 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->SetNpx(ACTIVATION_NBINS);
 	unified->SetNumberFitPoints(ACTIVATION_NBINS);
 	unified->SetParLimits(0, 0, 1E5);
-	unified->SetParLimits(1, 0, 1E10);
+	unified->SetParLimits(1, 0, 1E2);
 	unified->SetParLimits(2, 4E-15, 5E-15);
-	unified->SetParLimits(3, 0, 1E9);
+	unified->SetParLimits(3, 0, 1E2);
 	unified->SetParameters(15, 1E3, 4.62406E-15, 0);
 	unified->FixParameter(2, 4.62406E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
-	fitresult = labr_1->Fit("unified_fit", "SL");
+	fitresult = labr_1->Fit("unified_fit", "SLE");
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
-	fitresult = labr_2->Fit("unified_fit", "SL");
+	fitresult = labr_2->Fit("unified_fit", "SLE");
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
 	//rise
 	cout << "Rise fittings" << endl;
 
-	fitresult = labr_1_rise->Fit("unified_fit", "SL");
+	fitresult = labr_1_rise->Fit("unified_fit", "SLE");
 	results[0][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[0][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_1_rise");
 	myCanvas->Write();
 
-	fitresult = labr_2_rise->Fit("unified_fit", "SL");
+	fitresult = labr_2_rise->Fit("unified_fit", "SLE");
 	results[1][2] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
 	results[1][3] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_2_rise");
@@ -164,13 +164,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	decay->FixParameter(2, 4.62406E-15);
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
-	fitresult = labr_1_decay->Fit("decay", "SL");
+	fitresult = labr_1_decay->Fit("decay", "SLE");
 	results[0][0] = fitresult->Parameter(1);
 	results[0][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 
-	fitresult = labr_2_decay->Fit("decay", "SL");
+	fitresult = labr_2_decay->Fit("decay", "SLE");
 	results[1][0] = fitresult->Parameter(1);
 	results[1][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_2_decay");
