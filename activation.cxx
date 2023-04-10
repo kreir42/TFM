@@ -38,6 +38,24 @@ void activation(){
 	Double_t x[8];
 	Double_t y[8];
 	Double_t yerr[8];
+	TCanvas* myCanvas = new TCanvas("reactions_v_energy_unified");
+
+	//unified_fit
+	for(short i=0; i<4; i++){
+		x[2*i] = activation_energies[i];
+		x[2*i+1] = activation_energies[i];
+		y[2*i] = results[i][0][0];
+		y[2*i+1] = results[i][1][0];
+		yerr[2*i] = results[i][0][1];
+		yerr[2*i+1] = results[i][1][1];
+	}
+	TGraph* rectionsvenergy_unified = new TGraphErrors(8, x, y, NULL, yerr);
+	rectionsvenergy_unified->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_unified->SetMarkerStyle(20);
+	rectionsvenergy_unified->Draw("ap");
+	myCanvas->Write();
+
+	//rise fit
 	for(short i=0; i<4; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
@@ -46,11 +64,11 @@ void activation(){
 		yerr[2*i] = results[i][0][3];
 		yerr[2*i+1] = results[i][1][3];
 	}
-	TCanvas* myCanvas = new TCanvas("reactions_v_energy");
-	TGraph* rectionsvenergy = new TGraphErrors(8, x, y, NULL, yerr);
-	rectionsvenergy->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
-	rectionsvenergy->SetMarkerStyle(20);
-	rectionsvenergy->Draw("ap");
+	TGraph* rectionsvenergy_rise = new TGraphErrors(8, x, y, NULL, yerr);
+	rectionsvenergy_rise->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_rise->SetMarkerStyle(20);
+	myCanvas->SetName("reactions_v_energy_rise");
+	rectionsvenergy_rise->Draw("ap");
 	myCanvas->Write();
 
 	myCanvas->Close();
@@ -130,10 +148,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
 	fitresult = labr_1->Fit("unified_fit", "SLE");
+	results[0][0] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
+	results[0][1] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
 	fitresult = labr_2->Fit("unified_fit", "SLE");
+	results[1][0] = fitresult->Parameter(1)*(activation_end-activation_start)/number_of_alphas;
+	results[1][1] = fitresult->ParError(1)*(activation_end-activation_start)/number_of_alphas;
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
@@ -165,14 +187,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLE");
-	results[0][0] = fitresult->Parameter(1);
-	results[0][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_1_decay");
 	myCanvas->Write();
 
 	fitresult = labr_2_decay->Fit("decay", "SLE");
-	results[1][0] = fitresult->Parameter(1);
-	results[1][1] = fitresult->ParError(1);		//TBD:error no completo
 	myCanvas->SetName("labr_2_decay");
 	myCanvas->Write();
 
