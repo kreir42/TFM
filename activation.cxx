@@ -71,7 +71,6 @@ class unified_fit{
 			Double_t I = 0;	//created nuclei per time over lambda
 			unsigned long steps = x[0]/stepsize;
 			for(unsigned long i=0; i<=steps; i++){
-				//n = n*decay + (current_histogram->GetBinContent(i))*p[1];
 				I = (current_histogram->GetBinContent(i))*helper_ratio;
 				n = I + (n-I)*decay;
 			}
@@ -92,8 +91,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	//histogramas
 	auto rise_filter = [&](ULong64_t Timestamp){return Timestamp>=activation_start && Timestamp<=activation_end;};
 	auto decay_filter = [&](ULong64_t Timestamp){return Timestamp>activation_end;};
-	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<650");
-	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<650");
+	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<750");
+	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<750");
 
 	auto current_integrator = integrator_signals.Histo1D({"current_integrator", "; Timestamp; Counts", ACTIVATION_NBINS, 0, measurement_end}, "Timestamp");
 	auto labr_1 = labr_1_filter.Histo1D({"labr_1", "; Timestamp; Counts", ACTIVATION_NBINS, 0, measurement_end}, "Timestamp");
