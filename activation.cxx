@@ -143,7 +143,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->SetParLimits(1, 0, 1E2);
 	unified->SetParLimits(2, 4E-15, 5E-15);
 	unified->SetParLimits(3, 0, 1E2);
-	unified->SetParameters(15, 1E3, 4.62406E-15, 0);
+	unified->SetParameters(15, 1, 4.62406E-15, 0);
 	unified->FixParameter(2, 4.62406E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
