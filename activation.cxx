@@ -130,15 +130,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][4]){
 	unified->FixParameter(2, 4.62406E-15);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
-	fitresult = labr_1->Fit("unified_fit", "SLN");
-	labr_1->Draw();
-	unified->Draw("CSAME");
+	fitresult = labr_1->Fit("unified_fit", "SL");
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
-	fitresult = labr_2->Fit("unified_fit", "SLN");
-	labr_2->Draw();
-	unified->Draw("CSAME");
+	fitresult = labr_2->Fit("unified_fit", "SL");
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
