@@ -116,6 +116,7 @@ void activation(){
 	multigraph->Add(rectionsvenergy_rise);
 	rectionsvenergy_decay->SetMarkerColor(kBlue);
 	multigraph->Add(rectionsvenergy_decay);
+	myCanvas->SetLogy();
 	multigraph->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
 	multigraph->Draw("AP");
 	myCanvas->BuildLegend();
