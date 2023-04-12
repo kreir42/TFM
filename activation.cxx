@@ -109,12 +109,16 @@ void activation(){
 	//all results
 	TMultiGraph* multigraph = new TMultiGraph();
 	rectionsvenergy_exfor->SetMarkerColor(kBlack);
+	rectionsvenergy_exfor->SetTitle("EXFOR data");
 	multigraph->Add(rectionsvenergy_exfor,"c");
 	rectionsvenergy_unified->SetMarkerColor(kRed);
+	rectionsvenergy_unified->SetTitle("Unified fit");
 	multigraph->Add(rectionsvenergy_unified);
 	rectionsvenergy_rise->SetMarkerColor(kGreen);
+	rectionsvenergy_rise->SetTitle("Rise fit");
 	multigraph->Add(rectionsvenergy_rise);
 	rectionsvenergy_decay->SetMarkerColor(kBlue);
+	rectionsvenergy_decay->SetTitle("Decay fit");
 	multigraph->Add(rectionsvenergy_decay);
 	myCanvas->SetLogy();
 	multigraph->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
