@@ -19,7 +19,7 @@ void activation(){
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
-		exfor_data[i]*=2E-4;
+		exfor_data[i]*=1.88E-4;
 	}
 
 	gDirectory->cd("activation_1");
@@ -104,6 +104,22 @@ void activation(){
 	myCanvas->SetName("reactions_v_energy_decay");
 	rectionsvenergy_decay->Draw("ap");
 	rectionsvenergy_exfor->Draw("same");
+	myCanvas->Write();
+
+	//all results
+	TMultiGraph* multigraph = new TMultiGraph();
+	rectionsvenergy_exfor->SetMarkerColor(kBlack);
+	multigraph->Add(rectionsvenergy_exfor,"c");
+	rectionsvenergy_unified->SetMarkerColor(kRed);
+	multigraph->Add(rectionsvenergy_unified);
+	rectionsvenergy_rise->SetMarkerColor(kGreen);
+	multigraph->Add(rectionsvenergy_rise);
+	rectionsvenergy_decay->SetMarkerColor(kBlue);
+	multigraph->Add(rectionsvenergy_decay);
+	multigraph->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	multigraph->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->SetName("reactions_v_energy");
 	myCanvas->Write();
 
 	myCanvas->Close();
