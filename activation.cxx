@@ -9,7 +9,7 @@ void activation(){
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
-	TFile f("output/output.root", "UPDATE");
+	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
 	Double_t results[4][2][6];
 	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV

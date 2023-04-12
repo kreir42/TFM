@@ -4,7 +4,7 @@ void create_output_file(){
 	TFile activation_3("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root", "READ");
 	TFile activation_4("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 
-	TFile f("output/output.root", "RECREATE");
+	TFile f("output.root", "RECREATE");
 
 	//Activation measurements
 	f.mkdir("Activation");

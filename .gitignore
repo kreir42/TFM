@@ -1,3 +1,4 @@
 *.pdf
 raw_data/
 output/
+output.root
