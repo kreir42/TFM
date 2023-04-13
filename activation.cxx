@@ -19,7 +19,7 @@ void activation(){
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
-		exfor_data[i]*=1.88E-3/1.42E-9*2.67E-11;
+		exfor_data[i]*=8.71921676E-5;
 	}
 
 	gDirectory->cd("activation_1");
@@ -211,14 +211,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
 	fitresult = labr_1->Fit("unified_fit", "SLE");
-	results[0][0] = fitresult->Parameter(1)/(current2alpha*labr_1->GetBinWidth(1));
-	results[0][1] = fitresult->ParError(1)/(current2alpha*labr_1->GetBinWidth(1));
+	results[0][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[0][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
 	fitresult = labr_2->Fit("unified_fit", "SLE");
-	results[1][0] = fitresult->Parameter(1)/(current2alpha*labr_1->GetBinWidth(1));
-	results[1][1] = fitresult->ParError(1)/(current2alpha*labr_1->GetBinWidth(1));
+	results[1][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[1][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
@@ -227,14 +227,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetNpx(rise_nbins);
 
 	fitresult = labr_1_rise->Fit("unified_fit", "SLE");
-	results[0][2] = fitresult->Parameter(1)/current2alpha;
-	results[0][3] = fitresult->ParError(1)/current2alpha;
+	results[0][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[0][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_1_rise");
 	myCanvas->Write();
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLE");
-	results[1][2] = fitresult->Parameter(1)/current2alpha;
-	results[1][3] = fitresult->ParError(1)/current2alpha;
+	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[1][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_rise");
 	myCanvas->Write();
 
