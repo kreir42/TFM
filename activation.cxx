@@ -211,14 +211,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
 
 	fitresult = labr_1->Fit("unified_fit", "SLE");
-	results[0][0] = fitresult->Parameter(1)/current2alpha;
-	results[0][1] = fitresult->ParError(1)/current2alpha;
+	results[0][0] = fitresult->Parameter(1)/(current2alpha*labr_1->GetBinWidth(1));
+	results[0][1] = fitresult->ParError(1)/(current2alpha*labr_1->GetBinWidth(1));
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write();
 
 	fitresult = labr_2->Fit("unified_fit", "SLE");
-	results[1][0] = fitresult->Parameter(1)/current2alpha;
-	results[1][1] = fitresult->ParError(1)/current2alpha;
+	results[1][0] = fitresult->Parameter(1)/(current2alpha*labr_1->GetBinWidth(1));
+	results[1][1] = fitresult->ParError(1)/(current2alpha*labr_1->GetBinWidth(1));
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write();
 
