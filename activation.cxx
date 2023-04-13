@@ -173,10 +173,12 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 
-	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", ";Time (s);Counts", ACTIVATION_NBINS, activation_start/1E12, activation_end/1E12}, "t");
-	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", ";Time (s); Counts", ACTIVATION_NBINS, activation_end/1E12, measurement_end/1E12}, "t");
-	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", ACTIVATION_NBINS, activation_start/1E12, activation_end/1E12}, "t");
-	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", ";Time (s);Counts", ACTIVATION_NBINS, activation_end/1E12, measurement_end/1E12}, "t");
+	int rise_nbins = (activation_end-activation_start)/(labr_1->GetBinWidth(1)*1E12);
+	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);
+	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
+	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", ";Time (s); Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
+	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
+	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", ";Time (s);Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
 
 	cout << "Rise/decay histograms" << endl;
 	current_integrator->Write();
@@ -222,7 +224,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	//rise
 	cout << "Rise fittings" << endl;
-	unified->FixParameter(0, 0);
+	unified->SetNpx(rise_nbins);
 
 	fitresult = labr_1_rise->Fit("unified_fit", "SLE");
 	results[0][2] = fitresult->Parameter(1)/current2alpha;
@@ -239,7 +241,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	//decay
 	cout << "Decay fittings" << endl;
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
-	decay->SetNpx(ACTIVATION_NBINS);
+	decay->SetNpx(decay_nbins);
 	decay->SetNumberFitPoints(ACTIVATION_NBINS);
 	decay->SetParLimits(0, 0, 100);
 	decay->SetParLimits(2, 4E-3, 5E-3);
