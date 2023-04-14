@@ -13,7 +13,7 @@ void activation_results(){
 
 	//meter resultados en array
 	Double_t results[4][2][6];
-	TTree* tree = (TTree*)f.Get("activation_results_tree");
+	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
 
@@ -112,6 +112,7 @@ void activation_results(){
 	myCanvas->Write();
 
 	myCanvas->Close();
+	gDirectory->cd("..");
 	f.Close();
 }
 
@@ -146,13 +147,12 @@ void activation(){
 	per_file(filepath_4, results[3]);
 	gDirectory->cd("..");
 
-	gDirectory->cd("..");
-
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
 	tree->Branch("results", results, "results[4][2][6]/D");
 	tree->Fill();
 	tree->Write();
 
+	gDirectory->cd("..");
 	f.Close();
 }
 
