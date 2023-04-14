@@ -11,15 +11,19 @@ void activation_results(){
 
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
 
-	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
-		exfor_data[i]*=8.71921676E-5;
-	}
-
 	//meter resultados en array
 	Double_t results[4][2][6];
 	TTree* tree = (TTree*)f.Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
+
+	//escalado debido a la mala medida de la carga
+	results[3][0][4]*=172/239.1;
+	results[3][1][4]*=172/239.1;
+
+	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
+		exfor_data[i]*=8.71921676E-4*69.8/65.8;
+	}
 
 	//graficas
 	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV
@@ -181,14 +185,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
-	Double_t current2alpha = 1/(2*1.60217646E-10);
+	Double_t current2alpha = 1/(2*1.60217646E-9);
 	Double_t number_of_alphas = integrator_signals.Count().GetValue()*current2alpha;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
 	auto decay_filter = [&](ULong64_t t){return t>activation_end;};
-	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<750").Define("t", "Timestamp/1E12");
-	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<750").Define("t", "Timestamp/1E12");
+	auto labr_1_filter = d.Filter("Channel==6 && Energy>540 && Energy<640").Define("t", "Timestamp/1E12");
+	auto labr_2_filter = d.Filter("Channel==7 && Energy>540 && Energy<640").Define("t", "Timestamp/1E12");
 
 	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");

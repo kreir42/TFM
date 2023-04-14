@@ -18,8 +18,9 @@ void energy_calibration(){
 	short numbers_of_peaks[]={2,2};
 	Char_t* filepath;
 	unsigned short n = 0;
-	//for(short i=0; i<6; i++){
-	//	filepath = filepaths[i];
-	//	calibrate_energy(filepath, numbers_of_peaks[i], data[n], data[n+1], data[n+2], data[n+3], data[n+4]);
-	//	n+=numbers_of_peaks[i];
+//	for(short i=0; i<6; i++){
+//		filepath = filepaths[i];
+//		calibrate_energy(filepath, numbers_of_peaks[i], data[n], data[n+1], data[n+2], data[n+3], data[n+4]);
+//		n+=numbers_of_peaks[i];
+//	}
 }
