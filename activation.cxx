@@ -2,17 +2,10 @@
 
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
-void activation(){
-	cout << "Activation" << endl;
-	Char_t filepath_1[100] = "output/SData_aAl_J78kV_GVM1808kV_positions2_activacion.root";
-	Char_t filepath_2[100] = "output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root";
-	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
-	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
-
+void activation_results(){
+	cout << "Activation results" << endl;
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
-	Double_t results[4][2][6];
-	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV
 
 	Double_t exfor_energies[] = {3700, 3800, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900};	//TBD:hardcoded, read .txt
 
@@ -22,27 +15,14 @@ void activation(){
 		exfor_data[i]*=8.71921676E-5;
 	}
 
-	gDirectory->cd("activation_1");
-	cout << "activation_1" << endl;
-	per_file(filepath_1, results[0]);
-	gDirectory->cd("..");
-
-	gDirectory->cd("activation_2");
-	cout << "activation_2" << endl;
-	per_file(filepath_2, results[1]);
-	gDirectory->cd("..");
-
-	gDirectory->cd("activation_3");
-	cout << "activation_3" << endl;
-	per_file(filepath_3, results[2]);
-	gDirectory->cd("..");
-
-	gDirectory->cd("activation_4");
-	cout << "activation_4" << endl;
-	per_file(filepath_4, results[3]);
-	gDirectory->cd("..");
+	//meter resultados en array
+	Double_t results[4][2][6];
+	TTree* tree = (TTree*)f.Get("activation_results_tree");
+	tree->SetBranchAddress("results", results);
+	tree->GetEntry(0);
 
 	//graficas
+	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV
 	Double_t x[8];
 	Double_t y[8];
 	Double_t yerr[8];
@@ -128,6 +108,47 @@ void activation(){
 	myCanvas->Write();
 
 	myCanvas->Close();
+	f.Close();
+}
+
+void activation(){
+	cout << "Activation" << endl;
+	Char_t filepath_1[100] = "output/SData_aAl_J78kV_GVM1808kV_positions2_activacion.root";
+	Char_t filepath_2[100] = "output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root";
+	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
+	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+
+	TFile f("output.root", "UPDATE");
+	gDirectory->cd("Activation");
+	Double_t results[4][2][6];
+
+	gDirectory->cd("activation_1");
+	cout << "activation_1" << endl;
+	per_file(filepath_1, results[0]);
+	gDirectory->cd("..");
+
+	gDirectory->cd("activation_2");
+	cout << "activation_2" << endl;
+	per_file(filepath_2, results[1]);
+	gDirectory->cd("..");
+
+	gDirectory->cd("activation_3");
+	cout << "activation_3" << endl;
+	per_file(filepath_3, results[2]);
+	gDirectory->cd("..");
+
+	gDirectory->cd("activation_4");
+	cout << "activation_4" << endl;
+	per_file(filepath_4, results[3]);
+	gDirectory->cd("..");
+
+	gDirectory->cd("..");
+
+	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
+	tree->Branch("results", results, "results[4][2][6]/D");
+	tree->Fill();
+	tree->Write();
+
 	f.Close();
 }
 
@@ -229,13 +250,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	fitresult = labr_1_rise->Fit("unified_fit", "SLE");
 	results[0][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[0][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
-	myCanvas->SetName("labr_1_rise");
+	myCanvas->SetName("labr_1_rise_fit");
 	myCanvas->Write();
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLE");
 	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[1][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
-	myCanvas->SetName("labr_2_rise");
+	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write();
 
 	//decay
@@ -253,13 +274,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	fitresult = labr_1_decay->Fit("decay", "SLE");
 	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
-	myCanvas->SetName("labr_1_decay");
+	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write();
 
 	fitresult = labr_2_decay->Fit("decay", "SLE");
 	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
-	myCanvas->SetName("labr_2_decay");
+	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write();
 
 	myCanvas->Close();

@@ -80,8 +80,10 @@ void process_filelist(){
 	
 	signed char tof_flag = 1;
 	signed char histo_flag = 1;
-	signed char activation_flag = 1;
+	signed char create_output_file_flag = 1;
 	signed char energy_calibration_flag = 1;
+	signed char activation_flag = 1;
+	signed char activation_results_flag = 1;
 	char answer;
 	cout << "Add ToF and PSD? (y/n): ";
 	cin >> answer;	//TBD:unsafe?
@@ -99,10 +101,10 @@ void process_filelist(){
 		cout << "Invalid answer. Returning." << endl;
 		return;
 	}
-	cout << "Activation? (y/n): ";
+	cout << "Recreate output file? (y/n): ";
 	cin >> answer;	//TBD:unsafe?
 	if(answer=='n'||answer=='N'){
-		activation_flag = -1;
+		create_output_file_flag = -1;
 	}else if(answer!='y'&&answer!='Y'){
 		cout << "Invalid answer. Returning." << endl;
 		return;
@@ -115,7 +117,22 @@ void process_filelist(){
 		cout << "Invalid answer. Returning." << endl;
 		return;
 	}
-
+	cout << "Activation? (y/n): ";
+	cin >> answer;	//TBD:unsafe?
+	if(answer=='n'||answer=='N'){
+		activation_flag = -1;
+	}else if(answer!='y'&&answer!='Y'){
+		cout << "Invalid answer. Returning." << endl;
+		return;
+	}
+	cout << "Activation results? (y/n): ";
+	cin >> answer;	//TBD:unsafe?
+	if(answer=='n'||answer=='N'){
+		activation_results_flag = -1;
+	}else if(answer!='y'&&answer!='Y'){
+		cout << "Invalid answer. Returning." << endl;
+		return;
+	}
 
 	while (!read.eof()){
 		read >>filepath;
@@ -129,12 +146,17 @@ void process_filelist(){
 		cout << endl;
 	}
 
-	create_output_file();
+	if(create_output_file_flag==1){
+		create_output_file();
+	}
 	if(energy_calibration_flag==1){
 		energy_calibration();
 	}
 	if(activation_flag==1){
 		activation();
+	}
+	if(activation_results_flag==1){
+		activation_results();
 	}
 
 	cout << "That's all folks!" <<endl;
