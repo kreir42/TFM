@@ -191,8 +191,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
 	auto decay_filter = [&](ULong64_t t){return t>activation_end;};
-	auto labr_1_filter = d.Filter("Channel==6 && Energy>540 && Energy<640").Define("t", "Timestamp/1E12");
-	auto labr_2_filter = d.Filter("Channel==7 && Energy>540 && Energy<640").Define("t", "Timestamp/1E12");
+	auto labr_1_filter = d.Filter("Channel==6 && Energy>525 && Energy<750").Define("t", "Timestamp/1E12");
+	auto labr_2_filter = d.Filter("Channel==7 && Energy>525 && Energy<750").Define("t", "Timestamp/1E12");
 
 	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
