@@ -3,6 +3,9 @@ void create_output_file(){
 	TFile activation_2("output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root", "READ");
 	TFile activation_3("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root", "READ");
 	TFile activation_4("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+	TFile activation_5("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+	TFile activation_6("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+	TFile activation_7("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 
 	TFile f("output.root", "RECREATE");
 
@@ -40,6 +43,30 @@ void create_output_file(){
 	gDirectory->WriteObject(activation_4.Get("labr_1_time"), "labr_1_time");
 	gDirectory->WriteObject(activation_4.Get("labr_2_spectrum"), "labr_2_spectrum");
 	gDirectory->WriteObject(activation_4.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("activation_5");
+	gDirectory->cd("activation_5");
+	gDirectory->WriteObject(activation_5.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_5.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_5.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_5.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("activation_6");
+	gDirectory->cd("activation_6");
+	gDirectory->WriteObject(activation_6.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_6.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_6.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_6.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("activation_7");
+	gDirectory->cd("activation_7");
+	gDirectory->WriteObject(activation_7.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_7.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_7.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_7.Get("labr_2_time"), "labr_2_time");
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
