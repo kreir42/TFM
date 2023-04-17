@@ -18,8 +18,18 @@ void activation_results(){
 	tree->GetEntry(0);
 
 	//escalado debido a la mala medida de la carga
+	results[3][0][0]*=172/239.1;
+	results[3][0][1]*=172/239.1;
+	results[3][0][2]*=172/239.1;
+	results[3][0][3]*=172/239.1;
 	results[3][0][4]*=172/239.1;
+	results[3][0][5]*=172/239.1;
+	results[3][1][0]*=172/239.1;
+	results[3][1][1]*=172/239.1;
+	results[3][1][2]*=172/239.1;
+	results[3][1][3]*=172/239.1;
 	results[3][1][4]*=172/239.1;
+	results[3][1][5]*=172/239.1;
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
 		exfor_data[i]*=8.71921676E-4*69.8/65.8;
