@@ -172,17 +172,17 @@ void activation(){
 
 	gDirectory->cd("activation_5");
 	cout << "activation_5" << endl;
-	per_file(filepath_5, results[4]);
+//	per_file(filepath_5, results[4]);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_6");
 	cout << "activation_6" << endl;
-	per_file(filepath_6, results[5]);
+//	per_file(filepath_6, results[5]);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_7");
 	cout << "activation_7" << endl;
-	per_file(filepath_7, results[6]);
+//	per_file(filepath_7, results[6]);
 	gDirectory->cd("..");
 
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
