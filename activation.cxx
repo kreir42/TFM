@@ -1,5 +1,7 @@
 #define ACTIVATION_NBINS 1000
 
+#include "yesorno.cxx"
+
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
@@ -147,43 +149,57 @@ void activation(){
 	activation_window_low=525;
 	activation_window_high=750;
 
-	gDirectory->cd("activation_1");
-	cout << "activation_1" << endl;
-	per_file(filepath_1, results[0]);
-	gDirectory->cd("..");
+	if(activation_flag_1){
+		gDirectory->cd("activation_1");
+		cout << "activation_1" << endl;
+		per_file(filepath_1, results[0]);
+		gDirectory->cd("..");
+	}
 
-	gDirectory->cd("activation_2");
-	cout << "activation_2" << endl;
-	per_file(filepath_2, results[1]);
-	gDirectory->cd("..");
+	if(activation_flag_2){
+		gDirectory->cd("activation_2");
+		cout << "activation_2" << endl;
+		per_file(filepath_2, results[1]);
+		gDirectory->cd("..");
+	}
 
-	gDirectory->cd("activation_3");
-	cout << "activation_3" << endl;
-	per_file(filepath_3, results[2]);
-	gDirectory->cd("..");
+	if(activation_flag_3){
+		gDirectory->cd("activation_3");
+		cout << "activation_3" << endl;
+		per_file(filepath_3, results[2]);
+		gDirectory->cd("..");
+	}
 
-	gDirectory->cd("activation_4");
-	cout << "activation_4" << endl;
-	per_file(filepath_4, results[3]);
-	gDirectory->cd("..");
+	if(activation_flag_4){
+		gDirectory->cd("activation_4");
+		cout << "activation_4" << endl;
+		per_file(filepath_4, results[3]);
+		gDirectory->cd("..");
+	}
 
 	activation_window_low=1200;
 	activation_window_high=1450;
 
-	gDirectory->cd("activation_5");
-	cout << "activation_5" << endl;
-	per_file(filepath_5, results[4]);
-	gDirectory->cd("..");
+	if(activation_flag_5){
+		gDirectory->cd("activation_5");
+		cout << "activation_5" << endl;
+		per_file(filepath_5, results[4]);
+		gDirectory->cd("..");
+	}
 
-	gDirectory->cd("activation_6");
-	cout << "activation_6" << endl;
-//	per_file(filepath_6, results[5]);
-	gDirectory->cd("..");
+	if(activation_flag_6){
+		gDirectory->cd("activation_6");
+		cout << "activation_6" << endl;
+		per_file(filepath_6, results[5]);
+		gDirectory->cd("..");
+	}
 
-	gDirectory->cd("activation_7");
-	cout << "activation_7" << endl;
-//	per_file(filepath_7, results[6]);
-	gDirectory->cd("..");
+	if(activation_flag_7){
+		gDirectory->cd("activation_7");
+		cout << "activation_7" << endl;
+		per_file(filepath_7, results[6]);
+		gDirectory->cd("..");
+	}
 
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
 	tree->Branch("results", results, "results[7][2][6]/D");

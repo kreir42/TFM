@@ -45,6 +45,14 @@
 using namespace std;
 using namespace ROOT;
 
+bool activation_flag_1;
+bool activation_flag_2;
+bool activation_flag_3;
+bool activation_flag_4;
+bool activation_flag_5;
+bool activation_flag_6;
+bool activation_flag_7;
+
 #include "create_output_file.cxx"
 #include "activation.cxx"
 #include "calibration.cxx"
@@ -80,10 +88,6 @@ void process_filelist(){
 	
 	signed char tof_flag = 1;
 	signed char histo_flag = 1;
-	signed char create_output_file_flag = 1;
-	signed char energy_calibration_flag = 1;
-	signed char activation_flag = 1;
-	signed char activation_results_flag = 1;
 	char answer;
 	cout << "Add ToF and PSD? (y/n): ";
 	cin >> answer;	//TBD:unsafe?
@@ -101,38 +105,6 @@ void process_filelist(){
 		cout << "Invalid answer. Returning." << endl;
 		return;
 	}
-	cout << "Recreate output file? (y/n): ";
-	cin >> answer;	//TBD:unsafe?
-	if(answer=='n'||answer=='N'){
-		create_output_file_flag = -1;
-	}else if(answer!='y'&&answer!='Y'){
-		cout << "Invalid answer. Returning." << endl;
-		return;
-	}
-	cout << "Calibration? (y/n): ";
-	cin >> answer;	//TBD:unsafe?
-	if(answer=='n'||answer=='N'){
-		energy_calibration_flag = -1;
-	}else if(answer!='y'&&answer!='Y'){
-		cout << "Invalid answer. Returning." << endl;
-		return;
-	}
-	cout << "Activation? (y/n): ";
-	cin >> answer;	//TBD:unsafe?
-	if(answer=='n'||answer=='N'){
-		activation_flag = -1;
-	}else if(answer!='y'&&answer!='Y'){
-		cout << "Invalid answer. Returning." << endl;
-		return;
-	}
-	cout << "Activation results? (y/n): ";
-	cin >> answer;	//TBD:unsafe?
-	if(answer=='n'||answer=='N'){
-		activation_results_flag = -1;
-	}else if(answer!='y'&&answer!='Y'){
-		cout << "Invalid answer. Returning." << endl;
-		return;
-	}
 
 	while (!read.eof()){
 		read >>filepath;
@@ -146,16 +118,23 @@ void process_filelist(){
 		cout << endl;
 	}
 
-	if(create_output_file_flag==1){
+	if(yesorno("Create output file?")){
 		create_output_file();
 	}
-	if(energy_calibration_flag==1){
+	if(yesorno("Do energy calibration?")){
 		energy_calibration();
 	}
-	if(activation_flag==1){
+	if(yesorno("Do activation?")){
+		activation_flag_1 = yesorno("Activation 1?");
+		activation_flag_2 = yesorno("Activation 2?");
+		activation_flag_3 = yesorno("Activation 3?");
+		activation_flag_4 = yesorno("Activation 4?");
+		activation_flag_5 = yesorno("Activation 5?");
+		activation_flag_6 = yesorno("Activation 6?");
+		activation_flag_7 = yesorno("Activation 7?");
 		activation();
 	}
-	if(activation_results_flag==1){
+	if(yesorno("Analyze activation results?")){
 		activation_results();
 	}
 
