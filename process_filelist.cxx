@@ -52,6 +52,7 @@ bool activation_flag_4;
 bool activation_flag_5;
 bool activation_flag_6;
 bool activation_flag_7;
+bool activation_flag_8;
 
 #include "create_output_file.cxx"
 #include "activation.cxx"
@@ -132,6 +133,7 @@ void process_filelist(){
 		activation_flag_5 = yesorno("Activation 5?");
 		activation_flag_6 = yesorno("Activation 6?");
 		activation_flag_7 = yesorno("Activation 7?");
+		activation_flag_8 = yesorno("Activation 8?");
 		activation();
 	}
 	if(yesorno("Analyze activation results?")){

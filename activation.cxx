@@ -141,10 +141,11 @@ void activation(){
 	Char_t filepath_5[100] = "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
 	Char_t filepath_6[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 	Char_t filepath_7[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+	Char_t filepath_8[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
-	Double_t results[7][2][6];
+	Double_t results[8][2][6];
 
 	activation_window_low=525;
 	activation_window_high=750;
@@ -201,8 +202,15 @@ void activation(){
 		gDirectory->cd("..");
 	}
 
+	if(activation_flag_8){
+		gDirectory->cd("activation_8");
+		cout << "activation_8" << endl;
+		per_file(filepath_8, results[7]);
+		gDirectory->cd("..");
+	}
+
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
-	tree->Branch("results", results, "results[7][2][6]/D");
+	tree->Branch("results", results, "results[8][2][6]/D");
 	tree->Fill();
 	tree->Write();
 

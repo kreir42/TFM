@@ -6,6 +6,7 @@ void create_output_file(){
 	TFile activation_5("output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root", "READ");
 	TFile activation_6("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 	TFile activation_7("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+	TFile activation_8("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 
 	TFile f("output.root", "RECREATE");
 
@@ -69,6 +70,14 @@ void create_output_file(){
 	gDirectory->WriteObject(activation_7.Get("labr_2_time"), "labr_2_time");
 	gDirectory->cd("..");
 
+	gDirectory->mkdir("activation_8");
+	gDirectory->cd("activation_8");
+	gDirectory->WriteObject(activation_8.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_8.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_8.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_8.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
 	gDirectory->cd("..");
 
 	f.Close();
@@ -79,5 +88,6 @@ void create_output_file(){
 	activation_5.Close();
 	activation_6.Close();
 	activation_7.Close();
+	activation_8.Close();
 	cout << "Archivo output.root creado" << endl;
 }
