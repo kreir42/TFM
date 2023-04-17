@@ -3,7 +3,7 @@ void create_output_file(){
 	TFile activation_2("output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root", "READ");
 	TFile activation_3("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root", "READ");
 	TFile activation_4("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
-	TFile activation_5("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+	TFile activation_5("output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root", "READ");
 	TFile activation_6("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 	TFile activation_7("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 
@@ -76,5 +76,8 @@ void create_output_file(){
 	activation_2.Close();
 	activation_3.Close();
 	activation_4.Close();
+	activation_5.Close();
+	activation_6.Close();
+	activation_7.Close();
 	cout << "Archivo output.root creado" << endl;
 }

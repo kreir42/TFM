@@ -36,10 +36,10 @@ void activation_results(){
 	}
 
 	//graficas
-	Double_t activation_energies[] = {5500, 7000, 8500, 8500};	//keV
-	Double_t x[8];
-	Double_t y[8];
-	Double_t yerr[8];
+	Double_t activation_energies[] = {5500, 7000, 8500, 8500, 5500};	//keV
+	Double_t x[10];
+	Double_t y[10];
+	Double_t yerr[10];
 	TCanvas* myCanvas = new TCanvas("reactions_v_energy_unified");
 
 	//EXFOR data
@@ -51,7 +51,7 @@ void activation_results(){
 	rectionsvenergy_exfor->SetMarkerStyle(20);
 
 	//unified_fit
-	for(short i=0; i<4; i++){
+	for(short i=0; i<5; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][0];
@@ -59,7 +59,7 @@ void activation_results(){
 		yerr[2*i] = results[i][0][1];
 		yerr[2*i+1] = results[i][1][1];
 	}
-	TGraph* rectionsvenergy_unified = new TGraphErrors(8, x, y, NULL, yerr);
+	TGraph* rectionsvenergy_unified = new TGraphErrors(10, x, y, NULL, yerr);
 	rectionsvenergy_unified->SetTitle("(a,n) reactions v a energy (unified fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_unified->SetMarkerStyle(20);
 	rectionsvenergy_unified->Draw("ap");
@@ -67,7 +67,7 @@ void activation_results(){
 	myCanvas->Write();
 
 	//rise fit
-	for(short i=0; i<4; i++){
+	for(short i=0; i<5; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][2];
@@ -75,7 +75,7 @@ void activation_results(){
 		yerr[2*i] = results[i][0][3];
 		yerr[2*i+1] = results[i][1][3];
 	}
-	TGraph* rectionsvenergy_rise = new TGraphErrors(8, x, y, NULL, yerr);
+	TGraph* rectionsvenergy_rise = new TGraphErrors(10, x, y, NULL, yerr);
 	rectionsvenergy_rise->SetTitle("(a,n) reactions v a energy (rise fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise->SetMarkerStyle(20);
 	myCanvas->SetName("reactions_v_energy_rise");
@@ -84,7 +84,7 @@ void activation_results(){
 	myCanvas->Write();
 
 	//decay fit
-	for(short i=0; i<4; i++){
+	for(short i=0; i<5; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][4];
@@ -92,7 +92,7 @@ void activation_results(){
 		yerr[2*i] = results[i][0][5];
 		yerr[2*i+1] = results[i][1][5];
 	}
-	TGraph* rectionsvenergy_decay = new TGraphErrors(8, x, y, NULL, yerr);
+	TGraph* rectionsvenergy_decay = new TGraphErrors(10, x, y, NULL, yerr);
 	rectionsvenergy_decay->SetTitle("(a,n) reactions v a energy (decay fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_decay->SetMarkerStyle(20);
 	myCanvas->SetName("reactions_v_energy_decay");
@@ -136,7 +136,7 @@ void activation(){
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
-	Char_t filepath_5[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+	Char_t filepath_5[100] = "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
 	Char_t filepath_6[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 	Char_t filepath_7[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
@@ -167,12 +167,12 @@ void activation(){
 	per_file(filepath_4, results[3]);
 	gDirectory->cd("..");
 
-	activation_window_low=525;
-	activation_window_high=750;
+	activation_window_low=1200;
+	activation_window_high=1450;
 
 	gDirectory->cd("activation_5");
 	cout << "activation_5" << endl;
-//	per_file(filepath_5, results[4]);
+	per_file(filepath_5, results[4]);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_6");
