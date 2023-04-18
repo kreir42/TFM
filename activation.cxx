@@ -10,8 +10,8 @@ void activation_results(){
 	Double_t sodio_2_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
 	Double_t sodio_1_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
 	Double_t sodio_2_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
-	Double_t sodio_1_3 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
-	Double_t sodio_2_3 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
+	Double_t sodio_1_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1180, 1300);
+	Double_t sodio_2_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
 
 	cout << "Activation results" << endl;
 	TFile f("output.root", "UPDATE");
