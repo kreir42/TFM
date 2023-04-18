@@ -263,7 +263,7 @@ class unified_fit{
 			stepsize = current_histogram->GetBinWidth(1);
 		}
 		Double_t operator()(Double_t* x, Double_t* p){
-			Double_t n = 0;	//number of nuclei
+			Double_t n = p[4];	//initial number of nuclei
 			Double_t decay = exp(-p[2]*stepsize);
 			Double_t helper_ratio = p[1]/p[2];
 			Double_t I = 0;	//created nuclei per time over lambda
@@ -323,16 +323,17 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	//unified
 	cout << "Unified rise/decay fittings" << endl;
-	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 4);
+	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 5);
 	unified->SetNpx(ACTIVATION_NBINS);
 	unified->SetNumberFitPoints(ACTIVATION_NBINS);
 	unified->SetParLimits(0, 0, 1E5);
 	unified->SetParLimits(1, 0, 1E2);
 	unified->SetParLimits(2, 4E-3, 5E-3);
 	unified->SetParLimits(3, 0, 1E2);
-	unified->SetParameters(15, 1, 4.62406E-3, 0);
+	unified->SetParLimits(4, 0, 1E8);
+	unified->SetParameters(15, 1, 4.62406E-3, 0, 0);
 	unified->FixParameter(2, 4.62406E-3);
-	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg");
+	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg", "initial number of 30P");
 
 	fitresult = labr_1->Fit("unified_fit", "SLE");
 	results[0][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
