@@ -45,6 +45,7 @@
 using namespace std;
 using namespace ROOT;
 
+#define ACTIVATION_N 8
 bool activation_flag_1;
 bool activation_flag_2;
 bool activation_flag_3;

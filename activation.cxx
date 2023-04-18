@@ -14,7 +14,7 @@ void activation_results(){
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
 
 	//meter resultados en array
-	Double_t results[8][2][6];
+	Double_t results[ACTIVATION_N][2][6];
 	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
@@ -53,7 +53,7 @@ void activation_results(){
 	rectionsvenergy_exfor->SetMarkerStyle(20);
 
 	//unified_fit
-	for(short i=0; i<5; i++){
+	for(short i=0; i<ACTIVATION_N; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][0];
@@ -69,7 +69,7 @@ void activation_results(){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//rise fit
-	for(short i=0; i<5; i++){
+	for(short i=0; i<ACTIVATION_N; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][2];
@@ -86,7 +86,7 @@ void activation_results(){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//decay fit
-	for(short i=0; i<5; i++){
+	for(short i=0; i<ACTIVATION_N; i++){
 		x[2*i] = activation_energies[i];
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][4];
@@ -139,13 +139,13 @@ void activation(){
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
 	Char_t filepath_5[100] = "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
-	Char_t filepath_6[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+	Char_t filepath_6[100] = "output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root";
 	Char_t filepath_7[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 	Char_t filepath_8[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
-	Double_t results[8][2][6];
+	Double_t results[ACTIVATION_N][2][6];
 	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
