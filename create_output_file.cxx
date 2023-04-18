@@ -14,7 +14,7 @@ void create_output_file(){
 	f.mkdir("Activation");
 	gDirectory->cd("Activation");
 
-	Double_t results[8][2][6];
+	Double_t results[ACTIVATION_N][2][6];
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
 	tree->Branch("results", results, "results[8][2][6]/D");
 	tree->Write();

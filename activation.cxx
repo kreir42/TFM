@@ -42,13 +42,33 @@ void activation_results(){
 	results[3][1][5]*=172/239.1;
 
 	//escalado na22
-	for(unsigned short j=0; j++; j<6){
-		results[4][0][j] *= sodio_1_1/sodio_1_2;
-		results[4][1][j] *= sodio_2_1/sodio_2_2;
-		results[5][0][j] *= sodio_1_1/sodio_1_2;
-		results[5][1][j] *= sodio_2_1/sodio_2_2;
-		results[6][0][j] *= sodio_1_1/sodio_1_3;
-		results[6][1][j] *= sodio_2_1/sodio_2_3;
+	for(unsigned short j=0; j<6; j++){
+		results[4][0][j]*=sodio_1_1/sodio_1_2;
+		results[4][1][j]*=sodio_2_1/sodio_2_2;
+      		results[5][0][j]*=sodio_1_1/sodio_1_3;
+      		results[5][1][j]*=sodio_2_1/sodio_2_3;
+		results[6][0][j]*=sodio_1_1/sodio_1_3;
+		results[6][1][j]*=sodio_2_1/sodio_2_3;
+		results[7][0][j]*=sodio_1_1/sodio_1_3;
+		results[7][1][j]*=sodio_2_1/sodio_2_3;
+
+		//comentar para mostrar
+//		results[0][0][j]=0;
+//		results[0][1][j]=0;
+//		results[1][0][j]=0;
+//		results[1][1][j]=0;
+//		results[2][0][j]=0;
+//		results[2][1][j]=0;
+//		results[3][0][j]=0;
+//		results[3][1][j]=0;
+//		results[4][0][j]=0;
+//		results[4][1][j]=0;
+//		results[5][0][j]=0;
+//		results[5][1][j]=0;
+//		results[6][0][j]=0;
+//		results[6][1][j]=0;
+//		results[7][0][j]=0;
+//		results[7][1][j]=0;
 	}
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
@@ -63,9 +83,6 @@ void activation_results(){
 	TCanvas* myCanvas = new TCanvas("reactions_v_energy_unified");
 
 	//EXFOR data
-	x[0] = activation_energies[0];
-	x[1] = activation_energies[1];
-	x[2] = activation_energies[2];
 	TGraph* rectionsvenergy_exfor = new TGraphErrors(63, exfor_energies, exfor_data, NULL, NULL);	//TBD:hardcoded number
 	rectionsvenergy_exfor->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_exfor->SetMarkerStyle(20);
@@ -134,7 +151,6 @@ void activation_results(){
 	rectionsvenergy_decay->SetMarkerColor(kBlue);
 	rectionsvenergy_decay->SetTitle("Decay fit");
 	multigraph->Add(rectionsvenergy_decay);
-	myCanvas->SetLogy();
 	multigraph->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
 	multigraph->Draw("AP");
 	myCanvas->BuildLegend();
@@ -166,7 +182,6 @@ void activation(){
 	Double_t results[ACTIVATION_N][2][6];
 	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
-	tree->GetEntry(0);
 
 	activation_window_low=525;
 	activation_window_high=750;
@@ -210,7 +225,7 @@ void activation(){
 	}
 
 	activation_window_low=1200;
-	activation_window_high=1550;
+	activation_window_high=1600;
 
 	if(activation_flag_6){
 		gDirectory->cd("activation_6");
@@ -218,9 +233,6 @@ void activation(){
 		per_file(filepath_6, results[5]);
 		gDirectory->cd("..");
 	}
-
-	activation_window_low=1200;
-	activation_window_high=1450;
 
 	if(activation_flag_7){
 		gDirectory->cd("activation_7");
