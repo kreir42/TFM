@@ -8,9 +8,9 @@ void activation_results(){
 	//escalado con na22
 	Double_t sodio_1_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
 	Double_t sodio_2_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
-	Double_t sodio_1_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
-	Double_t sodio_2_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
-	Double_t sodio_1_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1180, 1300);
+	Double_t sodio_1_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1180, 1320);
+	Double_t sodio_2_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1410);
+	Double_t sodio_1_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1190, 1300);
 	Double_t sodio_2_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
 
 	cout << "Activation results" << endl;
@@ -27,22 +27,12 @@ void activation_results(){
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
 
-	//escalado debido a la mala medida de la carga
-	results[3][0][0]*=172/239.1;
-	results[3][0][1]*=172/239.1;
-	results[3][0][2]*=172/239.1;
-	results[3][0][3]*=172/239.1;
-	results[3][0][4]*=172/239.1;
-	results[3][0][5]*=172/239.1;
-	results[3][1][0]*=172/239.1;
-	results[3][1][1]*=172/239.1;
-	results[3][1][2]*=172/239.1;
-	results[3][1][3]*=172/239.1;
-	results[3][1][4]*=172/239.1;
-	results[3][1][5]*=172/239.1;
-
-	//escalado na22
+	//escalados
 	for(unsigned short j=0; j<6; j++){
+		//escalado debido a la mala medida de la carga
+		results[3][0][j]*=172/239.1;
+
+		//escalado na22
 		results[4][0][j]*=sodio_1_1/sodio_1_2;
 		results[4][1][j]*=sodio_2_1/sodio_2_2;
       		results[5][0][j]*=sodio_1_1/sodio_1_3;
