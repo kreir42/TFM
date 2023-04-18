@@ -14,6 +14,11 @@ void create_output_file(){
 	f.mkdir("Activation");
 	gDirectory->cd("Activation");
 
+	Double_t results[8][2][6];
+	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
+	tree->Branch("results", results, "results[8][2][6]/D");
+	tree->Write();
+
 	gDirectory->mkdir("activation_1");
 	gDirectory->cd("activation_1");
 	gDirectory->WriteObject(activation_1.Get("labr_1_spectrum"), "labr_1_spectrum");
