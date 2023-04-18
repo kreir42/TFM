@@ -66,7 +66,7 @@ void activation_results(){
 	rectionsvenergy_unified->SetMarkerStyle(20);
 	rectionsvenergy_unified->Draw("ap");
 	rectionsvenergy_exfor->Draw("same");
-	myCanvas->Write();
+	myCanvas->Write("reactions_v_energy_unified", TObject::kOverwrite);
 
 	//rise fit
 	for(short i=0; i<5; i++){
@@ -83,7 +83,7 @@ void activation_results(){
 	myCanvas->SetName("reactions_v_energy_rise");
 	rectionsvenergy_rise->Draw("ap");
 	rectionsvenergy_exfor->Draw("same");
-	myCanvas->Write();
+	myCanvas->Write("reactions_v_energy_rise", TObject::kOverwrite);
 
 	//decay fit
 	for(short i=0; i<5; i++){
@@ -100,7 +100,7 @@ void activation_results(){
 	myCanvas->SetName("reactions_v_energy_decay");
 	rectionsvenergy_decay->Draw("ap");
 	rectionsvenergy_exfor->Draw("same");
-	myCanvas->Write();
+	myCanvas->Write("reactions_v_energy_decay", TObject::kOverwrite);
 
 	//all results
 	TMultiGraph* multigraph = new TMultiGraph();
@@ -121,7 +121,7 @@ void activation_results(){
 	multigraph->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->SetName("reactions_v_energy");
-	myCanvas->Write();
+	myCanvas->Write("reactions_v_energy", TObject::kOverwrite);
 
 	myCanvas->Close();
 	gDirectory->cd("..");
@@ -269,13 +269,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", ";Time (s);Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
 
 	cout << "Rise/decay histograms" << endl;
-	current_integrator->Write();
-	labr_1->Write();
-	labr_2->Write();
-	labr_1_rise->Write();
-	labr_1_decay->Write();
-	labr_2_rise->Write();
-	labr_2_decay->Write();
+	current_integrator->Write("current_integrator", TObject::kOverwrite);
+	labr_1->Write("labr_1", TObject::kOverwrite);
+	labr_2->Write("labr_2", TObject::kOverwrite);
+	labr_1_rise->Write("labr_1_rise", TObject::kOverwrite);
+	labr_1_decay->Write("labr_1_decay", TObject::kOverwrite);
+	labr_2_rise->Write("labr_2_rise", TObject::kOverwrite);
+	labr_2_decay->Write("labr_2_decay", TObject::kOverwrite);
 
 	activation_start/=1E12;
 	activation_end/=1E12;
@@ -302,13 +302,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[0][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[0][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_1_unified_fit");
-	myCanvas->Write();
+	myCanvas->Write("labr_1_unified_fit", TObject::kOverwrite);
 
 	fitresult = labr_2->Fit("unified_fit", "SLE");
 	results[1][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[1][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_unified_fit");
-	myCanvas->Write();
+	myCanvas->Write("labr_2_unified_fit", TObject::kOverwrite);
 
 	//rise
 	cout << "Rise fittings" << endl;
@@ -318,13 +318,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[0][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[0][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_1_rise_fit");
-	myCanvas->Write();
+	myCanvas->Write("labr_1_rise_fit", TObject::kOverwrite);
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLE");
 	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[1][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_rise_fit");
-	myCanvas->Write();
+	myCanvas->Write("labr_2_rise_fit", TObject::kOverwrite);
 
 	//decay
 	cout << "Decay fittings" << endl;
@@ -342,13 +342,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	myCanvas->SetName("labr_1_decay_fit");
-	myCanvas->Write();
+	myCanvas->Write("labr_1_decay_fit", TObject::kOverwrite);
 
 	fitresult = labr_2_decay->Fit("decay", "SLE");
 	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	myCanvas->SetName("labr_2_decay_fit");
-	myCanvas->Write();
+	myCanvas->Write("labr_2_decay_fit", TObject::kOverwrite);
 
 	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
