@@ -4,9 +4,9 @@ void create_output_file(){
 	TFile activation_3("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root", "READ");
 	TFile activation_4("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
 	TFile activation_5("output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root", "READ");
-	TFile activation_6("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
-	TFile activation_7("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
-	TFile activation_8("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+	TFile activation_6("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
+	TFile activation_7("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
+	TFile activation_8("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
 
 	TFile f("output.root", "RECREATE");
 
