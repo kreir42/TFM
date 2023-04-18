@@ -191,12 +191,18 @@ void activation(){
 		gDirectory->cd("..");
 	}
 
+	activation_window_low=1200;
+	activation_window_high=1550;
+
 	if(activation_flag_6){
 		gDirectory->cd("activation_6");
 		cout << "activation_6" << endl;
 		per_file(filepath_6, results[5]);
 		gDirectory->cd("..");
 	}
+
+	activation_window_low=1200;
+	activation_window_high=1450;
 
 	if(activation_flag_7){
 		gDirectory->cd("activation_7");
