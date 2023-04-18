@@ -7,9 +7,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]);
 void activation_results(){
 	//escalado con na22
 	Double_t sodio_1_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
-	Double_t sodio_1_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
 	Double_t sodio_2_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
+	Double_t sodio_1_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
 	Double_t sodio_2_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
+	Double_t sodio_1_3 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
+	Double_t sodio_2_3 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
 
 	cout << "Activation results" << endl;
 	TFile f("output.root", "UPDATE");
@@ -40,11 +42,13 @@ void activation_results(){
 	results[3][1][5]*=172/239.1;
 
 	//escalado na22
-	for(unsigned short i=4; i++; i<ACTIVATION_N){
-		for(unsigned short j=0; j++; j<6){
-			results[i][0][j] *= sodio_1_1/sodio_1_2;
-			results[i][1][j] *= sodio_2_1/sodio_2_2;
-		}
+	for(unsigned short j=0; j++; j<6){
+		results[4][0][j] *= sodio_1_1/sodio_1_2;
+		results[4][1][j] *= sodio_2_1/sodio_2_2;
+		results[5][0][j] *= sodio_1_1/sodio_1_2;
+		results[5][1][j] *= sodio_2_1/sodio_2_2;
+		results[6][0][j] *= sodio_1_1/sodio_1_3;
+		results[6][1][j] *= sodio_2_1/sodio_2_3;
 	}
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
