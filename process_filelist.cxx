@@ -45,7 +45,7 @@
 using namespace std;
 using namespace ROOT;
 
-#define ACTIVATION_N 8
+#define ACTIVATION_N 10
 bool activation_flag_1;
 bool activation_flag_2;
 bool activation_flag_3;
@@ -54,6 +54,8 @@ bool activation_flag_5;
 bool activation_flag_6;
 bool activation_flag_7;
 bool activation_flag_8;
+bool activation_flag_9;
+bool activation_flag_10;
 
 #include "create_output_file.cxx"
 #include "activation.cxx"
@@ -136,6 +138,8 @@ void process_filelist(){
 		activation_flag_6 = yesorno("Activation 6?");
 		activation_flag_7 = yesorno("Activation 7?");
 		activation_flag_8 = yesorno("Activation 8?");
+		activation_flag_9 = yesorno("Activation 9?");
+		activation_flag_10 = yesorno("Activation 10?");
 		activation();
 	}
 	if(yesorno("Analyze activation results?")){

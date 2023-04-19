@@ -3,10 +3,13 @@ void create_output_file(){
 	TFile activation_2("output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root", "READ");
 	TFile activation_3("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root", "READ");
 	TFile activation_4("output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root", "READ");
+
 	TFile activation_5("output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root", "READ");
 	TFile activation_6("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
-	TFile activation_7("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
+	TFile activation_7("output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
 	TFile activation_8("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
+	TFile activation_9("output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
+	TFile activation_10("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
 
 	TFile f("output.root", "RECREATE");
 
@@ -83,6 +86,22 @@ void create_output_file(){
 	gDirectory->WriteObject(activation_8.Get("labr_2_time"), "labr_2_time");
 	gDirectory->cd("..");
 
+	gDirectory->mkdir("activation_9");
+	gDirectory->cd("activation_9");
+	gDirectory->WriteObject(activation_9.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_9.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_9.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_9.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("activation_10");
+	gDirectory->cd("activation_10");
+	gDirectory->WriteObject(activation_10.Get("labr_1_spectrum"), "labr_1_spectrum");
+	gDirectory->WriteObject(activation_10.Get("labr_1_time"), "labr_1_time");
+	gDirectory->WriteObject(activation_10.Get("labr_2_spectrum"), "labr_2_spectrum");
+	gDirectory->WriteObject(activation_10.Get("labr_2_time"), "labr_2_time");
+	gDirectory->cd("..");
+
 	gDirectory->cd("..");
 
 	f.Close();
@@ -94,5 +113,7 @@ void create_output_file(){
 	activation_6.Close();
 	activation_7.Close();
 	activation_8.Close();
+	activation_9.Close();
+	activation_10.Close();
 	cout << "Archivo output.root creado" << endl;
 }

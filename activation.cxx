@@ -41,6 +41,10 @@ void activation_results(){
 		results[6][1][j]*=sodio_2_1/sodio_2_3;
 		results[7][0][j]*=sodio_1_1/sodio_1_3;
 		results[7][1][j]*=sodio_2_1/sodio_2_3;
+		results[8][0][j]*=sodio_1_1/sodio_1_3;
+		results[8][1][j]*=sodio_2_1/sodio_2_3;
+		results[9][0][j]*=sodio_1_1/sodio_1_3;
+		results[9][1][j]*=sodio_2_1/sodio_2_3;
 
 		//comentar para mostrar
 //		results[0][0][j]=0;
@@ -59,6 +63,10 @@ void activation_results(){
 //		results[6][1][j]=0;
 //		results[7][0][j]=0;
 //		results[7][1][j]=0;
+//		results[8][0][j]=0;
+//		results[8][1][j]=0;
+//		results[9][0][j]=0;
+//		results[9][1][j]=0;
 	}
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
@@ -66,7 +74,7 @@ void activation_results(){
 	}
 
 	//graficas
-	Double_t activation_energies[] = {5500, 7000, 8500, 8500, 5500, 5500, 0000, 0000};	//keV
+	Double_t activation_energies[] = {5500, 7000, 8500, 8500, 5500, 5500, 5500, 7000, 8500, 7050};	//keV
 	Double_t x[2*ACTIVATION_N];
 	Double_t y[2*ACTIVATION_N];
 	Double_t yerr[2*ACTIVATION_N];
@@ -162,10 +170,12 @@ void activation(){
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
-	Char_t filepath_5[100] = "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
-	Char_t filepath_6[100] = "output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root";
-	Char_t filepath_7[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
-	Char_t filepath_8[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+	Char_t filepath_5[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
+	Char_t filepath_6[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root";
+	Char_t filepath_7[100] =  "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
+	Char_t filepath_8[100] =  "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+	Char_t filepath_9[100] =  "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
+	Char_t filepath_10[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
@@ -235,6 +245,20 @@ void activation(){
 		gDirectory->cd("activation_8");
 		cout << "activation_8" << endl;
 		per_file(filepath_8, results[7]);
+		gDirectory->cd("..");
+	}
+
+	if(activation_flag_9){
+		gDirectory->cd("activation_9");
+		cout << "activation_9" << endl;
+		per_file(filepath_9, results[8]);
+		gDirectory->cd("..");
+	}
+
+	if(activation_flag_10){
+		gDirectory->cd("activation_10");
+		cout << "activation_10" << endl;
+		per_file(filepath_10, results[9]);
 		gDirectory->cd("..");
 	}
 
