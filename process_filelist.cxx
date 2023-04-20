@@ -46,6 +46,8 @@ using namespace std;
 using namespace ROOT;
 
 #define ACTIVATION_N 10
+#define PULSED_1_PATH "output/SData_aAl_J78kV_GVM1808kV_positions2.root"
+
 bool activation_flag_1;
 bool activation_flag_2;
 bool activation_flag_3;
@@ -61,6 +63,7 @@ bool activation_flag_10;
 #include "activation.cxx"
 #include "calibration.cxx"
 #include "yesorno.cxx"
+#include "pulsed.cxx"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +147,9 @@ void process_filelist(){
 	}
 	if(yesorno("Analyze activation results?")){
 		activation_results();
+	}
+	if(yesorno("Pulsed?")){
+		pulsed();
 	}
 
 	cout << "That's all folks!" <<endl;

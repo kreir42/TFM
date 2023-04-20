@@ -11,6 +11,8 @@ void create_output_file(){
 	TFile activation_9("output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
 	TFile activation_10("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
 
+	TFile pulsed_1(PULSED_1_PATH, "READ");
+
 	TFile f("output.root", "RECREATE");
 
 	//Activation measurements
@@ -104,6 +106,18 @@ void create_output_file(){
 
 	gDirectory->cd("..");
 
+
+	gDirectory->mkdir("Pulsed");
+	gDirectory->cd("Pulsed");
+
+	gDirectory->mkdir("pulsed_1");
+	gDirectory->cd("pulsed_1");
+	gDirectory->WriteObject(pulsed_1.Get("monster_time"), "monster_time");
+	gDirectory->WriteObject(pulsed_1.Get("monster_spectrum"), "monster_spectrum");
+	gDirectory->cd("..");
+
+	gDirectory->cd("..");
+
 	f.Close();
 	activation_1.Close();
 	activation_2.Close();
@@ -115,5 +129,6 @@ void create_output_file(){
 	activation_8.Close();
 	activation_9.Close();
 	activation_10.Close();
+	pulsed_1.Close();
 	cout << "Archivo output.root creado" << endl;
 }
