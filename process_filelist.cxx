@@ -46,7 +46,7 @@ using namespace std;
 using namespace ROOT;
 
 #define ACTIVATION_N 10
-#define PULSED_1_PATH "output/SData_aAl_J78kV_GVM1808kV_positions2.root"
+#define PULSED_1_PATH "output/SData_aAl_J78keV_GVM1808keV_positions1_20230417.root"
 
 bool activation_flag_1;
 bool activation_flag_2;
