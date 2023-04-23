@@ -1,1 +1,1 @@
-d068885b-df77-41a8-839d-212291fd5599 encryption=none name=basura-ssh rsyncurl=kreir42@192.168.1.13:22/home/kreir42/TFM/ type=rsync timestamp=1682267649.316971643s
+d068885b-df77-41a8-839d-212291fd5599 encryption=none name=old-basura rsyncurl=kreir42@192.168.1.13:22/home/kreir42/TFM/ type=rsync timestamp=1682268888.022455849s
