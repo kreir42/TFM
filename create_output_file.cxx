@@ -12,6 +12,11 @@ void create_output_file(){
 	TFile activation_10("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
 
 	TFile pulsed_1(PULSED_1_PATH, "READ");
+	TFile pulsed_2(PULSED_2_PATH, "READ");
+	TFile pulsed_3(PULSED_3_PATH, "READ");
+	TFile pulsed_4(PULSED_4_PATH, "READ");
+	TFile pulsed_5(PULSED_5_PATH, "READ");
+	TFile pulsed_6(PULSED_6_PATH, "READ");
 
 	TFile f("output.root", "RECREATE");
 
@@ -116,6 +121,36 @@ void create_output_file(){
 	gDirectory->WriteObject(pulsed_1.Get("monster_spectrum"), "monster_spectrum");
 	gDirectory->cd("..");
 
+	gDirectory->mkdir("pulsed_2");
+	gDirectory->cd("pulsed_2");
+	gDirectory->WriteObject(pulsed_2.Get("monster_time"), "monster_time");
+	gDirectory->WriteObject(pulsed_2.Get("monster_spectrum"), "monster_spectrum");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("pulsed_3");
+	gDirectory->cd("pulsed_3");
+	gDirectory->WriteObject(pulsed_3.Get("monster_time"), "monster_time");
+	gDirectory->WriteObject(pulsed_3.Get("monster_spectrum"), "monster_spectrum");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("pulsed_4");
+	gDirectory->cd("pulsed_4");
+	gDirectory->WriteObject(pulsed_4.Get("monster_time"), "monster_time");
+	gDirectory->WriteObject(pulsed_4.Get("monster_spectrum"), "monster_spectrum");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("pulsed_5");
+	gDirectory->cd("pulsed_5");
+	gDirectory->WriteObject(pulsed_5.Get("monster_time"), "monster_time");
+	gDirectory->WriteObject(pulsed_5.Get("monster_spectrum"), "monster_spectrum");
+	gDirectory->cd("..");
+
+	gDirectory->mkdir("pulsed_6");
+	gDirectory->cd("pulsed_6");
+	gDirectory->WriteObject(pulsed_6.Get("monster_time"), "monster_time");
+	gDirectory->WriteObject(pulsed_6.Get("monster_spectrum"), "monster_spectrum");
+	gDirectory->cd("..");
+
 	gDirectory->cd("..");
 
 	f.Close();
@@ -130,5 +165,10 @@ void create_output_file(){
 	activation_9.Close();
 	activation_10.Close();
 	pulsed_1.Close();
+	pulsed_2.Close();
+	pulsed_3.Close();
+	pulsed_4.Close();
+	pulsed_5.Close();
+	pulsed_6.Close();
 	cout << "Archivo output.root creado" << endl;
 }

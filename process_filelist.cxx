@@ -47,6 +47,11 @@ using namespace ROOT;
 
 #define ACTIVATION_N 10
 #define PULSED_1_PATH "output/SData_aAl_J78keV_GVM1808keV_positions1_20230417.root"
+#define PULSED_2_PATH "output/SData_aAL_J78keV_GVM2730kV_position1_20230418.root"
+#define PULSED_3_PATH "output/SData_aAl_J78kV_GVM1808kV_positions1.root"
+#define PULSED_4_PATH "output/SData_aAl_J78kV_GVM1808kV_positions2_bis.root"
+#define PULSED_5_PATH "output/SData_aAl_J78kV_GVM1808kV_positions2.root"
+#define PULSED_6_PATH "output/SData_aAl_J78kV_GVM2810kV_positions2_20230223.root"
 
 bool activation_flag_1;
 bool activation_flag_2;

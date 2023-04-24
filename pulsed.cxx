@@ -24,12 +24,37 @@ void pulsed_per_file(char filepath[500]){
 
 void pulsed(){
 	char pulsed_1[500] = PULSED_1_PATH;
+	char pulsed_2[500] = PULSED_2_PATH;
+	char pulsed_3[500] = PULSED_3_PATH;
+	char pulsed_4[500] = PULSED_4_PATH;
+	char pulsed_5[500] = PULSED_5_PATH;
+	char pulsed_6[500] = PULSED_6_PATH;
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
 	pulsed_per_file(pulsed_1);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_2");
+	pulsed_per_file(pulsed_2);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_3");
+	pulsed_per_file(pulsed_3);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_4");
+	pulsed_per_file(pulsed_4);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_5");
+	pulsed_per_file(pulsed_5);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_6");
+	pulsed_per_file(pulsed_6);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
