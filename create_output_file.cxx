@@ -16,7 +16,6 @@ void create_output_file(){
 	TFile pulsed_3(PULSED_3_PATH, "READ");
 	TFile pulsed_4(PULSED_4_PATH, "READ");
 	TFile pulsed_5(PULSED_5_PATH, "READ");
-	TFile pulsed_6(PULSED_6_PATH, "READ");
 
 	TFile f("output.root", "RECREATE");
 
@@ -145,12 +144,6 @@ void create_output_file(){
 	gDirectory->WriteObject(pulsed_5.Get("monster_spectrum"), "monster_spectrum");
 	gDirectory->cd("..");
 
-	gDirectory->mkdir("pulsed_6");
-	gDirectory->cd("pulsed_6");
-	gDirectory->WriteObject(pulsed_6.Get("monster_time"), "monster_time");
-	gDirectory->WriteObject(pulsed_6.Get("monster_spectrum"), "monster_spectrum");
-	gDirectory->cd("..");
-
 	gDirectory->cd("..");
 
 	f.Close();
@@ -169,6 +162,5 @@ void create_output_file(){
 	pulsed_3.Close();
 	pulsed_4.Close();
 	pulsed_5.Close();
-	pulsed_6.Close();
 	cout << "Archivo output.root creado" << endl;
 }
