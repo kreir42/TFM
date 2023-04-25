@@ -3,12 +3,15 @@ void pulsed_per_file(char filepath[500]){
 	RDataFrame d("Data", filepath);
 
 	auto monster = d.Filter("Channel==4");
-	Double_t min_tof = monster.Min("tof").GetValue();
-	Double_t max_tof = monster.Max("tof").GetValue();
+	Double_t min_tof = 250;
+	Double_t max_tof = 650;
 	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
 	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, min_tof, max_tof, 100, 0, 1}, "tof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
+
+	auto monster_neutrons = monster.Filter("psd>0.3");
+	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
 
 	TCanvas* myCanvas = new TCanvas("");
 
@@ -18,6 +21,8 @@ void pulsed_per_file(char filepath[500]){
 	myCanvas->Write("tof_id_plot", TObject::kOverwrite);
 	energy_id_plot->Draw("COLZ");
 	myCanvas->Write("energy_id_plot", TObject::kOverwrite);
+
+	neutron_tof_plot->Write("", TObject::kOverwrite);
 
 	myCanvas->Close();
 	DisableImplicitMT();
