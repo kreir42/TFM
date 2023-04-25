@@ -3,10 +3,11 @@ void pulsed_per_file(char filepath[500]){
 	RDataFrame d("Data", filepath);
 
 	auto monster = d.Filter("Channel==4");
+	Double_t min_tof = monster.Min("tof").GetValue();
 	Double_t max_tof = monster.Max("tof").GetValue();
-	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 1000, 0, max_tof}, "tof");
+	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
-	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, 0, max_tof, 100, 0, 1}, "tof", "psd");
+	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, min_tof, max_tof, 100, 0, 1}, "tof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
 
 	TCanvas* myCanvas = new TCanvas("");
