@@ -1,4 +1,38 @@
-void pulsed_per_file(char filepath[500]){
+#define GAMMA_FLASH_BINS_N 400
+#define NEUTRON_RESPONSE_BINS_N 400
+#define PULSE_FIT_PARAMS_N 50
+
+class pulse_fit_functor{
+	private:
+		TH1F* gamma_histo;
+		Double_t gamma_stepsize;
+		TH1F* neutron_histo;
+		Double_t neutron_stepsize;
+		Double_t param_width;
+	public:
+		Double_t gamma_min;
+		Double_t gamma_max;
+		Double_t neutron_min;
+		Double_t neutron_max;
+		pulse_fit_functor(TH1F* gamma_histo, TH1F* neutron_histo):gamma_histo(gamma_histo),neutron_histo(neutron_histo){
+			gamma_stepsize = gamma_histo->GetBinWidth(1);
+			neutron_stepsize = neutron_histo->GetBinWidth(1);
+			param_width = (neutron_max-neutron_min)/PULSE_FIT_PARAMS_N;
+		}
+		Double_t operator()(Double_t* x, Double_t* p){
+			Double_t sum = 0;
+			Short_t param_index = 0;
+			for(Short_t i=0; i<GAMMA_FLASH_BINS_N; i++){
+				param_index = 1 + (x[0] - gamma_stepsize*i - neutron_min)/param_width;
+				if(param_index>0 && param_index<PULSE_FIT_PARAMS_N){
+					sum += gamma_histo->GetBinContent(i) * p[param_index];
+				}
+			}
+			return p[0] + sum;
+		}
+};
+
+void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param){
 	EnableImplicitMT();
 	RDataFrame d("Data", filepath);
 
@@ -10,8 +44,13 @@ void pulsed_per_file(char filepath[500]){
 	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, min_tof, max_tof, 100, 0, 1}, "tof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
 
+	auto monster_gammas = monster.Filter("psd<0.3");
+	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
 	auto monster_neutrons = monster.Filter("psd>0.3");
 	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
+
+	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, gammaflash_min, gammaflash_max}, "tof");
+	auto neutron_response = monster_neutrons.Histo1D({"neutron_response", ";ToF;Counts", NEUTRON_RESPONSE_BINS_N, neutronresponse_min, neutronresponse_max}, "tof");
 
 	TCanvas* myCanvas = new TCanvas("");
 
@@ -22,7 +61,27 @@ void pulsed_per_file(char filepath[500]){
 	energy_id_plot->Draw("COLZ");
 	myCanvas->Write("energy_id_plot", TObject::kOverwrite);
 
+	gamma_tof_plot->Write("", TObject::kOverwrite);
 	neutron_tof_plot->Write("", TObject::kOverwrite);
+
+	gamma_flash->Write("", TObject::kOverwrite);
+	neutron_response->Write("", TObject::kOverwrite);
+
+	//fit
+	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"), (TH1F*)gDirectory->Get("neutron_response"));
+	pulse_fit_obj.gamma_min = gammaflash_min;
+	pulse_fit_obj.gamma_max = gammaflash_max;
+	pulse_fit_obj.neutron_min = neutronresponse_min;
+	pulse_fit_obj.neutron_max = neutronresponse_max;
+	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+1);
+	pulse_fit->SetNpx(200);
+	pulse_fit->SetNumberFitPoints(200);
+	pulse_fit->SetParLimits(0, 0, 10);
+	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
+		pulse_fit->SetParLimits(i, 0, max_param);
+	}
+	TFitResultPtr fitresult = neutron_response->Fit("pulse_fit", "SLE");
+	myCanvas->Write("pulse_fit_plot", TObject::kOverwrite);
 
 	myCanvas->Close();
 	DisableImplicitMT();
@@ -39,23 +98,23 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1);
+	pulsed_per_file(pulsed_1, 482, 505, 530, 590, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_per_file(pulsed_2);
+	pulsed_per_file(pulsed_2, 479, 500, 527, 580, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3);
+	pulsed_per_file(pulsed_3, 365, 390, 403, 470, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_per_file(pulsed_4);
+	pulsed_per_file(pulsed_4, 288, 310, 322, 380, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5);
+	pulsed_per_file(pulsed_5, 290, 310, 350, 500, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
