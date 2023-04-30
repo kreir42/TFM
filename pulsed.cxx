@@ -76,12 +76,26 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+1);
 	pulse_fit->SetNpx(200);
 	pulse_fit->SetNumberFitPoints(200);
-	pulse_fit->SetParLimits(0, 0, 10);
+	pulse_fit->SetParLimits(0, 0, 100);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
 	}
 	TFitResultPtr fitresult = neutron_response->Fit("pulse_fit", "SLE");
 	myCanvas->Write("pulse_fit_plot", TObject::kOverwrite);
+
+	Float_t x[PULSE_FIT_PARAMS_N];
+	Float_t y[PULSE_FIT_PARAMS_N];
+	Float_t y_err[PULSE_FIT_PARAMS_N];
+	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
+		x[i] = i;	//TBD
+		y[i] = fitresult->Parameter(i+1);
+		y_err[i] = fitresult->ParError(i+1);
+	}
+	TGraph* cross_section_result = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
+	cross_section_result->SetTitle("Fit results;arbitrary;arbitrary");
+	cross_section_result->SetMarkerStyle(21);
+	cross_section_result->Draw("alp");
+	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
 
 	myCanvas->Close();
 	DisableImplicitMT();
@@ -98,7 +112,7 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, 482, 505, 530, 590, 1E-3);
+	pulsed_per_file(pulsed_1, 482, 505, 530, 590, 1E-4);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
@@ -114,7 +128,7 @@ void pulsed(){
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, 290, 310, 350, 500, 1E-3);
+	pulsed_per_file(pulsed_5, 290, 310, 350, 500, 1E-2);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
