@@ -1,5 +1,7 @@
-#define GAMMA_FLASH_BINS_N 400
-#define NEUTRON_RESPONSE_BINS_N 400
+#define MIN_TOF 250
+#define MAX_TOF 650
+#define GAMMA_FLASH_BINS_N 500
+#define NEUTRON_RESPONSE_BINS_N 500
 #define PULSE_FIT_PARAMS_N 50
 
 class pulse_fit_functor{
@@ -37,17 +39,15 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	RDataFrame d("Data", filepath);
 
 	auto monster = d.Filter("Channel==4");
-	Double_t min_tof = 250;
-	Double_t max_tof = 650;
-	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
+	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
-	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, min_tof, max_tof, 100, 0, 1}, "tof", "psd");
+	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, MIN_TOF, MAX_TOF, 100, 0, 1}, "tof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
 
 	auto monster_gammas = monster.Filter("psd<0.3");
-	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
+	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 	auto monster_neutrons = monster.Filter("psd>0.3");
-	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, min_tof, max_tof}, "tof");
+	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 
 	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, gammaflash_min, gammaflash_max}, "tof");
 	auto neutron_response = monster_neutrons.Histo1D({"neutron_response", ";ToF;Counts", NEUTRON_RESPONSE_BINS_N, neutronresponse_min, neutronresponse_max}, "tof");
@@ -76,7 +76,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+1);
 	pulse_fit->SetNpx(200);
 	pulse_fit->SetNumberFitPoints(200);
-	pulse_fit->SetParLimits(0, 0, 100);
+	pulse_fit->SetParLimits(0, 0, 50);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
 	}
@@ -92,7 +92,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		y_err[i] = fitresult->ParError(i+1);
 	}
 	TGraph* cross_section_result = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	cross_section_result->SetTitle("Fit results;arbitrary;arbitrary");
+	cross_section_result->SetTitle("Fit results;ToF (arbitrary);Cross section (arbitrary)");
 	cross_section_result->SetMarkerStyle(21);
 	cross_section_result->Draw("alp");
 	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
