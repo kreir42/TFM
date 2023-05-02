@@ -235,12 +235,18 @@ void activation(){
 		gDirectory->cd("..");
 	}
 
+	activation_window_low=1200;
+	activation_window_high=1800;
+
 	if(activation_flag_7){
 		gDirectory->cd("activation_7");
 		cout << "activation_7" << endl;
 		per_file(filepath_7, results[6]);
 		gDirectory->cd("..");
 	}
+
+	activation_window_low=1200;
+	activation_window_high=1700;
 
 	if(activation_flag_8){
 		gDirectory->cd("activation_8");
@@ -249,12 +255,18 @@ void activation(){
 		gDirectory->cd("..");
 	}
 
+	activation_window_low=1150;
+	activation_window_high=1400;
+
 	if(activation_flag_9){
 		gDirectory->cd("activation_9");
 		cout << "activation_9" << endl;
 		per_file(filepath_9, results[8]);
 		gDirectory->cd("..");
 	}
+
+	activation_window_low=1200;
+	activation_window_high=1700;
 
 	if(activation_flag_10){
 		gDirectory->cd("activation_10");
@@ -295,11 +307,26 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
+	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
 	auto integrator_signals = d.Filter("Channel==1");
+	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
-	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
 	Double_t current2alpha = 1/(2*1.60217646E-9);
+	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){
+		number_of_alphas = current2alpha * 101.1E4;
+		activation_start= 364E12;
+		activation_end= 830E12;
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){
+		number_of_alphas = current2alpha * 67.96E4;
+		activation_start= 302E12;
+		activation_end= 753E12;
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){
+		number_of_alphas = current2alpha * 81.82E4;
+		activation_start= 304E12;
+		activation_end= 752E12;
+	}
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
@@ -308,20 +335,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto labr_1_filter = energy_window.Filter("Channel==6").Define("t", "Timestamp/1E12");
 	auto labr_2_filter = energy_window.Filter("Channel==7").Define("t", "Timestamp/1E12");
 
-	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
-
-	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
-	if(number_of_alphas<1E3){	//no hay información de corriente
-		if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")!=0){
-			number_of_alphas = current2alpha * 101.1E4;
-		}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")!=0){	//activation 7
-			number_of_alphas = current2alpha * 67.96E4;
-		}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")!=0){	//activation 9
-			number_of_alphas = current2alpha * 81.82E4;
-		}
-	}
 
 	int rise_nbins = (activation_end-activation_start)/(labr_1->GetBinWidth(1)*1E12);
 	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);
