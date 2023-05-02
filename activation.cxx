@@ -74,7 +74,7 @@ void activation_results(){
 	}
 
 	//graficas
-	Double_t activation_energies[] = {5500, 7000, 8500, 8500, 5500, 5500, 5500, 7000, 8500, 7050};	//keV
+	Double_t activation_energies[] = {5500, 7000, 8500, 8500, 5500, 5500, 8250, 7000, 5500, 7050};	//keV
 	Double_t x[2*ACTIVATION_N];
 	Double_t y[2*ACTIVATION_N];
 	Double_t yerr[2*ACTIVATION_N];
@@ -172,10 +172,11 @@ void activation(){
 
 	Char_t filepath_5[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
 	Char_t filepath_6[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root";
-	Char_t filepath_7[100] =  "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
-	Char_t filepath_8[100] =  "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
-	Char_t filepath_9[100] =  "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
-	Char_t filepath_10[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
+
+	Char_t filepath_7[100] =  "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
+	Char_t filepath_8[100] =  "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
+	Char_t filepath_9[100] =  "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
+	Char_t filepath_10[100] = "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root";
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
@@ -312,6 +313,15 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
+	if(number_of_alphas<1E3){	//no hay información de corriente
+		if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")!=0){
+			number_of_alphas = current2alpha * 101.1E4;
+		}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")!=0){	//activation 7
+			number_of_alphas = current2alpha * 67.96E4;
+		}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")!=0){	//activation 9
+			number_of_alphas = current2alpha * 81.82E4;
+		}
+	}
 
 	int rise_nbins = (activation_end-activation_start)/(labr_1->GetBinWidth(1)*1E12);
 	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);

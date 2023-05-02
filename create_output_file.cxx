@@ -6,10 +6,11 @@ void create_output_file(){
 
 	TFile activation_5("output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root", "READ");
 	TFile activation_6("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
-	TFile activation_7("output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
-	TFile activation_8("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
-	TFile activation_9("output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
-	TFile activation_10("output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root", "READ");
+
+	TFile activation_7("output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
+	TFile activation_8("output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
+	TFile activation_9("output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
+	TFile activation_10("output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root", "READ");
 
 	TFile pulsed_1(PULSED_1_PATH, "READ");
 	TFile pulsed_2(PULSED_2_PATH, "READ");
