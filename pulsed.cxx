@@ -112,23 +112,23 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, 482, 505, 530, 590, 1E-4);
+	pulsed_per_file(pulsed_1, 482, 505, 530, 600, 1E-4);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_per_file(pulsed_2, 479, 500, 527, 580, 1E-3);
+	pulsed_per_file(pulsed_2, 479, 500, 527, 600, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3, 365, 390, 403, 470, 1E-3);
+	pulsed_per_file(pulsed_3, 365, 390, 403, 500, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_per_file(pulsed_4, 288, 310, 322, 380, 1E-3);
+	pulsed_per_file(pulsed_4, 288, 310, 322, 400, 1E-3);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, 290, 310, 350, 500, 1E-2);
+	pulsed_per_file(pulsed_5, 292, 310, 350, 500, 1E-1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
