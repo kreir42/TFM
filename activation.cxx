@@ -33,18 +33,18 @@ void activation_results(){
 		results[3][0][j]*=172/239.1;
 
 		//escalado na22
-		results[4][0][j]*=sodio_1_1/sodio_1_2;
-		results[4][1][j]*=sodio_2_1/sodio_2_2;
-      		results[5][0][j]*=sodio_1_1/sodio_1_3;
-      		results[5][1][j]*=sodio_2_1/sodio_2_3;
-		results[6][0][j]*=sodio_1_1/sodio_1_3;
-		results[6][1][j]*=sodio_2_1/sodio_2_3;
-		results[7][0][j]*=sodio_1_1/sodio_1_3;
-		results[7][1][j]*=sodio_2_1/sodio_2_3;
-		results[8][0][j]*=sodio_1_1/sodio_1_3;
-		results[8][1][j]*=sodio_2_1/sodio_2_3;
-		results[9][0][j]*=sodio_1_1/sodio_1_3;
-		results[9][1][j]*=sodio_2_1/sodio_2_3;
+		results[4][0][j]*=sodio_1_1/sodio_1_3;
+		results[4][1][j]*=sodio_2_1/sodio_2_3;
+		results[5][0][j]*=sodio_1_1/sodio_1_3;
+		results[5][1][j]*=sodio_2_1/sodio_2_3;
+		results[6][0][j]*=sodio_1_1/sodio_1_2;
+		results[6][1][j]*=sodio_2_1/sodio_2_2;
+		results[7][0][j]*=sodio_1_1/sodio_1_2;
+		results[7][1][j]*=sodio_2_1/sodio_2_2;
+		results[8][0][j]*=sodio_1_1/sodio_1_2;
+		results[8][1][j]*=sodio_2_1/sodio_2_2;
+		results[9][0][j]*=sodio_1_1/sodio_1_2;
+		results[9][1][j]*=sodio_2_1/sodio_2_2;
 
 		//comentar para mostrar
 //		results[0][0][j]=0;
@@ -124,9 +124,6 @@ void activation_results(){
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][4];
 		y[2*i+1] = results[i][1][4];
-		cout<<(y[2*i])<<endl;
-		cout<<(y[2*i+1])<<endl;
-		cout<<("--------------")<<endl;
 		yerr[2*i] = results[i][0][5];
 		yerr[2*i+1] = results[i][1][5];
 	}
@@ -171,6 +168,7 @@ void activation(){
 	Char_t filepath_1[100] = "output/SData_aAl_J78kV_GVM1808kV_positions2_activacion.root";
 	Char_t filepath_2[100] = "output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root";
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
+
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
 	Char_t filepath_5[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
@@ -420,20 +418,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLE");
-	cout<<"----------"<<endl;
-	cout<<"----------"<<endl;
 	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
-	cout<<results[0][4]<<endl;
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_decay->Fit("decay", "SLE");
 	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
-	cout<<results[1][4]<<endl;
-	cout<<"----------"<<endl;
-	cout<<"----------"<<endl;
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
