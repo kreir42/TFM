@@ -26,7 +26,7 @@ void create_output_file(){
 
 	Double_t results[ACTIVATION_N][2][6];
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
-	tree->Branch("results", results, "results[8][2][6]/D");
+	tree->Branch("results", results, "results[10][2][6]/D");
 	tree->Write();
 
 	gDirectory->mkdir("activation_1");

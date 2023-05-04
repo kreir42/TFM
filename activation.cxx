@@ -124,6 +124,9 @@ void activation_results(){
 		x[2*i+1] = activation_energies[i];
 		y[2*i] = results[i][0][4];
 		y[2*i+1] = results[i][1][4];
+		cout<<(y[2*i])<<endl;
+		cout<<(y[2*i+1])<<endl;
+		cout<<("--------------")<<endl;
 		yerr[2*i] = results[i][0][5];
 		yerr[2*i+1] = results[i][1][5];
 	}
@@ -417,14 +420,20 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLE");
+	cout<<"----------"<<endl;
+	cout<<"----------"<<endl;
 	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
+	cout<<results[0][4]<<endl;
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_decay->Fit("decay", "SLE");
 	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
+	cout<<results[1][4]<<endl;
+	cout<<"----------"<<endl;
+	cout<<"----------"<<endl;
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
