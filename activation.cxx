@@ -69,7 +69,7 @@ void activation_results(){
 	}
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
-		exfor_data[i]*=9.249260268E-4;
+		exfor_data[i]*=9.249260268E-4;	//eficiencia
 	}
 
 	//graficas
