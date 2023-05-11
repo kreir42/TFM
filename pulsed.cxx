@@ -2,7 +2,7 @@
 #define MAX_TOF 650
 #define GAMMA_FLASH_BINS_N 500
 #define NEUTRON_RESPONSE_BINS_N 500
-#define PULSE_FIT_PARAMS_N 50
+#define PULSE_FIT_PARAMS_N 15
 
 class pulse_fit_functor{
 	private:
@@ -83,19 +83,16 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	TFitResultPtr fitresult = neutron_response->Fit("pulse_fit", "SLE");
 	myCanvas->Write("pulse_fit_plot", TObject::kOverwrite);
 
-	Float_t x[PULSE_FIT_PARAMS_N];
-	Float_t y[PULSE_FIT_PARAMS_N];
-	Float_t y_err[PULSE_FIT_PARAMS_N];
+	//guardar resultados en tree
+	Double_t results[PULSE_FIT_PARAMS_N][2];
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = i;	//TBD
-		y[i] = fitresult->Parameter(i+1);
-		y_err[i] = fitresult->ParError(i+1);
+		results[i][0] = fitresult->Parameter(i+1);
+		results[i][1] = fitresult->ParError(i+1);
 	}
-	TGraph* cross_section_result = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	cross_section_result->SetTitle("Fit results;ToF (arbitrary);Cross section (arbitrary)");
-	cross_section_result->SetMarkerStyle(21);
-	cross_section_result->Draw("alp");
-	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
+	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
+	results_tree->Branch("results", results, "results[15]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Fill();
+	results_tree->Write("", TObject::kOverwrite);
 
 	myCanvas->Close();
 	DisableImplicitMT();
@@ -135,5 +132,56 @@ void pulsed(){
 	f.Close();
 }
 
+void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max){
+	Float_t results[PULSE_FIT_PARAMS_N][2];
+	TTree* tree = (TTree*)gDirectory->Get("results_tree");
+	tree->SetBranchAddress("results", results);
+	tree->GetEntry(0);
+
+	Float_t x[PULSE_FIT_PARAMS_N];
+	Float_t y[PULSE_FIT_PARAMS_N];
+	Float_t y_err[PULSE_FIT_PARAMS_N];
+	Float_t base = n_min-g_min;
+	Float_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
+	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
+		x[i] = base + paramwidth*i;
+		y[i] = results[i][0];
+		y_err[i] = results[i][1];
+	}
+
+	TCanvas* myCanvas = new TCanvas("");
+	TGraph* cross_section_result = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
+	cross_section_result->SetTitle("Fit results;ToF (arbitrary);Cross section (arbitrary)");
+	cross_section_result->SetMarkerStyle(21);
+	cross_section_result->Draw("alp");
+	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
+	myCanvas->Close();
+}
+
 void pulsed_results(){
+	TFile f("output.root", "UPDATE");
+	gDirectory->cd("Pulsed");
+
+	gDirectory->cd("pulsed_1");
+	pulsed_results_per_file(482, 505, 510, 600);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_2");
+	pulsed_results_per_file(479, 500, 510, 600);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_3");
+	pulsed_results_per_file(365, 390, 390, 500);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_4");
+	pulsed_results_per_file(288, 310, 310, 400);
+	gDirectory->cd("..");
+
+	gDirectory->cd("pulsed_5");
+	pulsed_results_per_file(292, 310, 330, 500);
+	gDirectory->cd("..");
+
+	gDirectory->cd("..");
+	f.Close();
 }

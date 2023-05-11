@@ -24,10 +24,10 @@ void create_output_file(){
 	f.mkdir("Activation");
 	gDirectory->cd("Activation");
 
-	Double_t results[ACTIVATION_N][2][6];
-	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
-	tree->Branch("results", results, "results[10][2][6]/D");
-	tree->Write();
+	Double_t activation_results[ACTIVATION_N][2][6];
+	TTree* activation_tree = new TTree("activation_results_tree", "Tree with activation results");
+	activation_tree->Branch("results", activation_results, "results[10][2][6]/D");
+	activation_tree->Write();
 
 	gDirectory->mkdir("activation_1");
 	gDirectory->cd("activation_1");
