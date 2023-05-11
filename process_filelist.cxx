@@ -155,6 +155,9 @@ void process_filelist(){
 	if(yesorno("Pulsed?")){
 		pulsed();
 	}
+	if(yesorno("Pulsed results?")){
+		pulsed_results();
+	}
 
 	cout << "That's all folks!" <<endl;
 	return;

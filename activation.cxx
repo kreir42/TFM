@@ -32,10 +32,10 @@ void activation_results(){
 		results[3][0][j]*=172/239.1;
 
 		//escalado na22
-		results[4][0][j]*=sodio_1_1/sodio_1_3;
-		results[4][1][j]*=sodio_2_1/sodio_2_3;
-		results[5][0][j]*=sodio_1_1/sodio_1_3;
-		results[5][1][j]*=sodio_2_1/sodio_2_3;
+		results[4][0][j]*=sodio_1_1/sodio_1_2;
+		results[4][1][j]*=sodio_2_1/sodio_2_2;
+		results[5][0][j]*=sodio_1_1/sodio_1_2;
+		results[5][1][j]*=sodio_2_1/sodio_2_2;
 		results[6][0][j]*=sodio_1_1/sodio_1_2;
 		results[6][1][j]*=sodio_2_1/sodio_2_2;
 		results[7][0][j]*=sodio_1_1/sodio_1_2;
