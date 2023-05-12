@@ -2,7 +2,7 @@
 #define MAX_TOF 650
 #define GAMMA_FLASH_BINS_N 500
 #define NEUTRON_RESPONSE_BINS_N 500
-#define PULSE_FIT_PARAMS_N 15
+#define PULSE_FIT_PARAMS_N 50
 
 class pulse_fit_functor{
 	private:
@@ -90,7 +90,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		results[i][1] = fitresult->ParError(i+1);
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
-	results_tree->Branch("results", results, "results[15]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Branch("results", results, "results[50][2]/D");	//PULSE_FIT_PARAMS_N
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);
 
