@@ -91,6 +91,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
 	results_tree->Branch("results", results, "results[50][2]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->SetBranchAddress("results", results);
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);
 
@@ -133,7 +134,7 @@ void pulsed(){
 }
 
 void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max){
-	Float_t results[PULSE_FIT_PARAMS_N][2];
+	Double_t results[PULSE_FIT_PARAMS_N][2];
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
