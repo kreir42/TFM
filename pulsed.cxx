@@ -139,11 +139,11 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
 
-	Float_t x[PULSE_FIT_PARAMS_N];
-	Float_t y[PULSE_FIT_PARAMS_N];
-	Float_t y_err[PULSE_FIT_PARAMS_N];
-	Float_t base = n_min-g_min;
-	Float_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
+	Double_t x[PULSE_FIT_PARAMS_N];
+	Double_t y[PULSE_FIT_PARAMS_N];
+	Double_t y_err[PULSE_FIT_PARAMS_N];
+	Double_t base = n_min-g_min;
+	Double_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = base + paramwidth*i;
 		y[i] = results[i][0];
@@ -156,6 +156,21 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	cross_section_result->SetMarkerStyle(21);
 	cross_section_result->Draw("alp");
 	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
+
+	TH1D* gamma_flash = (TH1D*)gDirectory->Get("gamma_flash");
+	Double_t gammas_n = gamma_flash->Integral(0, gamma_flash->GetNbinsX());
+	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
+		x[i] += g_min;
+		y[i] *= gammas_n;
+		y_err[i] *= gammas_n;
+	}
+	TGraph* cross_section_result_delta = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
+	cross_section_result_delta->SetTitle("delta;ToF;Counts");
+	cross_section_result_delta->SetMarkerStyle(21);
+	cross_section_result_delta->Draw("alp");
+	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
+	myCanvas->Write("neutron_response+delta", TObject::kOverwrite);
+
 	myCanvas->Close();
 }
 
