@@ -157,7 +157,7 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 
 	TCanvas* myCanvas = new TCanvas("");
 	TGraph* cross_section_result = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	cross_section_result->SetTitle("Fit results;ToF (s);Cross section (arbitrary)");
+	cross_section_result->SetTitle("Fit results;ToF (s);Counts");
 	cross_section_result->SetMarkerStyle(21);
 	cross_section_result->Draw("alp");
 	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
@@ -185,7 +185,7 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 		y_err[i] = results[i][1];
 	}
 	TGraph* energy_result= new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	energy_result->SetTitle("Energy result;Energy (eV);Cross section (arbitrary)");
+	energy_result->SetTitle("Energy result;Energy (eV);Counts");
 	energy_result->SetMarkerStyle(21);
 	energy_result->Draw("alp");
 	myCanvas->Write("energy_result", TObject::kOverwrite);
