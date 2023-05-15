@@ -415,6 +415,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
 	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", ";Time (s);Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
 
+	auto labr1_E_t_plot = d.Filter("Channel==6").Define("t", "Timestamp/1E12").Histo2D({"labr1_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
+	auto labr2_E_t_plot = d.Filter("Channel==7").Define("t", "Timestamp/1E12").Histo2D({"labr2_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
+
 	cout << "Rise/decay histograms" << endl;
 	current_integrator->Write("", TObject::kOverwrite);
 	labr_1->Write("", TObject::kOverwrite);
@@ -423,6 +426,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	labr_1_decay->Write("", TObject::kOverwrite);
 	labr_2_rise->Write("", TObject::kOverwrite);
 	labr_2_decay->Write("", TObject::kOverwrite);
+	labr1_E_t_plot->Write("", TObject::kOverwrite);
+	labr2_E_t_plot->Write("", TObject::kOverwrite);
 
 	activation_start/=1E12;
 	activation_end/=1E12;
