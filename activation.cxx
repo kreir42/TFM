@@ -426,15 +426,18 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	labr_1_decay->Write("", TObject::kOverwrite);
 	labr_2_rise->Write("", TObject::kOverwrite);
 	labr_2_decay->Write("", TObject::kOverwrite);
-	labr1_E_t_plot->Write("", TObject::kOverwrite);
-	labr2_E_t_plot->Write("", TObject::kOverwrite);
+	TCanvas* myCanvas = new TCanvas("myCanvas");
+	labr1_E_t_plot->Draw("COLZ");
+	myCanvas->Write("labr1_E_t_plot", TObject::kOverwrite);
+	labr2_E_t_plot->Draw("COLZ");
+	myCanvas->Write("labr2_E_t_plot", TObject::kOverwrite);
+	labr2_E_t_plot->Draw("COLZ");
 
 	activation_start/=1E12;
 	activation_end/=1E12;
 	measurement_end/=1E12;
 
 	//fittings
-	TCanvas* myCanvas = new TCanvas("myCanvas");
 	TFitResultPtr fitresult;
 
 	//unified
