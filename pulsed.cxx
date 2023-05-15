@@ -142,7 +142,7 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
 	Double_t y_err[PULSE_FIT_PARAMS_N];
-	Double_t base = n_min-g_min;
+	Double_t base = n_min-g_min;	//TBD:plus value of g_flash tof
 	Double_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = base + paramwidth*i;
@@ -171,6 +171,22 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("neutron_response+delta", TObject::kOverwrite);
 
+	Double_t c = 299792458;	//speed of light
+	Double_t neutron_mass = 1.67492749804E-27;
+	Double_t distance = 1.0;
+	Double_t v;
+	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
+		x[i] = base + paramwidth*i;
+		v = distance/((base + paramwidth*i)*1E-6);
+		x[i] = neutron_mass/2*v*v;
+		y[i] = results[i][0];
+		y_err[i] = results[i][1];
+	}
+	TGraph* energy_result= new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
+	energy_result->SetTitle("Energy result;Energy (arbitrary);Cross section (arbitrary)");
+	energy_result->SetMarkerStyle(21);
+	energy_result->Draw("alp");
+	myCanvas->Write("energy_result", TObject::kOverwrite);
 	myCanvas->Close();
 }
 
