@@ -142,7 +142,7 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	Double_t tof_to_seconds = 1E-9;
 	Double_t c = 299792458;	//speed of light
 	Double_t neutron_mass = 1.67492749804E-27;
-	Double_t J_to_eV = 1/1.602177E-19;
+	Double_t J_to_keV = 1/1.602177E-16;
 
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
@@ -180,12 +180,12 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = base + paramwidth*i;
 		v = distance/((base + paramwidth*i)*tof_to_seconds);
-		x[i] = (neutron_mass/2*v*v)*J_to_eV;
+		x[i] = (neutron_mass/2*v*v)*J_to_keV;
 		y[i] = results[i][0];
 		y_err[i] = results[i][1];
 	}
 	TGraph* energy_result= new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	energy_result->SetTitle("Energy result;Energy (eV);Counts");
+	energy_result->SetTitle("Energy result;Energy (keV);Counts");
 	energy_result->SetMarkerStyle(21);
 	energy_result->Draw("alp");
 	myCanvas->Write("energy_result", TObject::kOverwrite);
