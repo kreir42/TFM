@@ -133,26 +133,31 @@ void pulsed(){
 	f.Close();
 }
 
-void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max){
+void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance){
 	Double_t results[PULSE_FIT_PARAMS_N][2];
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
 
+	Double_t tof_to_seconds = 1E-9;
+	Double_t c = 299792458;	//speed of light
+	Double_t neutron_mass = 1.67492749804E-27;
+	Double_t J_to_eV = 1/1.602177E-19;
+
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
 	Double_t y_err[PULSE_FIT_PARAMS_N];
-	Double_t base = n_min-g_min;	//TBD:plus value of g_flash tof
+	Double_t base = n_min-g_min + distance/c;
 	Double_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = base + paramwidth*i;
+		x[i] = (base + paramwidth*i)*tof_to_seconds;
 		y[i] = results[i][0];
 		y_err[i] = results[i][1];
 	}
 
 	TCanvas* myCanvas = new TCanvas("");
 	TGraph* cross_section_result = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	cross_section_result->SetTitle("Fit results;ToF (arbitrary);Cross section (arbitrary)");
+	cross_section_result->SetTitle("Fit results;ToF (s);Cross section (arbitrary)");
 	cross_section_result->SetMarkerStyle(21);
 	cross_section_result->Draw("alp");
 	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
@@ -160,30 +165,27 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	TH1D* gamma_flash = (TH1D*)gDirectory->Get("gamma_flash");
 	Double_t gammas_n = gamma_flash->Integral(0, gamma_flash->GetNbinsX());
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] += g_min;
+		x[i] = (n_min + paramwidth*i);
 		y[i] *= gammas_n;
 		y_err[i] *= gammas_n;
 	}
 	TGraph* cross_section_result_delta = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	cross_section_result_delta->SetTitle("delta;ToF;Counts");
+	cross_section_result_delta->SetTitle("delta;ToF (ns);Counts");
 	cross_section_result_delta->SetMarkerStyle(21);
 	cross_section_result_delta->Draw("alp");
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("neutron_response+delta", TObject::kOverwrite);
 
-	Double_t c = 299792458;	//speed of light
-	Double_t neutron_mass = 1.67492749804E-27;
-	Double_t distance = 1.0;
 	Double_t v;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = base + paramwidth*i;
-		v = distance/((base + paramwidth*i)*1E-6);
-		x[i] = neutron_mass/2*v*v;
+		v = distance/((base + paramwidth*i)*tof_to_seconds);
+		x[i] = (neutron_mass/2*v*v)*J_to_eV;
 		y[i] = results[i][0];
 		y_err[i] = results[i][1];
 	}
 	TGraph* energy_result= new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	energy_result->SetTitle("Energy result;Energy (arbitrary);Cross section (arbitrary)");
+	energy_result->SetTitle("Energy result;Energy (eV);Cross section (arbitrary)");
 	energy_result->SetMarkerStyle(21);
 	energy_result->Draw("alp");
 	myCanvas->Write("energy_result", TObject::kOverwrite);
@@ -195,23 +197,23 @@ void pulsed_results(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_results_per_file(482, 505, 510, 600);
+	pulsed_results_per_file(482, 505, 510, 600, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_results_per_file(479, 500, 510, 600);
+	pulsed_results_per_file(479, 500, 510, 600, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_results_per_file(365, 390, 390, 500);
+	pulsed_results_per_file(365, 390, 390, 500, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_results_per_file(288, 310, 310, 400);
+	pulsed_results_per_file(288, 310, 310, 400, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_results_per_file(292, 310, 330, 500);
+	pulsed_results_per_file(292, 310, 330, 500, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
