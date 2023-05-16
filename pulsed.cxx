@@ -133,7 +133,7 @@ void pulsed(){
 	f.Close();
 }
 
-void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy){
+TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy){
 	Double_t results[PULSE_FIT_PARAMS_N][2];
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
@@ -194,6 +194,7 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	energy_line->Draw("same");
 	myCanvas->Write("energy_result", TObject::kOverwrite);
 	myCanvas->Close();
+	return energy_result;
 }
 
 void pulsed_results(){
@@ -201,24 +202,52 @@ void pulsed_results(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_results_per_file(482, 505, 510, 600, 1, 5500);
+	TGraph* energy_1 = pulsed_results_per_file(482, 505, 510, 600, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_results_per_file(479, 500, 510, 600, 1, 5500);
+	TGraph* energy_2 =pulsed_results_per_file(479, 500, 510, 600, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_results_per_file(365, 390, 390, 500, 1, 7000);
+	TGraph* energy_3 =pulsed_results_per_file(365, 390, 390, 500, 1, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_results_per_file(288, 310, 310, 400, 1, 8250);
+	TGraph* energy_4 =pulsed_results_per_file(288, 310, 310, 400, 1, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_results_per_file(292, 310, 330, 500, 2, 8250);
+	TGraph* energy_5 =pulsed_results_per_file(292, 310, 330, 500, 2, 8250);
 	gDirectory->cd("..");
+
+	TCanvas* myCanvas = new TCanvas("");
+	TMultiGraph* energy_results = new TMultiGraph();
+	energy_1->SetTitle("5500keV");
+	energy_1->SetMarkerColor(kRed);
+	energy_1->SetLineColor(kRed);
+	energy_results->Add(energy_1);
+	energy_2->SetTitle("5500keV");
+	energy_2->SetMarkerColor(kBlue);
+	energy_2->SetLineColor(kBlue);
+	energy_results->Add(energy_2);
+	energy_3->SetTitle("7000keV");
+	energy_3->SetMarkerColor(kViolet);
+	energy_3->SetLineColor(kViolet);
+	energy_results->Add(energy_3);
+	energy_4->SetTitle("8250keV");
+	energy_4->SetMarkerColor(kYellow);
+	energy_4->SetLineColor(kYellow);
+	energy_results->Add(energy_4);
+	energy_5->SetTitle("8250keV, 2m");
+	energy_5->SetMarkerColor(kBlack);
+	energy_5->SetLineColor(kBlack);
+	energy_results->Add(energy_5);
+
+	energy_results->Draw("ALP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("energy_results", TObject::kOverwrite);
+	myCanvas->Close();
 
 	gDirectory->cd("..");
 	f.Close();
