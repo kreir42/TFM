@@ -133,7 +133,7 @@ void pulsed(){
 	f.Close();
 }
 
-TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy){
+TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy){
 	Double_t results[PULSE_FIT_PARAMS_N][2];
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
@@ -165,7 +165,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, 
 	TH1D* gamma_flash = (TH1D*)gDirectory->Get("gamma_flash");
 	Double_t gammas_n = gamma_flash->Integral(0, gamma_flash->GetNbinsX());
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = (n_min + paramwidth*i);
+		x[i] = (n_min + g_center-g_min + paramwidth*i);
 		y[i] *= gammas_n;
 		y_err[i] *= gammas_n;
 	}
@@ -202,23 +202,23 @@ void pulsed_results(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	TGraph* energy_1 = pulsed_results_per_file(482, 505, 510, 600, 1, 5500);
+	TGraph* energy_1 = pulsed_results_per_file(482, 488.100, 505, 510, 600, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	TGraph* energy_2 =pulsed_results_per_file(479, 500, 510, 600, 1, 5500);
+	TGraph* energy_2 = pulsed_results_per_file(479, 485.950, 500, 510, 600, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	TGraph* energy_3 =pulsed_results_per_file(365, 390, 390, 500, 1, 7000);
+	TGraph* energy_3 = pulsed_results_per_file(365, 360.637, 390, 390, 500, 1, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	TGraph* energy_4 =pulsed_results_per_file(288, 310, 310, 400, 1, 8250);
+	TGraph* energy_4 = pulsed_results_per_file(288, 294.508, 310, 310, 400, 1, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	TGraph* energy_5 =pulsed_results_per_file(292, 310, 330, 500, 2, 8250);
+	TGraph* energy_5 = pulsed_results_per_file(292, 297.897, 310, 330, 500, 2, 8250);
 	gDirectory->cd("..");
 
 	TCanvas* myCanvas = new TCanvas("");
