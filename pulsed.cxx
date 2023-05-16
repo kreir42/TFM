@@ -133,7 +133,7 @@ void pulsed(){
 	f.Close();
 }
 
-void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance){
+void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy){
 	Double_t results[PULSE_FIT_PARAMS_N][2];
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
@@ -188,6 +188,10 @@ void pulsed_results_per_file(Double_t g_min, Double_t g_max, Double_t n_min, Dou
 	energy_result->SetTitle("Energy result;Energy (keV);Counts");
 	energy_result->SetMarkerStyle(21);
 	energy_result->Draw("alp");
+	Double_t max_y = *max_element(y,y+PULSE_FIT_PARAMS_N-1);
+	TLine* energy_line = new TLine(alpha_energy-2642.41, -0.1*max_y, alpha_energy-2642.41, 1.1*max_y);
+	energy_line->SetLineStyle(3);
+	energy_line->Draw("same");
 	myCanvas->Write("energy_result", TObject::kOverwrite);
 	myCanvas->Close();
 }
@@ -197,23 +201,23 @@ void pulsed_results(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_results_per_file(482, 505, 510, 600, 1);
+	pulsed_results_per_file(482, 505, 510, 600, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_results_per_file(479, 500, 510, 600, 1);
+	pulsed_results_per_file(479, 500, 510, 600, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_results_per_file(365, 390, 390, 500, 1);
+	pulsed_results_per_file(365, 390, 390, 500, 1, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_results_per_file(288, 310, 310, 400, 1);
+	pulsed_results_per_file(288, 310, 310, 400, 1, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_results_per_file(292, 310, 330, 500, 1);
+	pulsed_results_per_file(292, 310, 330, 500, 2, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
