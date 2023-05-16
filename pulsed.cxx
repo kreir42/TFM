@@ -27,7 +27,7 @@ class pulse_fit_functor{
 			for(Short_t i=0; i<GAMMA_FLASH_BINS_N; i++){
 				param_index = 1 + (x[0] - gamma_stepsize*i - neutron_min)/param_width;
 				if(param_index>0 && param_index<PULSE_FIT_PARAMS_N){
-					sum += gamma_histo->GetBinContent(i) * p[param_index];
+					sum += (gamma_histo->GetBinContent(i)-p[PULSE_FIT_PARAMS_N+1]) * p[param_index];
 				}
 			}
 			return p[0] + sum;
@@ -73,10 +73,11 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	pulse_fit_obj.gamma_max = gammaflash_max;
 	pulse_fit_obj.neutron_min = neutronresponse_min;
 	pulse_fit_obj.neutron_max = neutronresponse_max;
-	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+1);
+	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+2);
 	pulse_fit->SetNpx(200);
 	pulse_fit->SetNumberFitPoints(200);
 	pulse_fit->SetParLimits(0, 0, 50);
+	pulse_fit->SetParLimits(PULSE_FIT_PARAMS_N+1, 0, 500);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
 	}
