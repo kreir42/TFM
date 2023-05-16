@@ -93,6 +93,7 @@ void add_histograms(Char_t filepath[500]);
 
 //process all files inside "input" folder with relative filepaths in "filelist" file
 void process_filelist(){
+	gROOT->SetBatch(kTRUE);
 	Char_t filepath[500];
 	Char_t new_filepath[500];
 
@@ -160,6 +161,7 @@ void process_filelist(){
 	}
 
 	cout << "That's all folks!" <<endl;
+	gROOT->SetBatch(kFALSE);
 	return;
 }
 
