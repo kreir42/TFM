@@ -1,6 +1,6 @@
 #define MIN_TOF 250
 #define MAX_TOF 650
-#define GAMMA_FLASH_BINS_N 500
+#define GAMMA_FLASH_BINS_N 350
 #define NEUTRON_RESPONSE_BINS_N 500
 #define PULSE_FIT_PARAMS_N 50
 
@@ -74,8 +74,8 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	pulse_fit_obj.neutron_min = neutronresponse_min;
 	pulse_fit_obj.neutron_max = neutronresponse_max;
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+2);
-	pulse_fit->SetNpx(200);
-	pulse_fit->SetNumberFitPoints(200);
+	pulse_fit->SetNpx(NEUTRON_RESPONSE_BINS_N);
+	pulse_fit->SetNumberFitPoints(NEUTRON_RESPONSE_BINS_N);
 	pulse_fit->SetParLimits(0, 0, 50);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
@@ -113,23 +113,23 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, 482, 505, 510, 600, 1E-4, 10);
+	pulsed_per_file(pulsed_1, 482, 505, 510, 600, 1E-5, 20);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_per_file(pulsed_2, 479, 500, 510, 600, 1E-3, 10);
+	pulsed_per_file(pulsed_2, 479, 500, 510, 600, 1E-3, 20);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3, 365, 390, 390, 500, 1E-3, 20);
+	pulsed_per_file(pulsed_3, 365, 390, 390, 500, 1E-2, 40);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_per_file(pulsed_4, 288, 310, 310, 400, 1E-3, 5);
+	pulsed_per_file(pulsed_4, 288, 310, 310, 400, 1E-2, 10);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, 292, 310, 330, 500, 1E-1, 20);
+	pulsed_per_file(pulsed_5, 292, 310, 330, 500, 1E-1, 30);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
@@ -239,8 +239,8 @@ void pulsed_results(){
 	energy_3->SetLineColor(kViolet);
 	energy_results->Add(energy_3);
 	energy_4->SetTitle("8250keV");
-	energy_4->SetMarkerColor(kYellow);
-	energy_4->SetLineColor(kYellow);
+	energy_4->SetMarkerColor(kGreen);
+	energy_4->SetLineColor(kGreen);
 	energy_results->Add(energy_4);
 	energy_5->SetTitle("8250keV, 2m");
 	energy_5->SetMarkerColor(kBlack);
