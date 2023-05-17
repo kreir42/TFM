@@ -34,7 +34,7 @@ class pulse_fit_functor{
 		}
 };
 
-void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param){
+void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param, Double_t gamma_background){
 	EnableImplicitMT();
 	RDataFrame d("Data", filepath);
 
@@ -77,10 +77,12 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	pulse_fit->SetNpx(200);
 	pulse_fit->SetNumberFitPoints(200);
 	pulse_fit->SetParLimits(0, 0, 50);
-	pulse_fit->SetParLimits(PULSE_FIT_PARAMS_N+1, 0, 500);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
 	}
+	pulse_fit->SetParLimits(PULSE_FIT_PARAMS_N+1, 0, 500);
+	pulse_fit->SetParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
+	pulse_fit->FixParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
 	TFitResultPtr fitresult = neutron_response->Fit("pulse_fit", "SLE");
 	myCanvas->Write("pulse_fit_plot", TObject::kOverwrite);
 
@@ -111,23 +113,23 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, 482, 505, 510, 600, 1E-4);
+	pulsed_per_file(pulsed_1, 482, 505, 510, 600, 1E-4, 10);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_per_file(pulsed_2, 479, 500, 510, 600, 1E-3);
+	pulsed_per_file(pulsed_2, 479, 500, 510, 600, 1E-3, 10);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3, 365, 390, 390, 500, 1E-3);
+	pulsed_per_file(pulsed_3, 365, 390, 390, 500, 1E-3, 20);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_per_file(pulsed_4, 288, 310, 310, 400, 1E-3);
+	pulsed_per_file(pulsed_4, 288, 310, 310, 400, 1E-3, 5);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, 292, 310, 330, 500, 1E-1);
+	pulsed_per_file(pulsed_5, 292, 310, 330, 500, 1E-1, 20);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
