@@ -62,14 +62,14 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	tof_plot->Write("", TObject::kOverwrite);
 	psd_plot->Write("", TObject::kOverwrite);
 	tof_id_plot->Draw("COLZ");
+	myCanvas->Write("tof_id_plot", TObject::kOverwrite);
+	energy_id_plot->Draw("COLZ");
 	TLine* psd_line_1 = new TLine(0, y1, x1, y1);
 	TLine* psd_line_2 = new TLine(x1, y1, (1-n)/m, 1);
 	psd_line_1->SetLineStyle(3);
 	psd_line_2->SetLineStyle(3);
 	psd_line_1->Draw("same");
 	psd_line_2->Draw("same");
-	myCanvas->Write("tof_id_plot", TObject::kOverwrite);
-	energy_id_plot->Draw("COLZ");
 	myCanvas->Write("energy_id_plot", TObject::kOverwrite);
 
 	gamma_tof_plot->Write("", TObject::kOverwrite);
