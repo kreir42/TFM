@@ -43,10 +43,15 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
 	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, MIN_TOF, MAX_TOF, 100, 0, 1}, "tof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
-
-	auto monster_gammas = monster.Filter("psd<0.3");
+	Double_t y1 = 0.3;
+	Double_t y2 = 0.42;
+	Double_t x1 = 2100;
+	Double_t x2 = 2600;
+	Double_t m = (y2-y1)/(x2-x1);
+	Double_t n = y1-x1*m;
+	auto monster_gammas = monster.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd<y1 || psd<m*Energy+n;},{"psd", "Energy"});
 	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
-	auto monster_neutrons = monster.Filter("psd>0.3");
+	auto monster_neutrons = monster.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 || psd>=m*Energy+n;},{"psd", "Energy"});
 	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 
 	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, gammaflash_min, gammaflash_max}, "tof");
@@ -57,6 +62,12 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	tof_plot->Write("", TObject::kOverwrite);
 	psd_plot->Write("", TObject::kOverwrite);
 	tof_id_plot->Draw("COLZ");
+	TLine* psd_line_1 = new TLine(0, y1, x1, y1);
+	TLine* psd_line_2 = new TLine(x1, y1, (1-n)/m, 1);
+	psd_line_1->SetLineStyle(3);
+	psd_line_2->SetLineStyle(3);
+	psd_line_1->Draw("same");
+	psd_line_2->Draw("same");
 	myCanvas->Write("tof_id_plot", TObject::kOverwrite);
 	energy_id_plot->Draw("COLZ");
 	myCanvas->Write("energy_id_plot", TObject::kOverwrite);
