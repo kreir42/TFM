@@ -140,7 +140,7 @@ void pulsed(){
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, 292, 310, 330, 500, 1E-1, 30);
+	pulsed_per_file(pulsed_5, 270, 320, 352, 470, 1E-2, 30);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
