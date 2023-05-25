@@ -1,4 +1,14 @@
 #define ACTIVATION_NBINS 1000
+#define ACT1_AENERGY 5500
+#define ACT2_AENERGY 7000
+#define ACT3_AENERGY 8500
+#define ACT4_AENERGY 8500
+#define ACT5_AENERGY 5500
+#define ACT6_AENERGY 5500
+#define ACT7_AENERGY 8250
+#define ACT8_AENERGY 7000
+#define ACT9_AENERGY 5500
+#define ACT10_AENERGY 7050
 
 #include "peak_activity.cxx"
 
@@ -44,28 +54,6 @@ void activation_results(){
 		results[8][1][j]*=sodio_2_1/sodio_2_2;
 		results[9][0][j]*=sodio_1_1/sodio_1_2;
 		results[9][1][j]*=sodio_2_1/sodio_2_2;
-
-		//comentar para mostrar
-//		results[0][0][j]=0;
-//		results[0][1][j]=0;
-//		results[1][0][j]=0;
-//		results[1][1][j]=0;
-//		results[2][0][j]=0;
-//		results[2][1][j]=0;
-//		results[3][0][j]=0;
-//		results[3][1][j]=0;
-//		results[4][0][j]=0;
-//		results[4][1][j]=0;
-//		results[5][0][j]=0;
-//		results[5][1][j]=0;
-//		results[6][0][j]=0;
-//		results[6][1][j]=0;
-//		results[7][0][j]=0;
-//		results[7][1][j]=0;
-//		results[8][0][j]=0;
-//		results[8][1][j]=0;
-//		results[9][0][j]=0;
-//		results[9][1][j]=0;
 	}
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
@@ -73,7 +61,7 @@ void activation_results(){
 	}
 
 	//graficas
-	Double_t activation_energies[] = {5500, 7000, 8500, 8500, 5500, 5500, 8250, 7000, 5500, 7050};	//keV
+	Double_t activation_energies[] = {ACT1_AENERGY, ACT2_AENERGY, ACT3_AENERGY, ACT4_AENERGY, ACT5_AENERGY, ACT6_AENERGY, ACT7_AENERGY, ACT8_AENERGY, ACT9_AENERGY, ACT10_AENERGY};
 	Double_t x[2*ACTIVATION_N];
 	Double_t y[2*ACTIVATION_N];
 	Double_t yerr[2*ACTIVATION_N];
@@ -234,6 +222,7 @@ Double_t activation_window_high;
 
 void activation(){
 	cout << "Activation" << endl;
+	cout << endl;
 	Char_t filepath_1[100] = "output/SData_aAl_J78kV_GVM1808kV_positions2_activacion.root";
 	Char_t filepath_2[100] = "output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root";
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
@@ -254,8 +243,8 @@ void activation(){
 	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
 
-	activation_window_low=525;
-	activation_window_high=750;
+	activation_window_low=550;
+	activation_window_high=650;
 
 	if(activation_flag_1){
 		gDirectory->cd("activation_1");
@@ -271,12 +260,18 @@ void activation(){
 		gDirectory->cd("..");
 	}
 
+	activation_window_low=550;
+	activation_window_high=750;
+
 	if(activation_flag_3){
 		gDirectory->cd("activation_3");
 		cout << "activation_3" << endl;
 		per_file(filepath_3, results[2]);
 		gDirectory->cd("..");
 	}
+
+	activation_window_low=550;
+	activation_window_high=825;
 
 	if(activation_flag_4){
 		gDirectory->cd("activation_4");
@@ -374,6 +369,7 @@ class unified_fit{
 };
 
 static void per_file(Char_t filepath[500], Double_t results[2][6]){
+	cout << "***************" << endl;
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
@@ -384,19 +380,20 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t current2alpha = 1/(2*1.60217646E-9);
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
-	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
 		number_of_alphas = current2alpha * 101.1E4;
 		activation_start= 364E12;
 		activation_end= 830E12;
-	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//9
 		number_of_alphas = current2alpha * 67.96E4;
 		activation_start= 302E12;
 		activation_end= 753E12;
-	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//10
 		number_of_alphas = current2alpha * 81.82E4;
 		activation_start= 304E12;
 		activation_end= 752E12;
 	}
+	cout << "Number of alphas: " << number_of_alphas << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
@@ -418,7 +415,6 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto labr1_E_t_plot = d.Filter("Channel==6").Define("t", "Timestamp/1E12").Histo2D({"labr1_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
 	auto labr2_E_t_plot = d.Filter("Channel==7").Define("t", "Timestamp/1E12").Histo2D({"labr2_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
 
-	cout << "Rise/decay histograms" << endl;
 	current_integrator->Write("", TObject::kOverwrite);
 	labr_1->Write("", TObject::kOverwrite);
 	labr_2->Write("", TObject::kOverwrite);
@@ -441,7 +437,6 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	TFitResultPtr fitresult;
 
 	//unified
-	cout << "Unified rise/decay fittings" << endl;
 	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 5);
 	unified->SetNpx(ACTIVATION_NBINS);
 	unified->SetNumberFitPoints(ACTIVATION_NBINS);
@@ -454,36 +449,34 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->FixParameter(2, 4.62406E-3);
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg", "initial number of 30P");
 
-	fitresult = labr_1->Fit("unified_fit", "SLE");
+	fitresult = labr_1->Fit("unified_fit", "SLEQ");
 	results[0][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[0][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	fitresult = labr_2->Fit("unified_fit", "SLE");
+	fitresult = labr_2->Fit("unified_fit", "SLEQ");
 	results[1][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[1][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//rise
-	cout << "Rise fittings" << endl;
 	unified->SetNpx(rise_nbins);
 
-	fitresult = labr_1_rise->Fit("unified_fit", "SLE");
+	fitresult = labr_1_rise->Fit("unified_fit", "SLEQ");
 	results[0][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[0][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_1_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	fitresult = labr_2_rise->Fit("unified_fit", "SLE");
+	fitresult = labr_2_rise->Fit("unified_fit", "SLEQ");
 	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
 	results[1][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//decay
-	cout << "Decay fittings" << endl;
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
 	decay->SetNpx(decay_nbins);
 	decay->SetNumberFitPoints(ACTIVATION_NBINS);
@@ -494,13 +487,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->FixParameter(2, 4.62406E-3);
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
-	fitresult = labr_1_decay->Fit("decay", "SLE");
+	fitresult = labr_1_decay->Fit("decay", "SLEQ");
 	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	fitresult = labr_2_decay->Fit("decay", "SLE");
+	fitresult = labr_2_decay->Fit("decay", "SLEQ");
 	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	myCanvas->SetName("labr_2_decay_fit");
@@ -508,4 +501,5 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
+	cout << "---------------" << endl;
 }
