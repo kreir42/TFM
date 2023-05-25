@@ -394,6 +394,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 		activation_end= 752E12;
 	}
 	cout << "Number of alphas: " << number_of_alphas << endl;
+	cout << "Alphas per second: " << number_of_alphas/(activation_end-activation_start)*1E12 << endl;
+	cout << "Coulomb per nanosecond: " << number_of_alphas/(activation_end-activation_start)/current2alpha << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
@@ -461,6 +463,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
+	cout << "labr1 unified number of 30P: " << results[0][0]*number_of_alphas << endl;
+	cout << "labr2 unified number of 30P: " << results[1][0]*number_of_alphas << endl;
+
 	//rise
 	unified->SetNpx(rise_nbins);
 
@@ -475,6 +480,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[1][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
+
+	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
+	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
 
 	//decay
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
@@ -498,6 +506,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
+
+	cout << "labr1 decay number of 30P: " << results[0][4]*number_of_alphas << endl;
+	cout << "labr2 decay number of 30P: " << results[1][4]*number_of_alphas << endl;
 
 	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
