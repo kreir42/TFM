@@ -188,10 +188,10 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
 	Double_t y_err[PULSE_FIT_PARAMS_N];
-	Double_t base = n_min-g_min + distance/c;
+	Double_t base = n_min-g_min;
 	Double_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = (base + paramwidth*i)*tof_to_seconds;
+		x[i] = (base + paramwidth*i)*tof_to_seconds + distance/c;
 		y[i] = results[i+1][0];
 		y_err[i] = results[i+1][1];
 	}
@@ -203,28 +203,29 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	cross_section_result->Draw("alp");
 	myCanvas->Write("pulse_fit_results", TObject::kOverwrite);
 
+	TH1D* gamma_flash = (TH1D*)gDirectory->Get("gamma_flash");
+	Double_t gammas_n = gamma_flash->Integral(0, gamma_flash->GetNbinsX());
 	//histograma "delta de dirac" con una sola cuenta
-	TH1D* histogram = new TH1D("centered dirac delta", "Dirac delta;ToF;Counts", GAMMA_FLASH_BINS_N, g_min, g_max);
-	histogram->Fill(g_center, 1);
-	histogram->Write("dirac_delta", TObject::kOverwrite);
+	TH1D* delta_histogram = new TH1D("centered dirac delta", "Dirac delta;ToF;Counts", GAMMA_FLASH_BINS_N, g_min, g_max);
+	delta_histogram->Fill(g_center, gammas_n);
+	delta_histogram->Write("dirac_delta", TObject::kOverwrite);
 	//functor
 	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),n_min,n_max);
 	Double_t x2[200];
 	Double_t y2[200];
 	for(UShort_t i=0; i<200; i++){
-		x2[i] = g_center + n_min - g_min + (n_max-n_min)/200*(i+0.5);
+		x2[i] = n_min + (n_max-n_min)/200*(i+0.5);
 		y2[i] = pulse_functor(&x2[i], p);
 	}
 	TGraph* result_for_delta = new TGraphErrors(200, x2, y2, NULL, NULL);
 	result_for_delta->SetTitle("delta; ToF (ns);Counts per gamma");
 	result_for_delta->SetMarkerStyle(21);
 	result_for_delta->Draw("alp");
+	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("response_to_delta", TObject::kOverwrite);
 
-	TH1D* gamma_flash = (TH1D*)gDirectory->Get("gamma_flash");
-	Double_t gammas_n = gamma_flash->Integral(0, gamma_flash->GetNbinsX());
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = n_min + g_center - g_min + paramwidth*i + paramwidth/2;
+		x[i] = n_min + paramwidth*i + paramwidth/2;
 		y[i] = results[i+1][0] * gammas_n;
 		y_err[i] = results[i+1][1] * gammas_n;
 	}
@@ -237,8 +238,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 
 	Double_t v;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = base + paramwidth*i;
-		v = distance/((base + paramwidth*i)*tof_to_seconds);
+		v = distance/((base + paramwidth*i)*tof_to_seconds + distance/c);
 		x[i] = (neutron_mass/2*v*v)*J_to_keV;
 		y[i] = results[i+1][0];
 		y_err[i] = results[i+1][1];
