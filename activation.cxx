@@ -30,11 +30,88 @@ void activation_results(){
 	Double_t exfor_energies[] = {3700, 3800, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900};	//TBD:hardcoded, read .txt
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
 
+	//EXFOR data
+	TGraph* rectionsvenergy_exfor = new TGraphErrors(63, exfor_energies, exfor_data, NULL, NULL);	//TBD:hardcoded number
+	rectionsvenergy_exfor->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_exfor->SetMarkerStyle(20);
+
 	//meter resultados en array
 	Double_t results[ACTIVATION_N][2][6];
 	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
+
+	//graficas
+	Double_t activation_energies[] = {ACT1_AENERGY, ACT2_AENERGY, ACT3_AENERGY, ACT4_AENERGY, ACT5_AENERGY, ACT6_AENERGY, ACT7_AENERGY, ACT8_AENERGY, ACT9_AENERGY, ACT10_AENERGY};
+	Double_t x[2*ACTIVATION_N];
+	Double_t y[2*ACTIVATION_N];
+	Double_t yerr[2*ACTIVATION_N];
+	TCanvas* myCanvas = new TCanvas("30P per alpha sin escalar");
+
+	//unified fit sin escalar
+	for(short i=0; i<ACTIVATION_N; i++){
+		x[2*i] = activation_energies[i];
+		x[2*i+1] = activation_energies[i];
+		y[2*i] = results[i][0][0];
+		y[2*i+1] = results[i][1][0];
+		yerr[2*i] = results[i][0][1];
+		yerr[2*i+1] = results[i][1][1];
+	}
+	TGraph* rectionsvenergy_unified_feb_sin_escalar= new TGraphErrors(2*4, x, y, NULL, yerr);
+	rectionsvenergy_unified_feb_sin_escalar->SetMarkerStyle(20);
+	TGraph* rectionsvenergy_unified_apr_sin_escalar= new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	rectionsvenergy_unified_apr_sin_escalar->SetMarkerStyle(21);
+	//rise fit sin escalar
+	for(short i=0; i<ACTIVATION_N; i++){
+		x[2*i] = activation_energies[i];
+		x[2*i+1] = activation_energies[i];
+		y[2*i] = results[i][0][2];
+		y[2*i+1] = results[i][1][2];
+		yerr[2*i] = results[i][0][3];
+		yerr[2*i+1] = results[i][1][3];
+	}
+	TGraph* rectionsvenergy_rise_feb_sin_escalar= new TGraphErrors(2*4, x, y, NULL, yerr);
+	rectionsvenergy_rise_feb_sin_escalar->SetMarkerStyle(20);
+	TGraph* rectionsvenergy_rise_apr_sin_escalar= new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	rectionsvenergy_rise_apr_sin_escalar->SetMarkerStyle(21);
+	//decay fit sin escalar
+	for(short i=0; i<ACTIVATION_N; i++){
+		x[2*i] = activation_energies[i];
+		x[2*i+1] = activation_energies[i];
+		y[2*i] = results[i][0][4];
+		y[2*i+1] = results[i][1][4];
+		yerr[2*i] = results[i][0][5];
+		yerr[2*i+1] = results[i][1][5];
+	}
+	TGraph* rectionsvenergy_decay_feb_sin_escalar= new TGraphErrors(2*4, x, y, NULL, yerr);
+	rectionsvenergy_decay_feb_sin_escalar->SetMarkerStyle(20);
+	TGraph* rectionsvenergy_decay_apr_sin_escalar= new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	rectionsvenergy_decay_apr_sin_escalar->SetMarkerStyle(21);
+
+	//todos los resultados antes de los escalados
+	TMultiGraph* multigraph_sin_escalar = new TMultiGraph();
+	rectionsvenergy_unified_feb_sin_escalar->SetMarkerColor(kRed);
+	rectionsvenergy_unified_feb_sin_escalar->SetTitle("Unified fit, February");
+	multigraph_sin_escalar->Add(rectionsvenergy_unified_feb_sin_escalar);
+	rectionsvenergy_unified_apr_sin_escalar->SetMarkerColor(kRed);
+	rectionsvenergy_unified_apr_sin_escalar->SetTitle("Unified fit, April");
+	multigraph_sin_escalar->Add(rectionsvenergy_unified_apr_sin_escalar);
+	rectionsvenergy_rise_feb_sin_escalar->SetMarkerColor(kGreen);
+	rectionsvenergy_rise_feb_sin_escalar->SetTitle("Rise fit, February");
+	multigraph_sin_escalar->Add(rectionsvenergy_rise_feb_sin_escalar);
+	rectionsvenergy_rise_apr_sin_escalar->SetMarkerColor(kGreen);
+	rectionsvenergy_rise_apr_sin_escalar->SetTitle("Rise fit, April");
+	multigraph_sin_escalar->Add(rectionsvenergy_rise_apr_sin_escalar);
+	rectionsvenergy_decay_feb_sin_escalar->SetMarkerColor(kBlue);
+	rectionsvenergy_decay_feb_sin_escalar->SetTitle("Decay fit, February");
+	multigraph_sin_escalar->Add(rectionsvenergy_decay_feb_sin_escalar);
+	rectionsvenergy_decay_apr_sin_escalar->SetMarkerColor(kBlue);
+	rectionsvenergy_decay_apr_sin_escalar->SetTitle("Decay fit, April");
+	multigraph_sin_escalar->Add(rectionsvenergy_decay_apr_sin_escalar);
+	multigraph_sin_escalar->SetTitle("30P v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	multigraph_sin_escalar->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("", TObject::kOverwrite);
 
 	//escalados
 	for(unsigned short j=0; j<6; j++){
@@ -60,17 +137,7 @@ void activation_results(){
 		exfor_data[i]*=9.249260268E-4;	//eficiencia
 	}
 
-	//graficas
-	Double_t activation_energies[] = {ACT1_AENERGY, ACT2_AENERGY, ACT3_AENERGY, ACT4_AENERGY, ACT5_AENERGY, ACT6_AENERGY, ACT7_AENERGY, ACT8_AENERGY, ACT9_AENERGY, ACT10_AENERGY};
-	Double_t x[2*ACTIVATION_N];
-	Double_t y[2*ACTIVATION_N];
-	Double_t yerr[2*ACTIVATION_N];
-	TCanvas* myCanvas = new TCanvas("reactions_v_energy_unified_feb");
-
-	//EXFOR data
-	TGraph* rectionsvenergy_exfor = new TGraphErrors(63, exfor_energies, exfor_data, NULL, NULL);	//TBD:hardcoded number
-	rectionsvenergy_exfor->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
-	rectionsvenergy_exfor->SetMarkerStyle(20);
+	myCanvas->SetName("reactions_v_energy_unified_feb");
 
 	//unified_fit
 	for(short i=0; i<ACTIVATION_N; i++){
