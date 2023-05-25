@@ -463,6 +463,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
+	cout << "labr1 unified 30P per alpha: " << results[0][0] << endl;
+	cout << "labr2 unified 30P per alpha: " << results[1][0] << endl;
 	cout << "labr1 unified number of 30P: " << results[0][0]*number_of_alphas << endl;
 	cout << "labr2 unified number of 30P: " << results[1][0]*number_of_alphas << endl;
 
@@ -481,6 +483,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
+	cout << "labr1 rise 30P per alpha: " << results[0][2] << endl;
+	cout << "labr2 rise 30P per alpha: " << results[1][2] << endl;
 	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
 	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
 
@@ -507,6 +511,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
+	cout << "labr1 decay 30P per alpha: " << results[0][4] << endl;
+	cout << "labr2 decay 30P per alpha: " << results[1][4] << endl;
 	cout << "labr1 decay number of 30P: " << results[0][4]*number_of_alphas << endl;
 	cout << "labr2 decay number of 30P: " << results[1][4]*number_of_alphas << endl;
 
