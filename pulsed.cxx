@@ -209,7 +209,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	TH1D* delta_histogram = new TH1D("centered dirac delta", "Dirac delta;ToF;Counts", GAMMA_FLASH_BINS_N, g_min, g_max);
 	delta_histogram->Fill(g_center, gammas_n);
 	delta_histogram->Write("dirac_delta", TObject::kOverwrite);
-	//functor
+	//functor with delta
 	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),n_min,n_max);
 	Double_t x2[200];
 	Double_t y2[200];
@@ -223,6 +223,18 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	result_for_delta->Draw("alp");
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("response_to_delta", TObject::kOverwrite);
+	//functor with gamma flash
+	pulse_fit_functor pulse_functor_2 = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),n_min,n_max);
+	for(UShort_t i=0; i<200; i++){
+		x2[i] = n_min + (n_max-n_min)/200*(i+0.5);
+		y2[i] = pulse_functor_2(&x2[i], p);
+	}
+	TGraph* result_for_gflash = new TGraphErrors(200, x2, y2, NULL, NULL);
+	result_for_gflash->SetTitle("delta; ToF (ns);Counts per gamma");
+	result_for_gflash->SetMarkerStyle(21);
+	result_for_gflash->Draw("alp");
+	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
+	myCanvas->Write("response_to_gflash", TObject::kOverwrite);
 
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = n_min + paramwidth*i + paramwidth/2;
