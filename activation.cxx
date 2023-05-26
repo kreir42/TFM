@@ -16,12 +16,18 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
 	//escalado con na22
-	Double_t sodio_1_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
-	Double_t sodio_2_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
-	Double_t sodio_1_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1180, 1320);
-	Double_t sodio_2_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1410);
-	Double_t sodio_1_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1190, 1300);
-	Double_t sodio_2_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
+	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
+	cout << "labr1_sodio_1: " << labr1_sodio_1 << endl;
+	Double_t labr2_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
+	cout << "labr2_sodio_1: " << labr2_sodio_1 << endl;
+	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1180, 1320);
+	cout << "labr1_sodio_2: " << labr1_sodio_2 << endl;
+	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1410);
+	cout << "labr2_sodio_2: " << labr2_sodio_2 << endl;
+	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1190, 1300);
+	cout << "labr1_sodio_3: " << labr1_sodio_3 << endl;
+	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
+	cout << "labr2_sodio_3: " << labr2_sodio_3 << endl;
 
 	cout << "Activation results" << endl;
 	TFile f("output.root", "UPDATE");
@@ -123,18 +129,18 @@ void activation_results(){
 		results[3][0][j]*=172/239.1;
 
 		//escalado na22
-		results[4][0][j]*=sodio_1_1/sodio_1_2;
-		results[4][1][j]*=sodio_2_1/sodio_2_2;
-		results[5][0][j]*=sodio_1_1/sodio_1_2;
-		results[5][1][j]*=sodio_2_1/sodio_2_2;
-		results[6][0][j]*=sodio_1_1/sodio_1_2;
-		results[6][1][j]*=sodio_2_1/sodio_2_2;
-		results[7][0][j]*=sodio_1_1/sodio_1_2;
-		results[7][1][j]*=sodio_2_1/sodio_2_2;
-		results[8][0][j]*=sodio_1_1/sodio_1_2;
-		results[8][1][j]*=sodio_2_1/sodio_2_2;
-		results[9][0][j]*=sodio_1_1/sodio_1_2;
-		results[9][1][j]*=sodio_2_1/sodio_2_2;
+		results[4][0][j]*=labr1_sodio_1/labr1_sodio_2;
+		results[4][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[5][0][j]*=labr1_sodio_1/labr1_sodio_2;
+		results[5][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[6][0][j]*=labr1_sodio_1/labr1_sodio_2;
+		results[6][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[7][0][j]*=labr1_sodio_1/labr1_sodio_2;
+		results[7][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[8][0][j]*=labr1_sodio_1/labr1_sodio_2;
+		results[8][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[9][0][j]*=labr1_sodio_1/labr1_sodio_2;
+		results[9][1][j]*=labr2_sodio_1/labr2_sodio_2;
 	}
 
 	myCanvas->SetName("reactions_v_energy_unified_feb");
