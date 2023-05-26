@@ -129,18 +129,18 @@ void activation_results(){
 		results[3][0][j]*=172/239.1;
 
 		//escalado na22
-		results[4][0][j]*=labr1_sodio_1/labr1_sodio_2;
-		results[4][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[4][0][j]*=labr1_sodio_1/labr1_sodio_3;
+		results[4][1][j]*=labr2_sodio_1/labr2_sodio_3;
 		results[5][0][j]*=labr1_sodio_1/labr1_sodio_2;
 		results[5][1][j]*=labr2_sodio_1/labr2_sodio_2;
-		results[6][0][j]*=labr1_sodio_1/labr1_sodio_2;
-		results[6][1][j]*=labr2_sodio_1/labr2_sodio_2;
-		results[7][0][j]*=labr1_sodio_1/labr1_sodio_2;
-		results[7][1][j]*=labr2_sodio_1/labr2_sodio_2;
-		results[8][0][j]*=labr1_sodio_1/labr1_sodio_2;
-		results[8][1][j]*=labr2_sodio_1/labr2_sodio_2;
-		results[9][0][j]*=labr1_sodio_1/labr1_sodio_2;
-		results[9][1][j]*=labr2_sodio_1/labr2_sodio_2;
+		results[6][0][j]*=labr1_sodio_1/labr1_sodio_3;
+		results[6][1][j]*=labr2_sodio_1/labr2_sodio_3;
+		results[7][0][j]*=labr1_sodio_1/labr1_sodio_3;
+		results[7][1][j]*=labr2_sodio_1/labr2_sodio_3;
+		results[8][0][j]*=labr1_sodio_1/labr1_sodio_3;
+		results[8][1][j]*=labr2_sodio_1/labr2_sodio_3;
+		results[9][0][j]*=labr1_sodio_1/labr1_sodio_3;
+		results[9][1][j]*=labr2_sodio_1/labr2_sodio_3;
 	}
 
 	myCanvas->SetName("reactions_v_energy_unified_feb");
