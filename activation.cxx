@@ -69,7 +69,7 @@ void activation_results(){
 	}
 	TGraph* rectionsvenergy_unified_feb_sin_escalar= new TGraphErrors(2*4, x, y, NULL, yerr);
 	rectionsvenergy_unified_feb_sin_escalar->SetMarkerStyle(20);
-	TGraph* rectionsvenergy_unified_apr_sin_escalar= new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	TGraph* rectionsvenergy_unified_apr_sin_escalar= new TGraphErrors(2*3, &x[2*4], &y[2*4], NULL, yerr);
 	rectionsvenergy_unified_apr_sin_escalar->SetMarkerStyle(21);
 	//rise fit sin escalar
 	for(short i=0; i<ACTIVATION_N; i++){
@@ -82,7 +82,7 @@ void activation_results(){
 	}
 	TGraph* rectionsvenergy_rise_feb_sin_escalar= new TGraphErrors(2*4, x, y, NULL, yerr);
 	rectionsvenergy_rise_feb_sin_escalar->SetMarkerStyle(20);
-	TGraph* rectionsvenergy_rise_apr_sin_escalar= new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	TGraph* rectionsvenergy_rise_apr_sin_escalar= new TGraphErrors(2*3, &x[2*4], &y[2*4], NULL, yerr);
 	rectionsvenergy_rise_apr_sin_escalar->SetMarkerStyle(21);
 	//decay fit sin escalar
 	for(short i=0; i<ACTIVATION_N; i++){
@@ -127,6 +127,7 @@ void activation_results(){
 	for(unsigned short j=0; j<6; j++){
 		//escalado debido a la mala medida de la carga
 		results[3][0][j]*=172/239.1;
+		results[3][1][j]*=172/239.1;
 
 		//escalado na22
 		results[4][0][j]*=labr1_sodio_1/labr1_sodio_3;
@@ -161,7 +162,7 @@ void activation_results(){
 	rectionsvenergy_exfor->Draw("same");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	TGraph* rectionsvenergy_unified_apr = new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	TGraph* rectionsvenergy_unified_apr = new TGraphErrors(2*3, &x[2*4], &y[2*4], NULL, yerr);
 	rectionsvenergy_unified_apr->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_apr");
 	rectionsvenergy_unified_apr->SetMarkerStyle(21);
@@ -199,7 +200,7 @@ void activation_results(){
 	rectionsvenergy_exfor->Draw("same");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	TGraph* rectionsvenergy_rise_apr = new TGraphErrors(2*6, &x[2*4], &y[2*4], NULL, yerr);
+	TGraph* rectionsvenergy_rise_apr = new TGraphErrors(2*3, &x[2*4], &y[2*4], NULL, yerr);
 	rectionsvenergy_rise_apr->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_apr->SetMarkerStyle(21);
 	myCanvas->SetName("reactions_v_energy_rise_apr");
@@ -313,106 +314,87 @@ void activation(){
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
 	Double_t results[ACTIVATION_N][2][6];
-	TTree* tree = (TTree*)gDirectory->Get("activation_results_tree");
-	tree->SetBranchAddress("results", results);
 
 	activation_window_low=550;
 	activation_window_high=650;
 
-	if(activation_flag_1){
-		gDirectory->cd("activation_1");
-		cout << "activation_1" << endl;
-		per_file(filepath_1, results[0]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_1");
+	cout << "activation_1" << endl;
+	per_file(filepath_1, results[0]);
+	gDirectory->cd("..");
 
-	if(activation_flag_2){
-		gDirectory->cd("activation_2");
-		cout << "activation_2" << endl;
-		per_file(filepath_2, results[1]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_2");
+	cout << "activation_2" << endl;
+	per_file(filepath_2, results[1]);
+	gDirectory->cd("..");
 
 	activation_window_low=550;
 	activation_window_high=750;
 
-	if(activation_flag_3){
-		gDirectory->cd("activation_3");
-		cout << "activation_3" << endl;
-		per_file(filepath_3, results[2]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_3");
+	cout << "activation_3" << endl;
+	per_file(filepath_3, results[2]);
+	gDirectory->cd("..");
 
 	activation_window_low=550;
 	activation_window_high=825;
 
-	if(activation_flag_4){
-		gDirectory->cd("activation_4");
-		cout << "activation_4" << endl;
-		per_file(filepath_4, results[3]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_4");
+	cout << "activation_4" << endl;
+	per_file(filepath_4, results[3]);
+	gDirectory->cd("..");
 
 	activation_window_low=1200;
 	activation_window_high=1450;
 
-	if(activation_flag_5){
-		gDirectory->cd("activation_5");
-		cout << "activation_5" << endl;
-		per_file(filepath_5, results[4]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_5");
+	cout << "activation_5" << endl;
+	per_file(filepath_5, results[4]);
+	gDirectory->cd("..");
 
 	activation_window_low=1200;
 	activation_window_high=1600;
 
-	if(activation_flag_6){
-		gDirectory->cd("activation_6");
-		cout << "activation_6" << endl;
-		per_file(filepath_6, results[5]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_6");
+	cout << "activation_6" << endl;
+	per_file(filepath_6, results[5]);
+	gDirectory->cd("..");
 
 	activation_window_low=1200;
 	activation_window_high=1800;
 
-	if(activation_flag_7){
-		gDirectory->cd("activation_7");
-		cout << "activation_7" << endl;
-		per_file(filepath_7, results[6]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_7");
+	cout << "activation_7" << endl;
+	per_file(filepath_7, results[6]);
+	gDirectory->cd("..");
 
 	activation_window_low=1200;
 	activation_window_high=1700;
 
-	if(activation_flag_8){
-		gDirectory->cd("activation_8");
-		cout << "activation_8" << endl;
-		per_file(filepath_8, results[7]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_8");
+	cout << "activation_8" << endl;
+	per_file(filepath_8, results[7]);
+	gDirectory->cd("..");
 
 	activation_window_low=1150;
 	activation_window_high=1400;
 
-	if(activation_flag_9){
-		gDirectory->cd("activation_9");
-		cout << "activation_9" << endl;
-		per_file(filepath_9, results[8]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_9");
+	cout << "activation_9" << endl;
+	per_file(filepath_9, results[8]);
+	gDirectory->cd("..");
 
 	activation_window_low=1200;
 	activation_window_high=1700;
 
-	if(activation_flag_10){
-		gDirectory->cd("activation_10");
-		cout << "activation_10" << endl;
-		per_file(filepath_10, results[9]);
-		gDirectory->cd("..");
-	}
+	gDirectory->cd("activation_10");
+	cout << "activation_10" << endl;
+	per_file(filepath_10, results[9]);
+	gDirectory->cd("..");
 
+	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
+	tree->Branch("results", results, "results[10][2][6]/D");
+	tree->SetBranchAddress("results", results);
 	tree->Fill();
 	tree->Write("", TObject::kOverwrite);
 

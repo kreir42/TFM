@@ -52,17 +52,6 @@ using namespace ROOT;
 #define PULSED_4_PATH "output/SData_aAL_J78keV_GVM2730kV_position1_20230418.root"
 #define PULSED_5_PATH "output/SData_aAL_J78keV_GVM2730kV_position2_20230418.root"
 
-bool activation_flag_1;
-bool activation_flag_2;
-bool activation_flag_3;
-bool activation_flag_4;
-bool activation_flag_5;
-bool activation_flag_6;
-bool activation_flag_7;
-bool activation_flag_8;
-bool activation_flag_9;
-bool activation_flag_10;
-
 #include "create_output_file.cxx"
 #include "activation.cxx"
 #include "calibration.cxx"
@@ -138,16 +127,6 @@ void process_filelist(){
 		energy_calibration();
 	}
 	if(yesorno("Do activation?")){
-		activation_flag_1 = yesorno("Activation 1?");
-		activation_flag_2 = yesorno("Activation 2?");
-		activation_flag_3 = yesorno("Activation 3?");
-		activation_flag_4 = yesorno("Activation 4?");
-		activation_flag_5 = yesorno("Activation 5?");
-		activation_flag_6 = yesorno("Activation 6?");
-		activation_flag_7 = yesorno("Activation 7?");
-		activation_flag_8 = yesorno("Activation 8?");
-		activation_flag_9 = yesorno("Activation 9?");
-		activation_flag_10 = yesorno("Activation 10?");
 		activation();
 	}
 	if(yesorno("Analyze activation results?")){
