@@ -16,14 +16,17 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
 	//escalado con na22
+	//en logbook
 	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 550, 620);
 	cout << "labr1_sodio_1: " << labr1_sodio_1 << endl;
 	Double_t labr2_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
 	cout << "labr2_sodio_1: " << labr2_sodio_1 << endl;
+	//no en logbook
 	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1180, 1320);
 	cout << "labr1_sodio_2: " << labr1_sodio_2 << endl;
 	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1410);
 	cout << "labr2_sodio_2: " << labr2_sodio_2 << endl;
+	//en logbook
 	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1190, 1300);
 	cout << "labr1_sodio_3: " << labr1_sodio_3 << endl;
 	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
@@ -417,12 +420,14 @@ Double_t activation_window_high;
 void activation(){
 	cout << "Activation" << endl;
 	cout << endl;
+	//Feb
 	Char_t filepath_1[100] = "output/SData_aAl_J78kV_GVM1808kV_positions2_activacion.root";
 	Char_t filepath_2[100] = "output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root";
 	Char_t filepath_3[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion.root";
 
 	Char_t filepath_4[100] = "output/SData_aAl_J78kV_GVM2810kV_positions2_activacion_20230223.root";
 
+	//Apr
 	Char_t filepath_5[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion.root";
 	Char_t filepath_6[100] =  "output/SData_aAl_J78keV_GVM1808keV_LaBr1_5cmdelante_LaBr2_20cm_activacion.root";
 
