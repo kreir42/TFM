@@ -8,7 +8,7 @@
 #define ACT7_AENERGY 8250
 #define ACT8_AENERGY 7000
 #define ACT9_AENERGY 5500
-#define ACT10_AENERGY 7050
+#define ACT10_AENERGY 7500
 
 #include "peak_activity.cxx"
 
@@ -26,7 +26,7 @@ void activation_results(){
 	cout << "labr1_sodio_2: " << labr1_sodio_2 << endl;
 	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1400);
 	cout << "labr2_sodio_2: " << labr2_sodio_2 << endl;
-	//no en logbook
+	//no en logbook, pone febrero pero probablemente abril
 	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1190, 1300);
 	cout << "labr1_sodio_3: " << labr1_sodio_3 << endl;
 	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
@@ -40,7 +40,7 @@ void activation_results(){
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
 
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
-		exfor_data[i]*=9.249260268E-4*2E-13;	//eficiencia
+		exfor_data[i]*=9.249260268E-4*3E-2*0.95;	//eficiencia
 	}
 
 	//EXFOR data
@@ -176,18 +176,18 @@ void activation_results(){
 		results[2][1][j]/=labr2_sodio_1;
 		results[3][0][j]/=labr1_sodio_1;
 		results[3][1][j]/=labr2_sodio_1;
-		results[4][0][j]/=labr1_sodio_2;
-		results[4][1][j]/=labr2_sodio_2;
+		results[4][0][j]/=labr1_sodio_3;
+		results[4][1][j]/=labr2_sodio_3;
 		results[5][0][j]/=labr1_sodio_2;
 		results[5][1][j]/=labr2_sodio_2;
-		results[6][0][j]/=labr1_sodio_2;
-		results[6][1][j]/=labr2_sodio_2;
-		results[7][0][j]/=labr1_sodio_2;
-		results[7][1][j]/=labr2_sodio_2;
-		results[8][0][j]/=labr1_sodio_2;
-		results[8][1][j]/=labr2_sodio_2;
-		results[9][0][j]/=labr1_sodio_2;
-		results[9][1][j]/=labr2_sodio_2;
+		results[6][0][j]/=labr1_sodio_3;
+		results[6][1][j]/=labr2_sodio_3;
+		results[7][0][j]/=labr1_sodio_3;
+		results[7][1][j]/=labr2_sodio_3;
+		results[8][0][j]/=labr1_sodio_3;
+		results[8][1][j]/=labr2_sodio_3;
+		results[9][0][j]/=labr1_sodio_3;
+		results[9][1][j]/=labr2_sodio_3;
 	}
 
 	//unified_fit
