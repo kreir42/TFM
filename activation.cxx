@@ -90,11 +90,11 @@ void activation_results(){
 	}
 	TGraph* rectionsvenergy_rise_feb_sin_escalar_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
 	rectionsvenergy_rise_feb_sin_escalar_1->SetMarkerStyle(22);
-	TGraph* rectionsvenergy_rise_apr_sin_escalar_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
+	TGraph* rectionsvenergy_rise_apr_sin_escalar_1 = new TGraphErrors(2, &x1[4], &y1[4], NULL, yerr1);
 	rectionsvenergy_rise_apr_sin_escalar_1->SetMarkerStyle(23);
 	TGraph* rectionsvenergy_rise_feb_sin_escalar_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
 	rectionsvenergy_rise_feb_sin_escalar_2->SetMarkerStyle(34);
-	TGraph* rectionsvenergy_rise_apr_sin_escalar_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
+	TGraph* rectionsvenergy_rise_apr_sin_escalar_2 = new TGraphErrors(2, &x2[4], &y2[4], NULL, yerr2);
 	rectionsvenergy_rise_apr_sin_escalar_2->SetMarkerStyle(47);
 
 	//decay fit sin escalar
@@ -270,7 +270,7 @@ void activation_results(){
 	rectionsvenergy_exfor->Draw("same");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	TGraph* rectionsvenergy_rise_apr_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
+	TGraph* rectionsvenergy_rise_apr_1 = new TGraphErrors(2, &x1[4], &y1[4], NULL, yerr1);
 	rectionsvenergy_rise_apr_1->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_apr_1->SetMarkerStyle(23);
 	myCanvas->SetName("reactions_v_energy_rise_apr_1");
@@ -278,7 +278,7 @@ void activation_results(){
 	rectionsvenergy_exfor->Draw("same");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	TGraph* rectionsvenergy_rise_apr_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
+	TGraph* rectionsvenergy_rise_apr_2 = new TGraphErrors(2, &x2[4], &y2[4], NULL, yerr2);
 	rectionsvenergy_rise_apr_2->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_apr_2->SetMarkerStyle(47);
 	myCanvas->SetName("reactions_v_energy_rise_apr_2");
