@@ -21,12 +21,12 @@ void activation_results(){
 	cout << "labr1_sodio_1: " << labr1_sodio_1 << endl;
 	Double_t labr2_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 560, 640);
 	cout << "labr2_sodio_1: " << labr2_sodio_1 << endl;
-	//no en logbook
-	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1180, 1320);
-	cout << "labr1_sodio_2: " << labr1_sodio_2 << endl;
-	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1410);
-	cout << "labr2_sodio_2: " << labr2_sodio_2 << endl;
 	//en logbook
+	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1180, 1310);
+	cout << "labr1_sodio_2: " << labr1_sodio_2 << endl;
+	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1280, 1400);
+	cout << "labr2_sodio_2: " << labr2_sodio_2 << endl;
+	//no en logbook
 	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1190, 1300);
 	cout << "labr1_sodio_3: " << labr1_sodio_3 << endl;
 	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1280, 1400);
