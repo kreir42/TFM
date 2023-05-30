@@ -288,13 +288,13 @@ void activation_results(){
 
 	TMultiGraph* reactions_v_energy_rise = new TMultiGraph();
 	reactions_v_energy_rise->Add(rectionsvenergy_exfor,"c");
-	rectionsvenergy_rise_feb_1->SetTitle("Unified fit, February, LaBr1");
+	rectionsvenergy_rise_feb_1->SetTitle("Rise fit, February, LaBr1");
 	reactions_v_energy_rise->Add(rectionsvenergy_rise_feb_1);
-	rectionsvenergy_rise_apr_1->SetTitle("Unified fit, April, LaBr1");
+	rectionsvenergy_rise_apr_1->SetTitle("Rise fit, April, LaBr1");
 	reactions_v_energy_rise->Add(rectionsvenergy_rise_apr_1);
-	rectionsvenergy_rise_feb_2->SetTitle("Unified fit, February, LaBr2");
+	rectionsvenergy_rise_feb_2->SetTitle("Rise fit, February, LaBr2");
 	reactions_v_energy_rise->Add(rectionsvenergy_rise_feb_2);
-	rectionsvenergy_rise_apr_2->SetTitle("Unified fit, April, LaBr2");
+	rectionsvenergy_rise_apr_2->SetTitle("Rise fit, April, LaBr2");
 	reactions_v_energy_rise->Add(rectionsvenergy_rise_apr_2);
 	reactions_v_energy_rise->SetTitle("(a,n) reactions v a energy (rise fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	reactions_v_energy_rise->Draw("AP");
@@ -345,13 +345,13 @@ void activation_results(){
 
 	TMultiGraph* reactions_v_energy_decay = new TMultiGraph();
 	reactions_v_energy_decay->Add(rectionsvenergy_exfor,"c");
-	rectionsvenergy_decay_feb_1->SetTitle("Unified fit, February, LaBr1");
+	rectionsvenergy_decay_feb_1->SetTitle("Decay fit, February, LaBr1");
 	reactions_v_energy_decay->Add(rectionsvenergy_decay_feb_1);
-	rectionsvenergy_decay_apr_1->SetTitle("Unified fit, April, LaBr1");
+	rectionsvenergy_decay_apr_1->SetTitle("Decay fit, April, LaBr1");
 	reactions_v_energy_decay->Add(rectionsvenergy_decay_apr_1);
-	rectionsvenergy_decay_feb_2->SetTitle("Unified fit, February, LaBr2");
+	rectionsvenergy_decay_feb_2->SetTitle("Decay fit, February, LaBr2");
 	reactions_v_energy_decay->Add(rectionsvenergy_decay_feb_2);
-	rectionsvenergy_decay_apr_2->SetTitle("Unified fit, April, LaBr2");
+	rectionsvenergy_decay_apr_2->SetTitle("Decay fit, April, LaBr2");
 	reactions_v_energy_decay->Add(rectionsvenergy_decay_apr_2);
 	reactions_v_energy_decay->SetTitle("(a,n) reactions v a energy (decay fit);Energy of a (keV);Inferred (a,n)/Number of a");
 	reactions_v_energy_decay->Draw("AP");
