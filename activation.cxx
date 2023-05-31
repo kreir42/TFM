@@ -51,16 +51,14 @@ void activation_results(){
 	//EXFOR data
 	TGraph* rectionsvenergy_exfor_feb = new TGraphErrors(63, exfor_energies, exfor_data_1, NULL, exfor_errors_1);	//TBD:hardcoded number
 	rectionsvenergy_exfor_feb->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_exfor_feb->SetFillColorAlpha(kGray, 0.4);
 	rectionsvenergy_exfor_feb->SetMarkerStyle(20);
-//	rectionsvenergy_exfor_feb->SetFillStyle(1001); 
 	rectionsvenergy_exfor_feb->SetLineColor(kBlack);
-	rectionsvenergy_exfor_feb->SetFillColorAlpha(kGray, 0.5);
 	TGraph* rectionsvenergy_exfor_apr = new TGraphErrors(63, exfor_energies, exfor_data_2, NULL, exfor_errors_2);	//TBD:hardcoded number
 	rectionsvenergy_exfor_apr->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	rectionsvenergy_exfor_apr->SetFillColorAlpha(kGray+1, 0.4);
 	rectionsvenergy_exfor_apr->SetMarkerStyle(20);
-//	rectionsvenergy_exfor_apr->SetFillStyle(1001); 
 	rectionsvenergy_exfor_apr->SetLineColor(kBlack);
-	rectionsvenergy_exfor_apr->SetFillColorAlpha(kGray, 0.5);
 
 	//meter resultados en array
 	Double_t results[ACTIVATION_N][2][6];
@@ -217,7 +215,8 @@ void activation_results(){
 	rectionsvenergy_unified_feb_1->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_feb_1");
 	rectionsvenergy_unified_feb_1->SetMarkerStyle(22);
-	rectionsvenergy_exfor_feb->Draw("A3");
+	rectionsvenergy_exfor_feb->Draw("E3");
+	rectionsvenergy_exfor_feb->Draw("same LX");
 	rectionsvenergy_unified_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -225,7 +224,8 @@ void activation_results(){
 	rectionsvenergy_unified_feb_2->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_feb_2");
 	rectionsvenergy_unified_feb_2->SetMarkerStyle(34);
-	rectionsvenergy_exfor_feb->Draw("A3");
+	rectionsvenergy_exfor_feb->Draw("E3");
+	rectionsvenergy_exfor_feb->Draw("same LX");
 	rectionsvenergy_unified_feb_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -233,7 +233,8 @@ void activation_results(){
 	rectionsvenergy_unified_apr_1->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_apr_1");
 	rectionsvenergy_unified_apr_1->SetMarkerStyle(23);
-	rectionsvenergy_exfor_apr->Draw("A3");
+	rectionsvenergy_exfor_apr->Draw("E3");
+	rectionsvenergy_exfor_apr->Draw("same LX");
 	rectionsvenergy_unified_apr_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -241,14 +242,17 @@ void activation_results(){
 	rectionsvenergy_unified_apr_2->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_apr_2");
 	rectionsvenergy_unified_apr_2->SetMarkerStyle(47);
-	rectionsvenergy_exfor_apr->Draw("A3");
+	rectionsvenergy_exfor_apr->Draw("E3");
+	rectionsvenergy_exfor_apr->Draw("same LX");
 	rectionsvenergy_unified_apr_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TMultiGraph* reactions_v_energy_unified = new TMultiGraph();
-	reactions_v_energy_unified->Add(rectionsvenergy_exfor_feb, "A3");
+	reactions_v_energy_unified->Add(rectionsvenergy_exfor_feb, "E3");
+	reactions_v_energy_unified->Add(rectionsvenergy_exfor_feb, "LX");
 	rectionsvenergy_exfor_feb->SetTitle("EXFOR data, feb");
-	reactions_v_energy_unified->Add(rectionsvenergy_exfor_apr, "A3");
+	reactions_v_energy_unified->Add(rectionsvenergy_exfor_apr, "E3");
+	reactions_v_energy_unified->Add(rectionsvenergy_exfor_apr, "LX");
 	rectionsvenergy_exfor_apr->SetTitle("EXFOR data, apr");
 	rectionsvenergy_unified_feb_1->SetTitle("Unified fit, February, LaBr1");
 	reactions_v_energy_unified->Add(rectionsvenergy_unified_feb_1);
@@ -277,7 +281,8 @@ void activation_results(){
 	rectionsvenergy_rise_feb_1->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_feb_1->SetMarkerStyle(22);
 	myCanvas->SetName("reactions_v_energy_rise_feb_1");
-	rectionsvenergy_exfor_feb->Draw("A3");
+	rectionsvenergy_exfor_feb->Draw("E3");
+	rectionsvenergy_exfor_feb->Draw("same LX");
 	rectionsvenergy_rise_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -285,7 +290,8 @@ void activation_results(){
 	rectionsvenergy_rise_feb_2->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_feb_2->SetMarkerStyle(34);
 	myCanvas->SetName("reactions_v_energy_rise_feb_2");
-	rectionsvenergy_exfor_feb->Draw("A3");
+	rectionsvenergy_exfor_feb->Draw("E3");
+	rectionsvenergy_exfor_feb->Draw("same LX");
 	rectionsvenergy_rise_feb_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -293,7 +299,8 @@ void activation_results(){
 	rectionsvenergy_rise_apr_1->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_apr_1->SetMarkerStyle(23);
 	myCanvas->SetName("reactions_v_energy_rise_apr_1");
-	rectionsvenergy_exfor_apr->Draw("A3");
+	rectionsvenergy_exfor_apr->Draw("E3");
+	rectionsvenergy_exfor_apr->Draw("same LX");
 	rectionsvenergy_rise_apr_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -301,13 +308,16 @@ void activation_results(){
 	rectionsvenergy_rise_apr_2->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_rise_apr_2->SetMarkerStyle(47);
 	myCanvas->SetName("reactions_v_energy_rise_apr_2");
-	rectionsvenergy_exfor_apr->Draw("A3");
+	rectionsvenergy_exfor_apr->Draw("E3");
+	rectionsvenergy_exfor_apr->Draw("same LX");
 	rectionsvenergy_rise_apr_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TMultiGraph* reactions_v_energy_rise = new TMultiGraph();
-	reactions_v_energy_rise->Add(rectionsvenergy_exfor_feb, "A3");
-	reactions_v_energy_rise->Add(rectionsvenergy_exfor_apr, "A3");
+	reactions_v_energy_rise->Add(rectionsvenergy_exfor_feb, "E3");
+	reactions_v_energy_rise->Add(rectionsvenergy_exfor_feb, "LX");
+	reactions_v_energy_rise->Add(rectionsvenergy_exfor_apr, "E3");
+	reactions_v_energy_rise->Add(rectionsvenergy_exfor_apr, "LX");
 	rectionsvenergy_rise_feb_1->SetTitle("Rise fit, February, LaBr1");
 	reactions_v_energy_rise->Add(rectionsvenergy_rise_feb_1);
 	rectionsvenergy_rise_apr_1->SetTitle("Rise fit, April, LaBr1");
@@ -335,7 +345,8 @@ void activation_results(){
 	rectionsvenergy_decay_feb_1->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_decay_feb_1->SetMarkerStyle(22);
 	myCanvas->SetName("reactions_v_energy_decay_feb_1");
-	rectionsvenergy_exfor_feb->Draw("A3");
+	rectionsvenergy_exfor_feb->Draw("E3");
+	rectionsvenergy_exfor_feb->Draw("same LX");
 	rectionsvenergy_decay_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -343,7 +354,8 @@ void activation_results(){
 	rectionsvenergy_decay_feb_2->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_decay_feb_2->SetMarkerStyle(34);
 	myCanvas->SetName("reactions_v_energy_decay_feb_2");
-	rectionsvenergy_exfor_feb->Draw("A3");
+	rectionsvenergy_exfor_feb->Draw("E3");
+	rectionsvenergy_exfor_feb->Draw("same LX");
 	rectionsvenergy_decay_feb_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -351,7 +363,8 @@ void activation_results(){
 	rectionsvenergy_decay_apr_1->SetTitle("(a,n) reactions v a energy (decay it, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_decay_apr_1->SetMarkerStyle(23);
 	myCanvas->SetName("reactions_v_energy_decay_apr_1");
-	rectionsvenergy_exfor_apr->Draw("A3");
+	rectionsvenergy_exfor_apr->Draw("E3");
+	rectionsvenergy_exfor_apr->Draw("same LX");
 	rectionsvenergy_decay_apr_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -359,13 +372,16 @@ void activation_results(){
 	rectionsvenergy_decay_apr_2->SetTitle("(a,n) reactions v a energy (decay it, April);Energy of a (keV);Inferred (a,n)/Number of a");
 	rectionsvenergy_decay_apr_2->SetMarkerStyle(47);
 	myCanvas->SetName("reactions_v_energy_decay_apr_2");
-	rectionsvenergy_exfor_apr->Draw("A3");
+	rectionsvenergy_exfor_apr->Draw("E3");
+	rectionsvenergy_exfor_apr->Draw("same LX");
 	rectionsvenergy_decay_apr_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TMultiGraph* reactions_v_energy_decay = new TMultiGraph();
-	reactions_v_energy_decay->Add(rectionsvenergy_exfor_feb, "A3");
-	reactions_v_energy_decay->Add(rectionsvenergy_exfor_apr, "A3");
+	reactions_v_energy_decay->Add(rectionsvenergy_exfor_feb, "E3");
+	reactions_v_energy_decay->Add(rectionsvenergy_exfor_feb, "LX");
+	reactions_v_energy_decay->Add(rectionsvenergy_exfor_apr, "E3");
+	reactions_v_energy_decay->Add(rectionsvenergy_exfor_apr, "LX");
 	rectionsvenergy_decay_feb_1->SetTitle("Decay fit, February, LaBr1");
 	reactions_v_energy_decay->Add(rectionsvenergy_decay_feb_1);
 	rectionsvenergy_decay_apr_1->SetTitle("Decay fit, April, LaBr1");
@@ -382,8 +398,10 @@ void activation_results(){
 
 	//all results
 	TMultiGraph* multigraph = new TMultiGraph();
-	multigraph->Add(rectionsvenergy_exfor_feb, "A3");
-	multigraph->Add(rectionsvenergy_exfor_apr, "A3");
+	multigraph->Add(rectionsvenergy_exfor_feb, "E3");
+	multigraph->Add(rectionsvenergy_exfor_feb, "LX");
+	multigraph->Add(rectionsvenergy_exfor_apr, "E3");
+	multigraph->Add(rectionsvenergy_exfor_apr, "LX");
 	rectionsvenergy_unified_feb_1->SetMarkerColor(kRed);
 	rectionsvenergy_unified_feb_1->SetTitle("Unified fit, February, LaBr1");
 	multigraph->Add(rectionsvenergy_unified_feb_1);
