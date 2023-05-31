@@ -42,9 +42,9 @@ void activation_results(){
 	Double_t exfor_errors_1[63];
 	Double_t exfor_errors_2[63];
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
-		exfor_data_1[i]*=9.249260268E-4*3E-2*0.95*(1.67747/1.99153);	//eficiencia feb
+		exfor_data_1[i]*=2.220341468E-5;	//eficiencia feb
 		exfor_errors_1[i] = exfor_data_1[i] * 0.05;
-		exfor_data_2[i]*=9.249260268E-4*3E-2*0.95*(1.99614/1.99153);	//eficiencia apr
+		exfor_data_2[i]*=2.642141092E-5;	//eficiencia apr
 		exfor_errors_2[i] = exfor_data_2[i] * 0.08;
 	}
 
