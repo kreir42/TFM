@@ -10,11 +10,18 @@
 #define ACT9_AENERGY 5500
 #define ACT10_AENERGY 7500
 
+#define NA22_CALIBRATION_ACTIVITY 1
+#define NA22_511_INTENSITY 1.798
+#define NA22_HALF_LIFE 2.6027*365.2425*24*3600
+#define NA22_LAMBDA ln(2)/NA22_HALF_LIFE
+
 #include "peak_activity.cxx"
 
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
+	Double_t na22_511_per_second_feb = NA22_CALIBRATION_ACTIVITY * NA22_511_INTENSITY * exp(-NA22_LAMBDA * 24*3600);	//time in seconds
+	Double_t na22_511_per_second_apr = NA22_CALIBRATION_ACTIVITY * NA22_511_INTENSITY * exp(-NA22_LAMBDA * 24*3600);	//time in seconds
 	//escalado con na22
 	//en logbook
 	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 500, 700, "labr1_sodio_1");
