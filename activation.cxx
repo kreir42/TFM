@@ -14,10 +14,12 @@
 #define NA22_LAMBDA log(2)/(2.6027*365.2425*24*3600)
 #define NA22_CALIBRATION_ACTIVITY_NOMINAL 53590
 #define NA22_CALIBRATION_ACTIVITY_PABLO 85973
-#define NA22_CALIBRATION_ACTIVITY NA22_CALIBRATION_ACTIVITY_PABLO*NA22_511_INTENSITY*exp(-NA22_LAMBDA*24*3600*103)
+#define NA22_ORIGINAL_ACTIVITY NA22_CALIBRATION_ACTIVITY_PABLO
+#define NA22_CALIBRATION_ACTIVITY NA22_ORIGINAL_ACTIVITY*NA22_511_INTENSITY*exp(-NA22_LAMBDA*24*3600*103)
 #define CS137_INTENSITY 0.851
 #define CS137_LAMBDA log(2)/(30.07*365.2425*24*3600)
-#define CS137_CALIBRATION_ACTIVITY 4360*CS137_INTENSITY*exp(-CS137_LAMBDA*24*3600*260)
+#define CS137_ORIGINAL_ACTIVITY 4360
+#define CS137_CALIBRATION_ACTIVITY CS137_ORIGINAL_ACTIVITY*CS137_INTENSITY*exp(-CS137_LAMBDA*24*3600*260)
 
 #include "peak_activity.cxx"
 
@@ -29,27 +31,45 @@ void activation_results(){
 	std::streambuf* originalBuffer = std::cout.rdbuf();
 	std::cout.rdbuf(outputFile.rdbuf());
 
+	cout << "Calcular emisiones reales de muestras de calibración como calibration activity * intensity * e^(-lambda*t):" << endl;
+	cout << "Na22 intensity: " << NA22_511_INTENSITY << endl;
+	cout << "Na22 lambda (s^-1): " << NA22_LAMBDA << endl;
+	cout << "Na22 original activity (decays/s): " << NA22_ORIGINAL_ACTIVITY << endl;
+	cout << "Na22 activity (decays/s): " << NA22_CALIBRATION_ACTIVITY << endl;
+	cout << "--------------" << endl;
+	cout << "Cs137 intensity: " << CS137_INTENSITY << endl;
+	cout << "Cs137 lambda (s^-1): " << CS137_LAMBDA << endl;
+	cout << "Cs137 original activity (decays/s): " << CS137_ORIGINAL_ACTIVITY << endl;
+	cout << "Cs137 activity (decays/s): " << CS137_CALIBRATION_ACTIVITY << endl;
+	cout << endl;
+
+	//calibración con na22
+	cout << "Calcular cuentas/s medidas en runs de calibración:" << endl;
+	//en logbook
+	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 500, 700, "labr1_sodio_1");
+	Double_t labr2_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 500, 700, "labr2_sodio_1");
+	//en logbook
+	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1100, 1400, "labr1_sodio_2");
+	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1200, 1450, "labr2_sodio_2");
+	//no en logbook, pone febrero pero probablemente abril
+	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1100, 1400, "labr1_sodio_3");
+	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1150, 1500, "labr2_sodio_3");
+	cout << "labr1_sodio_1: " << labr1_sodio_1 << " counts/s" << endl;
+	cout << "labr2_sodio_1: " << labr2_sodio_1 << " counts/s" << endl;
+	cout << "labr1_sodio_2: " << labr1_sodio_2 << " counts/s" << endl;
+	cout << "labr2_sodio_2: " << labr2_sodio_2 << " counts/s" << endl;
+	cout << "labr1_sodio_3: " << labr1_sodio_3 << " counts/s" << endl;
+	cout << "labr2_sodio_3: " << labr2_sodio_3 << " counts/s" << endl;
+	cout << "--------------" << endl;
 	Double_t labr1_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 6, 1600, 1800, "labr1_cesio_1");
 	Double_t labr2_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 7, 1600, 1850, "labr2_cesio_1");
 	Double_t labr1_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 6, 1450, 1750, "labr1_cesio_2");
 	Double_t labr2_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 7, 1650, 1850, "labr2_cesio_2");
-
-	//escalado con na22
-	//en logbook
-	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 500, 700, "labr1_sodio_1");
-	cout << "labr1_sodio_1: " << labr1_sodio_1 << " counts/s" << endl;
-	Double_t labr2_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 500, 700, "labr2_sodio_1");
-	cout << "labr2_sodio_1: " << labr2_sodio_1 << " counts/s" << endl;
-	//en logbook
-	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1100, 1400, "labr1_sodio_2");
-	cout << "labr1_sodio_2: " << labr1_sodio_2 << " counts/s" << endl;
-	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1200, 1450, "labr2_sodio_2");
-	cout << "labr2_sodio_2: " << labr2_sodio_2 << " counts/s" << endl;
-	//no en logbook, pone febrero pero probablemente abril
-	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1100, 1400, "labr1_sodio_3");
-	cout << "labr1_sodio_3: " << labr1_sodio_3 << " counts/s" << endl;
-	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1150, 1500, "labr2_sodio_3");
-	cout << "labr2_sodio_3: " << labr2_sodio_3 << " counts/s" << endl;
+	cout << "labr1_cesio_1: " << labr1_cesio_1 << " counts/s" << endl;
+	cout << "labr2_cesio_1: " << labr2_cesio_1 << " counts/s" << endl;
+	cout << "labr1_cesio_2: " << labr1_cesio_2 << " counts/s" << endl;
+	cout << "labr2_cesio_2: " << labr2_cesio_2 << " counts/s" << endl;
+	cout << endl;
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
@@ -167,16 +187,18 @@ void activation_results(){
 	myCanvas->BuildLegend();
 	myCanvas->Write("", TObject::kOverwrite);
 
+	cout << "Calcular eficiencias como cuentas/s en fotopico durante run de calibración dividido por emisiones de la muestra:" << endl;
+
 	Double_t eficiencia_feb_labr1 = labr1_sodio_1 / NA22_CALIBRATION_ACTIVITY;
 	Double_t eficiencia_feb_labr2 = labr2_sodio_1 / NA22_CALIBRATION_ACTIVITY;
 	Double_t eficiencia_apr2_labr1 = labr1_sodio_2 / NA22_CALIBRATION_ACTIVITY;
 	Double_t eficiencia_apr2_labr2 = labr2_sodio_2 / NA22_CALIBRATION_ACTIVITY;
 	Double_t eficiencia_apr3_labr1 = labr1_sodio_3 / NA22_CALIBRATION_ACTIVITY;
 	Double_t eficiencia_apr3_labr2 = labr2_sodio_3 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_feb_labr1 = labr1_cesio_1/CS137_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_feb_labr2 = labr2_cesio_1/CS137_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_apr_labr1 = labr1_cesio_2/CS137_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_apr_labr2 = labr2_cesio_2/CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_feb_labr1 = labr1_cesio_1 / CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_feb_labr2 = labr2_cesio_1 / CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_apr_labr1 = labr1_cesio_2 / CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_apr_labr2 = labr2_cesio_2 / CS137_CALIBRATION_ACTIVITY;
 
 	cout << "Eficiencia sodio labr1 febrero: " << eficiencia_feb_labr1*100 << "%" << endl;
 	cout << "Eficiencia sodio labr2 febrero: " << eficiencia_feb_labr2*100 << "%" << endl;
@@ -184,10 +206,12 @@ void activation_results(){
 	cout << "Eficiencia sodio labr2 abril no logbook: " << eficiencia_apr2_labr2*100 << "%" << endl;
 	cout << "Eficiencia sodio labr1 abril sí logbook: " << eficiencia_apr3_labr1*100 << "%" << endl;
 	cout << "Eficiencia sodio labr2 abril sí logbook: " << eficiencia_apr3_labr2*100 << "%" << endl;
+	cout << "--------------" << endl;
 	cout << "Eficiencia cesio labr1 febrero: " << eficiencia_cesio_feb_labr1*100 << "%" << endl;
 	cout << "Eficiencia cesio labr2 febrero: " << eficiencia_cesio_feb_labr2*100 << "%" << endl;
 	cout << "Eficiencia cesio labr1 abril: " << eficiencia_cesio_apr_labr1*100 << "%" << endl;
 	cout << "Eficiencia cesio labr2 abril: " << eficiencia_cesio_apr_labr2*100 << "%" << endl;
+	cout << endl;
 
 	//escalados
 	for(unsigned short j=0; j<6; j++){
