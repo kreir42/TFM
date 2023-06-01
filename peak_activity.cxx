@@ -38,8 +38,8 @@ Double_t peak_activity(const TString filepath, unsigned short channel, unsigned 
 	myCanvas->Close();
 
 	Double_t result = sqrt(2*M_PI) * fitfresult->Parameter(2) * abs(fitfresult->Parameter(4));
-	cout << "Result from integral: " << spectrum->Integral(low, high) << endl;
-	cout << "Result from gaussian: " << result << endl;
+//	cout << "Result from integral: " << spectrum->Integral(low, high) << endl;
+//	cout << "Result from gaussian: " << result << endl;
 	result/= time->FindLastBinAbove(0, 1, -1)*time->GetBinWidth(1)/1E12;
 
 	f.Close();

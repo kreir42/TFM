@@ -25,13 +25,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
 	Double_t labr1_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 6, 1600, 1800, "labr1_cesio_1");
-	cout << "Eficiencia cesio labr1 febrero: " << labr1_cesio_1/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
 	Double_t labr2_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 7, 1600, 1850, "labr2_cesio_1");
-	cout << "Eficiencia cesio labr2 febrero: " << labr2_cesio_1/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
 	Double_t labr1_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 6, 1450, 1750, "labr1_cesio_2");
-	cout << "Eficiencia cesio labr2 abril: " << labr1_cesio_2/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
 	Double_t labr2_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 7, 1650, 1850, "labr2_cesio_2");
-	cout << "Eficiencia cesio labr2 abril: " << labr2_cesio_2/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
 
 	//escalado con na22
 	//en logbook
@@ -167,6 +163,28 @@ void activation_results(){
 	myCanvas->BuildLegend();
 	myCanvas->Write("", TObject::kOverwrite);
 
+	Double_t eficiencia_feb_labr1 = labr1_sodio_1 / NA22_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_feb_labr2 = labr2_sodio_1 / NA22_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_apr2_labr1 = labr1_sodio_2 / NA22_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_apr2_labr2 = labr2_sodio_2 / NA22_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_apr3_labr1 = labr1_sodio_3 / NA22_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_apr3_labr2 = labr2_sodio_3 / NA22_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_feb_labr1 = labr1_cesio_1/CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_feb_labr2 = labr2_cesio_1/CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_apr_labr1 = labr1_cesio_2/CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_cesio_apr_labr2 = labr2_cesio_2/CS137_CALIBRATION_ACTIVITY;
+
+	cout << "Eficiencia sodio labr1 febrero: " << eficiencia_feb_labr1*100 << "%" << endl;
+	cout << "Eficiencia sodio labr2 febrero: " << eficiencia_feb_labr2*100 << "%" << endl;
+	cout << "Eficiencia sodio labr1 abril no logbook: " << eficiencia_apr2_labr1*100 << "%" << endl;
+	cout << "Eficiencia sodio labr2 abril no logbook: " << eficiencia_apr2_labr2*100 << "%" << endl;
+	cout << "Eficiencia sodio labr1 abril sí logbook: " << eficiencia_apr3_labr1*100 << "%" << endl;
+	cout << "Eficiencia sodio labr2 abril sí logbook: " << eficiencia_apr3_labr2*100 << "%" << endl;
+	cout << "Eficiencia cesio labr1 febrero: " << eficiencia_cesio_feb_labr1*100 << "%" << endl;
+	cout << "Eficiencia cesio labr2 febrero: " << eficiencia_cesio_feb_labr2*100 << "%" << endl;
+	cout << "Eficiencia cesio labr1 abril: " << eficiencia_cesio_apr_labr1*100 << "%" << endl;
+	cout << "Eficiencia cesio labr2 abril: " << eficiencia_cesio_apr_labr2*100 << "%" << endl;
+
 	//escalados
 	for(unsigned short j=0; j<6; j++){
 		//escalado debido a la mala medida de la carga
@@ -174,31 +192,27 @@ void activation_results(){
 		results[3][1][j]*=172/239.1;
 
 		//escalado na22
-		results[0][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_1;
-		results[0][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_1;
-		results[1][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_1;
-		results[1][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_1;
-		results[2][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_1;
-		results[2][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_1;
-		results[3][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_1;
-		results[3][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_1;
-		results[4][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_3;
-		results[4][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_3;
-		results[5][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_2;
-		results[5][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_2;
-		results[6][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_3;
-		results[6][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_3;
-		results[7][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_3;
-		results[7][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_3;
-		results[8][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_3;
-		results[8][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_3;
-		results[9][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_3;
-		results[9][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_3;
+		results[0][0][j] /= eficiencia_feb_labr1;
+		results[0][1][j] /= eficiencia_feb_labr2;
+		results[1][0][j] /= eficiencia_feb_labr1;
+		results[1][1][j] /= eficiencia_feb_labr2;
+		results[2][0][j] /= eficiencia_feb_labr1;
+		results[2][1][j] /= eficiencia_feb_labr2;
+		results[3][0][j] /= eficiencia_feb_labr1;
+		results[3][1][j] /= eficiencia_feb_labr2;
+		results[4][0][j] /= eficiencia_apr3_labr1;
+		results[4][1][j] /= eficiencia_apr3_labr2;
+		results[5][0][j] /= eficiencia_apr2_labr1;
+		results[5][1][j] /= eficiencia_apr2_labr2;
+		results[6][0][j] /= eficiencia_apr3_labr1;
+		results[6][1][j] /= eficiencia_apr3_labr2;
+		results[7][0][j] /= eficiencia_apr3_labr1;
+		results[7][1][j] /= eficiencia_apr3_labr2;
+		results[8][0][j] /= eficiencia_apr3_labr1;
+		results[8][1][j] /= eficiencia_apr3_labr2;
+		results[9][0][j] /= eficiencia_apr3_labr1;
+		results[9][1][j] /= eficiencia_apr3_labr2;
 	}
-	cout << "Eficiencia labr1 febrero: " << labr1_sodio_1/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
-	cout << "Eficiencia labr2 febrero: " << labr2_sodio_1/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
-	cout << "Eficiencia labr1 abril: " << labr1_sodio_3/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
-	cout << "Eficiencia labr2 abril: " << labr2_sodio_3/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
 
 	Double_t exfor_energies[] = {3700, 3800, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900};	//TBD:hardcoded, read .txt
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt

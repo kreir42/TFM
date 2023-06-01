@@ -207,6 +207,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	//histograma "delta de dirac" con una sola cuenta
 	TH1D* delta_histogram = new TH1D("centered dirac delta", "Dirac delta;ToF;Counts", GAMMA_FLASH_BINS_N, g_min, g_max);
 	delta_histogram->Fill(g_center, gammas_n);
+	delta_histogram->Fill(g_center+10, gammas_n);
 	delta_histogram->Write("dirac_delta", TObject::kOverwrite);
 	//functor with delta
 	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),n_min,n_max);
