@@ -188,10 +188,9 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
 	Double_t y_err[PULSE_FIT_PARAMS_N];
-	Double_t base = n_min-g_min;
 	Double_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = (base + paramwidth*i)*tof_to_seconds + distance/c;
+		x[i] = (n_min-g_min + paramwidth*i)*tof_to_seconds + distance/c;
 		y[i] = results[i+1][0];
 		y_err[i] = results[i+1][1];
 	}
@@ -250,7 +249,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 
 	Double_t v;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		v = distance/((base + paramwidth*i)*tof_to_seconds + distance/c);
+		v = distance/((n_min-g_min + paramwidth*i)*tof_to_seconds + distance/c);
 		x[i] = (neutron_mass/2*v*v)*J_to_keV;
 		y[i] = results[i+1][0];
 		y_err[i] = results[i+1][1];
