@@ -24,6 +24,11 @@
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
+	//redirige cout a archivo de texto
+	std::ofstream outputFile("resultados_activacion.txt");
+	std::streambuf* originalBuffer = std::cout.rdbuf();
+	std::cout.rdbuf(outputFile.rdbuf());
+
 	Double_t labr1_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 6, 1600, 1800, "labr1_cesio_1");
 	Double_t labr2_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 7, 1600, 1850, "labr2_cesio_1");
 	Double_t labr1_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 6, 1450, 1750, "labr1_cesio_2");
@@ -46,7 +51,6 @@ void activation_results(){
 	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1150, 1500, "labr2_sodio_3");
 	cout << "labr2_sodio_3: " << labr2_sodio_3 << endl;
 
-	cout << "Activation results" << endl;
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");
 
@@ -643,6 +647,9 @@ void activation_results(){
 
 	myCanvas->Close();
 	gDirectory->cd("..");
+
+	std::cout.rdbuf(originalBuffer);	//restaurar cout
+	outputFile.close();
 	f.Close();
 }
 
