@@ -37,19 +37,19 @@ void activation_results(){
 	//escalado con na22
 	//en logbook
 	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 500, 700, "labr1_sodio_1");
-	cout << "labr1_sodio_1: " << labr1_sodio_1 << endl;
+	cout << "labr1_sodio_1: " << labr1_sodio_1 << " counts/s" << endl;
 	Double_t labr2_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 7, 500, 700, "labr2_sodio_1");
-	cout << "labr2_sodio_1: " << labr2_sodio_1 << endl;
+	cout << "labr2_sodio_1: " << labr2_sodio_1 << " counts/s" << endl;
 	//en logbook
 	Double_t labr1_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 6, 1100, 1400, "labr1_sodio_2");
-	cout << "labr1_sodio_2: " << labr1_sodio_2 << endl;
+	cout << "labr1_sodio_2: " << labr1_sodio_2 << " counts/s" << endl;
 	Double_t labr2_sodio_2 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230418.root", 7, 1200, 1450, "labr2_sodio_2");
-	cout << "labr2_sodio_2: " << labr2_sodio_2 << endl;
+	cout << "labr2_sodio_2: " << labr2_sodio_2 << " counts/s" << endl;
 	//no en logbook, pone febrero pero probablemente abril
 	Double_t labr1_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 6, 1100, 1400, "labr1_sodio_3");
-	cout << "labr1_sodio_3: " << labr1_sodio_3 << endl;
+	cout << "labr1_sodio_3: " << labr1_sodio_3 << " counts/s" << endl;
 	Double_t labr2_sodio_3 = peak_activity("output/SData_LaBr1y2_Na22atTarget_calib_20230223.root", 7, 1150, 1500, "labr2_sodio_3");
-	cout << "labr2_sodio_3: " << labr2_sodio_3 << endl;
+	cout << "labr2_sodio_3: " << labr2_sodio_3 << " counts/s" << endl;
 
 	TFile f("output.root", "UPDATE");
 	gDirectory->cd("Activation");

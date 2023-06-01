@@ -1,9 +1,9 @@
-labr1_sodio_1: 34.9451
-labr2_sodio_1: 32.6378
-labr1_sodio_2: 377.952
-labr2_sodio_2: 54.0814
-labr1_sodio_3: 47.2958
-labr2_sodio_3: 55.1854
+labr1_sodio_1: 34.9451 counts/s
+labr2_sodio_1: 32.6378 counts/s
+labr1_sodio_2: 377.952 counts/s
+labr2_sodio_2: 54.0814 counts/s
+labr1_sodio_3: 47.2958 counts/s
+labr2_sodio_3: 55.1854 counts/s
 Eficiencia sodio labr1 febrero: 0.067795%
 Eficiencia sodio labr2 febrero: 0.0633186%
 Eficiencia sodio labr1 abril no logbook: 0.733243%

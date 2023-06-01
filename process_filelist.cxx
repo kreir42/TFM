@@ -117,7 +117,6 @@ void process_filelist(){
 		if(histo_flag==1){
 			add_histograms(new_filepath);
 		}
-		cout << endl;
 	}
 
 	if(yesorno("Create output file?")){
