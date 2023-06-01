@@ -14,13 +14,25 @@
 #define NA22_LAMBDA log(2)/(2.6027*365.2425*24*3600)
 #define NA22_CALIBRATION_ACTIVITY_NOMINAL 53590
 #define NA22_CALIBRATION_ACTIVITY_PABLO 85973
-#define NA22_CALIBRATION_ACTIVITY NA22_CALIBRATION_ACTIVITY_NOMINAL
+#define NA22_CALIBRATION_ACTIVITY NA22_CALIBRATION_ACTIVITY_PABLO*NA22_511_INTENSITY*exp(-NA22_LAMBDA*24*3600*103)
+#define CS137_INTENSITY 0.851
+#define CS137_LAMBDA log(2)/(30.07*365.2425*24*3600)
+#define CS137_CALIBRATION_ACTIVITY 4360*CS137_INTENSITY*exp(-CS137_LAMBDA*24*3600*260)
 
 #include "peak_activity.cxx"
 
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
 
 void activation_results(){
+	Double_t labr1_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 6, 1600, 1800, "labr1_cesio_1");
+	cout << "Eficiencia cesio labr1 febrero: " << labr1_cesio_1/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
+	Double_t labr2_cesio_1 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230223.root", 7, 1600, 1850, "labr2_cesio_1");
+	cout << "Eficiencia cesio labr2 febrero: " << labr2_cesio_1/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
+	Double_t labr1_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 6, 1450, 1750, "labr1_cesio_2");
+	cout << "Eficiencia cesio labr2 abril: " << labr1_cesio_2/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
+	Double_t labr2_cesio_2 = peak_activity("output/SData_LaBr_Cs137atTarget_calib_20230418.root", 7, 1650, 1850, "labr2_cesio_2");
+	cout << "Eficiencia cesio labr2 abril: " << labr2_cesio_2/CS137_CALIBRATION_ACTIVITY*100 << "%" << endl;
+
 	//escalado con na22
 	//en logbook
 	Double_t labr1_sodio_1 = peak_activity("output/SData_LaBr_Na22atTarget_calib_20230223.root", 6, 500, 700, "labr1_sodio_1");
@@ -183,6 +195,10 @@ void activation_results(){
 		results[9][0][j] *= NA22_CALIBRATION_ACTIVITY / labr1_sodio_3;
 		results[9][1][j] *= NA22_CALIBRATION_ACTIVITY / labr2_sodio_3;
 	}
+	cout << "Eficiencia labr1 febrero: " << labr1_sodio_1/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
+	cout << "Eficiencia labr2 febrero: " << labr2_sodio_1/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
+	cout << "Eficiencia labr1 abril: " << labr1_sodio_3/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
+	cout << "Eficiencia labr2 abril: " << labr2_sodio_3/NA22_CALIBRATION_ACTIVITY*100 << "%" << endl;
 
 	Double_t exfor_energies[] = {3700, 3800, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900};	//TBD:hardcoded, read .txt
 	Double_t exfor_data[] = {3.147E-09, 5.904E-09, 1.034E-08, 1.655E-08, 2.462E-08, 3.464E-08, 4.686E-08, 6.203E-08, 8.124E-08, 1.073E-07, 1.426E-07, 1.847E-07, 2.306E-07, 2.812E-07, 3.403E-07, 4.150E-07, 5.119E-07, 6.278E-07, 7.555E-07, 8.856E-07, 1.011E-06, 1.150E-06, 1.330E-06, 1.549E-06, 1.797E-06, 2.062E-06, 2.339E-06, 2.651E-06, 3.015E-06, 3.401E-06, 3.774E-06, 4.147E-06, 4.552E-06, 4.999E-06, 5.489E-06, 6.013E-06, 6.562E-06, 7.131E-06, 7.716E-06, 8.319E-06, 8.943E-06, 9.593E-06, 1.027E-05, 1.099E-05, 1.173E-05, 1.252E-05, 1.333E-05, 1.416E-05, 1.502E-05, 1.589E-05, 1.679E-05, 1.771E-05, 1.865E-05, 1.962E-05, 2.062E-05, 2.165E-05, 2.272E-05, 2.383E-05, 2.497E-05, 2.616E-05, 2.740E-05, 2.869E-05, 3.003E-05};	//TBD:hardcoded, read .txt
@@ -506,9 +522,9 @@ void activation_results(){
 	Double_t per_errors_feb_labr2[4];
 	Double_t per_errors_apr_labr1[6];
 	Double_t per_errors_apr_labr2[6];
-	Double_t rel_abs_errors_feb[4];		//errores absolutos entre detectores
+	Double_t rel_abs_errors_feb[4];		//diferencias absolutas entre detectores
 	Double_t rel_abs_errors_apr[6];
-	Double_t rel_per_errors_feb[4];		//errores porcentuales entre detectores
+	Double_t rel_per_errors_feb[4];		//diferencias porcentuales entre detectores
 	Double_t rel_per_errors_apr[6];
 	for(short i=0; i<4; i++){
 		abs_errors_feb_labr1[i] = results[i][0][4] - reactionsvenergy_exfor->Eval(activation_energies[i]);
@@ -526,6 +542,90 @@ void activation_results(){
 		rel_abs_errors_apr[i] = results[4+i][0][4] - results[4+i][1][4];
 		rel_per_errors_apr[i] = rel_abs_errors_apr[i] / ((results[4+i][0][4]+results[4+i][1][4])/2) * 100;
 	}
+	TGraph* abs_errors_feb_labr1_graph = new TGraph(4, activation_energies, abs_errors_feb_labr1);
+	abs_errors_feb_labr1_graph->SetTitle("Absolute error, February, LaBr1");
+	abs_errors_feb_labr1_graph->SetMarkerColor(kRed);
+	abs_errors_feb_labr1_graph->SetMarkerStyle(22);
+	TGraph* abs_errors_feb_labr2_graph = new TGraph(4, activation_energies, abs_errors_feb_labr2);
+	abs_errors_feb_labr2_graph->SetTitle("Absolute error, February, LaBr2");
+	abs_errors_feb_labr2_graph->SetMarkerColor(kRed);
+	abs_errors_feb_labr2_graph->SetMarkerStyle(34);
+	TGraph* abs_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], &abs_errors_apr_labr1[4]);
+	abs_errors_apr_labr1_graph->SetTitle("Absolute error, April, LaBr1");
+	abs_errors_apr_labr1_graph->SetMarkerColor(kBlue);
+	abs_errors_apr_labr1_graph->SetMarkerStyle(23);
+	TGraph* abs_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], &abs_errors_apr_labr2[4]);
+	abs_errors_apr_labr2_graph->SetTitle("Absolute error, April, LaBr2");
+	abs_errors_apr_labr2_graph->SetMarkerColor(kBlue);
+	abs_errors_apr_labr2_graph->SetMarkerStyle(47);
+	TGraph* per_errors_feb_labr1_graph = new TGraph(4, activation_energies, per_errors_feb_labr1);
+	per_errors_feb_labr1_graph->SetTitle("Relative error, February, LaBr1");
+	per_errors_feb_labr1_graph->SetMarkerColor(kRed);
+	per_errors_feb_labr1_graph->SetMarkerStyle(22);
+	TGraph* per_errors_feb_labr2_graph = new TGraph(4, activation_energies, per_errors_feb_labr2);
+	per_errors_feb_labr2_graph->SetTitle("Relative error, February, LaBr2");
+	per_errors_feb_labr2_graph->SetMarkerColor(kRed);
+	per_errors_feb_labr2_graph->SetMarkerStyle(34);
+	TGraph* per_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], &per_errors_apr_labr1[4]);
+	per_errors_apr_labr1_graph->SetTitle("Relative error, April, LaBr1");
+	per_errors_apr_labr1_graph->SetMarkerColor(kBlue);
+	per_errors_apr_labr1_graph->SetMarkerStyle(23);
+	TGraph* per_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], &per_errors_apr_labr2[4]);
+	per_errors_apr_labr2_graph->SetTitle("Relative error, April, LaBr2");
+	per_errors_apr_labr2_graph->SetMarkerColor(kBlue);
+	per_errors_apr_labr2_graph->SetMarkerStyle(47);
+	TGraph* rel_abs_errors_feb_graph = new TGraph(4, activation_energies, rel_abs_errors_feb);
+	rel_abs_errors_feb_graph->SetTitle("Absolute difference, February");
+	rel_abs_errors_feb_graph->SetMarkerColor(kRed);
+	rel_abs_errors_feb_graph->SetMarkerStyle(20);
+	TGraph* rel_abs_errors_apr_graph = new TGraph(6, &activation_energies[4], &rel_abs_errors_apr[4]);
+	rel_abs_errors_apr_graph->SetTitle("Absolute difference, April");
+	rel_abs_errors_apr_graph->SetMarkerColor(kBlue);
+	rel_abs_errors_apr_graph->SetMarkerStyle(21);
+	TGraph* rel_per_errors_feb_graph = new TGraph(4, activation_energies, rel_per_errors_feb);
+	rel_per_errors_feb_graph->SetTitle("Percentage difference, February");
+	rel_per_errors_feb_graph->SetMarkerColor(kRed);
+	rel_per_errors_feb_graph->SetMarkerStyle(20);
+	TGraph* rel_per_errors_apr_graph = new TGraph(6, &activation_energies[4], &rel_per_errors_apr[4]);
+	rel_per_errors_apr_graph->SetTitle("Percentage difference, April");
+	rel_per_errors_apr_graph->SetMarkerColor(kBlue);
+	rel_per_errors_apr_graph->SetMarkerStyle(21);
+
+	TMultiGraph* abs_errors = new TMultiGraph();
+	abs_errors->Add(abs_errors_feb_labr1_graph);
+	abs_errors->Add(abs_errors_feb_labr2_graph);
+	abs_errors->Add(abs_errors_apr_labr1_graph);
+	abs_errors->Add(abs_errors_apr_labr2_graph);
+	abs_errors->SetTitle("Absolute errors with respect to EXFOR data");
+	abs_errors->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("abs_errors", TObject::kOverwrite);
+
+	TMultiGraph* per_errors = new TMultiGraph();
+	per_errors->Add(per_errors_feb_labr1_graph);
+	per_errors->Add(per_errors_feb_labr2_graph);
+	per_errors->Add(per_errors_apr_labr1_graph);
+	per_errors->Add(per_errors_apr_labr2_graph);
+	per_errors->SetTitle("Relative errors with respect to EXFOR data");
+	per_errors->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("per_errors", TObject::kOverwrite);
+
+	TMultiGraph* rel_abs_errors = new TMultiGraph();
+	rel_abs_errors->Add(rel_abs_errors_feb_graph);
+	rel_abs_errors->Add(rel_abs_errors_apr_graph);
+	rel_abs_errors->SetTitle("Absolute errors with respect to average between Labr 1 and 2");
+	rel_abs_errors->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("rel_abs_errors", TObject::kOverwrite);
+
+	TMultiGraph* rel_per_errors = new TMultiGraph();
+	rel_per_errors->Add(rel_per_errors_feb_graph);
+	rel_per_errors->Add(rel_per_errors_apr_graph);
+	rel_per_errors->SetTitle("Relative errors with respect to average between Labr 1 and 2");
+	rel_per_errors->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("rel_per_errors", TObject::kOverwrite);
 
 	myCanvas->Close();
 	gDirectory->cd("..");
