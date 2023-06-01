@@ -63,7 +63,6 @@ using namespace ROOT;
 ////////////////////////////////////// GLOBAL PARAMETERS AND ROUTINES ////////////////////////////////////////////////// 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 #define channelsused 8
 #define maxTOF 1100
 #define minTOF -100
@@ -83,6 +82,7 @@ void add_histograms(Char_t filepath[500]);
 //process all files inside "input" folder with relative filepaths in "filelist" file
 void process_filelist(){
 	gROOT->SetBatch(kTRUE);
+	gErrorIgnoreLevel = kWarning;
 	Char_t filepath[500];
 	Char_t new_filepath[500];
 
