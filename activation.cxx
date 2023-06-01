@@ -498,21 +498,33 @@ void activation_results(){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//errores
-	Double_t abs_errors_feb_labr1[4];
+	Double_t abs_errors_feb_labr1[4];	//errores absolutos respecto a exfor
 	Double_t abs_errors_feb_labr2[4];
 	Double_t abs_errors_apr_labr1[6];
 	Double_t abs_errors_apr_labr2[6];
-	Double_t rel_errors_feb_labr1[4];
-	Double_t rel_errors_feb_labr2[4];
-	Double_t rel_errors_apr_labr1[6];
-	Double_t rel_errors_apr_labr2[6];
+	Double_t per_errors_feb_labr1[4];	//errores porcentuales respecto a exfor
+	Double_t per_errors_feb_labr2[4];
+	Double_t per_errors_apr_labr1[6];
+	Double_t per_errors_apr_labr2[6];
+	Double_t rel_abs_errors_feb[4];		//errores absolutos entre detectores
+	Double_t rel_abs_errors_apr[6];
+	Double_t rel_per_errors_feb[4];		//errores porcentuales entre detectores
+	Double_t rel_per_errors_apr[6];
 	for(short i=0; i<4; i++){
 		abs_errors_feb_labr1[i] = results[i][0][4] - reactionsvenergy_exfor->Eval(activation_energies[i]);
 		abs_errors_feb_labr2[i] = results[i][1][4] - reactionsvenergy_exfor->Eval(activation_energies[i]);
+		per_errors_feb_labr1[i] = abs_errors_feb_labr1[i]/reactionsvenergy_exfor->Eval(activation_energies[i]) * 100;
+		per_errors_feb_labr2[i] = abs_errors_feb_labr2[i]/reactionsvenergy_exfor->Eval(activation_energies[i]) * 100;
+		rel_abs_errors_feb[i] = results[i][0][4] - results[i][1][4];
+		rel_per_errors_feb[i] = rel_abs_errors_feb[i] / ((results[i][0][4]+results[i][1][4])/2) * 100;
 	}
 	for(short i=0; i<6; i++){
 		abs_errors_apr_labr1[i] = results[4+i][0][4] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
 		abs_errors_apr_labr2[i] = results[4+i][1][4] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
+		per_errors_apr_labr1[i] = abs_errors_apr_labr1[i]/reactionsvenergy_exfor->Eval(activation_energies[4+i]) * 100;
+		per_errors_apr_labr2[i] = abs_errors_apr_labr2[i]/reactionsvenergy_exfor->Eval(activation_energies[4+i]) * 100;
+		rel_abs_errors_apr[i] = results[4+i][0][4] - results[4+i][1][4];
+		rel_per_errors_apr[i] = rel_abs_errors_apr[i] / ((results[4+i][0][4]+results[4+i][1][4])/2) * 100;
 	}
 
 	myCanvas->Close();
