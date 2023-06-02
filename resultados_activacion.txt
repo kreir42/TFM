@@ -43,7 +43,7 @@ Eficiencia cesio labr2 abril: 0.0368501%
 
 Factor febrero: 1.32199
 Factor abril: 1.44927
-Eficiencia Febrero para acuerdo: 0.0896242%
+Eficiencia Febrero LaBr1 para acuerdo: 0.0896242%
 Distancia equivalente a Pablo: 17.3568cm
 Eficiencia Abril2 LaBr2 para acuerdo: 0.152057%
 Distancia equivalente a Pablo: 13.3253cm

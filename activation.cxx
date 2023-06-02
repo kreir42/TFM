@@ -268,7 +268,7 @@ void activation_results(){
 	Double_t factor_apr = (results[4][1][4]+results[4][0][4]+results[8][1][4]+results[8][0][4])/(4*exfor_data[18]);
 	cout << "Factor febrero: " << factor_feb << endl;
 	cout << "Factor abril: " << factor_apr << endl;
-	cout << "Eficiencia Febrero para acuerdo: " << eficiencia_feb_labr1*factor_feb*100 << "%" << endl;
+	cout << "Eficiencia Febrero LaBr1 para acuerdo: " << eficiencia_feb_labr1*factor_feb*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_feb_labr1*factor_feb)) << "cm" << endl;
 	cout << "Eficiencia Abril2 LaBr2 para acuerdo: " << eficiencia_apr2_labr2*factor_apr*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_apr2_labr2*factor_apr)) << "cm" << endl;
@@ -700,8 +700,11 @@ Double_t activation_window_low;
 Double_t activation_window_high;
 
 void activation(){
-	cout << "Activation" << endl;
-	cout << endl;
+	//redirige cout a archivo de texto
+	std::ofstream outputFile("fitting_activacion.txt");
+	std::streambuf* originalBuffer = std::cout.rdbuf();
+	std::cout.rdbuf(outputFile.rdbuf());
+
 	//Feb
 	Char_t filepath_1[100] = "output/SData_aAl_J78kV_GVM1808kV_positions2_activacion.root";
 	Char_t filepath_2[100] = "output/SData_aAl_J78kV_GVM2312kV_positions2_activacion.root";
@@ -806,6 +809,8 @@ void activation(){
 	tree->Write("", TObject::kOverwrite);
 
 	gDirectory->cd("..");
+	std::cout.rdbuf(originalBuffer);	//restaurar cout
+	outputFile.close();
 	f.Close();
 }
 
@@ -855,9 +860,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 		activation_start= 304E12;
 		activation_end= 752E12;
 	}
+	cout << "Activation time: " << (activation_end-activation_start)/1E12 << "s" << endl;
 	cout << "Number of alphas: " << number_of_alphas << endl;
-	cout << "Alphas per second: " << number_of_alphas/(activation_end-activation_start)*1E12 << endl;
-	cout << "Coulomb per nanosecond: " << number_of_alphas/(activation_end-activation_start)/current2alpha << endl;
+	cout << "Alphas per second: " << number_of_alphas/((activation_end-activation_start)/1E12) << endl;
+	cout << "nanoCoulomb per second: " << current_integrator->Integral()*((activation_end-activation_start)/1E12) << endl;
+	cout << "nanoCoulomb per second: " << number_of_alphas/((activation_end-activation_start)/1E12)/current2alpha << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
