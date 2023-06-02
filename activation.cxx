@@ -1,5 +1,4 @@
-#define WANTED_ACTIVATION_BINWIDTH 1
-#define ACTIVATION_NBINS 1000	//deprecated
+#define ACTIVATION_NBINS 1000
 #define ACT1_AENERGY 5500
 #define ACT2_AENERGY 7000
 #define ACT3_AENERGY 8500
@@ -843,62 +842,56 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
 	auto integrator_signals = d.Filter("Channel==1");
-	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue()/1E12;	//TBD!:muy ineficiente!!
-	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue()/1E12;
-	Double_t activation_time = activation_end - activation_start;
-	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", (int)(activation_time/WANTED_ACTIVATION_BINWIDTH), 0, measurement_end}, "t");
+	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
+	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
+	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t current2alpha = 1/(2*1.60217646E-9); //10^-10C to number of alphas
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
 	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//7
-		activation_start = 300.899;
-		activation_end = 753.207;
-		activation_time = activation_end - activation_start;
+		activation_start = 300.899E12;
+		activation_end = 753.207E12;
 	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
 		number_of_alphas = current2alpha * 101.1E4;
-		activation_start= 364;
-		activation_end= 830;
-		activation_time = activation_end - activation_start;
+		activation_start= 364E12;
+		activation_end= 830E12;
 	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//9
 		number_of_alphas = current2alpha * 67.96E4;
-		activation_start= 302;
-		activation_end= 753;
-		activation_time = activation_end - activation_start;
+		activation_start= 302E12;
+		activation_end= 753E12;
 	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//10
 		number_of_alphas = current2alpha * 81.82E4;
-		activation_start= 304;
-		activation_end= 752;
-		activation_time = activation_end - activation_start;
+		activation_start= 304E12;
+		activation_end= 752E12;
 	}
-	cout << "Activation time: " << acivation_time << "s" << endl;
+	cout << "Activation time: " << (activation_end-activation_start)/1E12 << "s" << endl;
 	cout << "Number of alphas: " << number_of_alphas << endl;
-	cout << "Alphas per second: " << number_of_alphas/activation_time << endl;
+	cout << "Alphas per second: " << number_of_alphas/((activation_end-activation_start)/1E12) << endl;
 	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
 	cout << "current2alpha: " << current2alpha << endl;
-	cout << "current (nA): " << current_integrator->Integral()/activation_time/10 << endl;
-	cout << "current (nA): " << (number_of_alphas/current2alpha)/activation_time/10 << endl;
+	cout << "current (nA): " << current_integrator->Integral()/((activation_end-activation_start)/1E12)/10 << endl;
+	cout << "current (nA): " << (number_of_alphas/current2alpha)/((activation_end-activation_start)/1E12)/10 << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
 	auto decay_filter = [&](ULong64_t t){return t>activation_end;};
-	auto d_seconds = d.Define("t", "Timestamp/1E12");
-	auto energy_window = d_seconds.Filter("Energy>activation_window_low && Energy<activation_window_high");
-	auto labr_1_filter = energy_window.Filter("Channel==6");
-	auto labr_2_filter = energy_window.Filter("Channel==7");
+	auto energy_window = d.Filter("Energy>activation_window_low && Energy<activation_window_high");
+	auto labr_1_filter = energy_window.Filter("Channel==6").Define("t", "Timestamp/1E12");
+	auto labr_2_filter = energy_window.Filter("Channel==7").Define("t", "Timestamp/1E12");
 
-	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", measurement_end/WANTED_ACTIVATION_BINWIDTH, 0, measurement_end}, "t");
-	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", measurement_end/WANTED_ACTIVATION_BINWIDTH, 0, measurement_end}, "t");
+	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
+	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 
-	int rise_nbins = activation_time/WANTED_ACTIVATION_BINWIDTH;
-	int decay_nbins = (measurement_end-activation_end)/WANTED_ACTIVATION_BINWIDTH;
+	int rise_nbins = (activation_end-activation_start)/(labr_1->GetBinWidth(1)*1E12);
+	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);
 	cout << "rise_nbins: " << rise_nbins << endl;
 	cout << "decay_nbins: " << decay_nbins << endl;
-	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"t"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start, activation_end}, "t");
-	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"t"}).Histo1D({"labr_1_decay", ";Time (s); Counts", decay_nbins, activation_end, measurement_end}, "t");
-	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"t"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start, activation_end}, "t");
-	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"t"}).Histo1D({"labr_2_decay", ";Time (s);Counts", decay_nbins, activation_end, measurement_end}, "t");
+	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
+	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", ";Time (s); Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
+	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
+	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", ";Time (s);Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
 
-	auto labr1_E_t_plot = d_seconds.Filter("Channel==6").Histo2D({"labr1_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end, 100, 0, 4096}, "t", "Energy");
-	auto labr2_E_t_plot = d_seconds.Filter("Channel==7").Histo2D({"labr2_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end, 100, 0, 4096}, "t", "Energy");
+	auto labr1_E_t_plot = d.Filter("Channel==6").Define("t", "Timestamp/1E12").Histo2D({"labr1_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
+	auto labr2_E_t_plot = d.Filter("Channel==7").Define("t", "Timestamp/1E12").Histo2D({"labr2_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
 
 	current_integrator->Write("", TObject::kOverwrite);
 	labr_1->Write("", TObject::kOverwrite);
