@@ -847,7 +847,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t current2alpha = 1/(2*1.60217646E-9); //10^-10C to number of alphas
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
-	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//7
+		activation_start = 300.899E12;
+		activation_end = 753.207E12;
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
 		number_of_alphas = current2alpha * 101.1E4;
 		activation_start= 364E12;
 		activation_end= 830E12;
@@ -880,6 +883,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	int rise_nbins = (activation_end-activation_start)/(labr_1->GetBinWidth(1)*1E12);
 	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);
+	cout << "rise_nbins: " << rise_nbins << endl;
+	cout << "decay_nbins: " << decay_nbins << endl;
 	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
 	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", ";Time (s); Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
 	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
