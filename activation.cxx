@@ -1,4 +1,4 @@
-#define WANTED_ACTIVATION_BINWIDTH 1.0
+#define WANTED_ACTIVATION_BINWIDTH 1
 #define ACTIVATION_NBINS 1000	//deprecated
 #define ACT1_AENERGY 5500
 #define ACT2_AENERGY 7000
@@ -841,13 +841,12 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	EnableImplicitMT();	//multithreading
 	RDataFrame d("Data", filepath);
 
-	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue()/1E12;
+	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
 	auto integrator_signals = d.Filter("Channel==1");
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue()/1E12;	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue()/1E12;
 	Double_t activation_time = activation_end - activation_start;
-	int nbins = measurement_end/WANTED_ACTIVATION_BINWIDTH;
-	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", nbins, 0, measurement_end}, "t");
+	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", (int)(activation_time/WANTED_ACTIVATION_BINWIDTH), 0, measurement_end}, "t");
 	Double_t current2alpha = 1/(2*1.60217646E-9); //10^-10C to number of alphas
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
 	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//7
@@ -870,7 +869,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 		activation_end= 752;
 		activation_time = activation_end - activation_start;
 	}
-	cout << "Activation time: " << activation_time << "s" << endl;
+	cout << "Activation time: " << acivation_time << "s" << endl;
 	cout << "Number of alphas: " << number_of_alphas << endl;
 	cout << "Alphas per second: " << number_of_alphas/activation_time << endl;
 	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
@@ -879,19 +878,18 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "current (nA): " << (number_of_alphas/current2alpha)/activation_time/10 << endl;
 
 	//histogramas
-	auto rise_filter = [&](Double_t t){return t>=activation_start && t<=activation_end;};
-	auto decay_filter = [&](Double_t t){return t>activation_end;};
+	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
+	auto decay_filter = [&](ULong64_t t){return t>activation_end;};
 	auto d_seconds = d.Define("t", "Timestamp/1E12");
 	auto energy_window = d_seconds.Filter("Energy>activation_window_low && Energy<activation_window_high");
 	auto labr_1_filter = energy_window.Filter("Channel==6");
 	auto labr_2_filter = energy_window.Filter("Channel==7");
 
-	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", nbins, 0, measurement_end}, "t");
-	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", nbins, 0, measurement_end}, "t");
+	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", measurement_end/WANTED_ACTIVATION_BINWIDTH, 0, measurement_end}, "t");
+	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", measurement_end/WANTED_ACTIVATION_BINWIDTH, 0, measurement_end}, "t");
 
 	int rise_nbins = activation_time/WANTED_ACTIVATION_BINWIDTH;
 	int decay_nbins = (measurement_end-activation_end)/WANTED_ACTIVATION_BINWIDTH;
-	cout << "nbins: " << nbins << endl;
 	cout << "rise_nbins: " << rise_nbins << endl;
 	cout << "decay_nbins: " << decay_nbins << endl;
 	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"t"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start, activation_end}, "t");
@@ -916,24 +914,21 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->Write("labr2_E_t_plot", TObject::kOverwrite);
 	labr2_E_t_plot->Draw("COLZ");
 
+	activation_start/=1E12;
+	activation_end/=1E12;
+	measurement_end/=1E12;
 	cout << "Activation start: " << activation_start << "s" << endl;
 	cout << "Activation end: " << activation_end << "s" << endl;
 	cout << "Measurement end: " << measurement_end << "s" << endl;
 
-	Double_t current_integrator_binwidth = current_integrator->GetBinWidth(1);
 	Double_t labr1_binwidth = labr_1->GetBinWidth(1);
 	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
 	Double_t labr1_decay_binwidth = labr_1_decay->GetBinWidth(1);
 	Double_t labr2_decay_binwidth = labr_2_decay->GetBinWidth(1);
-	Double_t labr1_rise_binwidth = labr_1_rise->GetBinWidth(1);
-	Double_t labr2_rise_binwidth = labr_2_rise->GetBinWidth(1);
-	cout << "current integrator binwidth: " << current_integrator_binwidth << endl;
 	cout << "labr1 binwidth: " << labr1_binwidth << endl;
 	cout << "labr2 binwidth: " << labr2_binwidth << endl;
 	cout << "labr1 decay binwidth: " << labr1_decay_binwidth << endl;
 	cout << "labr2 decay binwidth: " << labr2_decay_binwidth << endl;
-	cout << "labr1 rise binwidth: " << labr1_rise_binwidth << endl;
-	cout << "labr2 rise binwidth: " << labr2_rise_binwidth << endl;
 	cout << endl;
 
 	//fittings
