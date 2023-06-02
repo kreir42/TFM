@@ -3,16 +3,16 @@ activation_1
 Activation time: 867.567s
 Number of alphas: 3.46606e+14
 Alphas per second: 3.99515e+11
-Current integrator integral: 1.11065e+06
+Current integrator integral (nC): 111065
 current2alpha: 3.12075e+08
-current integrator per second: 1280.19
-nanoCoulomb per second: 1280.19
+current (nA): 128.019
+current (nA): 128.019
 Activation start: 473.63s
 Activation end: 1341.2s
 Measurement end: 2242.3s
-
 labr1 binwidth: 2.2423
 labr2 binwidth: 2.2423
+
 labr1 unified 30P per alpha: 6.43012e-10
 labr2 unified 30P per alpha: 6.48907e-10
 labr1 unified number of 30P: 222872
@@ -21,26 +21,26 @@ labr1 rise 30P per alpha: 7.48202e-10
 labr2 rise 30P per alpha: 6.4627e-10
 labr1 rise number of 30P: 259331
 labr2 rise number of 30P: 224001
-labr1 decay 30P per alpha: 6.5151e-10
-labr2 decay 30P per alpha: 6.56313e-10
-labr1 decay number of 30P: 225817
-labr2 decay number of 30P: 227482
+labr1 decay 30P per alpha: 3.27574e-09
+labr2 decay 30P per alpha: 3.29989e-09
+labr1 decay number of 30P: 1.13539e+06
+labr2 decay number of 30P: 1.14376e+06
 ---------------
 activation_2
 ***************
 Activation time: 981.819s
 Number of alphas: 3.10677e+14
 Alphas per second: 3.1643e+11
-Current integrator integral: 995518
+Current integrator integral (nC): 99551.8
 current2alpha: 3.12075e+08
-current integrator per second: 1013.95
-nanoCoulomb per second: 1013.95
+current (nA): 101.395
+current (nA): 101.395
 Activation start: 451.767s
 Activation end: 1433.59s
 Measurement end: 2305.26s
-
 labr1 binwidth: 2.30526
 labr2 binwidth: 2.30526
+
 labr1 unified 30P per alpha: 4.23592e-09
 labr2 unified 30P per alpha: 4.25812e-09
 labr1 unified number of 30P: 1.316e+06
@@ -49,232 +49,17 @@ labr1 rise 30P per alpha: 4.23769e-09
 labr2 rise 30P per alpha: 4.21363e-09
 labr1 rise number of 30P: 1.31655e+06
 labr2 rise number of 30P: 1.30908e+06
-labr1 decay 30P per alpha: 4.27271e-09
-labr2 decay 30P per alpha: 4.32168e-09
-labr1 decay number of 30P: 1.32743e+06
-labr2 decay number of 30P: 1.34265e+06
+labr1 decay 30P per alpha: 2.27061e-08
+labr2 decay 30P per alpha: 2.29664e-08
+labr1 decay number of 30P: 7.05427e+06
+labr2 decay number of 30P: 7.13512e+06
 ---------------
 activation_3
 ***************
 Activation time: 909.95s
 Number of alphas: 3.64098e+14
 Alphas per second: 4.0013e+11
-Current integrator integral: 1.1667e+06
+Current integrator integral (nC): 116670
 current2alpha: 3.12075e+08
-current integrator per second: 1282.16
-nanoCoulomb per second: 1282.16
-Activation start: 263.389s
-Activation end: 1173.34s
-Measurement end: 2062.85s
-
-labr1 binwidth: 2.06285
-labr2 binwidth: 2.06285
-labr1 unified 30P per alpha: 1.32287e-08
-labr2 unified 30P per alpha: 1.31233e-08
-labr1 unified number of 30P: 4.81656e+06
-labr2 unified number of 30P: 4.77817e+06
-labr1 rise 30P per alpha: 1.31545e-08
-labr2 rise 30P per alpha: 1.28005e-08
-labr1 rise number of 30P: 4.78954e+06
-labr2 rise number of 30P: 4.66065e+06
-labr1 decay 30P per alpha: 1.36175e-08
-labr2 decay 30P per alpha: 1.36097e-08
-labr1 decay number of 30P: 4.9581e+06
-labr2 decay number of 30P: 4.95528e+06
----------------
-activation_4
-***************
-Activation time: 899.426s
-Number of alphas: 5.39115e+14
-Alphas per second: 5.99398e+11
-Current integrator integral: 1.72751e+06
-current2alpha: 3.12075e+08
-current integrator per second: 1920.68
-nanoCoulomb per second: 1920.68
-Activation start: 384.615s
-Activation end: 1284.04s
-Measurement end: 2480.31s
-
-labr1 binwidth: 2.48031
-labr2 binwidth: 2.48031
-labr1 unified 30P per alpha: 1.04328e-08
-labr2 unified 30P per alpha: 1.02873e-08
-labr1 unified number of 30P: 5.62447e+06
-labr2 unified number of 30P: 5.54604e+06
-labr1 rise 30P per alpha: 1.92341e-09
-labr2 rise 30P per alpha: 1.87144e-09
-labr1 rise number of 30P: 1.03694e+06
-labr2 rise number of 30P: 1.00892e+06
-labr1 decay 30P per alpha: 1.72872e-08
-labr2 decay 30P per alpha: 1.71515e-08
-labr1 decay number of 30P: 9.31981e+06
-labr2 decay number of 30P: 9.24663e+06
----------------
-activation_5
-***************
-Activation time: 605.226s
-Number of alphas: 2.3219e+14
-Alphas per second: 3.83642e+11
-Current integrator integral: 744018
-current2alpha: 3.12075e+08
-current integrator per second: 1229.32
-nanoCoulomb per second: 1229.32
-Activation start: 129.279s
-Activation end: 734.505s
-Measurement end: 1946.98s
-
-labr1 binwidth: 1.94698
-labr2 binwidth: 1.94698
-labr1 unified 30P per alpha: 1.01674e-09
-labr2 unified 30P per alpha: 1.07121e-09
-labr1 unified number of 30P: 236077
-labr2 unified number of 30P: 248724
-labr1 rise 30P per alpha: 1.23365e-09
-labr2 rise 30P per alpha: 1.26734e-09
-labr1 rise number of 30P: 286442
-labr2 rise number of 30P: 294263
-labr1 decay 30P per alpha: 1.04735e-09
-labr2 decay 30P per alpha: 1.1155e-09
-labr1 decay number of 30P: 243184
-labr2 decay number of 30P: 259008
----------------
-activation_6
-***************
-Activation time: 599.52s
-Number of alphas: 5.83036e+14
-Alphas per second: 9.72504e+11
-Current integrator integral: 1.86825e+06
-current2alpha: 3.12075e+08
-current integrator per second: 3116.25
-nanoCoulomb per second: 3116.25
-Activation start: 302.437s
-Activation end: 901.957s
-Measurement end: 2126.26s
-
-labr1 binwidth: 2.12626
-labr2 binwidth: 2.12626
-labr1 unified 30P per alpha: 4.36435e-09
-labr2 unified 30P per alpha: 1.17329e-09
-labr1 unified number of 30P: 2.54457e+06
-labr2 unified number of 30P: 684072
-labr1 rise 30P per alpha: 5.43542e-09
-labr2 rise 30P per alpha: 1.54024e-09
-labr1 rise number of 30P: 3.16904e+06
-labr2 rise number of 30P: 898016
-labr1 decay 30P per alpha: 4.56769e-09
-labr2 decay 30P per alpha: 1.22606e-09
-labr1 decay number of 30P: 2.66312e+06
-labr2 decay number of 30P: 714836
----------------
-activation_7
-***************
-Activation time: 898.386s
-Number of alphas: 2.72299e+14
-Alphas per second: 3.03098e+11
-Current integrator integral: 872543
-current2alpha: 3.12075e+08
-current integrator per second: 971.233
-nanoCoulomb per second: 971.233
-Activation start: 83.9892s
-Activation end: 982.376s
-Measurement end: 1801.91s
-
-labr1 binwidth: 1.80191
-labr2 binwidth: 1.80191
-labr1 unified 30P per alpha: 1.80119e-08
-labr2 unified 30P per alpha: 2.00531e-08
-labr1 unified number of 30P: 4.90463e+06
-labr2 unified number of 30P: 5.46045e+06
-labr1 rise 30P per alpha: 1.79696e-08
-labr2 rise 30P per alpha: 1.98863e-08
-labr1 rise number of 30P: 4.89312e+06
-labr2 rise number of 30P: 5.41502e+06
-labr1 decay 30P per alpha: 1.11183e-08
-labr2 decay 30P per alpha: 1.25986e-08
-labr1 decay number of 30P: 3.02751e+06
-labr2 decay number of 30P: 3.43059e+06
----------------
-activation_8
-***************
-Activation time: 466s
-Number of alphas: 3.15508e+14
-Alphas per second: 6.77056e+11
-Current integrator integral: 0
-current2alpha: 3.12075e+08
-current integrator per second: 0
-nanoCoulomb per second: 2169.53
-Activation start: 364s
-Activation end: 830s
-Measurement end: 2006.12s
-
-labr1 binwidth: 2.00612
-labr2 binwidth: 2.00612
-labr1 unified 30P per alpha: 6.42833e-09
-labr2 unified 30P per alpha: 6.42833e-09
-labr1 unified number of 30P: 2.02819e+06
-labr2 unified number of 30P: 2.02819e+06
-labr1 rise 30P per alpha: 6.42833e-09
-labr2 rise 30P per alpha: 6.42833e-09
-labr1 rise number of 30P: 2.02819e+06
-labr2 rise number of 30P: 2.02819e+06
-labr1 decay 30P per alpha: 6.75285e-09
-labr2 decay 30P per alpha: 7.6462e-09
-labr1 decay number of 30P: 2.13058e+06
-labr2 decay number of 30P: 2.41244e+06
----------------
-activation_9
-***************
-Activation time: 451s
-Number of alphas: 2.12087e+14
-Alphas per second: 4.70258e+11
-Current integrator integral: 0
-current2alpha: 3.12075e+08
-current integrator per second: 0
-nanoCoulomb per second: 1506.87
-Activation start: 302s
-Activation end: 753s
-Measurement end: 1800.8s
-
-labr1 binwidth: 1.8008
-labr2 binwidth: 1.8008
-labr1 unified 30P per alpha: 5.7704e-09
-labr2 unified 30P per alpha: 5.7704e-09
-labr1 unified number of 30P: 1.22382e+06
-labr2 unified number of 30P: 1.22382e+06
-labr1 rise 30P per alpha: 5.7704e-09
-labr2 rise 30P per alpha: 5.7704e-09
-labr1 rise number of 30P: 1.22382e+06
-labr2 rise number of 30P: 1.22382e+06
-labr1 decay 30P per alpha: 1.02139e-09
-labr2 decay 30P per alpha: 1.15963e-09
-labr1 decay number of 30P: 216623
-labr2 decay number of 30P: 245943
----------------
-activation_10
-***************
-Activation time: 448s
-Number of alphas: 2.5534e+14
-Alphas per second: 5.69956e+11
-Current integrator integral: 0
-current2alpha: 3.12075e+08
-current integrator per second: 0
-nanoCoulomb per second: 1826.34
-Activation start: 304s
-Activation end: 752s
-Measurement end: 1804.33s
-
-labr1 binwidth: 1.80433
-labr2 binwidth: 1.80433
-labr1 unified 30P per alpha: 5.78172e-09
-labr2 unified 30P per alpha: 5.78172e-09
-labr1 unified number of 30P: 1.47631e+06
-labr2 unified number of 30P: 1.47631e+06
-labr1 rise 30P per alpha: 5.78172e-09
-labr2 rise 30P per alpha: 5.78172e-09
-labr1 rise number of 30P: 1.47631e+06
-labr2 rise number of 30P: 1.47631e+06
-labr1 decay 30P per alpha: 1.06891e-08
-labr2 decay 30P per alpha: 1.2117e-08
-labr1 decay number of 30P: 2.72935e+06
-labr2 decay number of 30P: 3.09395e+06
----------------
+current (nA): 128.216
+current (nA): 128.216

@@ -845,7 +845,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
-	Double_t current2alpha = 1/(2*1.60217646E-9);
+	Double_t current2alpha = 1/(2*1.60217646E-9); //10^-10C to number of alphas
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
 	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
 		number_of_alphas = current2alpha * 101.1E4;
@@ -863,10 +863,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "Activation time: " << (activation_end-activation_start)/1E12 << "s" << endl;
 	cout << "Number of alphas: " << number_of_alphas << endl;
 	cout << "Alphas per second: " << number_of_alphas/((activation_end-activation_start)/1E12) << endl;
-	cout << "Current integrator integral: " << current_integrator->Integral() << endl;
+	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
 	cout << "current2alpha: " << current2alpha << endl;
-	cout << "current integrator per second: " << current_integrator->Integral()/((activation_end-activation_start)/1E12) << endl;
-	cout << "nanoCoulomb per second: " << number_of_alphas/((activation_end-activation_start)/1E12)/current2alpha << endl;
+	cout << "current (nA): " << current_integrator->Integral()/((activation_end-activation_start)/1E12)/10 << endl;
+	cout << "current (nA): " << (number_of_alphas/current2alpha)/((activation_end-activation_start)/1E12)/10 << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
@@ -908,9 +908,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "Activation start: " << activation_start << "s" << endl;
 	cout << "Activation end: " << activation_end << "s" << endl;
 	cout << "Measurement end: " << measurement_end << "s" << endl;
+
+	Double_t labr1_binwidth = labr_1->GetBinWidth(1);
+	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
+	cout << "labr1 binwidth: " << labr1_binwidth << endl;
+	cout << "labr2 binwidth: " << labr2_binwidth << endl;
 	cout << endl;
-	cout << "labr1 binwidth: " << labr_1->GetBinWidth(1) << endl;
-	cout << "labr2 binwidth: " << labr_2->GetBinWidth(1) << endl;
+	labr1_binwidth = 1;
+	labr2_binwidth = 1;
 
 	//fittings
 	TFitResultPtr fitresult;
@@ -929,14 +934,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg", "initial number of 30P");
 
 	fitresult = labr_1->Fit("unified_fit", "SLEQ");
-	results[0][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
-	results[0][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[0][0] = fitresult->Parameter(1)/current2alpha*labr1_binwidth;
+	results[0][1] = fitresult->ParError(1)/current2alpha*labr1_binwidth;
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2->Fit("unified_fit", "SLEQ");
-	results[1][0] = fitresult->Parameter(1)/current2alpha*labr_2->GetBinWidth(1);
-	results[1][1] = fitresult->ParError(1)/current2alpha*labr_2->GetBinWidth(1);
+	results[1][0] = fitresult->Parameter(1)/current2alpha*labr2_binwidth;
+	results[1][1] = fitresult->ParError(1)/current2alpha*labr2_binwidth;
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -949,14 +954,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetNpx(rise_nbins);
 
 	fitresult = labr_1_rise->Fit("unified_fit", "SLEQ");
-	results[0][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
-	results[0][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[0][2] = fitresult->Parameter(1)/current2alpha*labr1_binwidth;
+	results[0][3] = fitresult->ParError(1)/current2alpha*labr1_binwidth;
 	myCanvas->SetName("labr_1_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLEQ");
-	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_2->GetBinWidth(1);
-	results[1][3] = fitresult->ParError(1)/current2alpha*labr_2->GetBinWidth(1);
+	results[1][2] = fitresult->Parameter(1)/current2alpha*labr2_binwidth;
+	results[1][3] = fitresult->ParError(1)/current2alpha*labr2_binwidth;
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -977,14 +982,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLEQ");
-	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
-	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_1->GetBinWidth(1));
+	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr1_binwidth);
+	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr1_binwidth);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
-	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
-	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr_2->GetBinWidth(1));
+	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr2_binwidth);
+	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr2_binwidth);
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
