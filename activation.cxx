@@ -911,11 +911,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	Double_t labr1_binwidth = labr_1->GetBinWidth(1);
 	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
+	Double_t labr1_decay_binwidth = labr_1_decay->GetBinWidth(1);
+	Double_t labr2_decay_binwidth = labr_2_decay->GetBinWidth(1);
 	cout << "labr1 binwidth: " << labr1_binwidth << endl;
 	cout << "labr2 binwidth: " << labr2_binwidth << endl;
+	cout << "labr1 decay binwidth: " << labr1_decay_binwidth << endl;
+	cout << "labr2 decay binwidth: " << labr2_decay_binwidth << endl;
 	cout << endl;
-	labr1_binwidth = 1;
-	labr2_binwidth = 1;
 
 	//fittings
 	TFitResultPtr fitresult;
@@ -982,14 +984,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLEQ");
-	results[0][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr1_binwidth);
-	results[0][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr1_binwidth);
+	results[0][4] = fitresult->Parameter(1)/labr1_decay_binwidth*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas);
+	results[0][5] = fitresult->ParError(1)/labr1_decay_binwidth*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
-	results[1][4] = fitresult->Parameter(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr2_binwidth);
-	results[1][5] = fitresult->ParError(1)*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas*labr2_binwidth);
+	results[1][4] = fitresult->Parameter(1)/labr2_decay_binwidth*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas);
+	results[1][5] = fitresult->ParError(1)/labr2_decay_binwidth*(activation_end-activation_start)/((1-exp(-fitresult->Parameter(2)*(activation_end-activation_start)))*number_of_alphas);
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
