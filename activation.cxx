@@ -863,7 +863,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "Activation time: " << (activation_end-activation_start)/1E12 << "s" << endl;
 	cout << "Number of alphas: " << number_of_alphas << endl;
 	cout << "Alphas per second: " << number_of_alphas/((activation_end-activation_start)/1E12) << endl;
-	cout << "nanoCoulomb per second: " << current_integrator->Integral()*((activation_end-activation_start)/1E12) << endl;
+	cout << "Current integrator integral: " << current_integrator->Integral() << endl;
+	cout << "current2alpha: " << current2alpha << endl;
+	cout << "current integrator per second: " << current_integrator->Integral()/((activation_end-activation_start)/1E12) << endl;
 	cout << "nanoCoulomb per second: " << number_of_alphas/((activation_end-activation_start)/1E12)/current2alpha << endl;
 
 	//histogramas
@@ -903,6 +905,12 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	activation_start/=1E12;
 	activation_end/=1E12;
 	measurement_end/=1E12;
+	cout << "Activation start: " << activation_start << "s" << endl;
+	cout << "Activation end: " << activation_end << "s" << endl;
+	cout << "Measurement end: " << measurement_end << "s" << endl;
+	cout << endl;
+	cout << "labr1 binwidth: " << labr_1->GetBinWidth(1) << endl;
+	cout << "labr2 binwidth: " << labr_2->GetBinWidth(1) << endl;
 
 	//fittings
 	TFitResultPtr fitresult;
@@ -927,8 +935,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2->Fit("unified_fit", "SLEQ");
-	results[1][0] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
-	results[1][1] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[1][0] = fitresult->Parameter(1)/current2alpha*labr_2->GetBinWidth(1);
+	results[1][1] = fitresult->ParError(1)/current2alpha*labr_2->GetBinWidth(1);
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -947,8 +955,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLEQ");
-	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_1->GetBinWidth(1);
-	results[1][3] = fitresult->ParError(1)/current2alpha*labr_1->GetBinWidth(1);
+	results[1][2] = fitresult->Parameter(1)/current2alpha*labr_2->GetBinWidth(1);
+	results[1][3] = fitresult->ParError(1)/current2alpha*labr_2->GetBinWidth(1);
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
