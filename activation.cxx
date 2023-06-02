@@ -213,6 +213,13 @@ void activation_results(){
 	cout << "Eficiencia cesio labr2 abril: " << eficiencia_cesio_apr_labr2*100 << "%" << endl;
 	cout << endl;
 
+//	eficiencia_feb_labr1  = 0.067/100;
+//	eficiencia_feb_labr2  = 0.067/100;
+//	eficiencia_apr2_labr1 = 0.067/100;
+//	eficiencia_apr2_labr2 = 0.067/100;
+//	eficiencia_apr3_labr1 = 0.067/100;
+//	eficiencia_apr3_labr2 = 0.067/100;
+
 	//escalados
 	for(unsigned short j=0; j<6; j++){
 		//escalado debido a la mala medida de la carga
