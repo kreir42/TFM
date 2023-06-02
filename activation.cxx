@@ -21,6 +21,8 @@
 #define CS137_ORIGINAL_ACTIVITY 4360
 #define CS137_CALIBRATION_ACTIVITY CS137_ORIGINAL_ACTIVITY*CS137_INTENSITY*exp(-CS137_LAMBDA*24*3600*260)
 
+#define PABLO_EFF_10CM 0.0027
+
 #include "peak_activity.cxx"
 
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
@@ -201,11 +203,17 @@ void activation_results(){
 	Double_t eficiencia_cesio_apr_labr2 = labr2_cesio_2 / CS137_CALIBRATION_ACTIVITY;
 
 	cout << "Eficiencia sodio labr1 febrero: " << eficiencia_feb_labr1*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_feb_labr1) << "cm" << endl;
 	cout << "Eficiencia sodio labr2 febrero: " << eficiencia_feb_labr2*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_feb_labr2) << "cm" << endl;
 	cout << "Eficiencia sodio labr1 abril no logbook: " << eficiencia_apr2_labr1*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_apr2_labr1) << "cm" << endl;
 	cout << "Eficiencia sodio labr2 abril no logbook: " << eficiencia_apr2_labr2*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_apr2_labr2) << "cm" << endl;
 	cout << "Eficiencia sodio labr1 abril sí logbook: " << eficiencia_apr3_labr1*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_apr3_labr1) << "cm" << endl;
 	cout << "Eficiencia sodio labr2 abril sí logbook: " << eficiencia_apr3_labr2*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_apr3_labr2) << "cm" << endl;
 	cout << "--------------" << endl;
 	cout << "Eficiencia cesio labr1 febrero: " << eficiencia_cesio_feb_labr1*100 << "%" << endl;
 	cout << "Eficiencia cesio labr2 febrero: " << eficiencia_cesio_feb_labr2*100 << "%" << endl;
@@ -258,8 +266,12 @@ void activation_results(){
 	Double_t exfor_errors_2[63];
 	Double_t factor_feb = (results[0][1][4]+results[0][0][4])/(2*exfor_data[18]);
 	Double_t factor_apr = (results[4][1][4]+results[4][0][4]+results[8][1][4]+results[8][0][4])/(4*exfor_data[18]);
-	cout << "Factor febrero :" << factor_feb << endl;
-	cout << "Factor abril :" << factor_apr << endl;
+	cout << "Factor febrero: " << factor_feb << endl;
+	cout << "Factor abril: " << factor_apr << endl;
+	cout << "Eficiencia Febrero para acuerdo: " << eficiencia_feb_labr1*factor_feb*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_feb_labr1*factor_feb)) << "cm" << endl;
+	cout << "Eficiencia Abril2 LaBr2 para acuerdo: " << eficiencia_apr2_labr2*factor_apr*100 << "%" << endl;
+	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_apr2_labr2*factor_apr)) << "cm" << endl;
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
 		exfor_errors[i] = exfor_data[i] * 0.05;
 //		exfor_data_1[i]*=2.220341468E-5*(19.5/16.8)*(19.358/19.5);	//eficiencia feb

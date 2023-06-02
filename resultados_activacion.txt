@@ -24,16 +24,26 @@ labr2_cesio_2: 1.91921 counts/s
 
 Calcular eficiencias como cuentas/s en fotopico durante run de calibración dividido por emisiones de la muestra:
 Eficiencia sodio labr1 febrero: 0.067795%
+Distancia equivalente a Pablo: 19.9564cm
 Eficiencia sodio labr2 febrero: 0.0633186%
+Distancia equivalente a Pablo: 20.6498cm
 Eficiencia sodio labr1 abril no logbook: 0.733243%
+Distancia equivalente a Pablo: 6.06817cm
 Eficiencia sodio labr2 abril no logbook: 0.10492%
+Distancia equivalente a Pablo: 16.0418cm
 Eficiencia sodio labr1 abril sí logbook: 0.0917557%
+Distancia equivalente a Pablo: 17.154cm
 Eficiencia sodio labr2 abril sí logbook: 0.107062%
+Distancia equivalente a Pablo: 15.8805cm
 --------------
 Eficiencia cesio labr1 febrero: 0.00656126%
 Eficiencia cesio labr2 febrero: 0.0210056%
 Eficiencia cesio labr1 abril: 0.239934%
 Eficiencia cesio labr2 abril: 0.0368501%
 
-Factor febrero :1.32199
-Factor abril :1.44927
+Factor febrero: 1.32199
+Factor abril: 1.44927
+Eficiencia Febrero para acuerdo: 0.0896242%
+Distancia equivalente a Pablo: 17.3568cm
+Eficiencia Abril2 LaBr2 para acuerdo: 0.152057%
+Distancia equivalente a Pablo: 13.3253cm
