@@ -11,15 +11,11 @@
 #define ACT10_AENERGY 7500
 
 #define NA22_511_INTENSITY 1.798
-#define NA22_LAMBDA log(2)/(2.6027*365.2425*24*3600)
 #define NA22_CALIBRATION_ACTIVITY_NOMINAL 53590
 #define NA22_CALIBRATION_ACTIVITY_PABLO 85973
 #define NA22_ORIGINAL_ACTIVITY NA22_CALIBRATION_ACTIVITY_PABLO
-#define NA22_CALIBRATION_ACTIVITY NA22_ORIGINAL_ACTIVITY*NA22_511_INTENSITY*exp(-NA22_LAMBDA*24*3600*103)
 #define CS137_INTENSITY 0.851
-#define CS137_LAMBDA log(2)/(30.07*365.2425*24*3600)
 #define CS137_ORIGINAL_ACTIVITY 4360
-#define CS137_CALIBRATION_ACTIVITY CS137_ORIGINAL_ACTIVITY*CS137_INTENSITY*exp(-CS137_LAMBDA*24*3600*260)
 
 #define PABLO_EFF_10CM 0.0027
 
@@ -33,16 +29,23 @@ void activation_results(){
 	std::streambuf* originalBuffer = std::cout.rdbuf();
 	std::cout.rdbuf(outputFile.rdbuf());
 
+	Double_t na22_lambda = log(2)/(2.6027*365.2425*24*3600);
+	Double_t na22_calibration_activity_feb = NA22_ORIGINAL_ACTIVITY * NA22_511_INTENSITY * exp(-na22_lambda*24*3600*108);
+	Double_t na22_calibration_activity_apr = NA22_ORIGINAL_ACTIVITY * NA22_511_INTENSITY * exp(-na22_lambda*24*3600*162);
+	Double_t cs137_lambda = log(2)/(30.07*365.2425*24*3600);
+	Double_t cs137_calibration_activity = CS137_ORIGINAL_ACTIVITY * CS137_INTENSITY * exp(-cs137_lambda*24*3600*260);
+
 	cout << "Calcular emisiones reales de muestras de calibración como calibration activity * intensity * e^(-lambda*t):" << endl;
 	cout << "Na22 intensity: " << NA22_511_INTENSITY << endl;
-	cout << "Na22 lambda (s^-1): " << NA22_LAMBDA << endl;
+	cout << "Na22 lambda (s^-1): " << na22_lambda << endl;
 	cout << "Na22 original activity (decays/s): " << NA22_ORIGINAL_ACTIVITY << endl;
-	cout << "Na22 activity (decays/s): " << NA22_CALIBRATION_ACTIVITY << endl;
+	cout << "Na22 activity Feb (decays/s): " << na22_calibration_activity_feb << endl;
+	cout << "Na22 activity Apr (decays/s): " << na22_calibration_activity_apr << endl;
 	cout << "--------------" << endl;
 	cout << "Cs137 intensity: " << CS137_INTENSITY << endl;
-	cout << "Cs137 lambda (s^-1): " << CS137_LAMBDA << endl;
+	cout << "Cs137 lambda (s^-1): " << cs137_lambda << endl;
 	cout << "Cs137 original activity (decays/s): " << CS137_ORIGINAL_ACTIVITY << endl;
-	cout << "Cs137 activity (decays/s): " << CS137_CALIBRATION_ACTIVITY << endl;
+	cout << "Cs137 activity (decays/s): " << cs137_calibration_activity << endl;
 	cout << endl;
 
 	//calibración con na22
@@ -191,16 +194,16 @@ void activation_results(){
 
 	cout << "Calcular eficiencias como cuentas/s en fotopico durante run de calibración dividido por emisiones de la muestra:" << endl;
 
-	Double_t eficiencia_feb_labr1 = labr1_sodio_1 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_feb_labr2 = labr2_sodio_1 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_apr2_labr1 = labr1_sodio_2 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_apr2_labr2 = labr2_sodio_2 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_apr3_labr1 = labr1_sodio_3 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_apr3_labr2 = labr2_sodio_3 / NA22_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_feb_labr1 = labr1_cesio_1 / CS137_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_feb_labr2 = labr2_cesio_1 / CS137_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_apr_labr1 = labr1_cesio_2 / CS137_CALIBRATION_ACTIVITY;
-	Double_t eficiencia_cesio_apr_labr2 = labr2_cesio_2 / CS137_CALIBRATION_ACTIVITY;
+	Double_t eficiencia_feb_labr1 = labr1_sodio_1 / na22_calibration_activity_feb;
+	Double_t eficiencia_feb_labr2 = labr2_sodio_1 / na22_calibration_activity_feb;
+	Double_t eficiencia_apr2_labr1 = labr1_sodio_2 / na22_calibration_activity_apr;
+	Double_t eficiencia_apr2_labr2 = labr2_sodio_2 / na22_calibration_activity_apr;
+	Double_t eficiencia_apr3_labr1 = labr1_sodio_3 / na22_calibration_activity_apr;
+	Double_t eficiencia_apr3_labr2 = labr2_sodio_3 / na22_calibration_activity_apr;
+	Double_t eficiencia_cesio_feb_labr1 = labr1_cesio_1 / cs137_calibration_activity;
+	Double_t eficiencia_cesio_feb_labr2 = labr2_cesio_1 / cs137_calibration_activity;
+	Double_t eficiencia_cesio_apr_labr1 = labr1_cesio_2 / cs137_calibration_activity;
+	Double_t eficiencia_cesio_apr_labr2 = labr2_cesio_2 / cs137_calibration_activity;
 
 	cout << "Eficiencia sodio labr1 febrero: " << eficiencia_feb_labr1*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/eficiencia_feb_labr1) << "cm" << endl;
@@ -220,13 +223,6 @@ void activation_results(){
 	cout << "Eficiencia cesio labr1 abril: " << eficiencia_cesio_apr_labr1*100 << "%" << endl;
 	cout << "Eficiencia cesio labr2 abril: " << eficiencia_cesio_apr_labr2*100 << "%" << endl;
 	cout << endl;
-
-//	eficiencia_feb_labr1  = 0.067/100;
-//	eficiencia_feb_labr2  = 0.067/100;
-//	eficiencia_apr2_labr1 = 0.067/100;
-//	eficiencia_apr2_labr2 = 0.067/100;
-//	eficiencia_apr3_labr1 = 0.067/100;
-//	eficiencia_apr3_labr2 = 0.067/100;
 
 	//escalados
 	for(unsigned short j=0; j<6; j++){
@@ -270,7 +266,7 @@ void activation_results(){
 	cout << "Factor abril: " << factor_apr << endl;
 	cout << "Eficiencia Febrero LaBr1 para acuerdo: " << eficiencia_feb_labr1*factor_feb*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_feb_labr1*factor_feb)) << "cm" << endl;
-	cout << "Eficiencia Abril2 LaBr2 para acuerdo: " << eficiencia_apr2_labr2*factor_apr*100 << "%" << endl;
+	cout << "Eficiencia Abril3 LaBr2 para acuerdo: " << eficiencia_apr3_labr2*factor_apr*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_apr2_labr2*factor_apr)) << "cm" << endl;
 	for(short i=0; i<63; i++){	//TBD:escalado temporal, números hardcoded
 		exfor_errors[i] = exfor_data[i] * 0.05;
@@ -913,8 +909,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	measurement_end/=1E12;
 	cout << "Activation start: " << activation_start << "s" << endl;
 	cout << "Activation end: " << activation_end << "s" << endl;
-	cout << "Activation time: " << activation_time/1E12 << "s" << endl;
+	cout << "Activation time: " << activation_time << "s" << endl;
 	cout << "Measurement end: " << measurement_end << "s" << endl;
+	cout << "activation_window_low: " << activation_window_low << endl;
+	cout << "activation_window_high: " << activation_window_high << endl;
 
 	Double_t labr1_binwidth = labr_1->GetBinWidth(1);
 	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
@@ -979,7 +977,6 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
 	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
 
-	cout << endl;
 	//decay
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
 	decay->SetNpx(decay_nbins);
@@ -992,15 +989,16 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLEQ");
-	cout << "Decay fit parameters:" << endl;
-	cout << "·Background activity: " << fitresult->Parameter(0) << endl;
-	cout << "·Initial activiy: " << fitresult->Parameter(1) << endl;
-	cout << "·Decay constant: " << fitresult->Parameter(2) << endl;
-	cout << "·activation_end: " << fitresult->Parameter(3) << endl;
 	results[0][4] = fitresult->Parameter(1)/labr1_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
 	results[0][5] = fitresult->ParError(1)/labr1_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
+
+	cout << "Labr1 decay fit parameters:" << endl;
+	cout << "·Background activity: " << fitresult->Parameter(0) << endl;
+	cout << "·Initial activiy: " << fitresult->Parameter(1) << endl;
+	cout << "·Decay constant: " << fitresult->Parameter(2) << endl;
+	cout << "·activation_end: " << fitresult->Parameter(3) << endl;
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
 	results[1][4] = fitresult->Parameter(1)/labr2_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
