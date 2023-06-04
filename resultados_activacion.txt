@@ -1,14 +1,14 @@
 Calcular emisiones reales de muestras de calibración como calibration activity * intensity * e^(-lambda*t):
 Na22 intensity: 1.798
-Na22 lambda (s^-1): 8.4393e-09
+Na22 lambda (s^-1): 8.44222e-09
 Na22 original activity (decays/s): 85973
-Na22 activity Feb (decays/s): 142873
-Na22 activity Apr (decays/s): 137357
+Na22 activity Feb (decays/s): 142870
+Na22 activity Apr (decays/s): 137352
 --------------
 Cs137 intensity: 0.851
 Cs137 lambda (s^-1): 7.30461e-10
 Cs137 original activity (decays/s): 4360
-Cs137 activity (decays/s): 3649.97
+Cs137 activity (decays/s): 3640.31
 
 Calcular cuentas/s medidas en runs de calibración:
 labr1_sodio_1: 34.9451 counts/s
@@ -24,26 +24,26 @@ labr1_cesio_2: 12.4961 counts/s
 labr2_cesio_2: 1.91921 counts/s
 
 Calcular eficiencias como cuentas/s en fotopico durante run de calibración dividido por emisiones de la muestra:
-Eficiencia sodio labr1 febrero: 0.0244588%
-Distancia equivalente a Pablo: 33.2249cm
-Eficiencia sodio labr2 febrero: 0.0228438%
-Distancia equivalente a Pablo: 34.3793cm
-Eficiencia sodio labr1 abril no logbook: 0.27516%
-Distancia equivalente a Pablo: 9.90579cm
-Eficiencia sodio labr2 abril no logbook: 0.0393728%
-Distancia equivalente a Pablo: 26.1869cm
-Eficiencia sodio labr1 abril sí logbook: 0.0344327%
-Distancia equivalente a Pablo: 28.0025cm
-Eficiencia sodio labr2 abril sí logbook: 0.0401766%
-Distancia equivalente a Pablo: 25.9236cm
+Eficiencia sodio labr1 febrero: 0.0244595%
+Distancia equivalente a Pablo: 33.2245cm
+Eficiencia sodio labr2 febrero: 0.0228444%
+Distancia equivalente a Pablo: 34.3789cm
+Eficiencia sodio labr1 abril no logbook: 0.275171%
+Distancia equivalente a Pablo: 9.90559cm
+Eficiencia sodio labr2 abril no logbook: 0.0393744%
+Distancia equivalente a Pablo: 26.1864cm
+Eficiencia sodio labr1 abril sí logbook: 0.0344341%
+Distancia equivalente a Pablo: 28.0019cm
+Eficiencia sodio labr2 abril sí logbook: 0.0401782%
+Distancia equivalente a Pablo: 25.9231cm
 --------------
-Eficiencia cesio labr1 febrero: 0.00936226%
-Eficiencia cesio labr2 febrero: 0.0299728%
-Eficiencia cesio labr1 abril: 0.342362%
-Eficiencia cesio labr2 abril: 0.0525814%
+Eficiencia cesio labr1 febrero: 0.00938711%
+Eficiencia cesio labr2 febrero: 0.0300524%
+Eficiencia cesio labr1 abril: 0.343271%
+Eficiencia cesio labr2 abril: 0.052721%
 
-Factor febrero: 3.6564
-Factor abril: 3.85684
+Factor febrero: 3.6563
+Factor abril: 3.85668
 Eficiencia Febrero LaBr1 para acuerdo: 0.0894311%
 Distancia equivalente a Pablo: 17.3755cm
 Eficiencia Abril3 LaBr2 para acuerdo: 0.154955%

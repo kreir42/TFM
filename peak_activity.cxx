@@ -27,7 +27,7 @@ Double_t peak_activity(const TString filepath, unsigned short channel, unsigned 
 	fitf->SetParameters(0, 0, (high-low)/2, (high+low)/2, 1);
 	fitf->SetParNames("Constant BG", "BG linear", "gauss a", "gauss b", "gauss c");
 	// gauss(x) = a * exp(-0.5*((x-b)/c)**2)
-	// integral(gauss(x))(x0,x1) = sqrt(2*a)*|c|*sqrt(pi)
+	// integral(gauss(x))(x0,x1) = sqrt(2*pi)*a*|c|
 
 	TCanvas* myCanvas = new TCanvas("peak activity fit to pol1+gaus");
 	TFitResultPtr fitfresult = spectrum->Fit("gaussplus", "RSQ");

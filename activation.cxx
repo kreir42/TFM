@@ -29,11 +29,11 @@ void activation_results(){
 	std::streambuf* originalBuffer = std::cout.rdbuf();
 	std::cout.rdbuf(outputFile.rdbuf());
 
-	Double_t na22_lambda = log(2)/(2.6027*365.2425*24*3600);
+	Double_t na22_lambda = log(2)/(2.6018*365.2425*24*3600);
 	Double_t na22_calibration_activity_feb = NA22_ORIGINAL_ACTIVITY * NA22_511_INTENSITY * exp(-na22_lambda*24*3600*108);
 	Double_t na22_calibration_activity_apr = NA22_ORIGINAL_ACTIVITY * NA22_511_INTENSITY * exp(-na22_lambda*24*3600*162);
 	Double_t cs137_lambda = log(2)/(30.07*365.2425*24*3600);
-	Double_t cs137_calibration_activity = CS137_ORIGINAL_ACTIVITY * CS137_INTENSITY * exp(-cs137_lambda*24*3600*260);
+	Double_t cs137_calibration_activity = CS137_ORIGINAL_ACTIVITY * CS137_INTENSITY * exp(-cs137_lambda*24*3600*302);	//for apr
 
 	cout << "Calcular emisiones reales de muestras de calibración como calibration activity * intensity * e^(-lambda*t):" << endl;
 	cout << "Na22 intensity: " << NA22_511_INTENSITY << endl;
