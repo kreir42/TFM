@@ -1,37 +1,20 @@
 activation_1
 ***************
-Number of alphas: 3.46606e+14
+*Number of alphas: 3.46606e+14
 Alphas per second: 3.99515e+11
 Current integrator integral (nC): 111065
-current2alpha: 3.12075e+08
-current (nA): 128.019
-current (nA): 128.019
 rise_nbins: 386
 decay_nbins: 401
 Activation start: 473.63s
 Activation end: 1341.2s
-Activation time: 867.567s
-Measurement end: 2242.3s
-activation_window_low: 550
-activation_window_high: 650
-labr1 binwidth: 2.2423
-labr2 binwidth: 2.2423
-labr1 decay binwidth: 2.24715
-labr2 decay binwidth: 2.24715
+*Activation time: 867.567s
+*labr1 decay binwidth: 2.24715
+*labr2 decay binwidth: 2.24715
 
-labr1 unified 30P per alpha: 6.43012e-10
-labr2 unified 30P per alpha: 6.48907e-10
-labr1 unified number of 30P: 222872
-labr2 unified number of 30P: 224915
-labr1 rise 30P per alpha: 7.48202e-10
-labr2 rise 30P per alpha: 6.4627e-10
-labr1 rise number of 30P: 259331
-labr2 rise number of 30P: 224001
-Labr1 decay fit parameters:
-·Background activity: 6.54229
-·Initial activiy: 573.079
-·Decay constant: 0.00462406
-·activation_end: 1341.2
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 573.079
+*LaBr2 Initial activiy: 577.303
+
 labr1 decay 30P per alpha: 8.14338e-11
 labr2 decay 30P per alpha: 8.2034e-11
 labr1 decay number of 30P: 28225.4
@@ -39,38 +22,21 @@ labr2 decay number of 30P: 28433.5
 ---------------
 activation_2
 ***************
-Number of alphas: 3.10677e+14
+*Number of alphas: 3.10677e+14
 Alphas per second: 3.1643e+11
 Current integrator integral (nC): 99551.8
-current2alpha: 3.12075e+08
-current (nA): 101.395
-current (nA): 101.395
 rise_nbins: 425
 decay_nbins: 378
 Activation start: 451.767s
 Activation end: 1433.59s
-Activation time: 981.819s
-Measurement end: 2305.26s
-activation_window_low: 550
-activation_window_high: 650
-labr1 binwidth: 2.30526
-labr2 binwidth: 2.30526
-labr1 decay binwidth: 2.30601
-labr2 decay binwidth: 2.30601
+*Activation time: 981.819s
+*labr1 decay binwidth: 2.30601
+*labr2 decay binwidth: 2.30601
 
-labr1 unified 30P per alpha: 4.23592e-09
-labr2 unified 30P per alpha: 4.25812e-09
-labr1 unified number of 30P: 1.316e+06
-labr2 unified number of 30P: 1.3229e+06
-labr1 rise 30P per alpha: 4.23769e-09
-labr2 rise 30P per alpha: 4.21363e-09
-labr1 rise number of 30P: 1.31655e+06
-labr2 rise number of 30P: 1.30908e+06
-Labr1 decay fit parameters:
-·Background activity: 9.52511
-·Initial activiy: 3083.47
-·Decay constant: 0.00462406
-·activation_end: 1433.59
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 3083.47
+*LaBr2 Initial activiy: 3118.81
+
 labr1 decay 30P per alpha: 4.72774e-10
 labr2 decay 30P per alpha: 4.78192e-10
 labr1 decay number of 30P: 146880
@@ -78,38 +44,21 @@ labr2 decay number of 30P: 148563
 ---------------
 activation_3
 ***************
-Number of alphas: 3.64098e+14
+*Number of alphas: 3.64098e+14
 Alphas per second: 4.0013e+11
 Current integrator integral (nC): 116670
-current2alpha: 3.12075e+08
-current (nA): 128.216
-current (nA): 128.216
 rise_nbins: 441
 decay_nbins: 431
 Activation start: 263.389s
 Activation end: 1173.34s
-Activation time: 909.95s
-Measurement end: 2062.85s
-activation_window_low: 550
-activation_window_high: 750
-labr1 binwidth: 2.06285
-labr2 binwidth: 2.06285
-labr1 decay binwidth: 2.06382
-labr2 decay binwidth: 2.06382
+*Activation time: 909.95s
+*labr1 decay binwidth: 2.06382
+*labr2 decay binwidth: 2.06382
 
-labr1 unified 30P per alpha: 1.32287e-08
-labr2 unified 30P per alpha: 1.31233e-08
-labr1 unified number of 30P: 4.81656e+06
-labr2 unified number of 30P: 4.77817e+06
-labr1 rise 30P per alpha: 1.31545e-08
-labr2 rise 30P per alpha: 1.28005e-08
-labr1 rise number of 30P: 4.78954e+06
-labr2 rise number of 30P: 4.66065e+06
-Labr1 decay fit parameters:
-·Background activity: 16.1071
-·Initial activiy: 11072.7
-·Decay constant: 0.00462406
-·activation_end: 1173.34
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 11072.7
+*LaBr2 Initial activiy: 11066.4
+
 labr1 decay 30P per alpha: 1.62554e-09
 labr2 decay 30P per alpha: 1.62461e-09
 labr1 decay number of 30P: 591856
@@ -117,38 +66,21 @@ labr2 decay number of 30P: 591519
 ---------------
 activation_4
 ***************
-Number of alphas: 5.39115e+14
+*Number of alphas: 5.39115e+14
 Alphas per second: 5.99398e+11
 Current integrator integral (nC): 172751
-current2alpha: 3.12075e+08
-current (nA): 192.068
-current (nA): 192.068
 rise_nbins: 362
 decay_nbins: 482
 Activation start: 384.615s
 Activation end: 1284.04s
-Activation time: 899.426s
-Measurement end: 2480.31s
-activation_window_low: 550
-activation_window_high: 825
-labr1 binwidth: 2.48031
-labr2 binwidth: 2.48031
-labr1 decay binwidth: 2.48189
-labr2 decay binwidth: 2.48189
+*Activation time: 899.426s
+*labr1 decay binwidth: 2.48189
+*labr2 decay binwidth: 2.48189
 
-labr1 unified 30P per alpha: 1.04328e-08
-labr2 unified 30P per alpha: 1.02873e-08
-labr1 unified number of 30P: 5.62447e+06
-labr2 unified number of 30P: 5.54604e+06
-labr1 rise 30P per alpha: 1.92341e-09
-labr2 rise 30P per alpha: 1.87144e-09
-labr1 rise number of 30P: 1.03694e+06
-labr2 rise number of 30P: 1.00892e+06
-Labr1 decay fit parameters:
-·Background activity: 22.7465
-·Initial activiy: 25299.4
-·Decay constant: 0.00462406
-·activation_end: 1284.04
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 25299.4
+*LaBr2 Initial activiy: 25100.7
+
 labr1 decay 30P per alpha: 2.08741e-09
 labr2 decay 30P per alpha: 2.07102e-09
 labr1 decay number of 30P: 1.12535e+06
@@ -156,38 +88,21 @@ labr2 decay number of 30P: 1.11652e+06
 ---------------
 activation_5
 ***************
-Number of alphas: 2.3219e+14
+*Number of alphas: 2.3219e+14
 Alphas per second: 3.83642e+11
 Current integrator integral (nC): 74401.8
-current2alpha: 3.12075e+08
-current (nA): 122.932
-current (nA): 122.932
 rise_nbins: 310
 decay_nbins: 622
 Activation start: 129.279s
 Activation end: 734.505s
-Activation time: 605.226s
-Measurement end: 1946.98s
-activation_window_low: 1200
-activation_window_high: 1450
-labr1 binwidth: 1.94698
-labr2 binwidth: 1.94698
-labr1 decay binwidth: 1.94932
-labr2 decay binwidth: 1.94932
+*Activation time: 605.226s
+*labr1 decay binwidth: 1.94932
+*labr2 decay binwidth: 1.94932
 
-labr1 unified 30P per alpha: 1.01674e-09
-labr2 unified 30P per alpha: 1.07121e-09
-labr1 unified number of 30P: 236077
-labr2 unified number of 30P: 248724
-labr1 rise 30P per alpha: 1.23365e-09
-labr2 rise 30P per alpha: 1.26734e-09
-labr1 rise number of 30P: 286442
-labr2 rise number of 30P: 294263
-Labr1 decay fit parameters:
-·Background activity: 6.44216
-·Initial activiy: 734.673
-·Decay constant: 0.00462406
-·activation_end: 734.505
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 734.673
+*LaBr2 Initial activiy: 782.478
+
 labr1 decay 30P per alpha: 1.87835e-10
 labr2 decay 30P per alpha: 2.00058e-10
 labr1 decay number of 30P: 43613.5
@@ -195,38 +110,21 @@ labr2 decay number of 30P: 46451.4
 ---------------
 activation_6
 ***************
-Number of alphas: 5.83036e+14
+*Number of alphas: 5.83036e+14
 Alphas per second: 9.72504e+11
 Current integrator integral (nC): 186825
-current2alpha: 3.12075e+08
-current (nA): 311.625
-current (nA): 311.625
 rise_nbins: 281
 decay_nbins: 575
 Activation start: 302.437s
 Activation end: 901.957s
-Activation time: 599.52s
-Measurement end: 2126.26s
-activation_window_low: 1200
-activation_window_high: 1600
-labr1 binwidth: 2.12626
-labr2 binwidth: 2.12626
-labr1 decay binwidth: 2.12922
-labr2 decay binwidth: 2.12922
+*Activation time: 599.52s
+*labr1 decay binwidth: 2.12922
+*labr2 decay binwidth: 2.12922
 
-labr1 unified 30P per alpha: 4.36435e-09
-labr2 unified 30P per alpha: 1.17329e-09
-labr1 unified number of 30P: 2.54457e+06
-labr2 unified number of 30P: 684072
-labr1 rise 30P per alpha: 5.43542e-09
-labr2 rise 30P per alpha: 1.54024e-09
-labr1 rise number of 30P: 3.16904e+06
-labr2 rise number of 30P: 898016
-Labr1 decay fit parameters:
-·Background activity: 11.1375
-·Initial activiy: 8854.51
-·Decay constant: 0.00462406
-·activation_end: 901.957
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 8854.51
+*LaBr2 Initial activiy: 2376.73
+
 labr1 decay 30P per alpha: 8.26821e-10
 labr2 decay 30P per alpha: 2.21935e-10
 labr1 decay number of 30P: 482066
@@ -234,38 +132,21 @@ labr2 decay number of 30P: 129396
 ---------------
 activation_7
 ***************
-Number of alphas: 2.72299e+14
+*Number of alphas: 2.72299e+14
 Alphas per second: 6.02022e+11
 Current integrator integral (nC): 87254.3
-current2alpha: 3.12075e+08
-current (nA): 192.909
-current (nA): 192.909
 rise_nbins: 251
 decay_nbins: 581
 Activation start: 300.899s
 Activation end: 753.207s
-Activation time: 452.308s
-Measurement end: 1801.91s
-activation_window_low: 1200
-activation_window_high: 1800
-labr1 binwidth: 1.80191
-labr2 binwidth: 1.80191
-labr1 decay binwidth: 1.805
-labr2 decay binwidth: 1.805
+*Activation time: 452.308s
+*labr1 decay binwidth: 1.805
+*labr2 decay binwidth: 1.805
 
-labr1 unified 30P per alpha: 1.80119e-08
-labr2 unified 30P per alpha: 2.00531e-08
-labr1 unified number of 30P: 4.90463e+06
-labr2 unified number of 30P: 5.46045e+06
-labr1 rise 30P per alpha: 1.79987e-08
-labr2 rise 30P per alpha: 1.93284e-08
-labr1 rise number of 30P: 4.90104e+06
-labr2 rise number of 30P: 5.2631e+06
-Labr1 decay fit parameters:
-·Background activity: 11.2154
-·Initial activiy: 17307.7
-·Decay constant: 0.00462406
-·activation_end: 753.207
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 17307.7
+*LaBr2 Initial activiy: 19399.3
+
 labr1 decay 30P per alpha: 4.36605e-09
 labr2 decay 30P per alpha: 4.89368e-09
 labr1 decay number of 30P: 1.18887e+06
@@ -273,38 +154,21 @@ labr2 decay number of 30P: 1.33255e+06
 ---------------
 activation_8
 ***************
-Number of alphas: 3.15508e+14
+*Number of alphas: 3.15508e+14
 Alphas per second: 6.77056e+11
 Current integrator integral (nC): 0
-current2alpha: 3.12075e+08
-current (nA): 0
-current (nA): 216.953
 rise_nbins: 232
 decay_nbins: 586
 Activation start: 364s
 Activation end: 830s
-Activation time: 466s
-Measurement end: 2006.12s
-activation_window_low: 1200
-activation_window_high: 1700
-labr1 binwidth: 2.00612
-labr2 binwidth: 2.00612
-labr1 decay binwidth: 2.00704
-labr2 decay binwidth: 2.00704
+*Activation time: 466s
+*labr1 decay binwidth: 2.00704
+*labr2 decay binwidth: 2.00704
 
-labr1 unified 30P per alpha: 6.42833e-09
-labr2 unified 30P per alpha: 6.42833e-09
-labr1 unified number of 30P: 2.02819e+06
-labr2 unified number of 30P: 2.02819e+06
-labr1 rise 30P per alpha: 6.42833e-09
-labr2 rise 30P per alpha: 6.42833e-09
-labr1 rise number of 30P: 2.02819e+06
-labr2 rise number of 30P: 2.02819e+06
-Labr1 decay fit parameters:
-·Background activity: 11.9291
-·Initial activiy: 8108.85
-·Decay constant: 0.00462406
-·activation_end: 830
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 8108.85
+*LaBr2 Initial activiy: 9181.57
+
 labr1 decay 30P per alpha: 1.57408e-09
 labr2 decay 30P per alpha: 1.78232e-09
 labr1 decay number of 30P: 496636
@@ -312,38 +176,21 @@ labr2 decay number of 30P: 562336
 ---------------
 activation_9
 ***************
-Number of alphas: 2.12087e+14
+*Number of alphas: 2.12087e+14
 Alphas per second: 4.70258e+11
 Current integrator integral (nC): 0
-current2alpha: 3.12075e+08
-current (nA): 0
-current (nA): 150.687
 rise_nbins: 250
 decay_nbins: 581
 Activation start: 302s
 Activation end: 753s
-Activation time: 451s
-Measurement end: 1800.8s
-activation_window_low: 1150
-activation_window_high: 1400
-labr1 binwidth: 1.8008
-labr2 binwidth: 1.8008
-labr1 decay binwidth: 1.80344
-labr2 decay binwidth: 1.80344
+*Activation time: 451s
+*labr1 decay binwidth: 1.80344
+*labr2 decay binwidth: 1.80344
 
-labr1 unified 30P per alpha: 5.7704e-09
-labr2 unified 30P per alpha: 5.7704e-09
-labr1 unified number of 30P: 1.22382e+06
-labr2 unified number of 30P: 1.22382e+06
-labr1 rise 30P per alpha: 5.7704e-09
-labr2 rise 30P per alpha: 5.7704e-09
-labr1 rise number of 30P: 1.22382e+06
-labr2 rise number of 30P: 1.22382e+06
-Labr1 decay fit parameters:
-·Background activity: 7.79532
-·Initial activiy: 757.482
-·Decay constant: 0.00462406
-·activation_end: 753
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 757.482
+*LaBr2 Initial activiy: 860.007
+
 labr1 decay 30P per alpha: 2.45755e-10
 labr2 decay 30P per alpha: 2.79017e-10
 labr1 decay number of 30P: 52121.2
@@ -351,38 +198,21 @@ labr2 decay number of 30P: 59175.8
 ---------------
 activation_10
 ***************
-Number of alphas: 2.5534e+14
+*Number of alphas: 2.5534e+14
 Alphas per second: 5.69956e+11
 Current integrator integral (nC): 0
-current2alpha: 3.12075e+08
-current (nA): 0
-current (nA): 182.634
 rise_nbins: 248
 decay_nbins: 583
 Activation start: 304s
 Activation end: 752s
-Activation time: 448s
-Measurement end: 1804.33s
-activation_window_low: 1200
-activation_window_high: 1700
-labr1 binwidth: 1.80433
-labr2 binwidth: 1.80433
-labr1 decay binwidth: 1.80503
-labr2 decay binwidth: 1.80503
+*Activation time: 448s
+*labr1 decay binwidth: 1.80503
+*labr2 decay binwidth: 1.80503
 
-labr1 unified 30P per alpha: 5.78172e-09
-labr2 unified 30P per alpha: 5.78172e-09
-labr1 unified number of 30P: 1.47631e+06
-labr2 unified number of 30P: 1.47631e+06
-labr1 rise 30P per alpha: 5.78172e-09
-labr2 rise 30P per alpha: 5.78172e-09
-labr1 rise number of 30P: 1.47631e+06
-labr2 rise number of 30P: 1.47631e+06
-Labr1 decay fit parameters:
-·Background activity: 7.16424
-·Initial activiy: 9607.61
-·Decay constant: 0.00462406
-·activation_end: 752
+*30P decay constant: 0.00462406
+*LaBr1 Initial activiy: 9607.61
+*LaBr2 Initial activiy: 10891
+
 labr1 decay 30P per alpha: 2.59189e-09
 labr2 decay 30P per alpha: 2.93813e-09
 labr1 decay number of 30P: 661815

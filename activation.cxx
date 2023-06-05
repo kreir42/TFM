@@ -862,12 +862,12 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 		activation_end= 752E12;
 	}
 	Double_t activation_time = activation_end-activation_start;
-	cout << "Number of alphas: " << number_of_alphas << endl;
+	cout << "*Number of alphas: " << number_of_alphas << endl;
 	cout << "Alphas per second: " << number_of_alphas/(activation_time/1E12) << endl;
 	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
-	cout << "current2alpha: " << current2alpha << endl;
-	cout << "current (nA): " << current_integrator->Integral()/(activation_time/1E12)/10 << endl;
-	cout << "current (nA): " << (number_of_alphas/current2alpha)/(activation_time/1E12)/10 << endl;
+//	cout << "current2alpha: " << current2alpha << endl;
+//	cout << "current (nA): " << current_integrator->Integral()/(activation_time/1E12)/10 << endl;
+//	cout << "current (nA): " << (number_of_alphas/current2alpha)/(activation_time/1E12)/10 << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
@@ -911,19 +911,19 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	measurement_end/=1E12;
 	cout << "Activation start: " << activation_start << "s" << endl;
 	cout << "Activation end: " << activation_end << "s" << endl;
-	cout << "Activation time: " << activation_time << "s" << endl;
-	cout << "Measurement end: " << measurement_end << "s" << endl;
-	cout << "activation_window_low: " << activation_window_low << endl;
-	cout << "activation_window_high: " << activation_window_high << endl;
+	cout << "*Activation time: " << activation_time << "s" << endl;
+//	cout << "Measurement end: " << measurement_end << "s" << endl;
+//	cout << "activation_window_low: " << activation_window_low << endl;
+//	cout << "activation_window_high: " << activation_window_high << endl;
 
 	Double_t labr1_binwidth = labr_1->GetBinWidth(1);
 	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
 	Double_t labr1_decay_binwidth = labr_1_decay->GetBinWidth(1);
 	Double_t labr2_decay_binwidth = labr_2_decay->GetBinWidth(1);
-	cout << "labr1 binwidth: " << labr1_binwidth << endl;
-	cout << "labr2 binwidth: " << labr2_binwidth << endl;
-	cout << "labr1 decay binwidth: " << labr1_decay_binwidth << endl;
-	cout << "labr2 decay binwidth: " << labr2_decay_binwidth << endl;
+//	cout << "labr1 binwidth: " << labr1_binwidth << endl;
+//	cout << "labr2 binwidth: " << labr2_binwidth << endl;
+	cout << "*labr1 decay binwidth: " << labr1_decay_binwidth << endl;
+	cout << "*labr2 decay binwidth: " << labr2_decay_binwidth << endl;
 	cout << endl;
 
 	//fittings
@@ -954,10 +954,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	cout << "labr1 unified 30P per alpha: " << results[0][0] << endl;
-	cout << "labr2 unified 30P per alpha: " << results[1][0] << endl;
-	cout << "labr1 unified number of 30P: " << results[0][0]*number_of_alphas << endl;
-	cout << "labr2 unified number of 30P: " << results[1][0]*number_of_alphas << endl;
+//	cout << "labr1 unified 30P per alpha: " << results[0][0] << endl;
+//	cout << "labr2 unified 30P per alpha: " << results[1][0] << endl;
+//	cout << "labr1 unified number of 30P: " << results[0][0]*number_of_alphas << endl;
+//	cout << "labr2 unified number of 30P: " << results[1][0]*number_of_alphas << endl;
 
 	//rise
 	unified->SetNpx(rise_nbins);
@@ -974,10 +974,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	cout << "labr1 rise 30P per alpha: " << results[0][2] << endl;
-	cout << "labr2 rise 30P per alpha: " << results[1][2] << endl;
-	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
-	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
+//	cout << "labr1 rise 30P per alpha: " << results[0][2] << endl;
+//	cout << "labr2 rise 30P per alpha: " << results[1][2] << endl;
+//	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
+//	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
 
 	//decay
 	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
@@ -995,19 +995,17 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[0][5] = fitresult->ParError(1)/labr1_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
-
-	cout << "Labr1 decay fit parameters:" << endl;
-	cout << "·Background activity: " << fitresult->Parameter(0) << endl;
-	cout << "·Initial activiy: " << fitresult->Parameter(1) << endl;
-	cout << "·Decay constant: " << fitresult->Parameter(2) << endl;
-	cout << "·activation_end: " << fitresult->Parameter(3) << endl;
+	cout << "*30P decay constant: " << fitresult->Parameter(2) << endl;
+	cout << "*LaBr1 Initial activiy: " << fitresult->Parameter(1) << endl;
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
 	results[1][4] = fitresult->Parameter(1)/labr2_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
 	results[1][5] = fitresult->ParError(1)/labr2_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
+	cout << "*LaBr2 Initial activiy: " << fitresult->Parameter(1) << endl;
 
+	cout << endl;
 	cout << "labr1 decay 30P per alpha: " << results[0][4] << endl;
 	cout << "labr2 decay 30P per alpha: " << results[1][4] << endl;
 	cout << "labr1 decay number of 30P: " << results[0][4]*number_of_alphas << endl;
