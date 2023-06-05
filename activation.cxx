@@ -261,8 +261,10 @@ void activation_results(){
 	Double_t exfor_errors_1[63];
 	Double_t exfor_errors_2[63];
 	Double_t factor_feb = (results[0][1][4]+results[0][0][4])/(2*exfor_data[18]);
+	Double_t error_feb = abs(results[0][1][4]-results[0][0][4])/(exfor_data[18]*factor_feb);
 	Double_t factor_apr = (results[4][1][4]+results[4][0][4]+results[8][1][4]+results[8][0][4])/(4*exfor_data[18]);
 	cout << "Factor febrero: " << factor_feb << endl;
+	cout << "Error febrero: " << error_feb*100 << "%" << endl;
 	cout << "Factor abril: " << factor_apr << endl;
 	cout << "Eficiencia Febrero LaBr1 para acuerdo: " << eficiencia_feb_labr1*factor_feb*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_feb_labr1*factor_feb)) << "cm" << endl;
@@ -272,10 +274,10 @@ void activation_results(){
 		exfor_errors[i] = exfor_data[i] * 0.05;
 //		exfor_data_1[i]*=2.220341468E-5*(19.5/16.8)*(19.358/19.5);	//eficiencia feb
 		exfor_data_1[i]*=factor_feb;
-		exfor_errors_1[i] = exfor_data_1[i] * 0.05;
+		exfor_errors_1[i] = exfor_data_1[i] * error_feb;
 //		exfor_data_2[i]*=2.642141092E-5*(22.5/20)*(21.847/22.3)*(21.934/21.5958)*(21.3124/22.1447);	//eficiencia apr
 		exfor_data_2[i]*=factor_apr;
-		exfor_errors_2[i] = exfor_data_2[i] * 0.05;
+		exfor_errors_2[i] = exfor_data_2[i] * 0.08;
 	}
 
 	//EXFOR data
@@ -607,11 +609,11 @@ void activation_results(){
 	abs_errors_feb_labr2_graph->SetTitle("Absolute error, February, LaBr2");
 	abs_errors_feb_labr2_graph->SetMarkerColor(kRed);
 	abs_errors_feb_labr2_graph->SetMarkerStyle(34);
-	TGraph* abs_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], &abs_errors_apr_labr1[4]);
+	TGraph* abs_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], abs_errors_apr_labr1);
 	abs_errors_apr_labr1_graph->SetTitle("Absolute error, April, LaBr1");
 	abs_errors_apr_labr1_graph->SetMarkerColor(kBlue);
 	abs_errors_apr_labr1_graph->SetMarkerStyle(23);
-	TGraph* abs_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], &abs_errors_apr_labr2[4]);
+	TGraph* abs_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], abs_errors_apr_labr2);
 	abs_errors_apr_labr2_graph->SetTitle("Absolute error, April, LaBr2");
 	abs_errors_apr_labr2_graph->SetMarkerColor(kBlue);
 	abs_errors_apr_labr2_graph->SetMarkerStyle(47);
@@ -623,11 +625,11 @@ void activation_results(){
 	per_errors_feb_labr2_graph->SetTitle("Relative error, February, LaBr2");
 	per_errors_feb_labr2_graph->SetMarkerColor(kRed);
 	per_errors_feb_labr2_graph->SetMarkerStyle(34);
-	TGraph* per_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], &per_errors_apr_labr1[4]);
+	TGraph* per_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], per_errors_apr_labr1);
 	per_errors_apr_labr1_graph->SetTitle("Relative error, April, LaBr1");
 	per_errors_apr_labr1_graph->SetMarkerColor(kBlue);
 	per_errors_apr_labr1_graph->SetMarkerStyle(23);
-	TGraph* per_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], &per_errors_apr_labr2[4]);
+	TGraph* per_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], per_errors_apr_labr2);
 	per_errors_apr_labr2_graph->SetTitle("Relative error, April, LaBr2");
 	per_errors_apr_labr2_graph->SetMarkerColor(kBlue);
 	per_errors_apr_labr2_graph->SetMarkerStyle(47);
@@ -635,7 +637,7 @@ void activation_results(){
 	rel_abs_errors_feb_graph->SetTitle("Absolute difference, February");
 	rel_abs_errors_feb_graph->SetMarkerColor(kRed);
 	rel_abs_errors_feb_graph->SetMarkerStyle(20);
-	TGraph* rel_abs_errors_apr_graph = new TGraph(6, &activation_energies[4], &rel_abs_errors_apr[4]);
+	TGraph* rel_abs_errors_apr_graph = new TGraph(6, &activation_energies[4], rel_abs_errors_apr);
 	rel_abs_errors_apr_graph->SetTitle("Absolute difference, April");
 	rel_abs_errors_apr_graph->SetMarkerColor(kBlue);
 	rel_abs_errors_apr_graph->SetMarkerStyle(21);
@@ -643,7 +645,7 @@ void activation_results(){
 	rel_per_errors_feb_graph->SetTitle("Percentage difference, February");
 	rel_per_errors_feb_graph->SetMarkerColor(kRed);
 	rel_per_errors_feb_graph->SetMarkerStyle(20);
-	TGraph* rel_per_errors_apr_graph = new TGraph(6, &activation_energies[4], &rel_per_errors_apr[4]);
+	TGraph* rel_per_errors_apr_graph = new TGraph(6, &activation_energies[4], rel_per_errors_apr);
 	rel_per_errors_apr_graph->SetTitle("Percentage difference, April");
 	rel_per_errors_apr_graph->SetMarkerColor(kBlue);
 	rel_per_errors_apr_graph->SetMarkerStyle(21);
@@ -989,8 +991,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLEQ");
-	results[0][4] = fitresult->Parameter(1)/labr1_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
-	results[0][5] = fitresult->ParError(1)/labr1_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
+	results[0][4] = fitresult->Parameter(1)/labr1_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
+	results[0][5] = fitresult->ParError(1)/labr1_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -1001,8 +1003,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "·activation_end: " << fitresult->Parameter(3) << endl;
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
-	results[1][4] = fitresult->Parameter(1)/labr2_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
-	results[1][5] = fitresult->ParError(1)/labr2_decay_binwidth*activation_time/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas);
+	results[1][4] = fitresult->Parameter(1)/labr2_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
+	results[1][5] = fitresult->ParError(1)/labr2_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 

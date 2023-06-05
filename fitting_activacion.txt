@@ -23,19 +23,19 @@ labr1 unified 30P per alpha: 6.43012e-10
 labr2 unified 30P per alpha: 6.48907e-10
 labr1 unified number of 30P: 222872
 labr2 unified number of 30P: 224915
-labr1 rise 30P per alpha: 7.48262e-10
-labr2 rise 30P per alpha: 6.46269e-10
-labr1 rise number of 30P: 259352
-labr2 rise number of 30P: 224000
+labr1 rise 30P per alpha: 7.48202e-10
+labr2 rise 30P per alpha: 6.4627e-10
+labr1 rise number of 30P: 259331
+labr2 rise number of 30P: 224001
 Labr1 decay fit parameters:
 ·Background activity: 6.54229
 ·Initial activiy: 573.079
 ·Decay constant: 0.00462406
 ·activation_end: 1341.2
-labr1 decay 30P per alpha: 6.50106e-10
-labr2 decay 30P per alpha: 6.54898e-10
-labr1 decay number of 30P: 225330
-labr2 decay number of 30P: 226991
+labr1 decay 30P per alpha: 8.14338e-11
+labr2 decay 30P per alpha: 8.2034e-11
+labr1 decay number of 30P: 28225.4
+labr2 decay number of 30P: 28433.5
 ---------------
 activation_2
 ***************
@@ -71,10 +71,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 3083.47
 ·Decay constant: 0.00462406
 ·activation_end: 1433.59
-labr1 decay 30P per alpha: 4.27132e-09
-labr2 decay 30P per alpha: 4.32027e-09
-labr1 decay number of 30P: 1.327e+06
-labr2 decay number of 30P: 1.34221e+06
+labr1 decay 30P per alpha: 4.72774e-10
+labr2 decay 30P per alpha: 4.78192e-10
+labr1 decay number of 30P: 146880
+labr2 decay number of 30P: 148563
 ---------------
 activation_3
 ***************
@@ -110,10 +110,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 11072.7
 ·Decay constant: 0.00462406
 ·activation_end: 1173.34
-labr1 decay 30P per alpha: 1.3611e-08
-labr2 decay 30P per alpha: 1.36033e-08
-labr1 decay number of 30P: 4.95576e+06
-labr2 decay number of 30P: 4.95293e+06
+labr1 decay 30P per alpha: 1.62554e-09
+labr2 decay 30P per alpha: 1.62461e-09
+labr1 decay number of 30P: 591856
+labr2 decay number of 30P: 591519
 ---------------
 activation_4
 ***************
@@ -149,10 +149,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 25299.4
 ·Decay constant: 0.00462406
 ·activation_end: 1284.04
-labr1 decay 30P per alpha: 1.72762e-08
-labr2 decay 30P per alpha: 1.71406e-08
-labr1 decay number of 30P: 9.31388e+06
-labr2 decay number of 30P: 9.24074e+06
+labr1 decay 30P per alpha: 2.08741e-09
+labr2 decay 30P per alpha: 2.07102e-09
+labr1 decay number of 30P: 1.12535e+06
+labr2 decay number of 30P: 1.11652e+06
 ---------------
 activation_5
 ***************
@@ -188,10 +188,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 734.673
 ·Decay constant: 0.00462406
 ·activation_end: 734.505
-labr1 decay 30P per alpha: 1.0461e-09
-labr2 decay 30P per alpha: 1.11416e-09
-labr1 decay number of 30P: 242893
-labr2 decay number of 30P: 258698
+labr1 decay 30P per alpha: 1.87835e-10
+labr2 decay 30P per alpha: 2.00058e-10
+labr1 decay number of 30P: 43613.5
+labr2 decay number of 30P: 46451.4
 ---------------
 activation_6
 ***************
@@ -218,19 +218,19 @@ labr1 unified 30P per alpha: 4.36435e-09
 labr2 unified 30P per alpha: 1.17329e-09
 labr1 unified number of 30P: 2.54457e+06
 labr2 unified number of 30P: 684072
-labr1 rise 30P per alpha: 5.43524e-09
+labr1 rise 30P per alpha: 5.43542e-09
 labr2 rise 30P per alpha: 1.54024e-09
-labr1 rise number of 30P: 3.16894e+06
-labr2 rise number of 30P: 898013
+labr1 rise number of 30P: 3.16904e+06
+labr2 rise number of 30P: 898016
 Labr1 decay fit parameters:
 ·Background activity: 11.1375
 ·Initial activiy: 8854.51
 ·Decay constant: 0.00462406
 ·activation_end: 901.957
-labr1 decay 30P per alpha: 4.56133e-09
-labr2 decay 30P per alpha: 1.22435e-09
-labr1 decay number of 30P: 2.65942e+06
-labr2 decay number of 30P: 713841
+labr1 decay 30P per alpha: 8.26821e-10
+labr2 decay 30P per alpha: 2.21935e-10
+labr1 decay number of 30P: 482066
+labr2 decay number of 30P: 129396
 ---------------
 activation_7
 ***************
@@ -266,10 +266,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 17307.7
 ·Decay constant: 0.00462406
 ·activation_end: 753.207
-labr1 decay 30P per alpha: 1.81719e-08
-labr2 decay 30P per alpha: 2.03679e-08
-labr1 decay number of 30P: 4.94818e+06
-labr2 decay number of 30P: 5.54617e+06
+labr1 decay 30P per alpha: 4.36605e-09
+labr2 decay 30P per alpha: 4.89368e-09
+labr1 decay number of 30P: 1.18887e+06
+labr2 decay number of 30P: 1.33255e+06
 ---------------
 activation_8
 ***************
@@ -305,10 +305,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 8108.85
 ·Decay constant: 0.00462406
 ·activation_end: 830
-labr1 decay 30P per alpha: 6.74978e-09
-labr2 decay 30P per alpha: 7.64272e-09
-labr1 decay number of 30P: 2.12961e+06
-labr2 decay number of 30P: 2.41134e+06
+labr1 decay 30P per alpha: 1.57408e-09
+labr2 decay 30P per alpha: 1.78232e-09
+labr1 decay number of 30P: 496636
+labr2 decay number of 30P: 562336
 ---------------
 activation_9
 ***************
@@ -344,10 +344,10 @@ Labr1 decay fit parameters:
 ·Initial activiy: 757.482
 ·Decay constant: 0.00462406
 ·activation_end: 753
-labr1 decay 30P per alpha: 1.01989e-09
-labr2 decay 30P per alpha: 1.15793e-09
-labr1 decay number of 30P: 216306
-labr2 decay number of 30P: 245582
+labr1 decay 30P per alpha: 2.45755e-10
+labr2 decay 30P per alpha: 2.79017e-10
+labr1 decay number of 30P: 52121.2
+labr2 decay number of 30P: 59175.8
 ---------------
 activation_10
 ***************
@@ -383,8 +383,8 @@ Labr1 decay fit parameters:
 ·Initial activiy: 9607.61
 ·Decay constant: 0.00462406
 ·activation_end: 752
-labr1 decay 30P per alpha: 1.06849e-08
-labr2 decay 30P per alpha: 1.21123e-08
-labr1 decay number of 30P: 2.72829e+06
-labr2 decay number of 30P: 3.09275e+06
+labr1 decay 30P per alpha: 2.59189e-09
+labr2 decay 30P per alpha: 2.93813e-09
+labr1 decay number of 30P: 661815
+labr2 decay number of 30P: 750223
 ---------------
