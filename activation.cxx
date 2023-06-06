@@ -104,11 +104,11 @@ void activation_results(){
 		yerr1[i] = results[i][0][1];
 		yerr2[i] = results[i][1][1];
 	}
-	TGraph* reactionsvenergy_unified_feb_sin_escalar_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
+	TGraph* reactionsvenergy_unified_feb_sin_escalar_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_unified_feb_sin_escalar_1->SetMarkerStyle(22);
 	TGraph* reactionsvenergy_unified_apr_sin_escalar_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
 	reactionsvenergy_unified_apr_sin_escalar_1->SetMarkerStyle(23);
-	TGraph* reactionsvenergy_unified_feb_sin_escalar_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
+	TGraph* reactionsvenergy_unified_feb_sin_escalar_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
 	reactionsvenergy_unified_feb_sin_escalar_2->SetMarkerStyle(34);
 	TGraph* reactionsvenergy_unified_apr_sin_escalar_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
 	reactionsvenergy_unified_apr_sin_escalar_2->SetMarkerStyle(47);
@@ -122,13 +122,13 @@ void activation_results(){
 		yerr1[i] = results[i][0][3];
 		yerr2[i] = results[i][1][3];
 	}
-	TGraph* reactionsvenergy_rise_feb_sin_escalar_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
+	TGraph* reactionsvenergy_rise_feb_sin_escalar_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_rise_feb_sin_escalar_1->SetMarkerStyle(22);
-	TGraph* reactionsvenergy_rise_apr_sin_escalar_1 = new TGraphErrors(2, &x1[4], &y1[4], NULL, yerr1);
+	TGraph* reactionsvenergy_rise_apr_sin_escalar_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
 	reactionsvenergy_rise_apr_sin_escalar_1->SetMarkerStyle(23);
-	TGraph* reactionsvenergy_rise_feb_sin_escalar_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
+	TGraph* reactionsvenergy_rise_feb_sin_escalar_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
 	reactionsvenergy_rise_feb_sin_escalar_2->SetMarkerStyle(34);
-	TGraph* reactionsvenergy_rise_apr_sin_escalar_2 = new TGraphErrors(2, &x2[4], &y2[4], NULL, yerr2);
+	TGraph* reactionsvenergy_rise_apr_sin_escalar_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
 	reactionsvenergy_rise_apr_sin_escalar_2->SetMarkerStyle(47);
 
 	//decay fit sin escalar
@@ -308,7 +308,7 @@ void activation_results(){
 		yerr1[i] = results[i][0][1];
 		yerr2[i] = results[i][1][1];
 	}
-	TGraph* reactionsvenergy_unified_feb_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
+	TGraph* reactionsvenergy_unified_feb_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_unified_feb_1->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_feb_1");
 	reactionsvenergy_unified_feb_1->SetMarkerStyle(22);
@@ -319,7 +319,7 @@ void activation_results(){
 	reactionsvenergy_unified_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	TGraph* reactionsvenergy_unified_feb_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
+	TGraph* reactionsvenergy_unified_feb_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
 	reactionsvenergy_unified_feb_2->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	myCanvas->SetName("reactions_v_energy_unified_feb_2");
 	reactionsvenergy_unified_feb_2->SetMarkerStyle(34);
@@ -385,7 +385,7 @@ void activation_results(){
 		yerr1[i] = results[i][0][3];
 		yerr2[i] = results[i][1][3];
 	}
-	TGraph* reactionsvenergy_rise_feb_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
+	TGraph* reactionsvenergy_rise_feb_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_rise_feb_1->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	reactionsvenergy_rise_feb_1->SetMarkerStyle(22);
 	myCanvas->SetName("reactions_v_energy_rise_feb_1");
@@ -396,7 +396,7 @@ void activation_results(){
 	reactionsvenergy_rise_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
-	TGraph* reactionsvenergy_rise_feb_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
+	TGraph* reactionsvenergy_rise_feb_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
 	reactionsvenergy_rise_feb_2->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
 	reactionsvenergy_rise_feb_2->SetMarkerStyle(34);
 	myCanvas->SetName("reactions_v_energy_rise_feb_2");
@@ -955,8 +955,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-//	cout << "labr1 unified 30P per alpha: " << results[0][0] << endl;
-//	cout << "labr2 unified 30P per alpha: " << results[1][0] << endl;
+	cout << "labr1 unified 30P per alpha: " << results[0][0] << endl;
+	cout << "labr2 unified 30P per alpha: " << results[1][0] << endl;
 //	cout << "labr1 unified number of 30P: " << results[0][0]*number_of_alphas << endl;
 //	cout << "labr2 unified number of 30P: " << results[1][0]*number_of_alphas << endl;
 
@@ -975,8 +975,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
-//	cout << "labr1 rise 30P per alpha: " << results[0][2] << endl;
-//	cout << "labr2 rise 30P per alpha: " << results[1][2] << endl;
+	cout << "labr1 rise 30P per alpha: " << results[0][2] << endl;
+	cout << "labr2 rise 30P per alpha: " << results[1][2] << endl;
 //	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
 //	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
 
