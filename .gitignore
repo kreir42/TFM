@@ -1,4 +1,12 @@
-*.pdf
 raw_data/
 output/
 output.root
+latex/*.pdf
+latex/*.db
+latex/*.db.lock
+latex/*.aux
+latex/*.fls
+latex/*.log
+latex/*.out
+latex/*.toc
+latex/*.synctex.gz
