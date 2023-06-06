@@ -2,219 +2,139 @@ activation_1
 ***************
 *Number of alphas: 3.46606e+14
 Alphas per second: 3.99515e+11
-Current integrator integral (nC): 111065
-rise_nbins: 386
-decay_nbins: 401
-Activation start: 473.63s
-Activation end: 1341.2s
-*Activation time: 867.567s
-*labr1 decay binwidth: 2.24715
-*labr2 decay binwidth: 2.24715
+Activation time: 867.567s
+labr1 decay binwidth: 2.24715
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 573.079
-*LaBr2 Initial activiy: 577.303
+Decay factor: 1.01844
 
-labr1 decay 30P per alpha: 8.14338e-11
-labr2 decay 30P per alpha: 8.2034e-11
-labr1 decay number of 30P: 28225.4
-labr2 decay number of 30P: 28433.5
+LaBr1 initial activity (/s): 255.025
+LaBr2 initial activity (/s): 256.905
+LaBr1 decay 30P per alpha: 8.14338e-11
+LaBr2 decay 30P per alpha: 8.2034e-11
 ---------------
 activation_2
 ***************
 *Number of alphas: 3.10677e+14
 Alphas per second: 3.1643e+11
-Current integrator integral (nC): 99551.8
-rise_nbins: 425
-decay_nbins: 378
-Activation start: 451.767s
-Activation end: 1433.59s
-*Activation time: 981.819s
-*labr1 decay binwidth: 2.30601
-*labr2 decay binwidth: 2.30601
+Activation time: 981.819s
+labr1 decay binwidth: 2.30601
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 3083.47
-*LaBr2 Initial activiy: 3118.81
+Decay factor: 1.01079
 
-labr1 decay 30P per alpha: 4.72774e-10
-labr2 decay 30P per alpha: 4.78192e-10
-labr1 decay number of 30P: 146880
-labr2 decay number of 30P: 148563
+LaBr1 initial activity (/s): 1337.15
+LaBr2 initial activity (/s): 1352.47
+LaBr1 decay 30P per alpha: 4.72774e-10
+LaBr2 decay 30P per alpha: 4.78192e-10
 ---------------
 activation_3
 ***************
 *Number of alphas: 3.64098e+14
 Alphas per second: 4.0013e+11
-Current integrator integral (nC): 116670
-rise_nbins: 441
-decay_nbins: 431
-Activation start: 263.389s
-Activation end: 1173.34s
-*Activation time: 909.95s
-*labr1 decay binwidth: 2.06382
-*labr2 decay binwidth: 2.06382
+Activation time: 909.95s
+labr1 decay binwidth: 2.06382
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 11072.7
-*LaBr2 Initial activiy: 11066.4
+Decay factor: 1.01511
 
-labr1 decay 30P per alpha: 1.62554e-09
-labr2 decay 30P per alpha: 1.62461e-09
-labr1 decay number of 30P: 591856
-labr2 decay number of 30P: 591519
+LaBr1 initial activity (/s): 5365.14
+LaBr2 initial activity (/s): 5362.09
+LaBr1 decay 30P per alpha: 1.62554e-09
+LaBr2 decay 30P per alpha: 1.62461e-09
 ---------------
 activation_4
 ***************
 *Number of alphas: 5.39115e+14
 Alphas per second: 5.99398e+11
-Current integrator integral (nC): 172751
-rise_nbins: 362
-decay_nbins: 482
-Activation start: 384.615s
-Activation end: 1284.04s
-*Activation time: 899.426s
-*labr1 decay binwidth: 2.48189
-*labr2 decay binwidth: 2.48189
+Activation time: 899.426s
+labr1 decay binwidth: 2.48189
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 25299.4
-*LaBr2 Initial activiy: 25100.7
+Decay factor: 1.01587
 
-labr1 decay 30P per alpha: 2.08741e-09
-labr2 decay 30P per alpha: 2.07102e-09
-labr1 decay number of 30P: 1.12535e+06
-labr2 decay number of 30P: 1.11652e+06
+LaBr1 initial activity (/s): 10193.6
+LaBr2 initial activity (/s): 10113.5
+LaBr1 decay 30P per alpha: 2.08741e-09
+LaBr2 decay 30P per alpha: 2.07102e-09
 ---------------
 activation_5
 ***************
 *Number of alphas: 2.3219e+14
 Alphas per second: 3.83642e+11
-Current integrator integral (nC): 74401.8
-rise_nbins: 310
-decay_nbins: 622
-Activation start: 129.279s
-Activation end: 734.505s
-*Activation time: 605.226s
-*labr1 decay binwidth: 1.94932
-*labr2 decay binwidth: 1.94932
+Activation time: 605.226s
+labr1 decay binwidth: 1.94932
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 734.673
-*LaBr2 Initial activiy: 782.478
+Decay factor: 1.06484
 
-labr1 decay 30P per alpha: 1.87835e-10
-labr2 decay 30P per alpha: 2.00058e-10
-labr1 decay number of 30P: 43613.5
-labr2 decay number of 30P: 46451.4
+LaBr1 initial activity (/s): 376.887
+LaBr2 initial activity (/s): 401.411
+LaBr1 decay 30P per alpha: 1.87835e-10
+LaBr2 decay 30P per alpha: 2.00058e-10
 ---------------
 activation_6
 ***************
 *Number of alphas: 5.83036e+14
 Alphas per second: 9.72504e+11
-Current integrator integral (nC): 186825
-rise_nbins: 281
-decay_nbins: 575
-Activation start: 302.437s
-Activation end: 901.957s
-*Activation time: 599.52s
-*labr1 decay binwidth: 2.12922
-*labr2 decay binwidth: 2.12922
+Activation time: 599.52s
+labr1 decay binwidth: 2.12922
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 8854.51
-*LaBr2 Initial activiy: 2376.73
+Decay factor: 1.06669
 
-labr1 decay 30P per alpha: 8.26821e-10
-labr2 decay 30P per alpha: 2.21935e-10
-labr1 decay number of 30P: 482066
-labr2 decay number of 30P: 129396
+LaBr1 initial activity (/s): 4158.57
+LaBr2 initial activity (/s): 1116.24
+LaBr1 decay 30P per alpha: 8.26821e-10
+LaBr2 decay 30P per alpha: 2.21935e-10
 ---------------
 activation_7
 ***************
 *Number of alphas: 2.72299e+14
 Alphas per second: 6.02022e+11
-Current integrator integral (nC): 87254.3
-rise_nbins: 251
-decay_nbins: 581
-Activation start: 300.899s
-Activation end: 753.207s
-*Activation time: 452.308s
-*labr1 decay binwidth: 1.805
-*labr2 decay binwidth: 1.805
+Activation time: 452.308s
+labr1 decay binwidth: 1.805
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 17307.7
-*LaBr2 Initial activiy: 19399.3
+Decay factor: 1.1409
 
-labr1 decay 30P per alpha: 4.36605e-09
-labr2 decay 30P per alpha: 4.89368e-09
-labr1 decay number of 30P: 1.18887e+06
-labr2 decay number of 30P: 1.33255e+06
+LaBr1 initial activity (/s): 9588.76
+LaBr2 initial activity (/s): 10747.6
+LaBr1 decay 30P per alpha: 4.36605e-09
+LaBr2 decay 30P per alpha: 4.89368e-09
 ---------------
 activation_8
 ***************
 *Number of alphas: 3.15508e+14
 Alphas per second: 6.77056e+11
-Current integrator integral (nC): 0
-rise_nbins: 232
-decay_nbins: 586
-Activation start: 364s
-Activation end: 830s
-*Activation time: 466s
-*labr1 decay binwidth: 2.00704
-*labr2 decay binwidth: 2.00704
+Activation time: 466s
+labr1 decay binwidth: 2.00704
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 8108.85
-*LaBr2 Initial activiy: 9181.57
+Decay factor: 1.13113
 
-labr1 decay 30P per alpha: 1.57408e-09
-labr2 decay 30P per alpha: 1.78232e-09
-labr1 decay number of 30P: 496636
-labr2 decay number of 30P: 562336
+LaBr1 initial activity (/s): 4040.21
+LaBr2 initial activity (/s): 4574.69
+LaBr1 decay 30P per alpha: 1.57408e-09
+LaBr2 decay 30P per alpha: 1.78232e-09
 ---------------
 activation_9
 ***************
 *Number of alphas: 2.12087e+14
 Alphas per second: 4.70258e+11
-Current integrator integral (nC): 0
-rise_nbins: 250
-decay_nbins: 581
-Activation start: 302s
-Activation end: 753s
-*Activation time: 451s
-*labr1 decay binwidth: 1.80344
-*labr2 decay binwidth: 1.80344
+Activation time: 451s
+labr1 decay binwidth: 1.80344
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 757.482
-*LaBr2 Initial activiy: 860.007
+Decay factor: 1.14188
 
-labr1 decay 30P per alpha: 2.45755e-10
-labr2 decay 30P per alpha: 2.79017e-10
-labr1 decay number of 30P: 52121.2
-labr2 decay number of 30P: 59175.8
+LaBr1 initial activity (/s): 420.021
+LaBr2 initial activity (/s): 476.87
+LaBr1 decay 30P per alpha: 2.45755e-10
+LaBr2 decay 30P per alpha: 2.79017e-10
 ---------------
 activation_10
 ***************
 *Number of alphas: 2.5534e+14
 Alphas per second: 5.69956e+11
-Current integrator integral (nC): 0
-rise_nbins: 248
-decay_nbins: 583
-Activation start: 304s
-Activation end: 752s
-*Activation time: 448s
-*labr1 decay binwidth: 1.80503
-*labr2 decay binwidth: 1.80503
+Activation time: 448s
+labr1 decay binwidth: 1.80503
 
-*30P decay constant: 0.00462406
-*LaBr1 Initial activiy: 9607.61
-*LaBr2 Initial activiy: 10891
+Decay factor: 1.14415
 
-labr1 decay 30P per alpha: 2.59189e-09
-labr2 decay 30P per alpha: 2.93813e-09
-labr1 decay number of 30P: 661815
-labr2 decay number of 30P: 750223
+LaBr1 initial activity (/s): 5322.69
+LaBr2 initial activity (/s): 6033.72
+LaBr1 decay 30P per alpha: 2.59189e-09
+LaBr2 decay 30P per alpha: 2.93813e-09
 ---------------

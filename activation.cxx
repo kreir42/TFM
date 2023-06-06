@@ -864,7 +864,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t activation_time = activation_end-activation_start;
 	cout << "*Number of alphas: " << number_of_alphas << endl;
 	cout << "Alphas per second: " << number_of_alphas/(activation_time/1E12) << endl;
-	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
+//	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
 //	cout << "current2alpha: " << current2alpha << endl;
 //	cout << "current (nA): " << current_integrator->Integral()/(activation_time/1E12)/10 << endl;
 //	cout << "current (nA): " << (number_of_alphas/current2alpha)/(activation_time/1E12)/10 << endl;
@@ -881,8 +881,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	int rise_nbins = activation_time/(labr_1->GetBinWidth(1)*1E12);
 	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);
-	cout << "rise_nbins: " << rise_nbins << endl;
-	cout << "decay_nbins: " << decay_nbins << endl;
+//	cout << "rise_nbins: " << rise_nbins << endl;
+//	cout << "decay_nbins: " << decay_nbins << endl;
 	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
 	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", ";Time (s); Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
 	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
@@ -909,9 +909,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	activation_end/=1E12;
 	activation_time/=1E12;
 	measurement_end/=1E12;
-	cout << "Activation start: " << activation_start << "s" << endl;
-	cout << "Activation end: " << activation_end << "s" << endl;
-	cout << "*Activation time: " << activation_time << "s" << endl;
+//	cout << "Activation start: " << activation_start << "s" << endl;
+//	cout << "Activation end: " << activation_end << "s" << endl;
+	cout << "Activation time: " << activation_time << "s" << endl;
 //	cout << "Measurement end: " << measurement_end << "s" << endl;
 //	cout << "activation_window_low: " << activation_window_low << endl;
 //	cout << "activation_window_high: " << activation_window_high << endl;
@@ -922,8 +922,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t labr2_decay_binwidth = labr_2_decay->GetBinWidth(1);
 //	cout << "labr1 binwidth: " << labr1_binwidth << endl;
 //	cout << "labr2 binwidth: " << labr2_binwidth << endl;
-	cout << "*labr1 decay binwidth: " << labr1_decay_binwidth << endl;
-	cout << "*labr2 decay binwidth: " << labr2_decay_binwidth << endl;
+	cout << "labr1 decay binwidth: " << labr1_decay_binwidth << endl;
+//	cout << "labr2 decay binwidth: " << labr2_decay_binwidth << endl;
 	cout << endl;
 
 	//fittings
@@ -991,25 +991,23 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
 
 	fitresult = labr_1_decay->Fit("decay", "SLEQ");
-	results[0][4] = fitresult->Parameter(1)/labr1_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
-	results[0][5] = fitresult->ParError(1)/labr1_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
+	Double_t decay_factor = 1/(1-exp(-fitresult->Parameter(2)*activation_time));
+	results[0][4] = fitresult->Parameter(1)*decay_factor/(labr1_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+	results[0][5] = fitresult->ParError(1)*decay_factor/(labr1_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
-	cout << "*30P decay constant: " << fitresult->Parameter(2) << endl;
-	cout << "*LaBr1 Initial activiy: " << fitresult->Parameter(1) << endl;
+	cout << "Decay factor: " << decay_factor << endl << endl;;
+	cout << "LaBr1 initial activity (/s): " << fitresult->Parameter(1)/labr1_decay_binwidth << endl;
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
-	results[1][4] = fitresult->Parameter(1)/labr2_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
-	results[1][5] = fitresult->ParError(1)/labr2_decay_binwidth/((1-exp(-fitresult->Parameter(2)*activation_time))*number_of_alphas)/(fitresult->Parameter(2)*1.99);
+	results[1][4] = fitresult->Parameter(1)*decay_factor/(labr2_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+	results[1][5] = fitresult->ParError(1)*decay_factor/(labr2_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_2_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
-	cout << "*LaBr2 Initial activiy: " << fitresult->Parameter(1) << endl;
+	cout << "LaBr2 initial activity (/s): " << fitresult->Parameter(1)/labr2_decay_binwidth << endl;
 
-	cout << endl;
-	cout << "labr1 decay 30P per alpha: " << results[0][4] << endl;
-	cout << "labr2 decay 30P per alpha: " << results[1][4] << endl;
-	cout << "labr1 decay number of 30P: " << results[0][4]*number_of_alphas << endl;
-	cout << "labr2 decay number of 30P: " << results[1][4]*number_of_alphas << endl;
+	cout << "LaBr1 decay 30P per alpha: " << results[0][4] << endl;
+	cout << "LaBr2 decay 30P per alpha: " << results[1][4] << endl;
 
 	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
