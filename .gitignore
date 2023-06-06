@@ -10,3 +10,4 @@ latex/*.log
 latex/*.out
 latex/*.toc
 latex/*.synctex.gz
+latex/*.idx

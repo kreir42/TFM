@@ -262,10 +262,12 @@ void activation_results(){
 	Double_t exfor_errors_2[63];
 	Double_t factor_feb = (results[0][1][4]+results[0][0][4])/(2*exfor_data[18]);
 	Double_t error_feb = abs(results[0][1][4]-results[0][0][4])/(exfor_data[18]*factor_feb);
-	Double_t factor_apr = (results[4][1][4]+results[4][0][4]+results[8][1][4]+results[8][0][4])/(4*exfor_data[18]);
+	Double_t factor_apr = (results[8][1][4]+results[8][0][4])/(2*exfor_data[18]);
+	Double_t error_apr = abs(results[8][1][4]-results[8][0][4])/(exfor_data[18]*factor_apr);
 	cout << "Factor febrero: " << factor_feb << endl;
 	cout << "Error febrero: " << error_feb*100 << "%" << endl;
 	cout << "Factor abril: " << factor_apr << endl;
+	cout << "Error abril: " << error_apr*100 << "%" << endl;
 	cout << "Eficiencia Febrero LaBr1 para acuerdo: " << eficiencia_feb_labr1*factor_feb*100 << "%" << endl;
 	cout << "Distancia equivalente a Pablo: " << sqrt(100*PABLO_EFF_10CM/(eficiencia_feb_labr1*factor_feb)) << "cm" << endl;
 	cout << "Eficiencia Abril3 LaBr2 para acuerdo: " << eficiencia_apr3_labr2*factor_apr*100 << "%" << endl;
@@ -277,7 +279,7 @@ void activation_results(){
 		exfor_errors_1[i] = exfor_data_1[i] * error_feb;
 //		exfor_data_2[i]*=2.642141092E-5*(22.5/20)*(21.847/22.3)*(21.934/21.5958)*(21.3124/22.1447);	//eficiencia apr
 		exfor_data_2[i]*=factor_apr;
-		exfor_errors_2[i] = exfor_data_2[i] * 0.08;
+		exfor_errors_2[i] = exfor_data_2[i] * error_apr;
 	}
 
 	//EXFOR data
@@ -920,11 +922,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
 	Double_t labr1_decay_binwidth = labr_1_decay->GetBinWidth(1);
 	Double_t labr2_decay_binwidth = labr_2_decay->GetBinWidth(1);
-//	cout << "labr1 binwidth: " << labr1_binwidth << endl;
+	cout << "labr1 binwidth: " << labr1_binwidth << endl;
 //	cout << "labr2 binwidth: " << labr2_binwidth << endl;
 	cout << "labr1 decay binwidth: " << labr1_decay_binwidth << endl;
 //	cout << "labr2 decay binwidth: " << labr2_decay_binwidth << endl;
-	cout << endl;
 
 	//fittings
 	TFitResultPtr fitresult;
@@ -943,14 +944,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg", "initial number of 30P");
 
 	fitresult = labr_1->Fit("unified_fit", "SLEQ");
-	results[0][0] = fitresult->Parameter(1)/current2alpha*labr1_binwidth;
-	results[0][1] = fitresult->ParError(1)/current2alpha*labr1_binwidth;
+	results[0][0] = fitresult->Parameter(1)/current2alpha*labr1_binwidth/1.99;
+	results[0][1] = fitresult->ParError(1)/current2alpha*labr1_binwidth/1.99;
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2->Fit("unified_fit", "SLEQ");
-	results[1][0] = fitresult->Parameter(1)/current2alpha*labr2_binwidth;
-	results[1][1] = fitresult->ParError(1)/current2alpha*labr2_binwidth;
+	results[1][0] = fitresult->Parameter(1)/current2alpha*labr2_binwidth/1.99;
+	results[1][1] = fitresult->ParError(1)/current2alpha*labr2_binwidth/1.99;
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -963,14 +964,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetNpx(rise_nbins);
 
 	fitresult = labr_1_rise->Fit("unified_fit", "SLEQ");
-	results[0][2] = fitresult->Parameter(1)/current2alpha*labr1_binwidth;
-	results[0][3] = fitresult->ParError(1)/current2alpha*labr1_binwidth;
+	results[0][2] = fitresult->Parameter(1)/current2alpha*labr1_binwidth/1.99;
+	results[0][3] = fitresult->ParError(1)/current2alpha*labr1_binwidth/1.99;
 	myCanvas->SetName("labr_1_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLEQ");
-	results[1][2] = fitresult->Parameter(1)/current2alpha*labr2_binwidth;
-	results[1][3] = fitresult->ParError(1)/current2alpha*labr2_binwidth;
+	results[1][2] = fitresult->Parameter(1)/current2alpha*labr2_binwidth/1.99;
+	results[1][3] = fitresult->ParError(1)/current2alpha*labr2_binwidth/1.99;
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -996,7 +997,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	results[0][5] = fitresult->ParError(1)*decay_factor/(labr1_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
 	myCanvas->SetName("labr_1_decay_fit");
 	myCanvas->Write("", TObject::kOverwrite);
-	cout << "Decay factor: " << decay_factor << endl << endl;;
+	cout << "Decay factor: " << decay_factor << endl << endl;
 	cout << "LaBr1 initial activity (/s): " << fitresult->Parameter(1)/labr1_decay_binwidth << endl;
 
 	fitresult = labr_2_decay->Fit("decay", "SLEQ");
@@ -1007,7 +1008,9 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "LaBr2 initial activity (/s): " << fitresult->Parameter(1)/labr2_decay_binwidth << endl;
 
 	cout << "LaBr1 decay 30P per alpha: " << results[0][4] << endl;
+	cout << "LaBr1 decay 30P per alpha error: " << results[0][4] << endl;
 	cout << "LaBr2 decay 30P per alpha: " << results[1][4] << endl;
+	cout << "LaBr2 decay 30P per alpha error: " << results[1][4] << endl;
 
 	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
