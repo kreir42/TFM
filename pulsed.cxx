@@ -74,9 +74,10 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	Double_t x2 = 2600;
 	Double_t m = (y2-y1)/(x2-x1);
 	Double_t n = y1-x1*m;
-	auto monster_gammas = monster.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd<y1 || psd<m*Energy+n;},{"psd", "Energy"});
+	auto monster_efiltered = monster.Filter("Energy>400");
+	auto monster_gammas = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd<y1 || psd<m*Energy+n;},{"psd", "Energy"});
 	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
-	auto monster_neutrons = monster.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 || psd>=m*Energy+n;},{"psd", "Energy"});
+	auto monster_neutrons = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 || psd>=m*Energy+n;},{"psd", "Energy"});
 	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 
 	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, gammaflash_min, gammaflash_max}, "tof");
