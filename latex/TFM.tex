@@ -10,6 +10,10 @@
 \usepackage{tablefootnote}
 \usepackage[12pt]{moresize}	%más tamaños de letra
 
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\bfseries}{}{0pt}{\Huge}	%quitar header de chapter
+
 \usepackage{siunitx}	%support for units, numbers
 \sisetup{output-decimal-marker={.}, separate-uncertainty}
 
@@ -54,6 +58,9 @@
 \newcommand{\mder}[3]{\frac{\dif^{#3}#1}{\dif #2^{#3}}}		%derivada múltiple
 \newcommand{\norm}[1]{\left\| #1 \right\|}
 \newcommand{\an}{($\alpha$,n) }
+\newcommand{\Aliso}{\textsuperscript{27}Al }
+\newcommand{\Piso}{\textsuperscript{30}P }
+\newcommand{\Na}{\textsuperscript{22}Na }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[a4paper]{geometry}
@@ -83,27 +90,75 @@ The objective of the measurements at CNA are to check the viability for carrying
 
 \chapter{Experimental setup and procedure}
 \section{Setup}
-We do the measurements for 27Al because it is the standard, with the best available measurements to compare to.
+\subsection{Target}
+We do the measurements for \Aliso because it is the standard, with the best available measurements to compare to.
+Explain how we measure the number of incident alphas with the current integrator.
 
-Tandem accelerator.
-Difficulty of accelerating alphas with the reactor, with it being designed for deuterons.
+\subsection{Tandem 3MV accelerator}
+Explain how a tandem accelerator works.
+Explain pulsed mode: chopper, buncher.
+Difficulty of using alphas with the reactor, with it being designed for deuterons.
 
-Distances and angles of all relevant detectors.
+Explain the different parts of the neutron line.
 
-LaBr detectors for gammas.
-MONSTER detector for neutrons.
+\subsection{Radiation detectors}
+Table with distances and angles of all relevant detectors.
+
+\subsubsection{LaBr}
+We use LaBr detectors for gammas.
+LaBr are inorganic scintillating detectors.
+LaBr detectors have a spectroscopic response.
+
+\subsubsection{MONSTER}
+We use a MONSTER detector for neutrons.
+MONSTER is an organic scintillating detector.
+MONSTER can do PSD.
+PSD allows us to separate neutrons and gammas.
+Explain PSD.
 
 \section{Procedure}
-Explain the procedure for activation measurements.
+\subsection{Activation measurements}
+We use the LaBr detectors and calibrate them with the \Na \qty{511}{\keV} peak.
+We calculate detector efficiency.
 
-Explain the procedure for pulsed measurements.
+Explain the procedure for activation measurements:
+Beam is continuous.
+\Piso created when an \an reaction occurs.
+\Piso decays with a X minute half life and emits \qty{511}{\keV} with X intensity.
+The \Aliso target is irradiated for several half-lifes, then left to decay.
+Show and explain resulting histogram.
+
+\subsection{Pulsed beam measurements}
+Beam is pulsed.
+Explain the procedure for pulsed measurements:
 
 
 \chapter{Measurements and results}
+Measurements were carried out in February and April.
+Table with activation/pulsed, alpha energy, current, time.
+
+List measurement problems: loss of signal, lack of current over time.
+
+\section{Activation}
+\subsubsection{Decay fit}
+We fit the decay to a negative exponential plus a constant background.
+From the "initial activity" given by the fit, we get the number of decays (\Piso intensity) and we correct for the decay during activation to get the activity if the \Piso hadn't decayed. Solve diffeq.
+From the corrected activity, we get the corrected number of \Piso nuclei, created by the alphas.
+We divide over the number of alphas to get the \an reaction yield in units of \an reactions per incident alpha.
+We correct for efficiency.
+
+\subsubsection{Unified and rise fit}
+We fit to a function that takes into account the current step by step, a constant background, a background proportional to current, and an initial number of \Piso nuclei.
+The fit returns the number of \an reactions per unit of charge.
+We convert from charge to number of alphas.
+We correct for efficiency.
+
+
+\section{Pulsed}
 
 
 \chapter{Conclusions}
-We have managed to measure reaction yield with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.
-We have managed to measure the neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.
+We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.
+We have managed to measure the corresponding neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.
 
 \end{document}
