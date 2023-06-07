@@ -1,0 +1,109 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage{graphicx}
+\usepackage{cancel}	%para cancelar expresiones en fórmulas
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{tablefootnote}
+\usepackage[12pt]{moresize}	%más tamaños de letra
+
+\usepackage{siunitx}	%support for units, numbers
+\sisetup{output-decimal-marker={.}, separate-uncertainty}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=red,
+	bookmarksopen=true,
+	bookmarksopenlevel=1,
+	urlcolor=blue
+}
+
+\usepackage{tikz}	%%TIKZ for drawings, shapes
+\usetikzlibrary{positioning}
+\tikzset{
+	nodo/.style={
+		rectangle,
+		draw,
+		black,
+		thick,
+		rounded corners,
+		node distance=1.5cm,
+		inner sep=0.3cm,
+		font=\large
+	}
+}
+
+%%% NOMBRES DE COSAS
+\renewcommand{\abstractname}{Abstract}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\appendixname}{Appendix}
+\renewcommand{\bibname}{References}
+\renewcommand{\chaptername}{Part}
+
+%%% COMANDOS COMUNES
+\newcommand{\dif}{\text{d}}
+\newcommand{\ddt}[1]{\frac{\dif #1}{\dif t}}
+\newcommand{\der}[2]{\frac{\dif #1}{\dif #2}}
+\newcommand{\mder}[3]{\frac{\dif^{#3}#1}{\dif #2^{#3}}}		%derivada múltiple
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\an}{($\alpha$,n) }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[a4paper]{geometry}
+\geometry{top=2cm,bottom=2cm,left=1.8cm,right=1.8cm}
+
+\author{Erik Cárdenas Mayoral}
+\title{\HUGE{Title}}
+\date{date}
+\makeindex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Abstract
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Introduction and motivation}
+Explain what \an reactions are.
+
+Relevance of \an reactions for: dark matter search, astrophysics.
+
+The objective of the measurements at CNA are to check the viability for carrying out more \an measurements.
+
+
+\chapter{Experimental setup and procedure}
+\section{Setup}
+We do the measurements for 27Al because it is the standard, with the best available measurements to compare to.
+
+Tandem accelerator.
+Difficulty of accelerating alphas with the reactor, with it being designed for deuterons.
+
+Distances and angles of all relevant detectors.
+
+LaBr detectors for gammas.
+MONSTER detector for neutrons.
+
+\section{Procedure}
+Explain the procedure for activation measurements.
+
+Explain the procedure for pulsed measurements.
+
+
+\chapter{Measurements and results}
+
+
+\chapter{Conclusions}
+We have managed to measure reaction yield with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.
+We have managed to measure the neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.
+
+\end{document}
