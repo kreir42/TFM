@@ -5,10 +5,10 @@ Alphas per second: 3.99515e+11
 Activation time: 867.567s
 labr1 binwidth: 2.2423
 labr1 decay binwidth: 2.24715
-labr1 unified 30P per alpha: 3.23122e-10
-labr2 unified 30P per alpha: 3.26084e-10
-labr1 rise 30P per alpha: 3.76011e-10
-labr2 rise 30P per alpha: 3.24758e-10
+labr1 unified 30P per alpha: 1.44103e-10
+labr2 unified 30P per alpha: 1.45424e-10
+labr1 rise 30P per alpha: 1.67676e-10
+labr2 rise 30P per alpha: 1.44833e-10
 Decay factor: 1.01844
 
 LaBr1 initial activity (/s): 255.025
@@ -25,10 +25,10 @@ Alphas per second: 3.1643e+11
 Activation time: 981.819s
 labr1 binwidth: 2.30526
 labr1 decay binwidth: 2.30601
-labr1 unified 30P per alpha: 2.1286e-09
-labr2 unified 30P per alpha: 2.13976e-09
-labr1 rise 30P per alpha: 2.12949e-09
-labr2 rise 30P per alpha: 2.1174e-09
+labr1 unified 30P per alpha: 9.23368e-10
+labr2 unified 30P per alpha: 9.28208e-10
+labr1 rise 30P per alpha: 9.23754e-10
+labr2 rise 30P per alpha: 9.1851e-10
 Decay factor: 1.01079
 
 LaBr1 initial activity (/s): 1337.15
@@ -45,10 +45,10 @@ Alphas per second: 4.0013e+11
 Activation time: 909.95s
 labr1 binwidth: 2.06285
 labr1 decay binwidth: 2.06382
-labr1 unified 30P per alpha: 6.64761e-09
-labr2 unified 30P per alpha: 6.59462e-09
-labr1 rise 30P per alpha: 6.61031e-09
-labr2 rise 30P per alpha: 6.43243e-09
+labr1 unified 30P per alpha: 3.22254e-09
+labr2 unified 30P per alpha: 3.19686e-09
+labr1 rise 30P per alpha: 3.20446e-09
+labr2 rise 30P per alpha: 3.11823e-09
 Decay factor: 1.01511
 
 LaBr1 initial activity (/s): 5365.14
@@ -65,10 +65,10 @@ Alphas per second: 5.99398e+11
 Activation time: 899.426s
 labr1 binwidth: 2.48031
 labr1 decay binwidth: 2.48189
-labr1 unified 30P per alpha: 5.24261e-09
-labr2 unified 30P per alpha: 5.1695e-09
-labr1 rise 30P per alpha: 9.66536e-10
-labr2 rise 30P per alpha: 9.40422e-10
+labr1 unified 30P per alpha: 2.11369e-09
+labr2 unified 30P per alpha: 2.08421e-09
+labr1 rise 30P per alpha: 3.89683e-10
+labr2 rise 30P per alpha: 3.79154e-10
 Decay factor: 1.01587
 
 LaBr1 initial activity (/s): 10193.6
@@ -85,10 +85,10 @@ Alphas per second: 3.83642e+11
 Activation time: 605.226s
 labr1 binwidth: 1.94698
 labr1 decay binwidth: 1.94932
-labr1 unified 30P per alpha: 5.10925e-10
-labr2 unified 30P per alpha: 5.38296e-10
-labr1 rise 30P per alpha: 6.19927e-10
-labr2 rise 30P per alpha: 6.36854e-10
+labr1 unified 30P per alpha: 2.62419e-10
+labr2 unified 30P per alpha: 2.76477e-10
+labr1 rise 30P per alpha: 3.18404e-10
+labr2 rise 30P per alpha: 3.27098e-10
 Decay factor: 1.06484
 
 LaBr1 initial activity (/s): 376.887
@@ -105,10 +105,10 @@ Alphas per second: 9.72504e+11
 Activation time: 599.52s
 labr1 binwidth: 2.12626
 labr1 decay binwidth: 2.12922
-labr1 unified 30P per alpha: 2.19314e-09
-labr2 unified 30P per alpha: 5.89595e-10
-labr1 rise 30P per alpha: 2.73128e-09
-labr2 rise 30P per alpha: 7.73988e-10
+labr1 unified 30P per alpha: 1.03145e-09
+labr2 unified 30P per alpha: 2.77292e-10
+labr1 rise 30P per alpha: 1.28459e-09
+labr2 rise 30P per alpha: 3.64015e-10
 Decay factor: 1.06669
 
 LaBr1 initial activity (/s): 4158.57
@@ -125,10 +125,10 @@ Alphas per second: 6.02022e+11
 Activation time: 452.308s
 labr1 binwidth: 1.80191
 labr1 decay binwidth: 1.805
-labr1 unified 30P per alpha: 9.05121e-09
-labr2 unified 30P per alpha: 1.00769e-08
-labr1 rise 30P per alpha: 9.04458e-09
-labr2 rise 30P per alpha: 9.71275e-09
+labr1 unified 30P per alpha: 5.02312e-09
+labr2 unified 30P per alpha: 5.59236e-09
+labr1 rise 30P per alpha: 5.01944e-09
+labr2 rise 30P per alpha: 5.39025e-09
 Decay factor: 1.1409
 
 LaBr1 initial activity (/s): 9588.76
@@ -145,10 +145,10 @@ Alphas per second: 6.77056e+11
 Activation time: 466s
 labr1 binwidth: 2.00612
 labr1 decay binwidth: 2.00704
-labr1 unified 30P per alpha: 3.23032e-09
-labr2 unified 30P per alpha: 3.23032e-09
-labr1 rise 30P per alpha: 3.23032e-09
-labr2 rise 30P per alpha: 3.23032e-09
+labr1 unified 30P per alpha: 1.61023e-09
+labr2 unified 30P per alpha: 1.61023e-09
+labr1 rise 30P per alpha: 1.61023e-09
+labr2 rise 30P per alpha: 1.61023e-09
 Decay factor: 1.13113
 
 LaBr1 initial activity (/s): 4040.21
@@ -165,10 +165,10 @@ Alphas per second: 4.70258e+11
 Activation time: 451s
 labr1 binwidth: 1.8008
 labr1 decay binwidth: 1.80344
-labr1 unified 30P per alpha: 2.8997e-09
-labr2 unified 30P per alpha: 2.8997e-09
-labr1 rise 30P per alpha: 2.8997e-09
-labr2 rise 30P per alpha: 2.8997e-09
+labr1 unified 30P per alpha: 1.61023e-09
+labr2 unified 30P per alpha: 1.61023e-09
+labr1 rise 30P per alpha: 1.61023e-09
+labr2 rise 30P per alpha: 1.61023e-09
 Decay factor: 1.14188
 
 LaBr1 initial activity (/s): 420.021
@@ -185,10 +185,10 @@ Alphas per second: 5.69956e+11
 Activation time: 448s
 labr1 binwidth: 1.80433
 labr1 decay binwidth: 1.80503
-labr1 unified 30P per alpha: 2.90539e-09
-labr2 unified 30P per alpha: 2.90539e-09
-labr1 rise 30P per alpha: 2.90539e-09
-labr2 rise 30P per alpha: 2.90539e-09
+labr1 unified 30P per alpha: 1.61023e-09
+labr2 unified 30P per alpha: 1.61023e-09
+labr1 rise 30P per alpha: 1.61023e-09
+labr2 rise 30P per alpha: 1.61023e-09
 Decay factor: 1.14415
 
 LaBr1 initial activity (/s): 5322.69

@@ -944,14 +944,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg", "initial number of 30P");
 
 	fitresult = labr_1->Fit("unified_fit", "SLEQ");
-	results[0][0] = fitresult->Parameter(1)/current2alpha*labr1_binwidth/1.99;
-	results[0][1] = fitresult->ParError(1)/current2alpha*labr1_binwidth/1.99;
+	results[0][0] = fitresult->Parameter(1)/current2alpha/1.99;
+	results[0][1] = fitresult->ParError(1)/current2alpha/1.99;
 	myCanvas->SetName("labr_1_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2->Fit("unified_fit", "SLEQ");
-	results[1][0] = fitresult->Parameter(1)/current2alpha*labr2_binwidth/1.99;
-	results[1][1] = fitresult->ParError(1)/current2alpha*labr2_binwidth/1.99;
+	results[1][0] = fitresult->Parameter(1)/current2alpha/1.99;
+	results[1][1] = fitresult->ParError(1)/current2alpha/1.99;
 	myCanvas->SetName("labr_2_unified_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
@@ -964,14 +964,14 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetNpx(rise_nbins);
 
 	fitresult = labr_1_rise->Fit("unified_fit", "SLEQ");
-	results[0][2] = fitresult->Parameter(1)/current2alpha*labr1_binwidth/1.99;
-	results[0][3] = fitresult->ParError(1)/current2alpha*labr1_binwidth/1.99;
+	results[0][2] = fitresult->Parameter(1)/current2alpha/1.99;
+	results[0][3] = fitresult->ParError(1)/current2alpha/1.99;
 	myCanvas->SetName("labr_1_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	fitresult = labr_2_rise->Fit("unified_fit", "SLEQ");
-	results[1][2] = fitresult->Parameter(1)/current2alpha*labr2_binwidth/1.99;
-	results[1][3] = fitresult->ParError(1)/current2alpha*labr2_binwidth/1.99;
+	results[1][2] = fitresult->Parameter(1)/current2alpha/1.99;
+	results[1][3] = fitresult->ParError(1)/current2alpha/1.99;
 	myCanvas->SetName("labr_2_rise_fit");
 	myCanvas->Write("", TObject::kOverwrite);
 
