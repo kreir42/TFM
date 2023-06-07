@@ -81,84 +81,107 @@ Abstract
 \tableofcontents
 
 \chapter{Introduction and motivation}
-Explain what \an reactions are.
+·Explain what \an reactions are.\\
 
-Relevance of \an reactions for: dark matter search, astrophysics.
+·Relevance of \an reactions for: dark matter search, astrophysics.\\
 
-The objective of the measurements at CNA are to check the viability for carrying out more \an measurements.
+·The objective of the measurements at CNA are to check the viability for carrying out more \an measurements.\\
 
 
 \chapter{Experimental setup and procedure}
 \section{Setup}
-\subsection{Target}
-We do the measurements for \Aliso because it is the standard, with the best available measurements to compare to.
-Explain how we measure the number of incident alphas with the current integrator.
-
 \subsection{Tandem 3MV accelerator}
-Explain how a tandem accelerator works.
-Explain pulsed mode: chopper, buncher.
-Difficulty of using alphas with the reactor, with it being designed for deuterons.
+·Explain how a tandem accelerator works.\\
+·Explain pulsed mode: chopper, buncher.\\
+·Difficulty of using alphas with the accelerator, with it being designed for deuterons. Graph of gamma flash highlighting assymetry and tail.\\
 
-Explain the different parts of the neutron line.
+·Explain the different parts of the neutron line. Photos.\\
+
+\subsection{Target}
+·We do the measurements for \Aliso because it is the standard, with the best available measurements to compare to.\\
+·Explain how we measure the number of incident alphas with the current integrator.\\
 
 \subsection{Radiation detectors}
-Table with distances and angles of all relevant detectors.
+·Table with distances and angles of all relevant detectors.\\
 
 \subsubsection{LaBr}
-We use LaBr detectors for gammas.
-LaBr are inorganic scintillating detectors.
-LaBr detectors have a spectroscopic response.
+·We use LaBr detectors for gammas.\\
+·LaBr are inorganic scintillating detectors.\\
+·LaBr detectors have a spectroscopic response.\\
+
+·We calibrate them with the \Na \qty{511}{\keV} peak. Calibration spectrum.\\
+·Alson \textsuperscript{137}Cs spectrum?\\
+·We calculate detector efficiency.\\
 
 \subsubsection{MONSTER}
-We use a MONSTER detector for neutrons.
-MONSTER is an organic scintillating detector.
-MONSTER can do PSD.
-PSD allows us to separate neutrons and gammas.
-Explain PSD.
+·We use a MONSTER detector for neutrons.\\
+·MONSTER is an organic scintillating detector.\\
+·MONSTER can do PSD.\\
+·PSD allows us to separate neutrons and gammas. Show PSD separation plot.\\
+·Explain PSD.\\
+·We use a theoretical curve to calibrate in efficiency. Show curve.\\
 
 \section{Procedure}
 \subsection{Activation measurements}
-We use the LaBr detectors and calibrate them with the \Na \qty{511}{\keV} peak.
-We calculate detector efficiency.
-
-Explain the procedure for activation measurements:
-Beam is continuous.
-\Piso created when an \an reaction occurs.
-\Piso decays with a X minute half life and emits \qty{511}{\keV} with X intensity.
-The \Aliso target is irradiated for several half-lifes, then left to decay.
-Show and explain resulting histogram.
+·Explain the procedure for activation measurements:\\
+·Beam is continuous.\\
+·\Piso created when an \an reaction occurs.\\
+·\Piso decays with a X minute half life and emits \qty{511}{\keV} with X intensity.\\
+·The \Aliso target is irradiated for several half-lifes, then left to decay.\\
+·Show and explain resulting histogram.\\
 
 \subsection{Pulsed beam measurements}
-Beam is pulsed.
-Explain the procedure for pulsed measurements:
+·Explain the procedure for pulsed measurements:\\
+·Beam is pulsed.\\
+·Alphas arrive all at the same time (lie), \an reactions happen.\\
+·Both gammas and neutrons are produced at the same time.	%TBD:mirar tiempo de producción de gammas\\
+·Gammas move at c, arrive to detectors d/c time later. This is called gamma flash.\\
+·Neutrons have different speed depending on energy, arrive with different ToF.\\
+·Show example ToF plot.\\
+·Measuring ToF, we measure neutron energy.\\
+·We time the pulses by using a signal from the chopper/buncher.	%TBD:chopper o buncher?\\
+
+·Alphas do not arrive all at the same time: X nanosecond wide pulses. This introduces uncertainty in the ToF, and thus energy, measurements.\\
+·Pulses are not symmetrical: tails, several peaks. This means we cannot treat pulses as gaussians and the introduced error in ToF as their standard deviation. Show graph of uneven gamma flash.\\
 
 
 \chapter{Measurements and results}
-Measurements were carried out in February and April.
-Table with activation/pulsed, alpha energy, current, time.
-
-List measurement problems: loss of signal, lack of current over time.
+·Measurements were carried out in February and April.\\
+·Table with activation/pulsed, alpha energy, current, time.\\
 
 \section{Activation}
+·Explain diffeq for activation case.\\
+·We use 3 different methods for data analysis, by fitting different parts of the histogram. Show example activation time histogram.\\
+
 \subsubsection{Decay fit}
-We fit the decay to a negative exponential plus a constant background.
-From the "initial activity" given by the fit, we get the number of decays (\Piso intensity) and we correct for the decay during activation to get the activity if the \Piso hadn't decayed. Solve diffeq.
-From the corrected activity, we get the corrected number of \Piso nuclei, created by the alphas.
-We divide over the number of alphas to get the \an reaction yield in units of \an reactions per incident alpha.
-We correct for efficiency.
+·We fit the decay to a negative exponential plus a constant background. Show decay fit.\\
+·Solve diffeq for constant current.\\
+·From the "initial activity" given by the fit, we get the number of decays (\Piso intensity) and we correct for the decay during activation to get the activity if the \Piso hadn't decayed.\\
+·From the corrected activity, we get the corrected number of \Piso nuclei, created by the alphas.\\
+·We divide over the number of alphas to get the \an reaction yield in units of \an reactions per incident alpha.\\
+·We correct for efficiency.\\
+
+·Graph with results compared to EXFOR.\\
 
 \subsubsection{Unified and rise fit}
-We fit to a function that takes into account the current step by step, a constant background, a background proportional to current, and an initial number of \Piso nuclei.
-The fit returns the number of \an reactions per unit of charge.
-We convert from charge to number of alphas.
-We correct for efficiency.
+·We fit to a function that integrates the diffeq, taking into account the current step by step, a constant background, a background proportional to current, and an initial number of \Piso nuclei.\\
+·We fit either the whole time histogram (unified) or only the activation (rise). Show fits.\\
+·The fit returns the number of \an reactions per unit of charge.\\
+·We convert from charge to number of alphas.\\
+·We correct for efficiency.\\
 
+·Problems with loss of current data in April.\\
+·Problems with DAQ loss in February. Show time histogram.\\
+
+·Graphs with results compared to EXFOR.\\
 
 \section{Pulsed}
+·We separate gamma flash and neutron response. Show tof histograms.\\
+·Explain deconvolution.\\
 
 
 \chapter{Conclusions}
-We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.
-We have managed to measure the corresponding neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.
+·We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.\\
+·We have managed to measure the corresponding neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.\\
 
 \end{document}
