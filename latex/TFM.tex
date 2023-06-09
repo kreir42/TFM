@@ -68,11 +68,27 @@
 
 \author{Erik Cárdenas Mayoral}
 \title{\HUGE{Title}}
+%\titlepic{\includegraphics[width=0.19\textwidth]{us.png}
 \date{date}
 \makeindex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-\maketitle
+\begin{titlepage}
+	\centering
+	\Huge Máster interuniversitario en física nuclear\par
+	\vspace*{3cm}
+	\HUGE \textbf{Title}\par
+	\vspace{1cm}
+	\includegraphics[width=0.35\textwidth]{us.png}\\
+	\vspace{1cm}
+	\Large \textsc{Erik Cárdenas Mayoral}\par
+	\vspace{2cm}
+	Tutores:\\
+	Carlos Guerrero Sánchez\\
+	María Begoña Fernández Martínez\par
+	\vfill
+	00/06/2023
+\end{titlepage}
 
 \begin{abstract}
 Abstract
@@ -177,7 +193,12 @@ Abstract
 
 \section{Pulsed}
 ·We separate gamma flash and neutron response. Show tof histograms.\\
-·Explain deconvolution.\\
+·Explain deconvolution:\\
+·We fit the neutron response histogram to a function that takes as input the gamma flash histogram and 50 parameters corresponding to the neutron spectra in time of flight. The function loops through the gamma histogram to add the contribution of each bin.\\
+·The result is to remove the effect of the width and assymetry of the gamma flash. Show plot of neutron response+response to delta.\\
+
+·We convert the resulting parameters from time of flight to energy. Show energy spectra plot.\\
+·We correct considering the efficiency of the detector. Show final plot.\\
 
 
 \chapter{Conclusions}
