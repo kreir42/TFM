@@ -869,7 +869,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 //	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
 //	cout << "current2alpha: " << current2alpha << endl;
 //	cout << "current (nA): " << current_integrator->Integral()/(activation_time/1E12)/10 << endl;
-//	cout << "current (nA): " << (number_of_alphas/current2alpha)/(activation_time/1E12)/10 << endl;
+	cout << "current (nA): " << (number_of_alphas/current2alpha)/(activation_time/1E12)/10 << endl;
 
 	//histogramas
 	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
