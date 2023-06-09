@@ -1,8 +1,10 @@
 #define MIN_TOF 250
 #define MAX_TOF 650
+#define PULSE_ENERGY_FILTER 400
 #define GAMMA_FLASH_BINS_N 350
 #define NEUTRON_RESPONSE_BINS_N 500
-#define PULSE_FIT_PARAMS_N 50
+#define PULSE_FIT_PARAMS_N 50	//must be even; if changed, must also change tree size definition
+#define EXTRA_FIT_WIDTH 1.20	//must be >= 1?? TBD: check
 
 #define PULSED1_GMIN	482
 #define PULSED1_GCENTER	488.096
@@ -38,21 +40,22 @@ class pulse_fit_functor{
 	private:
 		TH1F* gamma_histo;
 		Double_t gamma_stepsize;
-		Double_t param_width;
+		Double_t total_param_width;
 	public:
 		Double_t neutron_min;
 		Double_t neutron_max;
 		pulse_fit_functor(TH1F* gamma_histo, Double_t neutron_min, Double_t neutron_max):gamma_histo(gamma_histo),neutron_min(neutron_min),neutron_max(neutron_max){
 			gamma_stepsize = gamma_histo->GetBinWidth(1);
-			param_width = (neutron_max-neutron_min)/PULSE_FIT_PARAMS_N;
+			total_param_width = (neutron_max-neutron_min)*EXTRA_FIT_WIDTH;
 		}
 		Double_t operator()(Double_t* x, Double_t* p){
 			Double_t sum = 0;
 			Short_t param_index = 0;
+			Double_t param_calc_constant = (x[0]-neutron_min)/total_param_width + 0.5;
 			for(Short_t i=0; i<GAMMA_FLASH_BINS_N; i++){
-				param_index = 1 + (x[0] - gamma_stepsize*i - neutron_min)/param_width;
-				if(param_index>0 && param_index<PULSE_FIT_PARAMS_N){
-					sum += (gamma_histo->GetBinContent(i)-p[PULSE_FIT_PARAMS_N+1]) * p[param_index];
+				param_index = 1 + (param_calc_constant - (0.5+i)/(GAMMA_FLASH_BINS_N*EXTRA_FIT_WIDTH))*PULSE_FIT_PARAMS_N;
+				if(param_index>0 && param_index<=PULSE_FIT_PARAMS_N){
+					sum += gamma_histo->GetBinContent(i)>p[PULSE_FIT_PARAMS_N+1] ? (gamma_histo->GetBinContent(i)-p[PULSE_FIT_PARAMS_N+1]) * p[param_index] : 0;
 				}
 			}
 			return p[0] + sum;
@@ -74,7 +77,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	Double_t x2 = 2600;
 	Double_t m = (y2-y1)/(x2-x1);
 	Double_t n = y1-x1*m;
-	auto monster_efiltered = monster.Filter("Energy>400");
+	auto monster_efiltered = monster.Filter("Energy>PULSE_ENERGY_FILTER");
 	auto monster_gammas = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd<y1 || psd<m*Energy+n;},{"psd", "Energy"});
 	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 	auto monster_neutrons = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 || psd>=m*Energy+n;},{"psd", "Energy"});
