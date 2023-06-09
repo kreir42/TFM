@@ -164,6 +164,38 @@ Abstract
 \chapter{Measurements and results}
 ·Measurements were carried out in February and April.\\
 ·Table with activation/pulsed, alpha energy, current, time.\\
+\begin{table}[h]	%Tabla con datos de las medidas de activación
+\centering
+\begin{tabular}[c]{>{\bfseries}r||c|c|c|c}
+	N & Energy (\unit{\keV}) & Current (\unit{\nano\A}) & Activation time (\unit{\s}) & Date\tablefootnote{All took place in 2023.\label{date_tablefootnote}} \\ \hline
+	1	&\num{5500}&\num{128}&\num{867}&Feb 22nd\\ \hline
+	2	&\num{7000}&\num{101}&\num{981}&Feb 22nd\\ \hline
+	3	&\num{8500}&\num{128}&\num{909}&Feb 22nd\\ \hline
+	4	&\num{8500}&\num{192}&\num{899}&Feb 23rd\\ \hline
+	5	&\num{5500}&\num{123}&\num{605}&Apr 17th\\ \hline
+	6	&\num{5500}&\num{312}&\num{599}&Apr 17th\\ \hline
+	7	&\num{8250}&\num{193}&\num{452}&Apr 18th\\ \hline
+	8	&\num{7000}&\num{216}&\num{466}&Apr 18th\\ \hline
+	9	&\num{5500}&\num{151}&\num{451}&Apr 18th\\ \hline
+	10	&\num{7500}&\num{183}&\num{448}&Apr 18th\\ \hline
+\end{tabular}
+\label{activation_measurements_table}
+\caption{Activation measurements}
+\end{table}
+
+\begin{table}[h]	%Tabla con datos de las medidas de haz pulsado
+\centering
+\begin{tabular}[c]{>{\bfseries}r||c|c|c}
+	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\footref{date_tablefootnote} \\ \hline	%TBD?error en distancia?
+	1&\num{5500}&\num{1.0}&April 17th\\ \hline
+	2&\num{5500}&\num{1.0}&April 18th\\ \hline
+	3&\num{7000}&\num{1.0}&April 18th\\ \hline
+	4&\num{8250}&\num{1.0}&April 18th\\ \hline
+	5&\num{5250}&\num{2.0}&April 18th\\ \hline
+\end{tabular}
+\label{pulsed_measurements_table}
+\caption{Pulsed measurements}
+\end{table}
 
 \section{Activation}
 ·Explain diffeq for activation case.\\
