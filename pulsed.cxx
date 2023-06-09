@@ -1,6 +1,6 @@
 #define MIN_TOF 250
 #define MAX_TOF 650
-#define PULSE_ENERGY_FILTER 400
+#define PULSE_ENERGY_FILTER 0
 #define GAMMA_FLASH_BINS_N 350
 #define NEUTRON_RESPONSE_BINS_N 500
 #define PULSE_FIT_PARAMS_N 50	//must be even; if changed, must also change tree size definition
@@ -18,23 +18,23 @@
 #define PULSED2_NMIN	510
 #define PULSED2_NMAX	600
 
-#define PULSED3_GMIN	365
+#define PULSED3_GMIN	360
 #define PULSED3_GCENTER	370.548
-#define PULSED3_GMAX	390
-#define PULSED3_NMIN	400
-#define PULSED3_NMAX	500
+#define PULSED3_GMAX	403
+#define PULSED3_NMIN	404
+#define PULSED3_NMAX	480
 
-#define PULSED4_GMIN	288
+#define PULSED4_GMIN	280
 #define PULSED4_GCENTER	294.508
-#define PULSED4_GMAX	310
-#define PULSED4_NMIN	320
-#define PULSED4_NMAX	400
+#define PULSED4_GMAX	320
+#define PULSED4_NMIN	324
+#define PULSED4_NMAX	370
 
-#define PULSED5_GMIN	270
+#define PULSED5_GMIN	250
 #define PULSED5_GCENTER	297.949
-#define PULSED5_GMAX	320
-#define PULSED5_NMIN	352
-#define PULSED5_NMAX	470
+#define PULSED5_GMAX	352
+#define PULSED5_NMIN	353
+#define PULSED5_NMAX	471
 
 class pulse_fit_functor{
 	private:
@@ -80,7 +80,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	auto monster_efiltered = monster.Filter("Energy>PULSE_ENERGY_FILTER");
 	auto monster_gammas = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd<y1 || psd<m*Energy+n;},{"psd", "Energy"});
 	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
-	auto monster_neutrons = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 || psd>=m*Energy+n;},{"psd", "Energy"});
+	auto monster_neutrons = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 && psd>=m*Energy+n;},{"psd", "Energy"});
 	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
 
 	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, gammaflash_min, gammaflash_max}, "tof");
@@ -112,7 +112,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+2);
 	pulse_fit->SetNpx(NEUTRON_RESPONSE_BINS_N);
 	pulse_fit->SetNumberFitPoints(NEUTRON_RESPONSE_BINS_N);
-	pulse_fit->SetParLimits(0, 0, 50);
+	pulse_fit->SetParLimits(0, 0, 500);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
 	}
@@ -149,7 +149,7 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1E-5, 20);
+	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1E-4, 20);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
@@ -157,7 +157,7 @@ void pulsed(){
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1E-2, 40);
+	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1E-3, 40);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
@@ -165,7 +165,7 @@ void pulsed(){
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 1E-2, 35);
+	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 1E-1, 35);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
@@ -192,11 +192,12 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
 	Double_t y_err[PULSE_FIT_PARAMS_N];
-	Double_t paramwidth = (n_max-n_min)/PULSE_FIT_PARAMS_N;
+	Double_t paramwidth = EXTRA_FIT_WIDTH*(n_max-n_min)/PULSE_FIT_PARAMS_N * tof_to_seconds;
+	Double_t first_param_seconds = (n_min-g_min - EXTRA_FIT_WIDTH*(n_max-n_min)*0.5)*tof_to_seconds + distance/c;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = (n_min-g_min + paramwidth*i)*tof_to_seconds + distance/c;
-		y[i] = results[i+1][0];
-		y_err[i] = results[i+1][1];
+		x[i] = first_param_seconds + paramwidth*(i+0.5);
+		y[i] = p[i];
+		y_err[i] = p_err[i];
 	}
 
 	TCanvas* myCanvas = new TCanvas("");
@@ -211,7 +212,6 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	//histograma "delta de dirac" con una sola cuenta
 	TH1D* delta_histogram = new TH1D("centered dirac delta", "Dirac delta;ToF;Counts", GAMMA_FLASH_BINS_N, g_min, g_max);
 	delta_histogram->Fill(g_center, gammas_n);
-	delta_histogram->Fill(g_center+10, gammas_n);
 	delta_histogram->Write("dirac_delta", TObject::kOverwrite);
 	//functor with delta
 	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),n_min,n_max);
@@ -241,12 +241,12 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	myCanvas->Write("response_to_gflash", TObject::kOverwrite);
 
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = n_min + paramwidth*i + paramwidth/2;
-		y[i] = results[i+1][0] * gammas_n;
-		y_err[i] = results[i+1][1] * gammas_n;
+		x[i] = first_param_seconds + paramwidth*(i+0.5);
+		y[i] = p[i]*gammas_n;
+		y_err[i] = p_err[i]*gammas_n;
 	}
 	TGraph* cross_section_result_delta = new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
-	cross_section_result_delta->SetTitle("delta;ToF (ns);Counts");
+	cross_section_result_delta->SetTitle("delta;ToF (s);Counts");
 	cross_section_result_delta->SetMarkerStyle(21);
 	cross_section_result_delta->Draw("alp");
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
@@ -254,10 +254,10 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 
 	Double_t v;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		v = distance/((n_min-g_min + paramwidth*i)*tof_to_seconds + distance/c);
+		v = distance/(first_param_seconds + paramwidth*(i+0.5));
 		x[i] = (neutron_mass/2*v*v)*J_to_keV;
-		y[i] = results[i+1][0];
-		y_err[i] = results[i+1][1];
+		y[i] = p[i];
+		y_err[i] = p_err[i];
 	}
 	TGraph* energy_result= new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
 	energy_result->SetTitle("Energy result;Energy (keV);Counts");
