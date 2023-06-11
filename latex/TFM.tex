@@ -198,13 +198,14 @@ Abstract
 We can describe the number of \Piso nuclei in the target, $N$, using the differential equation:
 \begin{equation}
 	\ddt{N} = I(t) -\lambda N
+	\label{activation_diffeq}
 \end{equation}
 where $\lambda$ is the decay constant of \Piso and $I(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
 $I(t)$ will be proportional to the current of alphas hitting the target.
 If expressed in number of alphas per second, the proportionality constant will be the yield of the reaction; the number of \an reactions per incident $\alpha$ particle.\\
 
 In order to get $I(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
-We don't measure the activity directly, but rather the activity times $1.798$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
+We don't measure the activity directly, but rather the activity times $1.99$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
 
 We use three different methods to get $I(t)$, depending on wether $I(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
 
@@ -213,6 +214,7 @@ We use three different methods to get $I(t)$, depending on wether $I(t)$ is cons
 \subsubsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
 For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t}$, (plus a background) to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
+Note that, to get $A$\textsubscript{EOA}, we must divide the number given by the fitting by the binwidth of the histogram, so that $A\textsubscript{EOA}=\text{fit result}/\text{binwidth}$.
 We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
 ·Show decay fit.\\
 
@@ -238,21 +240,27 @@ As $I$ is the number of \Piso created per second, we can get the yield of the re
 
 All that is left is to correct for the efficiency of the detector, and the final formula for the yield is:
 \begin{equation}
-	\text{yield} = \frac{\text{fit result}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.798}	%TBD? use symbols instead?
+	\text{yield} = \frac{\text{fit result}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
 \end{equation}
-%TBD: mention binwidth
 
 ·Graph with results compared to EXFOR.\\
 
 \subsubsection{Unified and rise fit}
-·We fit to a function that integrates the diffeq, taking into account the current step by step, a constant background, a background proportional to current, and an initial number of \Piso nuclei.\\
-·We fit either the whole time histogram (unified) or only the activation (rise). Show fits.\\
-·The fit returns the number of \an reactions per unit of charge.\\
-·We convert from charge to number of alphas.\\
-·We correct for efficiency.\\
+Instead of taking $I(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $I(t)$ as proportional to the current step by step. ·Show current histogram.\\
+This function also has a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
+·Show fits.\\
+The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\Coulomb} per binwidth.
+Thus the yield, corrected by the detector efficiency, in \an per alpha, is:
+\begin{equation}
+	\text{yield} = \frac{\text{fit result}}{2\cdot1.60217646\cdot10^{-9}\cdot 1.99 \cdot \text{detector efficiency}}
+\end{equation}
+with $2\cdot\num{1.60217646E-9}$ the charge of an alpha particle in tenths of nanocoulombs.
+\\
 
-·Problems with loss of current data in April.\\
-·Problems with DAQ loss in February. Show time histogram.\\
+Data of current over time was not recorded in half of the measurements in April (numbers 8, 9 and 10).	%TBD: por qué razón?
+In addition, measurement number 4, in February, shows loss of data due to a problem with the DAQ. ·Show time histogram.
+These problems prevent the \textit{unified} and \textit{rise} fits to be used for all measurements.
+\\
 
 ·Graphs with results compared to EXFOR.\\
 
