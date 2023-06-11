@@ -9,6 +9,7 @@
 \usepackage{color}
 \usepackage{tablefootnote}
 \usepackage[12pt]{moresize}	%más tamaños de letra
+\usepackage{bm}	%bold para math
 
 \usepackage{titlesec}
 \titleformat{\chapter}[display]
@@ -66,10 +67,6 @@
 \usepackage[a4paper]{geometry}
 \geometry{top=2cm,bottom=2cm,left=1.8cm,right=1.8cm}
 
-\author{Erik Cárdenas Mayoral}
-\title{\HUGE{Title}}
-%\titlepic{\includegraphics[width=0.19\textwidth]{us.png}
-\date{date}
 \makeindex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -77,7 +74,7 @@
 	\centering
 	\Huge Máster interuniversitario en física nuclear\par
 	\vspace*{3cm}
-	\HUGE \textbf{Title}\par
+	\HUGE \textbf{Measurements of ($\bm{\alpha}$,n) reactions in CNA/HISPANOS}\par	%TBD? más largo?
 	\vspace{1cm}
 	\includegraphics[width=0.35\textwidth]{us.png}\\
 	\vspace{1cm}
@@ -163,7 +160,7 @@ Abstract
 
 \chapter{Measurements and results}
 ·Measurements were carried out in February and April.\\
-·Table with activation/pulsed, alpha energy, current, time.\\
+
 \begin{table}[h]	%Tabla con datos de las medidas de activación
 \centering
 \begin{tabular}[c]{>{\bfseries}r||c|c|c|c}
@@ -186,7 +183,7 @@ Abstract
 \begin{table}[h]	%Tabla con datos de las medidas de haz pulsado
 \centering
 \begin{tabular}[c]{>{\bfseries}r||c|c|c}
-	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\footref{date_tablefootnote} \\ \hline	%TBD?error en distancia?
+	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\footref{date_tablefootnote} \\ \hline	%TBD?incertidumbre en distancia?
 	1&\num{5500}&\num{1.0}&April 17th\\ \hline
 	2&\num{5500}&\num{1.0}&April 18th\\ \hline
 	3&\num{7000}&\num{1.0}&April 18th\\ \hline
@@ -198,16 +195,52 @@ Abstract
 \end{table}
 
 \section{Activation}
-·Explain diffeq for activation case.\\
-·We use 3 different methods for data analysis, by fitting different parts of the histogram. Show example activation time histogram.\\
+We can describe the number of \Piso nuclei in the target, $N$, using the differential equation:
+\begin{equation}
+	\ddt{N} = I(t) -\lambda N
+\end{equation}
+where $\lambda$ is the decay constant of \Piso and $I(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
+$I(t)$ will be proportional to the current of alphas hitting the target.
+If expressed in number of alphas per second, the proportionality constant will be the yield of the reaction; the number of \an reactions per incident $\alpha$ particle.\\
+
+In order to get $I(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
+We don't measure the activity directly, but rather the activity times $1.798$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
+
+We use three different methods to get $I(t)$, depending on wether $I(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
+
+·Show example activation time histogram.\\
 
 \subsubsection{Decay fit}
-·We fit the decay to a negative exponential plus a constant background. Show decay fit.\\
-·Solve diffeq for constant current.\\
-·From the "initial activity" given by the fit, we get the number of decays (\Piso intensity) and we correct for the decay during activation to get the activity if the \Piso hadn't decayed.\\
-·From the corrected activity, we get the corrected number of \Piso nuclei, created by the alphas.\\
-·We divide over the number of alphas to get the \an reaction yield in units of \an reactions per incident alpha.\\
-·We correct for efficiency.\\
+After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
+For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t}$, (plus a background) to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
+We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
+·Show decay fit.\\
+
+We can solve the differential equation during the activation period analytically by taking $I(t)$ as a constant, $I$.
+We get
+\[ \ddt{N} = I -\lambda N  \]
+and its solution is:
+\begin{equation}
+	N(t) = \frac{I}{\lambda} + \left(  N_0 - \frac{I}{\lambda}  \right) e^{-\lambda t}
+\end{equation}
+with $N_0$ the initial number of \Piso nuclei, assumed to be \num{0}.
+
+$N$\textsubscript{EOA} will then be equal to:
+\[ N\textsubscript{EOA} =N(\Delta t) = \frac{I}{\lambda} - \frac{I}{\lambda} e^{-\lambda \Delta t} = \frac{I}{\lambda} \left(1 - e^{-\lambda \Delta t} \right)\Longrightarrow A\textsubscript{EOA}=I\left(1-e^{-\lambda\Delta t}\right)\Longrightarrow \]
+\begin{equation}
+	I = \frac{A\textsubscript{EOA}}{1 - e^{-\lambda \Delta t}}
+\end{equation}
+with $\Delta t$ the total activation time.
+As $I$ is the number of \Piso created per second, we can get the yield of the reaction by dividing over the number of incident alpha particles per unit of time:
+\begin{equation}
+	\text{yield} = \frac{I}{\text{alphas per second}} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \left(1 - e^{-\lambda \Delta t} \right)}
+\end{equation}
+
+All that is left is to correct for the efficiency of the detector, and the final formula for the yield is:
+\begin{equation}
+	\text{yield} = \frac{\text{fit result}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.798}	%TBD? use symbols instead?
+\end{equation}
+%TBD: mention binwidth
 
 ·Graph with results compared to EXFOR.\\
 
