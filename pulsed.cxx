@@ -4,56 +4,62 @@
 #define GAMMA_FLASH_BINS_N 350
 #define NEUTRON_RESPONSE_BINS_N 500
 #define PULSE_FIT_PARAMS_N 50	//must be even; if changed, must also change tree size definition
-#define EXTRA_FIT_WIDTH 1.20	//must be >= 1?? TBD: check
+#define MIN_PARAM_TOF 22
+#define MAX_PARAM_TOF 130
 
-#define PULSED1_GMIN	482
+#define PULSED1_GMIN	480
 #define PULSED1_GCENTER	488.096
-#define PULSED1_GMAX	505
-#define PULSED1_NMIN	530
-#define PULSED1_NMAX	580
+#define PULSED1_GMAX	520
+#define PULSED1_NMIN	529
+#define PULSED1_NMAX	600
 
-#define PULSED2_GMIN	479
+#define PULSED2_GMIN	478
 #define PULSED2_GCENTER	484.855
-#define PULSED2_GMAX	500
-#define PULSED2_NMIN	510
-#define PULSED2_NMAX	600
+#define PULSED2_GMAX	520
+#define PULSED2_NMIN	527
+#define PULSED2_NMAX	610
 
-#define PULSED3_GMIN	360
+#define PULSED3_GMIN	364
 #define PULSED3_GCENTER	370.548
-#define PULSED3_GMAX	403
-#define PULSED3_NMIN	404
-#define PULSED3_NMAX	480
+#define PULSED3_GMAX	400
+#define PULSED3_NMIN	400
+#define PULSED3_NMAX	500
 
-#define PULSED4_GMIN	280
+#define PULSED4_GMIN	285
 #define PULSED4_GCENTER	294.508
 #define PULSED4_GMAX	320
-#define PULSED4_NMIN	324
-#define PULSED4_NMAX	370
+#define PULSED4_NMIN	320
+#define PULSED4_NMAX	410
 
-#define PULSED5_GMIN	250
+#define PULSED5_GMIN	290
 #define PULSED5_GCENTER	297.949
-#define PULSED5_GMAX	352
-#define PULSED5_NMIN	353
-#define PULSED5_NMAX	471
+#define PULSED5_GMAX	350
+#define PULSED5_NMIN	350
+#define PULSED5_NMAX	600
 
 class pulse_fit_functor{
 	private:
 		TH1F* gamma_histo;
 		Double_t gamma_stepsize;
-		Double_t total_param_width;
 	public:
+		Double_t gamma_min;
 		Double_t neutron_min;
 		Double_t neutron_max;
-		pulse_fit_functor(TH1F* gamma_histo, Double_t neutron_min, Double_t neutron_max):gamma_histo(gamma_histo),neutron_min(neutron_min),neutron_max(neutron_max){
+		Double_t min_param_tof;
+		Double_t max_param_tof;
+		pulse_fit_functor(TH1F* gamma_histo, Double_t gamma_min, Double_t neutron_min, Double_t neutron_max, Double_t min_param_tof, Double_t max_param_tof):gamma_histo(gamma_histo),gamma_min(gamma_min),neutron_min(neutron_min),neutron_max(neutron_max),min_param_tof(min_param_tof),max_param_tof(max_param_tof){
 			gamma_stepsize = gamma_histo->GetBinWidth(1);
-			total_param_width = (neutron_max-neutron_min)*EXTRA_FIT_WIDTH;
 		}
 		Double_t operator()(Double_t* x, Double_t* p){
 			Double_t sum = 0;
 			Short_t param_index = 0;
-			Double_t param_calc_constant = (x[0]-neutron_min)/total_param_width + 0.5;
+			Double_t tof = 0;
 			for(Short_t i=0; i<GAMMA_FLASH_BINS_N; i++){
-				param_index = 1 + (param_calc_constant - (0.5+i)/(GAMMA_FLASH_BINS_N*EXTRA_FIT_WIDTH))*PULSE_FIT_PARAMS_N;
+				tof = x[0] - (gamma_min+(0.5+i)*gamma_stepsize);
+				if(tof<min_param_tof || tof>max_param_tof){
+					continue;
+				}
+				param_index = 1 + (tof-min_param_tof)/max_param_tof*PULSE_FIT_PARAMS_N;
 				if(param_index>0 && param_index<=PULSE_FIT_PARAMS_N){
 					sum += gamma_histo->GetBinContent(i)>p[PULSE_FIT_PARAMS_N+1] ? (gamma_histo->GetBinContent(i)-p[PULSE_FIT_PARAMS_N+1]) * p[param_index] : 0;
 				}
@@ -62,7 +68,7 @@ class pulse_fit_functor{
 		}
 };
 
-void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param, Double_t gamma_background){
+void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param, Double_t gamma_background, Double_t distance){
 	EnableImplicitMT();
 	RDataFrame d("Data", filepath);
 
@@ -108,17 +114,18 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	neutron_response->Write("", TObject::kOverwrite);
 
 	//fit
-	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),neutronresponse_min,neutronresponse_max);
+	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),gammaflash_min,neutronresponse_min,neutronresponse_max,MIN_PARAM_TOF*distance,MAX_PARAM_TOF*distance);
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, neutronresponse_min, neutronresponse_max, PULSE_FIT_PARAMS_N+2);
 	pulse_fit->SetNpx(NEUTRON_RESPONSE_BINS_N);
 	pulse_fit->SetNumberFitPoints(NEUTRON_RESPONSE_BINS_N);
 	pulse_fit->SetParLimits(0, 0, 500);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
+		pulse_fit->SetParameter(i, 0);
 	}
 	pulse_fit->SetParLimits(PULSE_FIT_PARAMS_N+1, 0, 500);
 	pulse_fit->SetParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
-	pulse_fit->FixParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
+//	pulse_fit->FixParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
 	TFitResultPtr fitresult = neutron_response->Fit("pulse_fit", "SLE");
 	myCanvas->Write("pulse_fit_plot", TObject::kOverwrite);
 
@@ -149,23 +156,23 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1E-4, 20);
+	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1E-4, 20, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_per_file(pulsed_2, PULSED2_GMIN, PULSED2_GMAX, PULSED2_NMIN, PULSED2_NMAX, 1E-3, 20);
+	pulsed_per_file(pulsed_2, PULSED2_GMIN, PULSED2_GMAX, PULSED2_NMIN, PULSED2_NMAX, 1E-3, 20, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1E-3, 40);
+	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1E-3, 40, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_per_file(pulsed_4, PULSED4_GMIN, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, 1E-2, 10);
+	pulsed_per_file(pulsed_4, PULSED4_GMIN, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, 1E-2, 10, 1);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 1E-1, 35);
+	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 1E-1, 35, 2);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
@@ -180,8 +187,8 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t p[PULSE_FIT_PARAMS_N+2];
 	Double_t p_err[PULSE_FIT_PARAMS_N+2];
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		p[i] = results[i][0];
-		p_err[i] = results[i][0];
+		p[i] = results[i+1][0];
+		p_err[i] = results[i+1][1];
 	}
 
 	Double_t tof_to_seconds = 1E-9;
@@ -192,8 +199,9 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
 	Double_t y_err[PULSE_FIT_PARAMS_N];
-	Double_t paramwidth = EXTRA_FIT_WIDTH*(n_max-n_min)/PULSE_FIT_PARAMS_N * tof_to_seconds;
-	Double_t first_param_seconds = (n_min-g_min - EXTRA_FIT_WIDTH*(n_max-n_min)*0.5)*tof_to_seconds + distance/c;
+	Double_t paramwidth = (MAX_PARAM_TOF-MIN_PARAM_TOF)*distance/PULSE_FIT_PARAMS_N * tof_to_seconds;
+	Double_t first_param_seconds = MIN_PARAM_TOF*distance*tof_to_seconds + distance/c;
+	cout << "first_param_seconds: " << first_param_seconds << endl;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = first_param_seconds + paramwidth*(i+0.5);
 		y[i] = p[i];
@@ -214,7 +222,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	delta_histogram->Fill(g_center, gammas_n);
 	delta_histogram->Write("dirac_delta", TObject::kOverwrite);
 	//functor with delta
-	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),n_min,n_max);
+	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),g_min,n_min,n_max,MIN_PARAM_TOF*distance,MAX_PARAM_TOF*distance);
 	Double_t x2[200];
 	Double_t y2[200];
 	for(UShort_t i=0; i<200; i++){
@@ -228,7 +236,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("response_to_delta", TObject::kOverwrite);
 	//functor with gamma flash
-	pulse_fit_functor pulse_functor_2 = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),n_min,n_max);
+	pulse_fit_functor pulse_functor_2 = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),g_min,n_min,n_max,MIN_PARAM_TOF*distance,MAX_PARAM_TOF*distance);
 	for(UShort_t i=0; i<200; i++){
 		x2[i] = n_min + (n_max-n_min)/200*(i+0.5);
 		y2[i] = pulse_functor_2(&x2[i], p);
@@ -252,6 +260,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("neutron_response+delta", TObject::kOverwrite);
 
+	//energy
 	Double_t v;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		v = distance/(first_param_seconds + paramwidth*(i+0.5));
@@ -259,6 +268,8 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 		y[i] = p[i];
 		y_err[i] = p_err[i];
 	}
+	cout << "min tof energy: " << x[0] << endl;
+	cout << "max tof energy: " << x[PULSE_FIT_PARAMS_N-1] << endl;
 	TGraph* energy_result= new TGraphErrors(PULSE_FIT_PARAMS_N, x, y, NULL, y_err);
 	energy_result->SetTitle("Energy result;Energy (keV);Counts");
 	energy_result->SetMarkerStyle(21);
@@ -269,6 +280,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	energy_line->Draw("same");
 	myCanvas->Write("energy_result", TObject::kOverwrite);
 	myCanvas->Close();
+	cout << "------------" << endl;
 	return energy_result;
 }
 
@@ -277,23 +289,23 @@ void pulsed_results(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	TGraph* energy_1 = pulsed_results_per_file(PULSED1_GMIN, PULSED1_GCENTER, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1, 5500);
+	TGraph* energy_1 = pulsed_results_per_file(PULSED1_GMIN,PULSED1_GCENTER,PULSED1_GMAX,PULSED1_NMIN,PULSED1_NMAX, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	TGraph* energy_2 = pulsed_results_per_file(PULSED2_GMIN, PULSED2_GCENTER, PULSED2_GMAX, PULSED2_NMIN, PULSED2_NMAX, 1, 5500);
+	TGraph* energy_2 = pulsed_results_per_file(PULSED2_GMIN,PULSED2_GCENTER,PULSED2_GMAX,PULSED2_NMIN,PULSED2_NMAX, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	TGraph* energy_3 = pulsed_results_per_file(PULSED3_GMIN, PULSED3_GCENTER, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1, 7000);
+	TGraph* energy_3 = pulsed_results_per_file(PULSED3_GMIN,PULSED3_GCENTER,PULSED3_GMAX,PULSED3_NMIN,PULSED3_NMAX, 1, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	TGraph* energy_4 = pulsed_results_per_file(PULSED4_GMIN, PULSED4_GCENTER, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, 1, 8250);
+	TGraph* energy_4 = pulsed_results_per_file(PULSED4_GMIN,PULSED4_GCENTER,PULSED4_GMAX,PULSED4_NMIN,PULSED4_NMAX, 1, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	TGraph* energy_5 = pulsed_results_per_file(PULSED5_GMIN, PULSED5_GCENTER, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 2, 8250);
+	TGraph* energy_5 = pulsed_results_per_file(PULSED5_GMIN,PULSED5_GCENTER,PULSED5_GMAX,PULSED5_NMIN,PULSED5_NMAX, 2, 8250);
 	gDirectory->cd("..");
 
 	TCanvas* myCanvas = new TCanvas("");
