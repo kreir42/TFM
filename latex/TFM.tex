@@ -98,24 +98,29 @@ Abstract
 
 ·Relevance of \an reactions for: dark matter search, astrophysics.\\
 
+·Actual state and types of \an measurements.\\
+
 ·The objective of the measurements at CNA are to check the viability for carrying out more \an measurements.\\
 
 
 \chapter{Experimental setup and procedure}
 \section{Setup}
+·Pictures.\\
 \subsection{Tandem 3MV accelerator}
 ·Explain how a tandem accelerator works.\\
 ·Explain pulsed mode: chopper, buncher.\\
+·Explain the different parts of the neutron line. Photos.\\
 ·Difficulty of using alphas with the accelerator, with it being designed for deuterons. Graph of gamma flash highlighting assymetry and tail.\\
 
-·Explain the different parts of the neutron line. Photos.\\
-
 \subsection{Target}
-·We do the measurements for \Aliso because it is the standard, with the best available measurements to compare to.\\
+·We do the measurements for \Aliso because it is relatively well known compared to others, with the best available measurements to compare to.\\
+·Measurements are of a thick target.\\
+·This implies that the results are integrated, for alpha energies up to a maximum.\\
 ·Explain how we measure the number of incident alphas with the current integrator.\\
 
 \subsection{Radiation detectors}
-·Table with distances and angles of all relevant detectors.\\
+·We mmeasure TTY with gammas and neutron spectra with ToF.\\
+·Table and drawing with distances and angles of all relevant detectors.\\
 
 \subsubsection{LaBr}
 ·We use LaBr detectors for gammas.\\
@@ -123,12 +128,14 @@ Abstract
 ·LaBr detectors have a spectroscopic response.\\
 
 ·We calibrate them with the \Na \qty{511}{\keV} peak. Calibration spectrum.\\
-·Alson \textsuperscript{137}Cs spectrum?\\
+·Also show every othe calibration spectra.\\
 ·We calculate detector efficiency.\\
 
 \subsubsection{MONSTER}
 ·We use a MONSTER detector for neutrons.\\
+·We also have 2 TADEO detectors, but don't analyse their data because of poorer efficiency.\\
 ·MONSTER is an organic scintillating detector.\\
+·Show calibration spectra.\\
 ·MONSTER can do PSD.\\
 ·PSD allows us to separate neutrons and gammas. Show PSD separation plot.\\
 ·Explain PSD.\\
@@ -139,32 +146,36 @@ Abstract
 ·Explain the procedure for activation measurements:\\
 ·Beam is continuous.\\
 ·\Piso created when an \an reaction occurs.\\
-·\Piso decays with a X minute half life and emits \qty{511}{\keV} with X intensity.\\
+·\Piso decays with a X minute half life and emits \qty{511}{\keV} with X intensity. Show decay scheme.\\
 ·The \Aliso target is irradiated for several half-lifes, then left to decay.\\
-·Show and explain resulting histogram.\\
+·Show and explain resulting time and energy histograms. Show and explain 2D energy histogram and gain change after activation end.\\
 
-\subsection{Pulsed beam measurements}
+\subsection{Time of flight measurements}
 ·Explain the procedure for pulsed measurements:\\
 ·Beam is pulsed.\\
+·We time the pulses by using a signal from the chopper/buncher.\\	%TBD:chopper o buncher?
 ·Alphas arrive all at the same time (lie), \an reactions happen.\\
-·Both gammas and neutrons are produced at the same time.	%TBD:mirar tiempo de producción de gammas\\
+·Both gammas and neutrons are produced at the same time.\\	%TBD:mirar tiempo de producción de gammas
 ·Gammas move at c, arrive to detectors d/c time later. This is called gamma flash.\\
 ·Neutrons have different speed depending on energy, arrive with different ToF.\\
-·Show example ToF plot.\\
-·Measuring ToF, we measure neutron energy.\\
-·We time the pulses by using a signal from the chopper/buncher.	%TBD:chopper o buncher?\\
+·Show example ToF plot with and without PSD.\\
 
 ·Alphas do not arrive all at the same time: X nanosecond wide pulses. This introduces uncertainty in the ToF, and thus energy, measurements.\\
 ·Pulses are not symmetrical: tails, several peaks. This means we cannot treat pulses as gaussians and the introduced error in ToF as their standard deviation. Show graph of uneven gamma flash.\\
 
 
-\chapter{Measurements and results}
-·Measurements were carried out in February and April.\\
+\chapter{Measurements, analysis and results}
+
+\section{Activation}
+Activation measurements were carried out in two sessions of two consecutive days, in February and April.
+Table \ref{activation_measurements_table} summarises the different measurement conditions.
+
+Because detectors were unmounted in between both sessions, calibration measurements with \textsuperscript{22}Na to determine detector efficiency (for activation measurements) were done for each detector configuration.
 
 \begin{table}[h]	%Tabla con datos de las medidas de activación
 \centering
 \begin{tabular}[c]{>{\bfseries}r||c|c|c|c}
-	N & Energy (\unit{\keV}) & Current (\unit{\nano\A}) & Activation time (\unit{\s}) & Date\tablefootnote{All took place in 2023.\label{date_tablefootnote}} \\ \hline
+	N & Energy (\unit{\keV}) & Current (\unit{\nano\A}) & Activation time (\unit{\s}) & Date\tablefootnote{All took place in 2023.} \\ \hline
 	1	&\num{5500}&\num{128}&\num{867}&Feb 22nd\\ \hline
 	2	&\num{7000}&\num{101}&\num{981}&Feb 22nd\\ \hline
 	3	&\num{8500}&\num{128}&\num{909}&Feb 22nd\\ \hline
@@ -176,77 +187,62 @@ Abstract
 	9	&\num{5500}&\num{151}&\num{451}&Apr 18th\\ \hline
 	10	&\num{7500}&\num{183}&\num{448}&Apr 18th\\ \hline
 \end{tabular}
-\label{activation_measurements_table}
 \caption{Activation measurements}
+\label{activation_measurements_table}
 \end{table}
 
-\begin{table}[h]	%Tabla con datos de las medidas de haz pulsado
-\centering
-\begin{tabular}[c]{>{\bfseries}r||c|c|c}
-	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\footref{date_tablefootnote} \\ \hline	%TBD?incertidumbre en distancia?
-	1&\num{5500}&\num{1.0}&April 17th\\ \hline
-	2&\num{5500}&\num{1.0}&April 18th\\ \hline
-	3&\num{7000}&\num{1.0}&April 18th\\ \hline
-	4&\num{8250}&\num{1.0}&April 18th\\ \hline
-	5&\num{5250}&\num{2.0}&April 18th\\ \hline
-\end{tabular}
-\label{pulsed_measurements_table}
-\caption{Pulsed measurements}
-\end{table}
-
-\section{Activation}
+\subsection{Data analysis}
 We can describe the number of \Piso nuclei in the target, $N$, using the differential equation:
 \begin{equation}
-	\ddt{N} = I(t) -\lambda N
+	\ddt{N} = P(t) -\lambda N
 	\label{activation_diffeq}
 \end{equation}
-where $\lambda$ is the decay constant of \Piso and $I(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
-$I(t)$ will be proportional to the current of alphas hitting the target.
+where $\lambda$ is the decay constant of \Piso and $P(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
+$P(t)$ will be proportional to the current of alphas hitting the target.
 If expressed in number of alphas per second, the proportionality constant will be the yield of the reaction; the number of \an reactions per incident $\alpha$ particle.\\
 
-In order to get $I(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
+In order to get $P(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
 We don't measure the activity directly, but rather the activity times $1.99$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
+Furthermore, when representing the counts in a histogram, the number shown is dependent on the width of the bins.
+This means that, in order to get the activity in decays per second, we must divide the counts shown in a histogram by 1.99 and by the histogram binwidth.
+\\
 
-We use three different methods to get $I(t)$, depending on wether $I(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
+We use three different methods to get $P(t)$, depending on wether $P(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
 
 ·Show example activation time histogram.\\
 
 \subsubsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
 For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t}$, (plus a background) to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
-Note that, to get $A$\textsubscript{EOA}, we must divide the number given by the fitting by the binwidth of the histogram, so that $A\textsubscript{EOA}=\text{fit result}/\text{binwidth}$.
 We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
-·Show decay fit.\\
+·Show decay fit and $A$\textsubscript{EOA}.\\
 
-We can solve the differential equation during the activation period analytically by taking $I(t)$ as a constant, $I$.
+We can solve the differential equation during the activation period analytically by taking $P(t)$ as a constant, $P$.
 We get
-\[ \ddt{N} = I -\lambda N  \]
+\[ \ddt{N} = P -\lambda N  \]
 and its solution is:
 \begin{equation}
-	N(t) = \frac{I}{\lambda} + \left(  N_0 - \frac{I}{\lambda}  \right) e^{-\lambda t}
+	N(t) = \frac{P}{\lambda} + \left(  N_0 - \frac{P}{\lambda}  \right) e^{-\lambda t}
 \end{equation}
 with $N_0$ the initial number of \Piso nuclei, assumed to be \num{0}.
-
 $N$\textsubscript{EOA} will then be equal to:
-\[ N\textsubscript{EOA} =N(\Delta t) = \frac{I}{\lambda} - \frac{I}{\lambda} e^{-\lambda \Delta t} = \frac{I}{\lambda} \left(1 - e^{-\lambda \Delta t} \right)\Longrightarrow A\textsubscript{EOA}=I\left(1-e^{-\lambda\Delta t}\right)\Longrightarrow \]
+\[ N\textsubscript{EOA} =N(\Delta t) = \frac{P}{\lambda} - \frac{P}{\lambda} e^{-\lambda \Delta t} = \frac{P}{\lambda} \left(1 - e^{-\lambda \Delta t} \right)\Longrightarrow A\textsubscript{EOA}=P\left(1-e^{-\lambda\Delta t}\right)\Longrightarrow \]
 \begin{equation}
-	I = \frac{A\textsubscript{EOA}}{1 - e^{-\lambda \Delta t}}
+	P = \frac{A\textsubscript{EOA}}{1 - e^{-\lambda \Delta t}}
 \end{equation}
 with $\Delta t$ the total activation time.
-As $I$ is the number of \Piso created per second, we can get the yield of the reaction by dividing over the number of incident alpha particles per unit of time:
+As $P$ is the number of \Piso created per second, we can get the yield of the reaction by dividing over the number of incident alpha particles per unit of time:
 \begin{equation}
-	\text{yield} = \frac{I}{\text{alphas per second}} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \left(1 - e^{-\lambda \Delta t} \right)}
+	\text{yield} = \frac{P}{\text{alphas per second}} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \left(1 - e^{-\lambda \Delta t} \right)}
 \end{equation}
 
-All that is left is to correct for the efficiency of the detector, and the final formula for the yield is:
+All that is left is to correct for the efficiency of the detector, and the final formula for the thick target yield is:
 \begin{equation}
 	\text{yield} = \frac{\text{fit result}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
 \end{equation}
 
-·Graph with results compared to EXFOR.\\
-
 \subsubsection{Unified and rise fit}
-Instead of taking $I(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $I(t)$ as proportional to the current step by step. ·Show current histogram.\\
+Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step. ·Show current histogram.\\
 This function also has a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
 ·Show fits.\\
 The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\Coulomb} per binwidth.
@@ -262,9 +258,26 @@ In addition, measurement number 4, in February, shows loss of data due to a prob
 These problems prevent the \textit{unified} and \textit{rise} fits to be used for all measurements.
 \\
 
+\subsection{Results}
+
 ·Graphs with results compared to EXFOR.\\
 
 \section{Pulsed}
+
+\begin{table}[h]	%Tabla con datos de las medidas de haz pulsado
+\centering
+\begin{tabular}[c]{>{\bfseries}r||c|c|c}
+	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\tablefootnote{All took place in 2023} \\ \hline	%TBD?incertidumbre en distancia?
+	1&\num{5500}&\num{1.0}&April 17th\\ \hline
+	2&\num{5500}&\num{1.0}&April 18th\\ \hline
+	3&\num{7000}&\num{1.0}&April 18th\\ \hline
+	4&\num{8250}&\num{1.0}&April 18th\\ \hline
+	5&\num{5250}&\num{2.0}&April 18th\\ \hline
+\end{tabular}
+\caption{Pulsed measurements}
+\label{pulsed_measurements_table}
+\end{table}
+
 ·We separate gamma flash and neutron response. Show tof histograms.\\
 ·Explain deconvolution:\\
 ·We fit the neutron response histogram to a function that takes as input the gamma flash histogram and 50 parameters corresponding to the neutron spectra in time of flight. The function loops through the gamma histogram to add the contribution of each bin.\\
