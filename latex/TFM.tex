@@ -72,7 +72,7 @@
 \begin{document}
 \begin{titlepage}
 	\centering
-	\Huge Máster interuniversitario en física nuclear\par
+	\Huge Máster interuniversitario en Física Nuclear\par
 	\vspace*{3cm}
 	\HUGE \textbf{Measurements of ($\bm{\alpha}$,n) reactions in CNA/HISPANOS}\par	%TBD? más largo?
 	\vspace{1cm}
@@ -199,7 +199,8 @@ We can describe the number of \Piso nuclei in the target, $N$, using the differe
 \end{equation}
 where $\lambda$ is the decay constant of \Piso and $P(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
 $P(t)$ will be proportional to the current of alphas hitting the target.
-If expressed in number of alphas per second, the proportionality constant will be the yield of the reaction; the number of \an reactions per incident $\alpha$ particle.\\
+If expressed in number of alphas per second, the proportionality constant will be the yield of the reaction; the number of \an reactions per incident $\alpha$ particle.
+\\
 
 In order to get $P(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
 We don't measure the activity directly, but rather the activity times $1.99$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
@@ -209,13 +210,25 @@ This means that, in order to get the activity in decays per second, we must divi
 
 We use three different methods to get $P(t)$, depending on wether $P(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
 
-·Show example activation time histogram.\\
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{example_activation_time_histogram.png}
+	\caption{Example activation time histogram.
+	The \textit{activation} and \textit{decay} periods are labelled and separated from the rest of the histogram by red lines.}
+	\label{example_activation_time_histogram}
+\end{figure}
 
 \subsubsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
 For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t}$, (plus a background) to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
 We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
-·Show decay fit and $A$\textsubscript{EOA}.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{example_decay_fit.png}
+	\caption{Example decay fit.}
+	\label{example_decay_fit}
+\end{figure}
 
 We can solve the differential equation during the activation period analytically by taking $P(t)$ as a constant, $P$.
 We get
@@ -242,7 +255,16 @@ All that is left is to correct for the efficiency of the detector, and the final
 \end{equation}
 
 \subsubsection{Unified and rise fit}
-Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step. ·Show current histogram.\\
+Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{current_histograms.png}
+	\caption{All current histograms, superimposed.
+	The one in red corresponds to measurement 4.}
+	\label{current_histograms}
+\end{figure}
+
 This function also has a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
 ·Show fits.\\
 The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\Coulomb} per binwidth.
