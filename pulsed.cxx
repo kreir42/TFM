@@ -67,7 +67,7 @@ class pulse_fit_functor{
 		}
 };
 
-void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param, Double_t gamma_background, Double_t distance, Double_t max_par_energy){
+void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gammaflash_max, Double_t neutronresponse_min, Double_t neutronresponse_max, Double_t max_param, Double_t gamma_background, Double_t distance, Double_t max_param_energy){
 	EnableImplicitMT();
 	RDataFrame d("Data", filepath);
 
@@ -181,7 +181,7 @@ void pulsed(){
 	f.Close();
 }
 
-TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy){
+TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_max, Double_t n_min, Double_t n_max, Double_t distance, Double_t alpha_energy, Double_t max_param_energy){
 	Double_t results[PULSE_FIT_PARAMS_N+2][2];
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
@@ -197,6 +197,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t c = 299792458;	//speed of light
 	Double_t neutron_mass = 1.67492749804E-27;
 	Double_t J_to_keV = 1/1.602177E-16;
+	Double_t min_param_tof = distance*sqrt(neutron_mass*0.5/max_param_energy/J_to_keV)/tof_to_seconds;
 
 	Double_t x[PULSE_FIT_PARAMS_N];
 	Double_t y[PULSE_FIT_PARAMS_N];
@@ -291,23 +292,23 @@ void pulsed_results(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	TGraph* energy_1 = pulsed_results_per_file(PULSED1_GMIN,PULSED1_GCENTER,PULSED1_GMAX,PULSED1_NMIN,PULSED1_NMAX, 1, 5500);
+	TGraph* energy_1 = pulsed_results_per_file(PULSED1_GMIN,PULSED1_GCENTER,PULSED1_GMAX,PULSED1_NMIN,PULSED1_NMAX, 1, 5500, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	TGraph* energy_2 = pulsed_results_per_file(PULSED2_GMIN,PULSED2_GCENTER,PULSED2_GMAX,PULSED2_NMIN,PULSED2_NMAX, 1, 5500);
+	TGraph* energy_2 = pulsed_results_per_file(PULSED2_GMIN,PULSED2_GCENTER,PULSED2_GMAX,PULSED2_NMIN,PULSED2_NMAX, 1, 5500, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	TGraph* energy_3 = pulsed_results_per_file(PULSED3_GMIN,PULSED3_GCENTER,PULSED3_GMAX,PULSED3_NMIN,PULSED3_NMAX, 1, 7000);
+	TGraph* energy_3 = pulsed_results_per_file(PULSED3_GMIN,PULSED3_GCENTER,PULSED3_GMAX,PULSED3_NMIN,PULSED3_NMAX, 1, 7000, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	TGraph* energy_4 = pulsed_results_per_file(PULSED4_GMIN,PULSED4_GCENTER,PULSED4_GMAX,PULSED4_NMIN,PULSED4_NMAX, 1, 8250);
+	TGraph* energy_4 = pulsed_results_per_file(PULSED4_GMIN,PULSED4_GCENTER,PULSED4_GMAX,PULSED4_NMIN,PULSED4_NMAX, 1, 8250, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	TGraph* energy_5 = pulsed_results_per_file(PULSED5_GMIN,PULSED5_GCENTER,PULSED5_GMAX,PULSED5_NMIN,PULSED5_NMAX, 2, 8250);
+	TGraph* energy_5 = pulsed_results_per_file(PULSED5_GMIN,PULSED5_GCENTER,PULSED5_GMAX,PULSED5_NMIN,PULSED5_NMAX, 2, 8250, 8250);
 	gDirectory->cd("..");
 
 	TCanvas* myCanvas = new TCanvas("");
