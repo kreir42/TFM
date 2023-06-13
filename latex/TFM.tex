@@ -172,7 +172,7 @@ Table \ref{activation_measurements_table} summarises the different measurement c
 
 Because detectors were unmounted in between both sessions, calibration measurements with \textsuperscript{22}Na to determine detector efficiency (for activation measurements) were done for each detector configuration.
 
-\begin{table}[h]	%Tabla con datos de las medidas de activación
+\begin{table}[H]	%Tabla con datos de las medidas de activación
 \centering
 \begin{tabular}[c]{>{\bfseries}r||c|c|c|c}
 	N & Energy (\unit{\keV}) & Current (\unit{\nano\A}) & Activation time (\unit{\s}) & Date\tablefootnote{All took place in 2023.} \\ \hline
@@ -199,31 +199,43 @@ We can describe the number of \Piso nuclei in the target, $N$, using the differe
 \end{equation}
 where $\lambda$ is the decay constant of \Piso and $P(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
 $P(t)$ will be proportional to the current of alphas hitting the target.
-If expressed in number of alphas per second, the proportionality constant will be the yield of the reaction; the number of \an reactions per incident $\alpha$ particle.
+If expressed in number of alphas per second, the proportionality constant will be the thick target yield of the reaction; the number of \an reactions per incident $\alpha$ particle.
 \\
 
 In order to get $P(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
 We don't measure the activity directly, but rather the activity times $1.99$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
+
+To do that, we use the two LaBr scintillators to detect \qty{511}{\keV} gamma rays.
+Some counts will be noise, corresponding not to \Piso decays, but to the Compton continuum of other emissions either in the environment or due to other reactions caused by the alphas.
+
 Furthermore, when representing the counts in a histogram, the number shown is dependent on the width of the bins.
 This means that, in order to get the activity in decays per second, we must divide the counts shown in a histogram by 1.99 and by the histogram binwidth.
-\\
-
+\begin{equation}
+	A = \text{\Piso decays per second} = \frac{\text{counts per bin}}{\text{binwidth}\cdot\num{1.99}} - \text{background}
+\end{equation}
 We use three different methods to get $P(t)$, depending on wether $P(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{example_activation_time_histogram.png}
 	\caption{Example activation time histogram.
-	The \textit{activation} and \textit{decay} periods are labelled and separated from the rest of the histogram by red lines.}
+	The \textit{activation} and \textit{decay} periods are labeled and separated from the rest of the histogram by red lines.}
 	\label{example_activation_time_histogram}
 \end{figure}
 
 \subsubsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
-For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t}$, (plus a background) to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
-We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
+For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t} + B$ to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
 
-\begin{figure}[h]
+The fit also considers a constant background $B$, coming from the environment.
+The value of the decay constant $\lambda$ is fixed to that of \Piso, and not determined by the fit.
+Thus, the fit returns only two values: the constant background $B$, and the initial activity $A$\textsubscript{EOA}.
+\\
+
+We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
+But $N$\textsubscript{EOA} is not the number of \Piso nuclei created by \an reactions, as some decay during the activation period.
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{example_decay_fit.png}
 	\caption{Example decay fit.}
@@ -251,13 +263,14 @@ As $P$ is the number of \Piso created per second, we can get the yield of the re
 
 All that is left is to correct for the efficiency of the detector, and the final formula for the thick target yield is:
 \begin{equation}
-	\text{yield} = \frac{\text{fit result}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
+	\text{yield} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
 \end{equation}
 
 \subsubsection{Unified and rise fit}
 Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step.
+This is useful because the current
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{current_histograms.png}
 	\caption{All current histograms, superimposed.
@@ -266,8 +279,22 @@ Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or
 \end{figure}
 
 This function also has a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
-·Show fits.\\
-The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\Coulomb} per binwidth.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{example_unified_fit.png}
+	\caption{Example unified fit.}
+	\label{example_unified_fit}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{example_rise_fit.png}
+	\caption{Example rise fit.}
+	\label{example_rise_fit}
+\end{figure}
+
+The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\coulomb} per binwidth.
 Thus the yield, corrected by the detector efficiency, in \an per alpha, is:
 \begin{equation}
 	\text{yield} = \frac{\text{fit result}}{2\cdot1.60217646\cdot10^{-9}\cdot 1.99 \cdot \text{detector efficiency}}
@@ -276,7 +303,15 @@ with $2\cdot\num{1.60217646E-9}$ the charge of an alpha particle in tenths of na
 \\
 
 Data of current over time was not recorded in half of the measurements in April (numbers 8, 9 and 10).	%TBD: por qué razón?
-In addition, measurement number 4, in February, shows loss of data due to a problem with the DAQ. ·Show time histogram.
+In addition, measurement number 4, in February, shows loss of data due to a problem with the DAQ.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{activation_4_time.png}
+	\caption{Activation measurement number 4.}
+	\label{activation_4_time}
+\end{figure}
+
 These problems prevent the \textit{unified} and \textit{rise} fits to be used for all measurements.
 \\
 
@@ -286,7 +321,7 @@ These problems prevent the \textit{unified} and \textit{rise} fits to be used fo
 
 \section{Pulsed}
 
-\begin{table}[h]	%Tabla con datos de las medidas de haz pulsado
+\begin{table}[H]	%Tabla con datos de las medidas de haz pulsado
 \centering
 \begin{tabular}[c]{>{\bfseries}r||c|c|c}
 	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\tablefootnote{All took place in 2023} \\ \hline	%TBD?incertidumbre en distancia?
