@@ -8,7 +8,7 @@
 #define PULSE_ENERGY_FILTER 0
 #define GAMMA_FLASH_BINS_N 350
 #define NEUTRON_RESPONSE_BINS_N 500
-#define PULSE_FIT_PARAMS_N 10	//must be even; if changed, must also change tree size definition
+#define PULSE_FIT_PARAMS_N 50	//must be even; if changed, must also change tree size definition
 #define MAX_PARAM_TOF 150
 #define MIN_PARAM_TOF 0
 
@@ -136,12 +136,12 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, NMIN_TOF*distance, NMAX_TOF*distance, PULSE_FIT_PARAMS_N+2);
 	pulse_fit->SetNpx(NEUTRON_RESPONSE_BINS_N);
 	pulse_fit->SetNumberFitPoints(NEUTRON_RESPONSE_BINS_N);
-	pulse_fit->SetParLimits(0, 0, 500);
+	pulse_fit->SetParLimits(0, 0, 10);
 	for(UShort_t i=1; i<PULSE_FIT_PARAMS_N+1; i++){
 		pulse_fit->SetParLimits(i, 0, max_param);
 		pulse_fit->SetParameter(i, 0);
 	}
-	pulse_fit->SetParLimits(PULSE_FIT_PARAMS_N+1, 0, 500);
+	pulse_fit->SetParLimits(PULSE_FIT_PARAMS_N+1, 0.65*gamma_background, gamma_background*1.35);
 	pulse_fit->SetParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
 //	pulse_fit->FixParameter(PULSE_FIT_PARAMS_N+1, gamma_background);
 	TFitResultPtr fitresult = neutron_response->Fit("pulse_fit", "SLE");
@@ -154,7 +154,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		results[i][1] = fitresult->ParError(i);
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
-	results_tree->Branch("results", results, "results[12][2]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Branch("results", results, "results[52][2]/D");	//PULSE_FIT_PARAMS_N
 	results_tree->SetBranchAddress("results", results);
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);
@@ -174,23 +174,23 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GCENTER, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1E-4, 20, 1, 5500);
+	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GCENTER, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, 1E-4, 115, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
-	pulsed_per_file(pulsed_2, PULSED2_GMIN, PULSED2_GCENTER, PULSED2_GMAX, PULSED2_NMIN, PULSED2_NMAX, 1E-3, 20, 1, 5500);
+	pulsed_per_file(pulsed_2, PULSED2_GMIN, PULSED2_GCENTER, PULSED2_GMAX, PULSED2_NMIN, PULSED2_NMAX, 1E-3, 120, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GCENTER, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1E-3, 40, 1, 7000);
+	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GCENTER, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, 1E-2, 155, 1, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-	pulsed_per_file(pulsed_4, PULSED4_GMIN, PULSED4_GCENTER, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, 1E-2, 10, 1, 8250);
+	pulsed_per_file(pulsed_4, PULSED4_GMIN, PULSED4_GCENTER, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, 1E-2, 45, 1, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GCENTER, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 1E-1, 35, 2, 8250);
+	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GCENTER, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, 1E-1, 135, 2, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
