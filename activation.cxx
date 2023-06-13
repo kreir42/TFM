@@ -19,7 +19,7 @@
 
 #define PABLO_EFF_10CM 0.0027
 
-#define MARKER_SIZE 1.75
+#define MARKER_SIZE 2.5
 
 #include "peak_activity.cxx"
 
@@ -298,17 +298,17 @@ void activation_results(){
 
 	//EXFOR data
 	TGraph* reactionsvenergy_exfor = new TGraphErrors(63, exfor_energies, exfor_data, NULL, exfor_errors);	//TBD:hardcoded number
-	reactionsvenergy_exfor->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n) yield");
+	reactionsvenergy_exfor->SetTitle("EXFOR yield data;Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_exfor->SetFillColorAlpha(kGray+2, 0.2);
 	reactionsvenergy_exfor->SetMarkerStyle(20);
 	reactionsvenergy_exfor->SetLineColor(kBlack);
 	TGraph* reactionsvenergy_exfor_feb = new TGraphErrors(63, exfor_energies, exfor_data_1, NULL, exfor_errors_1);	//TBD:hardcoded number
-	reactionsvenergy_exfor_feb->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n)");
+	reactionsvenergy_exfor_feb->SetTitle("EXFOR yield data;Energy of a (keV);Thick target (a,n)");
 	reactionsvenergy_exfor_feb->SetFillColorAlpha(kGray, 0.4);
 	reactionsvenergy_exfor_feb->SetMarkerStyle(20);
 	reactionsvenergy_exfor_feb->SetLineColor(kBlack);
 	TGraph* reactionsvenergy_exfor_apr = new TGraphErrors(63, exfor_energies, exfor_data_2, NULL, exfor_errors_2);	//TBD:hardcoded number
-	reactionsvenergy_exfor_apr->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n)");
+	reactionsvenergy_exfor_apr->SetTitle("EXFOR yield data;Energy of a (keV);Thick target (a,n)");
 	reactionsvenergy_exfor_apr->SetFillColorAlpha(kGray+1, 0.4);
 	reactionsvenergy_exfor_apr->SetMarkerStyle(20);
 	reactionsvenergy_exfor_apr->SetLineColor(kBlack);
