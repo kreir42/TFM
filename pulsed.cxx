@@ -104,6 +104,9 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 
 	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, GMIN_TOF, GMAX_TOF}, "newtof");
 	auto neutron_response = monster_neutrons.Histo1D({"neutron_response", ";ToF;Counts", NEUTRON_RESPONSE_BINS_N, NMIN_TOF*distance, NMAX_TOF*distance}, "newtof");
+	Double_t vmin = distance/(NMAX_TOF*TOF_TO_S);
+	Double_t vmax = distance/(NMIN_TOF*TOF_TO_S);
+	auto neutron_response_energy = monster_neutrons.Histo1D({"neutron_response_energy", ";Energy (keV);Counts", 1000, NEUTRON_MASS/2*vmin*vmin*J_TO_KEV, NEUTRON_MASS/2*vmax*vmax*J_TO_KEV}, "neutron_energy");
 
 	TCanvas* myCanvas = new TCanvas("");
 
@@ -126,6 +129,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 
 	gamma_flash->Write("", TObject::kOverwrite);
 	neutron_response->Write("", TObject::kOverwrite);
+	neutron_response_energy->Write("", TObject::kOverwrite);
 
 	//fit
 	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),GMIN_TOF,NMIN_TOF*distance,NMAX_TOF*distance,MIN_PARAM_TOF*distance,MAX_PARAM_TOF*distance);
