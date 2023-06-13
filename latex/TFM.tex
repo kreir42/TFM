@@ -268,7 +268,7 @@ All that is left is to correct for the efficiency of the detector, and the final
 
 \subsubsection{Unified and rise fit}
 Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step.
-This is useful because the current
+This is useful because the current is not constant, there are drops and rises in many of the measurements (figure \ref{current_histograms}) and this will make the \textit{decay} fit less precise, as the assumption of constant current is incorrect.
 
 \begin{figure}[H]
 	\centering
@@ -278,7 +278,15 @@ This is useful because the current
 	\label{current_histograms}
 \end{figure}
 
-This function also has a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
+This function also considers a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
+
+The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\coulomb} per binwidth.
+Thus the yield, corrected by the detector efficiency, in \an per alpha, is:
+\begin{equation}
+	\text{yield} = \frac{\text{fit result}}{2\cdot1.60217646\cdot10^{-9}\cdot 1.99 \cdot \text{detector efficiency}}
+\end{equation}
+with $2\cdot\num{1.60217646E-9}$ the charge of an alpha particle in tenths of nanocoulombs.
+\\
 
 \begin{figure}[H]
 	\centering
@@ -293,14 +301,6 @@ This function also has a constant background, an initial number of \Piso (from p
 	\caption{Example rise fit.}
 	\label{example_rise_fit}
 \end{figure}
-
-The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\coulomb} per binwidth.
-Thus the yield, corrected by the detector efficiency, in \an per alpha, is:
-\begin{equation}
-	\text{yield} = \frac{\text{fit result}}{2\cdot1.60217646\cdot10^{-9}\cdot 1.99 \cdot \text{detector efficiency}}
-\end{equation}
-with $2\cdot\num{1.60217646E-9}$ the charge of an alpha particle in tenths of nanocoulombs.
-\\
 
 Data of current over time was not recorded in half of the measurements in April (numbers 8, 9 and 10).	%TBD: por qué razón?
 In addition, measurement number 4, in February, shows loss of data due to a problem with the DAQ.
@@ -317,7 +317,33 @@ These problems prevent the \textit{unified} and \textit{rise} fits to be used fo
 
 \subsection{Results}
 
-·Graphs with results compared to EXFOR.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{reactions_v_energy_decay.png}
+	\caption{Decay fit results.}
+	\label{reactions_v_energy_decay}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{reactions_v_energy_rise.png}
+	\caption{Rise fit results.}
+	\label{reactions_v_energy_rise}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{reactions_v_energy_unified.png}
+	\caption{Unified fit results.}
+	\label{reactions_v_energy_unified}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{reactions_v_energy.png}
+	\caption{Activation results.}
+	\label{reactions_v_energy}
+\end{figure}
 
 \section{Pulsed}
 

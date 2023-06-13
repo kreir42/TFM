@@ -19,6 +19,8 @@
 
 #define PABLO_EFF_10CM 0.0027
 
+#define MARKER_SIZE 1.75
+
 #include "peak_activity.cxx"
 
 static void per_file(Char_t filepath[500], Double_t results[2][6]);
@@ -106,12 +108,16 @@ void activation_results(){
 	}
 	TGraph* reactionsvenergy_unified_feb_sin_escalar_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_unified_feb_sin_escalar_1->SetMarkerStyle(22);
+	reactionsvenergy_unified_feb_sin_escalar_1->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_unified_apr_sin_escalar_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
 	reactionsvenergy_unified_apr_sin_escalar_1->SetMarkerStyle(23);
+	reactionsvenergy_unified_apr_sin_escalar_1->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_unified_feb_sin_escalar_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
 	reactionsvenergy_unified_feb_sin_escalar_2->SetMarkerStyle(34);
+	reactionsvenergy_unified_feb_sin_escalar_2->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_unified_apr_sin_escalar_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
 	reactionsvenergy_unified_apr_sin_escalar_2->SetMarkerStyle(47);
+	reactionsvenergy_unified_apr_sin_escalar_2->SetMarkerSize(MARKER_SIZE);
 
 	//rise fit sin escalar
 	for(short i=0; i<ACTIVATION_N; i++){
@@ -124,12 +130,16 @@ void activation_results(){
 	}
 	TGraph* reactionsvenergy_rise_feb_sin_escalar_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_rise_feb_sin_escalar_1->SetMarkerStyle(22);
+	reactionsvenergy_rise_feb_sin_escalar_1->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_rise_apr_sin_escalar_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
 	reactionsvenergy_rise_apr_sin_escalar_1->SetMarkerStyle(23);
+	reactionsvenergy_rise_apr_sin_escalar_1->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_rise_feb_sin_escalar_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
 	reactionsvenergy_rise_feb_sin_escalar_2->SetMarkerStyle(34);
+	reactionsvenergy_rise_feb_sin_escalar_2->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_rise_apr_sin_escalar_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
 	reactionsvenergy_rise_apr_sin_escalar_2->SetMarkerStyle(47);
+	reactionsvenergy_rise_apr_sin_escalar_2->SetMarkerSize(MARKER_SIZE);
 
 	//decay fit sin escalar
 	for(short i=0; i<ACTIVATION_N; i++){
@@ -142,12 +152,16 @@ void activation_results(){
 	}
 	TGraph* reactionsvenergy_decay_feb_sin_escalar_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
 	reactionsvenergy_decay_feb_sin_escalar_1->SetMarkerStyle(22);
+	reactionsvenergy_decay_feb_sin_escalar_1->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_decay_apr_sin_escalar_1 = new TGraphErrors(6, &x1[4], &y1[4], NULL, yerr1);
 	reactionsvenergy_decay_apr_sin_escalar_1->SetMarkerStyle(23);
+	reactionsvenergy_decay_apr_sin_escalar_1->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_decay_feb_sin_escalar_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
 	reactionsvenergy_decay_feb_sin_escalar_2->SetMarkerStyle(34);
+	reactionsvenergy_decay_feb_sin_escalar_2->SetMarkerSize(MARKER_SIZE);
 	TGraph* reactionsvenergy_decay_apr_sin_escalar_2 = new TGraphErrors(6, &x2[4], &y2[4], NULL, yerr2);
 	reactionsvenergy_decay_apr_sin_escalar_2->SetMarkerStyle(47);
+	reactionsvenergy_decay_apr_sin_escalar_2->SetMarkerSize(MARKER_SIZE);
 
 	//todos los resultados antes de los escalados
 	TMultiGraph* multigraph_sin_escalar = new TMultiGraph();
@@ -187,7 +201,7 @@ void activation_results(){
 	reactionsvenergy_decay_apr_sin_escalar_2->SetMarkerColor(kBlue);
 	reactionsvenergy_decay_apr_sin_escalar_2->SetTitle("Decay fit, April, LaBr2");
 	multigraph_sin_escalar->Add(reactionsvenergy_decay_apr_sin_escalar_2);
-	multigraph_sin_escalar->SetTitle("30P v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	multigraph_sin_escalar->SetTitle("30P v a energy;Energy of a (keV);Thick target (a,n) yield");
 	multigraph_sin_escalar->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->Write("", TObject::kOverwrite);
@@ -284,17 +298,17 @@ void activation_results(){
 
 	//EXFOR data
 	TGraph* reactionsvenergy_exfor = new TGraphErrors(63, exfor_energies, exfor_data, NULL, exfor_errors);	//TBD:hardcoded number
-	reactionsvenergy_exfor->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_exfor->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_exfor->SetFillColorAlpha(kGray+2, 0.2);
 	reactionsvenergy_exfor->SetMarkerStyle(20);
 	reactionsvenergy_exfor->SetLineColor(kBlack);
 	TGraph* reactionsvenergy_exfor_feb = new TGraphErrors(63, exfor_energies, exfor_data_1, NULL, exfor_errors_1);	//TBD:hardcoded number
-	reactionsvenergy_exfor_feb->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_exfor_feb->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n)");
 	reactionsvenergy_exfor_feb->SetFillColorAlpha(kGray, 0.4);
 	reactionsvenergy_exfor_feb->SetMarkerStyle(20);
 	reactionsvenergy_exfor_feb->SetLineColor(kBlack);
 	TGraph* reactionsvenergy_exfor_apr = new TGraphErrors(63, exfor_energies, exfor_data_2, NULL, exfor_errors_2);	//TBD:hardcoded number
-	reactionsvenergy_exfor_apr->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_exfor_apr->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n)");
 	reactionsvenergy_exfor_apr->SetFillColorAlpha(kGray+1, 0.4);
 	reactionsvenergy_exfor_apr->SetMarkerStyle(20);
 	reactionsvenergy_exfor_apr->SetLineColor(kBlack);
@@ -309,58 +323,66 @@ void activation_results(){
 		yerr2[i] = results[i][1][1];
 	}
 	TGraph* reactionsvenergy_unified_feb_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
-	reactionsvenergy_unified_feb_1->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_unified_feb_1->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Thick target (a,n) yield");
 	myCanvas->SetName("reactions_v_energy_unified_feb_1");
 	reactionsvenergy_unified_feb_1->SetMarkerStyle(22);
-	reactionsvenergy_exfor_feb->Draw("E3");
+	reactionsvenergy_unified_feb_1->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_unified_feb_1->SetMarkerColor(kRed);
+//	reactionsvenergy_exfor_feb->Draw("E3");
 //	reactionsvenergy_exfor_feb->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_unified_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_unified_feb_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
-	reactionsvenergy_unified_feb_2->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_unified_feb_2->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Thick target (a,n) yield");
 	myCanvas->SetName("reactions_v_energy_unified_feb_2");
 	reactionsvenergy_unified_feb_2->SetMarkerStyle(34);
-	reactionsvenergy_exfor_feb->Draw("E3");
+	reactionsvenergy_unified_feb_2->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_unified_feb_2->SetMarkerColor(kRed);
+//	reactionsvenergy_exfor_feb->Draw("E3");
 //	reactionsvenergy_exfor_feb->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_unified_feb_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_unified_apr_1 = new TGraphErrors(3, &x1[4], &y1[4], NULL, yerr1);
-	reactionsvenergy_unified_apr_1->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_unified_apr_1->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Thick target (a,n) yield");
 	myCanvas->SetName("reactions_v_energy_unified_apr_1");
 	reactionsvenergy_unified_apr_1->SetMarkerStyle(23);
-	reactionsvenergy_exfor_apr->Draw("E3");
+	reactionsvenergy_unified_apr_1->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_unified_apr_1->SetMarkerColor(kBlue);
+//	reactionsvenergy_exfor_apr->Draw("E3");
 //	reactionsvenergy_exfor_apr->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_unified_apr_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_unified_apr_2 = new TGraphErrors(3, &x2[4], &y2[4], NULL, yerr2);
-	reactionsvenergy_unified_apr_2->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_unified_apr_2->SetTitle("(a,n) reactions v a energy (unified fit, April);Energy of a (keV);Thick target (a,n) yield");
 	myCanvas->SetName("reactions_v_energy_unified_apr_2");
 	reactionsvenergy_unified_apr_2->SetMarkerStyle(47);
-	reactionsvenergy_exfor_apr->Draw("E3");
+	reactionsvenergy_unified_apr_2->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_unified_apr_2->SetMarkerColor(kBlue);
+//	reactionsvenergy_exfor_apr->Draw("E3");
 //	reactionsvenergy_exfor_apr->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_unified_apr_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TMultiGraph* reactions_v_energy_unified = new TMultiGraph();
-	reactions_v_energy_unified->Add(reactionsvenergy_exfor_feb, "E3");
+//	reactions_v_energy_unified->Add(reactionsvenergy_exfor_feb, "E3");
 //	reactions_v_energy_unified->Add(reactionsvenergy_exfor_feb, "LX");
 	reactionsvenergy_exfor_feb->SetTitle("EXFOR data, feb");
-	reactions_v_energy_unified->Add(reactionsvenergy_exfor_apr, "E3");
+//	reactions_v_energy_unified->Add(reactionsvenergy_exfor_apr, "E3");
 //	reactions_v_energy_unified->Add(reactionsvenergy_exfor_apr, "LX");
 	reactionsvenergy_exfor_apr->SetTitle("EXFOR data, apr");
 	reactions_v_energy_unified->Add(reactionsvenergy_exfor, "E3");
-	reactions_v_energy_unified->Add(reactionsvenergy_exfor, "LX");
+//	reactions_v_energy_unified->Add(reactionsvenergy_exfor, "LX");
 	reactionsvenergy_exfor_apr->SetTitle("EXFOR data");
 	reactionsvenergy_unified_feb_1->SetTitle("Unified fit, February, LaBr1");
 	reactions_v_energy_unified->Add(reactionsvenergy_unified_feb_1);
@@ -370,7 +392,7 @@ void activation_results(){
 	reactions_v_energy_unified->Add(reactionsvenergy_unified_feb_2);
 	reactionsvenergy_unified_apr_2->SetTitle("Unified fit, April, LaBr2");
 	reactions_v_energy_unified->Add(reactionsvenergy_unified_apr_2);
-	reactions_v_energy_unified->SetTitle("(a,n) reactions v a energy (unified fit);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactions_v_energy_unified->SetTitle("(a,n) reactions v a energy (unified fit);Energy of a (keV);Thick target (a,n) yield");
 	reactions_v_energy_unified->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->SetName("reactions_v_energy_unified");
@@ -386,56 +408,64 @@ void activation_results(){
 		yerr2[i] = results[i][1][3];
 	}
 	TGraph* reactionsvenergy_rise_feb_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
-	reactionsvenergy_rise_feb_1->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_rise_feb_1->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_rise_feb_1->SetMarkerStyle(22);
+	reactionsvenergy_rise_feb_1->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_rise_feb_1->SetMarkerColor(kRed);
 	myCanvas->SetName("reactions_v_energy_rise_feb_1");
-	reactionsvenergy_exfor_feb->Draw("E3");
+//	reactionsvenergy_exfor_feb->Draw("E3");
 //	reactionsvenergy_exfor_feb->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_rise_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_rise_feb_2 = new TGraphErrors(3, x2, y2, NULL, yerr2);
-	reactionsvenergy_rise_feb_2->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_rise_feb_2->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_rise_feb_2->SetMarkerStyle(34);
+	reactionsvenergy_rise_feb_2->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_rise_feb_2->SetMarkerColor(kRed);
 	myCanvas->SetName("reactions_v_energy_rise_feb_2");
-	reactionsvenergy_exfor_feb->Draw("E3");
+//	reactionsvenergy_exfor_feb->Draw("E3");
 //	reactionsvenergy_exfor_feb->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_rise_feb_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_rise_apr_1 = new TGraphErrors(2, &x1[4], &y1[4], NULL, yerr1);
-	reactionsvenergy_rise_apr_1->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_rise_apr_1->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_rise_apr_1->SetMarkerStyle(23);
+	reactionsvenergy_rise_apr_1->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_rise_apr_1->SetMarkerColor(kBlue);
 	myCanvas->SetName("reactions_v_energy_rise_apr_1");
-	reactionsvenergy_exfor_apr->Draw("E3");
+//	reactionsvenergy_exfor_apr->Draw("E3");
 //	reactionsvenergy_exfor_apr->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_rise_apr_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_rise_apr_2 = new TGraphErrors(2, &x2[4], &y2[4], NULL, yerr2);
-	reactionsvenergy_rise_apr_2->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_rise_apr_2->SetTitle("(a,n) reactions v a energy (rise fit, April);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_rise_apr_2->SetMarkerStyle(47);
+	reactionsvenergy_rise_apr_2->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_rise_apr_2->SetMarkerColor(kBlue);
 	myCanvas->SetName("reactions_v_energy_rise_apr_2");
-	reactionsvenergy_exfor_apr->Draw("E3");
+//	reactionsvenergy_exfor_apr->Draw("E3");
 //	reactionsvenergy_exfor_apr->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_rise_apr_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TMultiGraph* reactions_v_energy_rise = new TMultiGraph();
-	reactions_v_energy_rise->Add(reactionsvenergy_exfor_feb, "E3");
+//	reactions_v_energy_rise->Add(reactionsvenergy_exfor_feb, "E3");
 //	reactions_v_energy_rise->Add(reactionsvenergy_exfor_feb, "LX");
-	reactions_v_energy_rise->Add(reactionsvenergy_exfor_apr, "E3");
+//	reactions_v_energy_rise->Add(reactionsvenergy_exfor_apr, "E3");
 //	reactions_v_energy_rise->Add(reactionsvenergy_exfor_apr, "LX");
 	reactions_v_energy_rise->Add(reactionsvenergy_exfor, "E3");
-	reactions_v_energy_rise->Add(reactionsvenergy_exfor, "LX");
+//	reactions_v_energy_rise->Add(reactionsvenergy_exfor, "LX");
 	reactionsvenergy_rise_feb_1->SetTitle("Rise fit, February, LaBr1");
 	reactions_v_energy_rise->Add(reactionsvenergy_rise_feb_1);
 	reactionsvenergy_rise_apr_1->SetTitle("Rise fit, April, LaBr1");
@@ -444,7 +474,7 @@ void activation_results(){
 	reactions_v_energy_rise->Add(reactionsvenergy_rise_feb_2);
 	reactionsvenergy_rise_apr_2->SetTitle("Rise fit, April, LaBr2");
 	reactions_v_energy_rise->Add(reactionsvenergy_rise_apr_2);
-	reactions_v_energy_rise->SetTitle("(a,n) reactions v a energy (rise fit);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactions_v_energy_rise->SetTitle("(a,n) reactions v a energy (rise fit);Energy of a (keV);Thick target (a,n) yield");
 	reactions_v_energy_rise->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->SetName("reactions_v_energy_rise");
@@ -460,56 +490,64 @@ void activation_results(){
 		yerr2[i] = results[i][1][5];
 	}
 	TGraph* reactionsvenergy_decay_feb_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
-	reactionsvenergy_decay_feb_1->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_decay_feb_1->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_decay_feb_1->SetMarkerStyle(22);
+	reactionsvenergy_decay_feb_1->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_decay_feb_1->SetMarkerColor(kRed);
 	myCanvas->SetName("reactions_v_energy_decay_feb_1");
-	reactionsvenergy_exfor_feb->Draw("E3");
+//	reactionsvenergy_exfor_feb->Draw("E3");
 //	reactionsvenergy_exfor_feb->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_decay_feb_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_decay_feb_2 = new TGraphErrors(4, x2, y2, NULL, yerr2);
-	reactionsvenergy_decay_feb_2->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_decay_feb_2->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_decay_feb_2->SetMarkerStyle(34);
+	reactionsvenergy_decay_feb_2->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_decay_feb_2->SetMarkerColor(kRed);
 	myCanvas->SetName("reactions_v_energy_decay_feb_2");
-	reactionsvenergy_exfor_feb->Draw("E3");
+//	reactionsvenergy_exfor_feb->Draw("E3");
 //	reactionsvenergy_exfor_feb->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_decay_feb_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_decay_apr_1 = new TGraphErrors(6, &x1[4], &y1[4], NULL, yerr1);
-	reactionsvenergy_decay_apr_1->SetTitle("(a,n) reactions v a energy (decay it, April);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_decay_apr_1->SetTitle("(a,n) reactions v a energy (decay it, April);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_decay_apr_1->SetMarkerStyle(23);
+	reactionsvenergy_decay_apr_1->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_decay_apr_1->SetMarkerColor(kBlue);
 	myCanvas->SetName("reactions_v_energy_decay_apr_1");
-	reactionsvenergy_exfor_apr->Draw("E3");
+//	reactionsvenergy_exfor_apr->Draw("E3");
 //	reactionsvenergy_exfor_apr->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_decay_apr_1->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TGraph* reactionsvenergy_decay_apr_2 = new TGraphErrors(6, &x2[4], &y2[4], NULL, yerr2);
-	reactionsvenergy_decay_apr_2->SetTitle("(a,n) reactions v a energy (decay it, April);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactionsvenergy_decay_apr_2->SetTitle("(a,n) reactions v a energy (decay it, April);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_decay_apr_2->SetMarkerStyle(47);
+	reactionsvenergy_decay_apr_2->SetMarkerSize(MARKER_SIZE);
+	reactionsvenergy_decay_apr_2->SetMarkerColor(kBlue);
 	myCanvas->SetName("reactions_v_energy_decay_apr_2");
-	reactionsvenergy_exfor_apr->Draw("E3");
+//	reactionsvenergy_exfor_apr->Draw("E3");
 //	reactionsvenergy_exfor_apr->Draw("same LX");
 	reactionsvenergy_exfor->Draw("same E3");
-	reactionsvenergy_exfor->Draw("same LX");
+//	reactionsvenergy_exfor->Draw("same LX");
 	reactionsvenergy_decay_apr_2->Draw("same p");
 	myCanvas->Write("", TObject::kOverwrite);
 
 	TMultiGraph* reactions_v_energy_decay = new TMultiGraph();
-	reactions_v_energy_decay->Add(reactionsvenergy_exfor_feb, "E3");
+//	reactions_v_energy_decay->Add(reactionsvenergy_exfor_feb, "E3");
 //	reactions_v_energy_decay->Add(reactionsvenergy_exfor_feb, "LX");
-	reactions_v_energy_decay->Add(reactionsvenergy_exfor_apr, "E3");
+//	reactions_v_energy_decay->Add(reactionsvenergy_exfor_apr, "E3");
 //	reactions_v_energy_decay->Add(reactionsvenergy_exfor_apr, "LX");
 	reactions_v_energy_decay->Add(reactionsvenergy_exfor, "E3");
-	reactions_v_energy_decay->Add(reactionsvenergy_exfor, "LX");
+//	reactions_v_energy_decay->Add(reactionsvenergy_exfor, "LX");
 	reactionsvenergy_decay_feb_1->SetTitle("Decay fit, February, LaBr1");
 	reactions_v_energy_decay->Add(reactionsvenergy_decay_feb_1);
 	reactionsvenergy_decay_apr_1->SetTitle("Decay fit, April, LaBr1");
@@ -518,7 +556,7 @@ void activation_results(){
 	reactions_v_energy_decay->Add(reactionsvenergy_decay_feb_2);
 	reactionsvenergy_decay_apr_2->SetTitle("Decay fit, April, LaBr2");
 	reactions_v_energy_decay->Add(reactionsvenergy_decay_apr_2);
-	reactions_v_energy_decay->SetTitle("(a,n) reactions v a energy (decay fit);Energy of a (keV);Inferred (a,n)/Number of a");
+	reactions_v_energy_decay->SetTitle("(a,n) reactions v a energy (decay fit);Energy of a (keV);Thick target (a,n) yield");
 	reactions_v_energy_decay->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->SetName("reactions_v_energy_decay");
@@ -526,12 +564,12 @@ void activation_results(){
 
 	//all results
 	TMultiGraph* multigraph = new TMultiGraph();
-	multigraph->Add(reactionsvenergy_exfor_feb, "E3");
+//	multigraph->Add(reactionsvenergy_exfor_feb, "E3");
 //	multigraph->Add(reactionsvenergy_exfor_feb, "LX");
-	multigraph->Add(reactionsvenergy_exfor_apr, "E3");
+//	multigraph->Add(reactionsvenergy_exfor_apr, "E3");
 //	multigraph->Add(reactionsvenergy_exfor_apr, "LX");
 	multigraph->Add(reactionsvenergy_exfor, "E3");
-	multigraph->Add(reactionsvenergy_exfor, "LX");
+//	multigraph->Add(reactionsvenergy_exfor, "LX");
 	reactionsvenergy_unified_feb_1->SetMarkerColor(kRed);
 	reactionsvenergy_unified_feb_1->SetTitle("Unified fit, February, LaBr1");
 	multigraph->Add(reactionsvenergy_unified_feb_1);
@@ -568,7 +606,7 @@ void activation_results(){
 	reactionsvenergy_decay_apr_2->SetMarkerColor(kBlue);
 	reactionsvenergy_decay_apr_2->SetTitle("Decay fit, April, LaBr2");
 	multigraph->Add(reactionsvenergy_decay_apr_2);
-	multigraph->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Inferred (a,n)/Number of a");
+	multigraph->SetTitle("(a,n) reactions v a energy;Energy of a (keV);Thick target (a,n) yield");
 	multigraph->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->SetName("reactions_v_energy");
@@ -607,50 +645,62 @@ void activation_results(){
 	abs_errors_feb_labr1_graph->SetTitle("Absolute error, February, LaBr1");
 	abs_errors_feb_labr1_graph->SetMarkerColor(kRed);
 	abs_errors_feb_labr1_graph->SetMarkerStyle(22);
+	abs_errors_feb_labr1_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* abs_errors_feb_labr2_graph = new TGraph(4, activation_energies, abs_errors_feb_labr2);
 	abs_errors_feb_labr2_graph->SetTitle("Absolute error, February, LaBr2");
 	abs_errors_feb_labr2_graph->SetMarkerColor(kRed);
 	abs_errors_feb_labr2_graph->SetMarkerStyle(34);
+	abs_errors_feb_labr2_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* abs_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], abs_errors_apr_labr1);
 	abs_errors_apr_labr1_graph->SetTitle("Absolute error, April, LaBr1");
 	abs_errors_apr_labr1_graph->SetMarkerColor(kBlue);
 	abs_errors_apr_labr1_graph->SetMarkerStyle(23);
+	abs_errors_apr_labr1_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* abs_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], abs_errors_apr_labr2);
 	abs_errors_apr_labr2_graph->SetTitle("Absolute error, April, LaBr2");
 	abs_errors_apr_labr2_graph->SetMarkerColor(kBlue);
 	abs_errors_apr_labr2_graph->SetMarkerStyle(47);
+	abs_errors_apr_labr2_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* per_errors_feb_labr1_graph = new TGraph(4, activation_energies, per_errors_feb_labr1);
 	per_errors_feb_labr1_graph->SetTitle("Relative error, February, LaBr1");
 	per_errors_feb_labr1_graph->SetMarkerColor(kRed);
 	per_errors_feb_labr1_graph->SetMarkerStyle(22);
+	per_errors_feb_labr1_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* per_errors_feb_labr2_graph = new TGraph(4, activation_energies, per_errors_feb_labr2);
 	per_errors_feb_labr2_graph->SetTitle("Relative error, February, LaBr2");
 	per_errors_feb_labr2_graph->SetMarkerColor(kRed);
 	per_errors_feb_labr2_graph->SetMarkerStyle(34);
+	per_errors_feb_labr2_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* per_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], per_errors_apr_labr1);
 	per_errors_apr_labr1_graph->SetTitle("Relative error, April, LaBr1");
 	per_errors_apr_labr1_graph->SetMarkerColor(kBlue);
 	per_errors_apr_labr1_graph->SetMarkerStyle(23);
+	per_errors_apr_labr1_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* per_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], per_errors_apr_labr2);
 	per_errors_apr_labr2_graph->SetTitle("Relative error, April, LaBr2");
 	per_errors_apr_labr2_graph->SetMarkerColor(kBlue);
 	per_errors_apr_labr2_graph->SetMarkerStyle(47);
+	per_errors_apr_labr2_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* rel_abs_errors_feb_graph = new TGraph(4, activation_energies, rel_abs_errors_feb);
 	rel_abs_errors_feb_graph->SetTitle("Absolute difference, February");
 	rel_abs_errors_feb_graph->SetMarkerColor(kRed);
 	rel_abs_errors_feb_graph->SetMarkerStyle(20);
+	rel_abs_errors_feb_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* rel_abs_errors_apr_graph = new TGraph(6, &activation_energies[4], rel_abs_errors_apr);
 	rel_abs_errors_apr_graph->SetTitle("Absolute difference, April");
 	rel_abs_errors_apr_graph->SetMarkerColor(kBlue);
 	rel_abs_errors_apr_graph->SetMarkerStyle(21);
+	rel_abs_errors_apr_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* rel_per_errors_feb_graph = new TGraph(4, activation_energies, rel_per_errors_feb);
 	rel_per_errors_feb_graph->SetTitle("Percentage difference, February");
 	rel_per_errors_feb_graph->SetMarkerColor(kRed);
 	rel_per_errors_feb_graph->SetMarkerStyle(20);
+	rel_per_errors_feb_graph->SetMarkerSize(MARKER_SIZE);
 	TGraph* rel_per_errors_apr_graph = new TGraph(6, &activation_energies[4], rel_per_errors_apr);
 	rel_per_errors_apr_graph->SetTitle("Percentage difference, April");
 	rel_per_errors_apr_graph->SetMarkerColor(kBlue);
 	rel_per_errors_apr_graph->SetMarkerStyle(21);
+	rel_per_errors_apr_graph->SetMarkerSize(MARKER_SIZE);
 
 	TMultiGraph* abs_errors = new TMultiGraph();
 	abs_errors->Add(abs_errors_feb_labr1_graph);
