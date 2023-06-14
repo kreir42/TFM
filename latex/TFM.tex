@@ -319,31 +319,94 @@ These problems prevent the \textit{unified} and \textit{rise} fits to be used fo
 
 \begin{figure}[H]
 	\centering
+	\includegraphics[width=\textwidth]{decay_errors_rel_per.png}
+	\caption{Percentage difference in thick target yield results between detectors in each measurement.
+	The number shown is calculated as $\frac{\text{det}1-\text{det}2}{\left(\text{det}1+\text{det}2\right)/2}\cdot 100$, the difference over the average, in percentage.}
+	\label{decay_errors_rel_per}
+\end{figure}
+
+Figure \ref{decay_errors_rel_per} shows that the relative difference in measurements between LaBr detectors 1 and 2 is under \qty{10}{\percent}.
+The numbers are for decay fit measurements, but are similar for the other methods.
+Measurements in February show negative values, indicating detector 2 is higher; while those in April are positive, meaning the opposite is true.
+
+The outlier, with \qty{-60}{\percent}, corresponds to measurement number 6.
+For this measurement, LaBr detector number 1 was placed much closer to the target, and at \qty{0}{\degree}.
+The corresponding \textsuperscript{22}Na calibration measurement may not correspond to that exact configuration, and so the results from this measurement and detector are probably unreliable.
+The measurements \emph{before} the change in position can also not be trusted, as the calibration was done on the 18th, after the position change.
+\\
+
+The best agreements between detectors are for the measurements in April 18th, under \qty{5}{\percent}.
+In figure \ref{decay_errors_per}, we can see that decay fit results are between \qty{10}{\percent} and \qty{5}{\percent} smaller than EXFOR data for the measurements in April 18th, but more than \qty{50}{\percent} smaller for February.
+The April 17th results are around \qty{30}{\percent}, and the \textit{outlier} from before is at \qty{60}{\percent}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{decay_errors_per.png}
+	\caption{Percentage difference in thick target yield results between each \textit{decay} fit measurement and EXFOR.}
+	\label{decay_errors_per}
+\end{figure}
+
+In short, \textit{decay} fit thick target yield results agree relatively well with EXFOR data only for the measurements done in April 18th.
+The ones done in April 17th are suspect, and the ones in February agree with each other (have the same shape as the EXFOR data) but are off by a factor of $\approx 2$.
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=\textwidth]{reactions_v_energy_decay.png}
-	\caption{Decay fit results.}
+	\caption{Decay fit results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy_decay}
 \end{figure}
+
+We can compare this with the results obtained with \textit{rise} and \textit{unified} fits, in figures \ref{rise_errors_per} and \ref{unified_errors_per}.
+Both also show February results as smaller than April, but the difference is much smaller.
+Because of the missing current data, however, fewer points exist for April.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{rise_errors_per.png}
+	\caption{Percentage difference in thick target yield results between each \textit{rise} fit measurement and EXFOR.}
+	\label{rise_errors_per}
+\end{figure}
+
+For the \textit{rise} fits, there are no points for April 18th, as the only measurement on the 18th with current data has a few extra counts outside the activation period, throwing off the algorithm that determines the exact start and end of the activation period.
+Both February and April show, however, similar differences with respect to EXFOR data: around \qty{-15}{\percent} for February and around \qty{+20}{\percent} for April 17th.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{reactions_v_energy_rise.png}
-	\caption{Rise fit results.}
+	\caption{Rise fit results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy_rise}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
+	\includegraphics[width=\textwidth]{unified_errors_per.png}
+	\caption{Percentage difference in thick target yield results between each \textit{unified} fit measurement and EXFOR.}
+	\label{unified_errors_per}
+\end{figure}
+
+For the \textit{unified} fits, errors are larger for February, but there is less difference than in the case of the \textit{decay} fits.
+They are around \qty{10}{\percent} for April and \qty{20}{\percent} for February.
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=\textwidth]{reactions_v_energy_unified.png}
-	\caption{Unified fit results.}
+	\caption{Unified fit results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy_unified}
 \end{figure}
+
+Putting all of the resulting thick target yields together with EXFOR data, we get figure \ref{reactions_v_energy}.
+We see that April 18th \textit{decay} measurements agree well with EXFOR data, with \textit{unified} and \textit{rise} measurements have a larger error margin, and differ more.
+\textit{Decay} February results, however, differ much more from all of the others.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{reactions_v_energy.png}
-	\caption{Activation results.}
+	\caption{All activation thick target yield results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy}
 \end{figure}
+
+This discrepancy of the \textit{decay} February measurements is unexplained.
+If we ignore the February and April 17th \textit{decay} results, the measurements are around \qty{\pm 20}{\percent} of EXFOR.
 
 \section{Pulsed}
 
