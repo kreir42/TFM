@@ -20,6 +20,7 @@
 #define PABLO_EFF_10CM 0.0027
 
 #define MARKER_SIZE 2.5
+#define ERROR_I 0	//0 unified, 2 rise, 4 decay
 
 #include "peak_activity.cxx"
 
@@ -626,20 +627,20 @@ void activation_results(){
 	Double_t rel_per_errors_feb[4];		//diferencias porcentuales entre detectores
 	Double_t rel_per_errors_apr[6];
 	for(short i=0; i<4; i++){
-		abs_errors_feb_labr1[i] = results[i][0][4] - reactionsvenergy_exfor->Eval(activation_energies[i]);
-		abs_errors_feb_labr2[i] = results[i][1][4] - reactionsvenergy_exfor->Eval(activation_energies[i]);
+		abs_errors_feb_labr1[i] = results[i][0][ERROR_I] - reactionsvenergy_exfor->Eval(activation_energies[i]);
+		abs_errors_feb_labr2[i] = results[i][1][ERROR_I] - reactionsvenergy_exfor->Eval(activation_energies[i]);
 		per_errors_feb_labr1[i] = abs_errors_feb_labr1[i]/reactionsvenergy_exfor->Eval(activation_energies[i]) * 100;
 		per_errors_feb_labr2[i] = abs_errors_feb_labr2[i]/reactionsvenergy_exfor->Eval(activation_energies[i]) * 100;
-		rel_abs_errors_feb[i] = results[i][0][4] - results[i][1][4];
-		rel_per_errors_feb[i] = rel_abs_errors_feb[i] / ((results[i][0][4]+results[i][1][4])/2) * 100;
+		rel_abs_errors_feb[i] = results[i][0][ERROR_I] - results[i][1][ERROR_I];
+		rel_per_errors_feb[i] = rel_abs_errors_feb[i] / ((results[i][0][ERROR_I]+results[i][1][ERROR_I])/2) * 100;
 	}
 	for(short i=0; i<6; i++){
-		abs_errors_apr_labr1[i] = results[4+i][0][4] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
-		abs_errors_apr_labr2[i] = results[4+i][1][4] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
+		abs_errors_apr_labr1[i] = results[4+i][0][ERROR_I] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
+		abs_errors_apr_labr2[i] = results[4+i][1][ERROR_I] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
 		per_errors_apr_labr1[i] = abs_errors_apr_labr1[i]/reactionsvenergy_exfor->Eval(activation_energies[4+i]) * 100;
 		per_errors_apr_labr2[i] = abs_errors_apr_labr2[i]/reactionsvenergy_exfor->Eval(activation_energies[4+i]) * 100;
-		rel_abs_errors_apr[i] = results[4+i][0][4] - results[4+i][1][4];
-		rel_per_errors_apr[i] = rel_abs_errors_apr[i] / ((results[4+i][0][4]+results[4+i][1][4])/2) * 100;
+		rel_abs_errors_apr[i] = results[4+i][0][ERROR_I] - results[4+i][1][ERROR_I];
+		rel_per_errors_apr[i] = rel_abs_errors_apr[i] / ((results[4+i][0][ERROR_I]+results[4+i][1][ERROR_I])/2) * 100;
 	}
 	TGraph* abs_errors_feb_labr1_graph = new TGraph(4, activation_energies, abs_errors_feb_labr1);
 	abs_errors_feb_labr1_graph->SetTitle("Absolute error, February, LaBr1");
