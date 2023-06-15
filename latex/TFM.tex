@@ -168,19 +168,25 @@ We can thus indirectly measure the number of \an reactions by measuring the numb
 
 The \Aliso target is irradiated for several \Piso half-lifes, then the current in cut.
 The \Piso is then left to decay for several half-lifes.
-·Show and explain resulting time and energy histograms. Show and explain 2D energy histogram and gain change after activation end.\\
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{example_activation_energy_histogram.png}
-	\caption{Example activation spectrum.}
+	\caption{Example activation spectrum.
+	The energy window used to generate the time histogram (figure \ref{example_activation_time_histogram}) is shown in red.}
 	\label{example_activation_energy_histogram}
 \end{figure}
+
+To measure the decay of \Piso nuclei, we look at the \qty{511}{\keV} gamma rays emmited from the target.
+Figure \ref{example_activation_energy_histogram} shows the spectrum of one of the LaBr detectors during an activation measurement.
+To represent the time histogram (figure \ref{example_activation_time_histogram}), we take only the counts whose energy fall inside the energy window shown in figure \ref{example_activation_energy_histogram}.
+The reason there are two peaks, instead of only one, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{example_activation_energytime.png}
-	\caption{Example activation spectrum over time.}
+	\caption{Example activation spectrum over time.
+	The change in energy channel for the \qty{511}{\keV} peak is labelled in black.}
 	\label{example_activation_energytime}
 \end{figure}
 
@@ -188,9 +194,20 @@ The \Piso is then left to decay for several half-lifes.
 	\centering
 	\includegraphics[width=\textwidth]{example_activation_time_histogram.png}
 	\caption{Example activation time histogram.
-	The activation and decay periods are labeled and separated from the rest of the histogram by red lines.}
+	The activation and decay periods are labeled and separated from the rest of the histogram by red lines.
+	The approximate size of the \textit{extra background} caused by the alpha stream is also shown.}
 	\label{example_activation_time_histogram}
 \end{figure}
+
+The time histogram in figure \ref{example_activation_time_histogram} shows initial counts before the activation starts, corresponding to decay of \Piso from the previous measurement.
+When the activation starts, \num{\approx 11000} counts per bin appear very quickly.
+These counts go away as soon as the activation period ends.
+
+We call these counts \textit{extra background}.
+They are proportional to the alpha current, and correspond to different reactions other than \an.
+They can also be seen in figure \ref{example_activation_energytime}, as the large number of counts appearing during activation well outside of the \qty{511}{\keV} peak.
+
+After activation ends, we get counts corresponding to the decay of \Piso nuclei.
 
 \subsection{Time of flight measurements}
 ·Explain the procedure for pulsed measurements:\\
