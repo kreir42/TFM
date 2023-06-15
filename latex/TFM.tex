@@ -143,12 +143,54 @@ Abstract
 
 \section{Procedure}
 \subsection{Activation measurements}
-·Explain the procedure for activation measurements:\\
-·Beam is continuous.\\
-·\Piso created when an \an reaction occurs.\\
-·\Piso decays with a X minute half life and emits \qty{511}{\keV} with X intensity. Show decay scheme.\\
-·The \Aliso target is irradiated for several half-lifes, then left to decay.\\
+For the \textit{activation} measurements, the beam is operated in continuous mode, launching a stream of alpha particles of a certain energy, $E_\alpha$.
+When the alpha particles hit the target, \an reactions (among others) occur.
+Because the target is thick, these reaction will happen at alpha energies equal to or smaller than $E_\alpha$, as the particles lose energy in the target.
+
+The number of \an reactions will be proportional to the number of incident alpha particles, and the proportionality constant is the \textbf{thick target yield}.
+\begin{equation}
+	\text{thick target yield} = \frac{\text{number of \an reactions}}{\text{number of incident alphas}}
+\end{equation}
+
+Each \an reaction creates a \Piso nuclei, with a \qty{2.498}{\minute} half-life.
+It decays to \textsuperscript{30}Si by $\beta +$, emitting \qty{511}{\keV} annihilation gamma-rays with an intensity of \num{1.9971}.\cite{nucleardatasheets}
+
+We can thus indirectly measure the number of \an reactions by measuring the number of created \Piso nuclei.
+\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Piso_decay_scheme.png}
+	\caption{\Piso decay scheme.
+	From \cite{nucleardatasheets}.}
+	\label{Piso_decay_scheme}
+\end{figure}
+
+The \Aliso target is irradiated for several \Piso half-lifes, then the current in cut.
+The \Piso is then left to decay for several half-lifes.
 ·Show and explain resulting time and energy histograms. Show and explain 2D energy histogram and gain change after activation end.\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{example_activation_energy_histogram.png}
+	\caption{Example activation spectrum.}
+	\label{example_activation_energy_histogram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{example_activation_energytime.png}
+	\caption{Example activation spectrum over time.}
+	\label{example_activation_energytime}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{example_activation_time_histogram.png}
+	\caption{Example activation time histogram.
+	The activation and decay periods are labeled and separated from the rest of the histogram by red lines.}
+	\label{example_activation_time_histogram}
+\end{figure}
 
 \subsection{Time of flight measurements}
 ·Explain the procedure for pulsed measurements:\\
@@ -214,14 +256,6 @@ This means that, in order to get the activity in decays per second, we must divi
 	A = \text{\Piso decays per second} = \frac{\text{counts per bin}}{\text{binwidth}\cdot\num{1.99}} - \text{background}
 \end{equation}
 We use three different methods to get $P(t)$, depending on wether $P(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{example_activation_time_histogram.png}
-	\caption{Example activation time histogram.
-	The \textit{activation} and \textit{decay} periods are labeled and separated from the rest of the histogram by red lines.}
-	\label{example_activation_time_histogram}
-\end{figure}
 
 \subsubsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
@@ -316,6 +350,9 @@ These problems prevent the \textit{unified} and \textit{rise} fits to be used fo
 \\
 
 \subsection{Results}
+Figure \ref{decay_errors_rel_per} shows that the relative difference in measurements between LaBr detectors 1 and 2 is under \qty{10}{\percent}.
+The numbers are for decay fit measurements, but are similar for the other methods.
+Measurements in February show negative values, indicating detector 2 is higher; while those in April are positive, meaning the opposite is true.
 
 \begin{figure}[H]
 	\centering
@@ -324,10 +361,6 @@ These problems prevent the \textit{unified} and \textit{rise} fits to be used fo
 	The number shown is calculated as $\frac{\text{det}1-\text{det}2}{\left(\text{det}1+\text{det}2\right)/2}\cdot 100$, the difference over the average, in percentage.}
 	\label{decay_errors_rel_per}
 \end{figure}
-
-Figure \ref{decay_errors_rel_per} shows that the relative difference in measurements between LaBr detectors 1 and 2 is under \qty{10}{\percent}.
-The numbers are for decay fit measurements, but are similar for the other methods.
-Measurements in February show negative values, indicating detector 2 is higher; while those in April are positive, meaning the opposite is true.
 
 The outlier, with \qty{-60}{\percent}, corresponds to measurement number 6.
 For this measurement, LaBr detector number 1 was placed much closer to the target, and at \qty{0}{\degree}.
@@ -380,7 +413,8 @@ Both February and April show, however, similar differences with respect to EXFOR
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{unified_errors_per.png}
-	\caption{Percentage difference in thick target yield results between each \textit{unified} fit measurement and EXFOR.}
+	\caption{Percentage difference in thick target yield results between each \textit{unified} fit measurement and EXFOR.
+	\textit{Outlier} measurement (LaBr1, measurement 6) at \qty{-60}{\percent} is not shown.}
 	\label{unified_errors_per}
 \end{figure}
 
@@ -436,5 +470,9 @@ If we ignore the February and April 17th \textit{decay} results, the measurement
 \chapter{Conclusions}
 ·We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.\\
 ·We have managed to measure the corresponding neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.\\
+
+\begin{thebibliography}{5}
+	\bibitem{nucleardatasheets}Nuclear Data Sheets 111, 2331 (2010), M. Shamsuzzoha Basunia.
+\end{thebibliography}
 
 \end{document}
