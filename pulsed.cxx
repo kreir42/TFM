@@ -5,11 +5,11 @@
 
 #define MIN_TOF 0
 #define MAX_TOF 1500
-#define PULSE_ENERGY_FILTER 0
+#define PULSE_ENERGY_FILTER 100
 #define GAMMA_FLASH_BINS_N 400
 #define NEUTRON_RESPONSE_BINS_N 600
 #define PULSE_NPX 400
-#define PULSE_FIT_PARAMS_N 80	//must be even; if changed, must also change tree size definition
+#define PULSE_FIT_PARAMS_N 40	//must be even; if changed, must also change tree size definition
 #define MAX_PARAM_E 10000
 #define MIN_PARAM_E 50
 
@@ -164,7 +164,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		results[i][1] = fitresult->ParError(i);
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
-	results_tree->Branch("results", results, "results[82][2]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Branch("results", results, "results[42][2]/D");	//PULSE_FIT_PARAMS_N
 	results_tree->SetBranchAddress("results", results);
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);
@@ -212,21 +212,46 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	TTree* tree = (TTree*)gDirectory->Get("results_tree");
 	tree->SetBranchAddress("results", results);
 	tree->GetEntry(0);
-	Double_t p[PULSE_FIT_PARAMS_N+2];
-	Double_t p_err[PULSE_FIT_PARAMS_N+2];
+	Double_t p[PULSE_FIT_PARAMS_N];
+	Double_t p_err[PULSE_FIT_PARAMS_N];
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		p[i] = results[i+1][0];
 		p_err[i] = results[i+1][1];
 	}
 
-	Double_t x[PULSE_FIT_PARAMS_N];
-	Double_t y[PULSE_FIT_PARAMS_N];
-	Double_t y_err[PULSE_FIT_PARAMS_N];
 	Double_t first_param_seconds = energy_to_tof(MIN_PARAM_E,distance)*TOF_TO_S;
 	cout << "first_param_seconds: " << first_param_seconds << endl;
 	cout << "first param tof: " << first_param_seconds/TOF_TO_S << endl;
 	cout << "last param tof: " << energy_to_tof(MAX_PARAM_E,distance)<< endl;
 	Double_t param_energy_width = (MAX_PARAM_E-MIN_PARAM_E)/PULSE_FIT_PARAMS_N;
+
+	//scale because of efficiency
+	Double_t eff_energy[19] = {50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000};
+	Double_t eff_30[19] = {0.0159, 0.0136, 0.0155, 0.0129, 40.8395, 53.697, 57.0457, 57.6266, 57.3337, 57.3179, 57.4631, 52.4621, 48.26, 45.2324, 42.2129, 40.6158, 38.2269, 35.8656, 33.607};
+	Double_t eff_100[19] = {0.0142, 0.0128, 0.0146, 0.0121, 0.0098, 0.0086, 0.0087, 1.6957, 11.2538, 21.4897, 30.1175, 41.4082, 40.7344, 39.4135, 37.5031, 36.5453, 34.8368, 33.0715, 31.1554};
+	Double_t eff_250[19] = {0.0134, 0.0116, 0.0135, 0.0117, 0.009, 0.008, 0.0082, 0.0077, 0.0081, 0.0064, 0.0058, 12.7651, 27.1103, 30.7212, 31.0754, 30.9491, 30.2988, 29.3758, 28.042};
+
+	Double_t eff = 0;
+	Double_t energy = 0;
+	for(unsigned short i=0; i<PULSE_FIT_PARAMS_N; i++){
+		energy = MIN_PARAM_E+param_energy_width*i;
+		if(energy<=eff_energy[0]){
+			eff = energy*eff_100[0]/eff_energy[0];
+		}else{
+			for(unsigned short j=1; j<19; j++){
+				if(energy<=eff_energy[j] && energy>eff_energy[j-1]){
+					eff = eff_100[j-1] + (energy-eff_energy[j-1])*(eff_100[j]-eff_100[j-1])/(eff_energy[j]-eff_energy[j-1]);
+				}
+			}
+		}
+		p[i] /= eff/100;
+		p_err[i] /= eff/100;
+	}
+
+
+	Double_t x[PULSE_FIT_PARAMS_N];
+	Double_t y[PULSE_FIT_PARAMS_N];
+	Double_t y_err[PULSE_FIT_PARAMS_N];
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = energy_to_tof(MIN_PARAM_E+param_energy_width*i, distance)*TOF_TO_S;
 		y[i] = p[i];
@@ -374,7 +399,6 @@ void pulsed_results(){
 	energy_4->Scale(	4*M_PI*1*1/detector_surface);
 	energysimple_5->Scale(	4*M_PI*2*2/detector_surface);
 	energy_5->Scale(	4*M_PI*2*2/detector_surface);
-
 
 
 	TCanvas* myCanvas = new TCanvas("");
