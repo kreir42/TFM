@@ -4,14 +4,14 @@
 #define TOF_TO_S (1E-9)
 
 #define MIN_TOF 0
-#define MAX_TOF 1500
-#define PULSE_ENERGY_FILTER 100
+#define MAX_TOF 2500
+#define PULSE_ENERGY_FILTER 250
 #define GAMMA_FLASH_BINS_N 400
 #define NEUTRON_RESPONSE_BINS_N 600
 #define PULSE_NPX 400
 #define PULSE_FIT_PARAMS_N 40	//must be even; if changed, must also change tree size definition
 #define MAX_PARAM_E 10000
-#define MIN_PARAM_E 50
+#define MIN_PARAM_E 10
 
 #define GMIN_TOF -15
 #define GMAX_TOF +100
@@ -63,14 +63,12 @@ Double_t energy_to_tof(Double_t energy, Double_t distance){
 
 class pulse_fit_functor{
 	private:
-		TH1F* gamma_histo;
+		TH1D* gamma_histo;
 		Double_t gamma_stepsize;
 	public:
 		Double_t gamma_min;
-		Double_t neutron_min;
-		Double_t neutron_max;
 		Double_t distance;
-		pulse_fit_functor(TH1F* gamma_histo, Double_t gamma_min, Double_t neutron_min, Double_t neutron_max, Double_t distance):gamma_histo(gamma_histo),gamma_min(gamma_min),neutron_min(neutron_min),neutron_max(neutron_max),distance(distance){
+		pulse_fit_functor(TH1D* gamma_histo, Double_t gamma_min, Double_t distance):gamma_histo(gamma_histo),gamma_min(gamma_min),distance(distance){
 			gamma_stepsize = gamma_histo->GetBinWidth(1);
 		}
 		Double_t operator()(Double_t* x, Double_t* p){
@@ -97,7 +95,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 
 	Double_t gcenter = gammaflash_center-distance/C/TOF_TO_S;
 	auto monster = d.Filter("Channel==4").Define("newtof",[gcenter](const RVec<Double_t>& tof) {return tof-gcenter;},{"tof"}).Define("neutron_energy",[distance](const RVec<Double_t>& newtof) {RVec<Double_t> v=distance/(newtof*TOF_TO_S);return NEUTRON_MASS/2*v*v*J_TO_KEV;},{"newtof"});
-	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 1000, MIN_TOF, MAX_TOF}, "tof");
+	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 2000, MIN_TOF, MAX_TOF}, "tof");
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
 	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, MIN_TOF-gcenter, MAX_TOF-gcenter, 100, 0, 1}, "newtof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
@@ -142,7 +140,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	neutron_response_energy->Write("", TObject::kOverwrite);
 
 	//fit
-	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),GMIN_TOF,NMIN_TOF*distance,NMAX_TOF*distance,distance);
+	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1D*)gDirectory->Get("gamma_flash"),GMIN_TOF,distance);
 	TF1* pulse_fit = new TF1("pulse_fit", pulse_fit_obj, NMIN_TOF*distance, NMAX_TOF*distance, PULSE_FIT_PARAMS_N+2);
 	pulse_fit->SetNpx(PULSE_NPX);
 	pulse_fit->SetNumberFitPoints(PULSE_NPX);
@@ -230,19 +228,20 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t eff_30[19] = {0.0159, 0.0136, 0.0155, 0.0129, 40.8395, 53.697, 57.0457, 57.6266, 57.3337, 57.3179, 57.4631, 52.4621, 48.26, 45.2324, 42.2129, 40.6158, 38.2269, 35.8656, 33.607};
 	Double_t eff_100[19] = {0.0142, 0.0128, 0.0146, 0.0121, 0.0098, 0.0086, 0.0087, 1.6957, 11.2538, 21.4897, 30.1175, 41.4082, 40.7344, 39.4135, 37.5031, 36.5453, 34.8368, 33.0715, 31.1554};
 	Double_t eff_250[19] = {0.0134, 0.0116, 0.0135, 0.0117, 0.009, 0.008, 0.0082, 0.0077, 0.0081, 0.0064, 0.0058, 12.7651, 27.1103, 30.7212, 31.0754, 30.9491, 30.2988, 29.3758, 28.042};
-
 	Double_t eff = 0;
 	Double_t energy = 0;
 	for(unsigned short i=0; i<PULSE_FIT_PARAMS_N; i++){
 		energy = MIN_PARAM_E+param_energy_width*i;
 		if(energy<=eff_energy[0]){
-			eff = energy*eff_100[0]/eff_energy[0];
-		}else{
+			eff = energy*eff_250[0]/eff_energy[0];
+		}else if (energy <= eff_energy[18]){
 			for(unsigned short j=1; j<19; j++){
 				if(energy<=eff_energy[j] && energy>eff_energy[j-1]){
-					eff = eff_100[j-1] + (energy-eff_energy[j-1])*(eff_100[j]-eff_100[j-1])/(eff_energy[j]-eff_energy[j-1]);
+					eff = eff_250[j-1] + (energy-eff_energy[j-1])*(eff_250[j]-eff_250[j-1])/(eff_energy[j]-eff_energy[j-1]);
 				}
 			}
+		}else{
+			eff = eff_250[18];
 		}
 		p[i] /= eff/100;
 		p_err[i] /= eff/100;
@@ -272,7 +271,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	delta_histogram->Fill(g_center, gammas_n);
 	delta_histogram->Write("dirac_delta", TObject::kOverwrite);
 	//functor with delta
-	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1F*)gDirectory->Get("dirac_delta"),g_min,n_min,n_max,distance);
+	pulse_fit_functor pulse_functor = pulse_fit_functor((TH1D*)gDirectory->Get("dirac_delta"),g_min,distance);
 	Double_t x2[800];
 	Double_t y2[800];
 	for(UShort_t i=0; i<800; i++){
@@ -286,7 +285,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	((TH1D*)gDirectory->Get("neutron_response"))->Draw("same");
 	myCanvas->Write("response_to_delta", TObject::kOverwrite);
 	//functor with gamma flash
-	pulse_fit_functor pulse_functor_2 = pulse_fit_functor((TH1F*)gDirectory->Get("gamma_flash"),g_min,n_min,n_max,distance);
+	pulse_fit_functor pulse_functor_2 = pulse_fit_functor((TH1D*)gDirectory->Get("gamma_flash"),g_min,distance);
 	for(UShort_t i=0; i<800; i++){
 		x2[i] = n_min + (n_max-n_min)/800*i;
 		y2[i] = pulse_functor_2(&x2[i], p);
@@ -339,32 +338,32 @@ void pulsed_results(){
 
 	gDirectory->cd("pulsed_1");
 	TGraph* energy_1 = pulsed_results_per_file(PULSED1_GMIN,PULSED1_GCENTER,PULSED1_GMAX,PULSED1_NMIN,PULSED1_NMAX, 1, 5500, 5500);
-	TH1F* energysimple_1 = (TH1F*)gDirectory->Get("neutron_response_energy");
-	Double_t ngammas_1 = ((TH1F*)gDirectory->Get("gamma_flash"))->Integral();
+	TH1D* energysimple_1 = (TH1D*)gDirectory->Get("neutron_response_energy");
+	Double_t ngammas_1 = ((TH1D*)gDirectory->Get("gamma_flash"))->Integral();
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
 	TGraph* energy_2 = pulsed_results_per_file(PULSED2_GMIN,PULSED2_GCENTER,PULSED2_GMAX,PULSED2_NMIN,PULSED2_NMAX, 1, 5500, 5500);
-	TH1F* energysimple_2 = (TH1F*)gDirectory->Get("neutron_response_energy");
-	Double_t ngammas_2 = ((TH1F*)gDirectory->Get("gamma_flash"))->Integral();
+	TH1D* energysimple_2 = (TH1D*)gDirectory->Get("neutron_response_energy");
+	Double_t ngammas_2 = ((TH1D*)gDirectory->Get("gamma_flash"))->Integral();
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
 	TGraph* energy_3 = pulsed_results_per_file(PULSED3_GMIN,PULSED3_GCENTER,PULSED3_GMAX,PULSED3_NMIN,PULSED3_NMAX, 1, 7000, 7000);
-	TH1F* energysimple_3 = (TH1F*)gDirectory->Get("neutron_response_energy");
-	Double_t ngammas_3 = ((TH1F*)gDirectory->Get("gamma_flash"))->Integral();
+	TH1D* energysimple_3 = (TH1D*)gDirectory->Get("neutron_response_energy");
+	Double_t ngammas_3 = ((TH1D*)gDirectory->Get("gamma_flash"))->Integral();
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
 	TGraph* energy_4 = pulsed_results_per_file(PULSED4_GMIN,PULSED4_GCENTER,PULSED4_GMAX,PULSED4_NMIN,PULSED4_NMAX, 1, 8250, 8250);
-	TH1F* energysimple_4 = (TH1F*)gDirectory->Get("neutron_response_energy");
-	Double_t ngammas_4 = ((TH1F*)gDirectory->Get("gamma_flash"))->Integral();
+	TH1D* energysimple_4 = (TH1D*)gDirectory->Get("neutron_response_energy");
+	Double_t ngammas_4 = ((TH1D*)gDirectory->Get("gamma_flash"))->Integral();
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
 	TGraph* energy_5 = pulsed_results_per_file(PULSED5_GMIN,PULSED5_GCENTER,PULSED5_GMAX,PULSED5_NMIN,PULSED5_NMAX, 2, 8250, 8250);
-	TH1F* energysimple_5 = (TH1F*)gDirectory->Get("neutron_response_energy");
-	Double_t ngammas_5 = ((TH1F*)gDirectory->Get("gamma_flash"))->Integral();
+	TH1D* energysimple_5 = (TH1D*)gDirectory->Get("neutron_response_energy");
+	Double_t ngammas_5 = ((TH1D*)gDirectory->Get("gamma_flash"))->Integral();
 	gDirectory->cd("..");
 
 	//divide by number of alphas
@@ -400,6 +399,48 @@ void pulsed_results(){
 	energysimple_5->Scale(	4*M_PI*2*2/detector_surface);
 	energy_5->Scale(	4*M_PI*2*2/detector_surface);
 
+	//scale because of efficiency
+	Double_t eff_energy[19] = {50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000};
+	Double_t eff_30[19] = {0.0159, 0.0136, 0.0155, 0.0129, 40.8395, 53.697, 57.0457, 57.6266, 57.3337, 57.3179, 57.4631, 52.4621, 48.26, 45.2324, 42.2129, 40.6158, 38.2269, 35.8656, 33.607};
+	Double_t eff_100[19] = {0.0142, 0.0128, 0.0146, 0.0121, 0.0098, 0.0086, 0.0087, 1.6957, 11.2538, 21.4897, 30.1175, 41.4082, 40.7344, 39.4135, 37.5031, 36.5453, 34.8368, 33.0715, 31.1554};
+	Double_t eff_250[19] = {0.0134, 0.0116, 0.0135, 0.0117, 0.009, 0.008, 0.0082, 0.0077, 0.0081, 0.0064, 0.0058, 12.7651, 27.1103, 30.7212, 31.0754, 30.9491, 30.2988, 29.3758, 28.042};
+	Double_t eff = 0;
+	Double_t energy = 0;
+	for(short i=0; i<1000; i++){
+		energy += 10;
+		if(energy<=eff_energy[0]){
+			eff = energy*eff_250[0]/eff_energy[0];
+		}else if(energy<=eff_energy[18]){
+			for(unsigned short j=1; j<19; j++){
+				if(energy<=eff_energy[j] && energy>eff_energy[j-1]){
+					eff = eff_250[j-1] + (energy-eff_energy[j-1])*(eff_250[j]-eff_250[j-1])/(eff_energy[j]-eff_energy[j-1]);
+				}
+			}
+		}else{
+			eff = eff_250[18];
+		}
+		energysimple_1->SetBinContent(i+1, energysimple_1->GetBinContent(i+1)*100/eff);
+		energysimple_2->SetBinContent(i+1, energysimple_2->GetBinContent(i+1)*100/eff);
+		energysimple_3->SetBinContent(i+1, energysimple_3->GetBinContent(i+1)*100/eff);
+		energysimple_4->SetBinContent(i+1, energysimple_4->GetBinContent(i+1)*100/eff);
+		energysimple_5->SetBinContent(i+1, energysimple_5->GetBinContent(i+1)*100/eff);
+	}
+
+	//Jacobs data
+	Double_t jacobs_energies[119];
+	for(short i=0; i<119; i++){
+		jacobs_energies[i] =20 + i*20;
+	}
+	Double_t jacobs_yield_5500[119] = {6.62E-10,6.62E-10,6.62E-10,6.62E-10,6.62E-10,9.06E-10,9.06E-10,9.06E-10,9.06E-10,9.06E-10,4.36E-10,4.36E-10,4.36E-10,4.36E-10,4.36E-10,1.86E-10,3.30E-10,3.77E-10,3.55E-10,4.15E-10,3.98E-10,3.12E-10,1.70E-10,2.93E-10,4.71E-10,5.76E-10,5.35E-10,6.75E-10,6.97E-10,7.54E-10,7.29E-10,6.80E-10,8.96E-10,9.40E-10,6.88E-10,6.25E-10,6.18E-10,6.47E-10,6.02E-10,3.80E-10,2.97E-10,2.95E-10,1.90E-10,2.49E-10,2.56E-10,2.93E-10,3.45E-10,3.71E-10,3.48E-10,3.07E-10,3.86E-10,4.19E-10,5.04E-10,5.20E-10,5.21E-10,5.92E-10,7.03E-10,6.72E-10,5.21E-10,5.28E-10,5.49E-10,4.92E-10,5.20E-10,5.63E-10,5.69E-10,6.23E-10,6.21E-10,5.84E-10,5.53E-10,5.25E-10,6.29E-10,7.23E-10,7.46E-10,8.63E-10,9.34E-10,8.70E-10,7.99E-10,6.51E-10,5.21E-10,5.28E-10,5.87E-10,4.93E-10,5.12E-10,5.13E-10,5.18E-10,4.65E-10,3.88E-10,3.96E-10,4.61E-10,4.98E-10,5.47E-10,6.20E-10,6.62E-10,6.76E-10,6.57E-10,5.49E-10,4.85E-10,4.94E-10,5.12E-10,5.60E-10,5.57E-10,5.66E-10,6.48E-10,7.16E-10,7.07E-10,7.35E-10,7.13E-10,8.31E-10,1.05E-09,1.15E-09,1.02E-09,9.18E-10,8.21E-10,7.75E-10,6.30E-10,5.34E-10,4.71E-10,4.17E-10,3.97E-10};
+
+	TGraph* jacobs_5500 = new TGraphErrors(119, jacobs_energies, jacobs_yield_5500, NULL, NULL);
+	jacobs_5500->SetTitle("Jacobs data, 5500keV at 60deg");
+	jacobs_5500->SetLineColor(kBlack);
+	jacobs_5500->SetMarkerColor(kBlack);
+
+
+
+//	---------------------------------------------------
 
 	TCanvas* myCanvas = new TCanvas("");
 	TMultiGraph* energy_results = new TMultiGraph();
@@ -420,9 +461,10 @@ void pulsed_results(){
 	energy_4->SetLineColor(kGreen+1);
 	energy_results->Add(energy_4);
 	energy_5->SetTitle("8250keV, 2m");
-	energy_5->SetMarkerColor(kBlack);
-	energy_5->SetLineColor(kBlack);
+	energy_5->SetMarkerColor(kGreen+0.2);
+	energy_5->SetLineColor(kGreen+0.2);
 	energy_results->Add(energy_5);
+	energy_results->Add(jacobs_5500);
 
 	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha");
 	energy_results->Draw("ALP");
@@ -444,8 +486,9 @@ void pulsed_results(){
 	energysimple_4->SetLineColor(kGreen+1);
 	energysimple_4->Draw("same HISTO");
 	energysimple_5->SetTitle("8250keV, 2m");
-	energysimple_5->SetLineColor(kBlack);
+	energysimple_5->SetLineColor(kGreen+0.2);
 	energysimple_5->Draw("same HISTO");
+	jacobs_5500->Draw("same");
 
 	myCanvas->BuildLegend();
 	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha");
@@ -454,11 +497,25 @@ void pulsed_results(){
 //	------------------------------------
 
 	energy_results->Draw("ALP");
+	myCanvas->BuildLegend();
 	energysimple_1->Draw("same HISTO");
 	energysimple_2->Draw("same HISTO");
 	energysimple_3->Draw("same HISTO");
 	energysimple_4->Draw("same HISTO");
 	energysimple_5->Draw("same HISTO");
+	jacobs_5500->Draw("same");
+	TLine* energy_line_1 = new TLine(2280, 0, 2280, 1);
+	TLine* energy_line_2 = new TLine(3640, 0, 3640, 1);
+	TLine* energy_line_3 = new TLine(4760, 0, 4760, 1);
+	energy_line_1->SetLineStyle(3);
+	energy_line_1->SetLineColor(kRed);
+	energy_line_2->SetLineStyle(3);
+	energy_line_2->SetLineColor(kViolet);
+	energy_line_3->SetLineStyle(3);
+	energy_line_3->SetLineColor(kGreen+1);
+	energy_line_1->Draw("same");
+	energy_line_2->Draw("same");
+	energy_line_3->Draw("same");
 	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha");
 	myCanvas->Write("energysimple_and_deconvolution", TObject::kOverwrite);
 
