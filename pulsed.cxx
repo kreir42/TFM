@@ -6,17 +6,17 @@
 #define MIN_TOF 0
 #define MAX_TOF 1500
 #define PULSE_ENERGY_FILTER 0
-#define GAMMA_FLASH_BINS_N 350
+#define GAMMA_FLASH_BINS_N 400
 #define NEUTRON_RESPONSE_BINS_N 600
-#define PULSE_NPX 300
-#define PULSE_FIT_PARAMS_N 60	//must be even; if changed, must also change tree size definition
+#define PULSE_NPX 400
+#define PULSE_FIT_PARAMS_N 80	//must be even; if changed, must also change tree size definition
 #define MAX_PARAM_E 10000
 #define MIN_PARAM_E 50
 
 #define GMIN_TOF -15
 #define GMAX_TOF +100
-#define NMIN_TOF 5
-#define NMAX_TOF 500
+#define NMIN_TOF 1
+#define NMAX_TOF 501
 
 #define PULSED1_PARMAX 1E-2
 #define PULSED2_PARMAX 1E-1
@@ -164,7 +164,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		results[i][1] = fitresult->ParError(i);
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
-	results_tree->Branch("results", results, "results[62][2]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Branch("results", results, "results[82][2]/D");	//PULSE_FIT_PARAMS_N
 	results_tree->SetBranchAddress("results", results);
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);
@@ -224,6 +224,8 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	Double_t y_err[PULSE_FIT_PARAMS_N];
 	Double_t first_param_seconds = energy_to_tof(MIN_PARAM_E,distance)*TOF_TO_S;
 	cout << "first_param_seconds: " << first_param_seconds << endl;
+	cout << "first param tof: " << first_param_seconds/TOF_TO_S << endl;
+	cout << "last param tof: " << energy_to_tof(MAX_PARAM_E,distance)<< endl;
 	Double_t param_energy_width = (MAX_PARAM_E-MIN_PARAM_E)/PULSE_FIT_PARAMS_N;
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
 		x[i] = energy_to_tof(MIN_PARAM_E+param_energy_width*i, distance)*TOF_TO_S;
