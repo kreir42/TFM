@@ -8,15 +8,15 @@
 #define PULSE_ENERGY_FILTER 250
 #define GAMMA_FLASH_BINS_N 400
 #define NEUTRON_RESPONSE_BINS_N 600
-#define PULSE_NPX 400
-#define PULSE_FIT_PARAMS_N 40	//must be even; if changed, must also change tree size definition
+#define PULSE_NPX 600
+#define PULSE_FIT_PARAMS_N 80	//must be even; if changed, must also change tree size definition
 #define MAX_PARAM_E 10000
 #define MIN_PARAM_E 10
 
 #define GMIN_TOF -15
 #define GMAX_TOF +100
 #define NMIN_TOF 1
-#define NMAX_TOF 501
+#define NMAX_TOF 301
 
 #define PULSED1_PARMAX 1E-2
 #define PULSED2_PARMAX 1E-1
@@ -162,7 +162,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		results[i][1] = fitresult->ParError(i);
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
-	results_tree->Branch("results", results, "results[42][2]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Branch("results", results, "results[82][2]/D");	//PULSE_FIT_PARAMS_N
 	results_tree->SetBranchAddress("results", results);
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);

@@ -154,17 +154,17 @@ void add_histograms(Char_t filepath[500]){
 	//Histograms
 	auto current_integrator = no_noise.Filter("Channel==1").Histo1D({"current_integrator", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
 	auto tadeo_1_time = no_noise.Filter("Channel==2").Histo1D({"tadeo_1_time", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
-	auto tadeo_1_spectrum = no_noise.Filter("Channel==2").Histo1D({"tadeo_1_spectrum", ";Energy;Counts", 4096, 0, 4096}, "Energy");
+	auto tadeo_1_spectrum = no_noise.Filter("Channel==2").Histo1D({"tadeo_1_spectrum", ";Energy (channels);Counts", 4096, 0, 4096}, "Energy");
 	auto tadeo_2_time = no_noise.Filter("Channel==3").Histo1D({"tadeo_2_time", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
-	auto tadeo_2_spectrum = no_noise.Filter("Channel==3").Histo1D({"tadeo_2_spectrum", ";Energy;Counts", 4096, 0, 4096}, "Energy");
+	auto tadeo_2_spectrum = no_noise.Filter("Channel==3").Histo1D({"tadeo_2_spectrum", ";Energy (channels);Counts", 4096, 0, 4096}, "Energy");
 	auto monster_2_time = no_noise.Filter("Channel==4").Histo1D({"monster_time", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
-	auto monster_2_spectrum = no_noise.Filter("Channel==4").Histo1D({"monster_spectrum", ";Energy;Counts", 4096, 0, 4096}, "Energy");
+	auto monster_2_spectrum = no_noise.Filter("Channel==4").Histo1D({"monster_spectrum", ";Energy (channels);Counts", 4096, 0, 4096}, "Energy");
 	auto stylbeno_2_time = no_noise.Filter("Channel==5").Histo1D({"stylbeno_time", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
-	auto stylbeno_2_spectrum = no_noise.Filter("Channel==5").Histo1D({"stylbeno_spectrum", ";Energy;Counts", 4096, 0, 4096}, "Energy");
+	auto stylbeno_2_spectrum = no_noise.Filter("Channel==5").Histo1D({"stylbeno_spectrum", ";Energy (channels);Counts", 4096, 0, 4096}, "Energy");
 	auto labr_1_time = no_noise.Filter("Channel==6").Histo1D({"labr_1_time", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
-	auto labr_1_spectrum = no_noise.Filter("Channel==6").Histo1D({"labr_1_spectrum", ";Energy;Counts", 4096, 0, 4096}, "Energy");
+	auto labr_1_spectrum = no_noise.Filter("Channel==6").Histo1D({"labr_1_spectrum", ";Energy (channels);Counts", 4096, 0, 4096}, "Energy");
 	auto labr_2_time = no_noise.Filter("Channel==7").Histo1D({"labr_2_time", ";Timestamp;Counts", 500, 0, max_time}, "Timestamp");
-	auto labr_2_spectrum = no_noise.Filter("Channel==7").Histo1D({"labr_2_spectrum", ";Energy;Counts", 4096, 0, 4096}, "Energy");
+	auto labr_2_spectrum = no_noise.Filter("Channel==7").Histo1D({"labr_2_spectrum", ";Energy (channels);Counts", 4096, 0, 4096}, "Energy");
 
 	TFile f(filepath, "UPDATE");
 	current_integrator->Write("", TObject::kOverwrite);
