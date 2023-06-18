@@ -8,8 +8,8 @@ labr1 binwidth: 2.2423
 labr1 decay binwidth: 2.24715
 labr1 unified 30P per alpha: 1.44103e-10
 labr2 unified 30P per alpha: 1.45424e-10
-labr1 rise 30P per alpha: 1.67676e-10
-labr2 rise 30P per alpha: 1.44833e-10
+labr1 rise 30P per alpha: 1.6769e-10
+labr2 rise 30P per alpha: 1.44832e-10
 Decay factor: 1.01844
 
 LaBr1 initial activity (/s): 255.025
@@ -113,8 +113,8 @@ labr1 binwidth: 2.12626
 labr1 decay binwidth: 2.12922
 labr1 unified 30P per alpha: 1.03145e-09
 labr2 unified 30P per alpha: 2.77292e-10
-labr1 rise 30P per alpha: 1.28459e-09
-labr2 rise 30P per alpha: 3.64015e-10
+labr1 rise 30P per alpha: 1.28455e-09
+labr2 rise 30P per alpha: 3.64014e-10
 Decay factor: 1.06669
 
 LaBr1 initial activity (/s): 4158.57
