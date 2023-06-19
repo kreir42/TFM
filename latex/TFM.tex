@@ -114,7 +114,7 @@ Detectors used are both organic and inorganic scintillators.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{overview_photo.jpg}
+	\includegraphics[width=\textwidth]{overview_photo.jpg}
 	\caption{Overview picture of the experimental setup.
 	Detectors and the target are labeled.}
 	\label{overview_photo}
@@ -304,7 +304,7 @@ We can thus indirectly measure the number of \an reactions by measuring the numb
 	\label{Piso_decay_scheme}
 \end{figure}
 
-The \Aliso target is irradiated for several \Piso half-lifes, then the current in cut.
+The \Aliso target is irradiated for several \Piso half-lifes, then the current is cut.
 The \Piso is then left to decay for several half-lifes.
 
 \begin{figure}[H]
@@ -318,7 +318,7 @@ The \Piso is then left to decay for several half-lifes.
 To measure the decay of \Piso nuclei, we look at the \qty{511}{\keV} gamma rays emmited from the target.
 Figure \ref{example_activation_energy_histogram} shows the spectrum of one of the LaBr detectors during an activation measurement.
 To represent the time histogram (figure \ref{example_activation_time_histogram}), we take only the counts whose energy fall inside the energy window shown in figure \ref{example_activation_energy_histogram}.
-The reason there are two peaks, instead of only one, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}).
+The reason there are two peaks, instead of only one, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}), shifting the channel the peak corresponds to.
 
 \begin{figure}[H]
 	\centering
@@ -341,26 +341,52 @@ The time histogram in figure \ref{example_activation_time_histogram} shows initi
 When the activation starts, \num{\approx 11000} counts per bin appear very quickly.
 These counts go away as soon as the activation period ends.
 
-We call these counts \textit{extra background}.
-They are proportional to the alpha current, and correspond to different reactions other than \an.
+We call these counts the \textit{extra background}.
+They are proportional to the alpha current, and correspond to gamma rays created by reactions other than \an.
 They can also be seen in figure \ref{example_activation_energytime}, as the large number of counts appearing during activation well outside of the \qty{511}{\keV} peak.
+They affect the histogram because, even if the emitted gammas are outside of the energy window, their Compton continuum still falls inside.
 
-After activation ends, we get counts corresponding to the decay of \Piso nuclei.
+After activation ends, we get the counts corresponding to the decay of \Piso nuclei.
 
 \subsection{Time of flight measurements}
-·Explain the procedure for pulsed measurements:\\
-For the time of flight measurements, the beam is operated in pulsed mode.	%TBD: especificar anchura, frecuencia.
-·We time the pulses by using a signal from the chopper/buncher.\\	%TBD:chopper o buncher?
-Signal timestamps are registered in relation
-·Alphas arrive all at the same time (lie), \an reactions happen.\\
-·Both gammas and neutrons are produced at the same time.\\	%TBD:mirar tiempo de producción de gammas
-·Gammas move at c, arrive to detectors d/c time later. This is called gamma flash.\\
-·Neutrons have different speed depending on energy, arrive with different ToF.\\
+For the time of flight measurements, the beam is operated in pulsed mode.
+This means that, ideally, alphas arrive in groups, all at the same time, with a certain frequency.	%TBD: especificar anchura, frecuencia.
+Because of that, all of the \an reactions occur and all of the neutrons are produced at the same time.
+
+Each time the accelerator's chopper/buncher acts, an electric signal is emitted.	%TBD:chopper o buncher?
+This signal is what we use to time every detection in relation to a pulse.
+It doesn't correspond to when the pulse arrives at the target, but all of them arrive with the same delay with respect to it.
+\\
+
+Both gammas and neutrons are produced at the same time by the \an reactions.	%TBD:mirar tiempo de producción de gammas
+Gamma rays move at the speed of light, and thus all arrive at the detector $d/c$ time later, with $d$ the distance to the target.
+This is called the \textit{gamma flash}.
+
+Neutrons, however, have different speeds depending on their energy, and arrive at the detector different amounts of time later.
+This time is called the \textit{time-of-flight}, or ToF; and from it we can get the energy of the produced neutrons as $E=\frac{1}{2} m_\text{n} \left( \frac{d}{\text{ToF}} \right)^2$, with $m_\text{n}$ the mass of a neutron.
+\\
+
+In practice, alphas do not arrive all at the same time: the pulses always have a certain width.
+Generally, the time the particles hit the target can be approximated by a gaussian distribution.
+This introduces uncertainty in the ToF, and thus energy, measurements.
+
+The width and shape of the alpha pulses will be the same as that of the gamma flash.
+This is because the photons travel all at the same speed, and because we assume that the production of gammas is the same for all alphas in a pulse.
+\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{uneven_gflash.jpg}
+	\caption{Superposition of all histograms of gamma flashes.
+	In red is a measurement taken at double the distance than the others.
+	It is displaced to the right because of the longer time photons take to travel the distance to the detector.}
+	\label{uneven_gflash}
+\end{figure}
+
+We can see that the pulses are not symmetrical: they have long tails; and some of them, several peaks.
+This means we cannot treat them as gaussians and the introduced error in ToF as their standard deviation.
+
 ·Show example ToF plot with and without PSD.\\
-
-·Alphas do not arrive all at the same time: X nanosecond wide pulses. This introduces uncertainty in the ToF, and thus energy, measurements.\\
-·Pulses are not symmetrical: tails, several peaks. This means we cannot treat pulses as gaussians and the introduced error in ToF as their standard deviation. Show graph of uneven gamma flash.\\
-
 
 \chapter{Measurements, analysis and results}
 
