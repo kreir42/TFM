@@ -5,21 +5,22 @@
 
 #define MIN_TOF 0
 #define MAX_TOF 1500
-#define PULSE_ENERGY_FILTER 173	//482/700 keV/channel
+#define PULSE_ENERGY_FILTER 69	//482/700 keV/channel
 #define GAMMA_FLASH_BINS_N 400
 #define NEUTRON_RESPONSE_BINS_N 600
 #define PULSE_NPX 600
-#define PULSE_FIT_PARAMS_N 10	//must be even; if changed, must also change tree size definition
+#define PULSE_FIT_PARAMS_N 60	//must be even; if changed, must also change tree size definition
 #define MAX_PARAM_E 10000
 #define MIN_PARAM_E 100
+#define MIN_EFF 15
 
 #define GMIN_TOF -15
 #define GMAX_TOF +100
 #define NMIN_TOF 1
 #define NMAX_TOF 301
 
-#define PULSED1_PARMAX 1E-2
-#define PULSED2_PARMAX 1E-1
+#define PULSED1_PARMAX 1
+#define PULSED2_PARMAX 1
 #define PULSED3_PARMAX 1
 #define PULSED4_PARMAX 1
 #define PULSED5_PARMAX 1
@@ -99,7 +100,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	Double_t max_param_tof = energy_to_tof(MIN_PARAM_E, distance);
 
 	Double_t gcenter = gammaflash_center-distance/C/TOF_TO_S;
-	auto monster = d.Filter("Channel==4").Define("newtof",[gcenter](const RVec<Double_t>& tof) {return tof-gcenter;},{"tof"}).Define("neutron_energy",[distance](const RVec<Double_t>& newtof) {RVec<Double_t> v=distance/(newtof*TOF_TO_S);return NEUTRON_MASS/2*v*v*J_TO_KEV;},{"newtof"});
+	auto monster = d.Filter("Channel==4").Define("newtof",[gcenter](const RVec<Double_t>& tof) {return tof-gcenter;},{"tof"}).Define("neutron_energy",[distance](const RVec<Double_t>& newtof) {Double_t v=distance/(newtof[0]*TOF_TO_S);return NEUTRON_MASS/2*v*v*J_TO_KEV;},{"newtof"});
 	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF;Counts", 3000, MIN_TOF, MAX_TOF}, "tof");
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
 	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF;PSD;Counts", 100, MIN_TOF-gcenter, MAX_TOF-gcenter, 100, 0, 1}, "newtof", "psd");
@@ -114,12 +115,17 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	auto monster_gammas = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd<y1 || psd<m*Energy+n;},{"psd", "Energy"});
 	auto gamma_tof_plot = monster_gammas.Histo1D({"gamma_tof_plot", ";ToF;Counts", 1000, MIN_TOF-gcenter, MAX_TOF-gcenter}, "newtof");
 	auto monster_neutrons = monster_efiltered.Filter([m, n, y1](Double_t psd, UShort_t Energy){return psd>=y1 && psd>=m*Energy+n;},{"psd", "Energy"});
-	auto neutron_tof_plot = monster_neutrons.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, MIN_TOF-gcenter, MAX_TOF-gcenter}, "newtof");
-	auto neutron_energy_plot = monster_neutrons.Histo1D({"neutron_energy_plot", ";Energy (keV);Counts", 1000, 0, 10000}, "neutron_energy");
+	auto monster_neutrons_efiltered = monster_neutrons.Filter([](Double_t neutron_energy){return neutron_energy>MIN_PARAM_E;},{"neutron_energy"});
+	auto neutron_tof_plot = monster_neutrons_efiltered.Histo1D({"neutron_tof_plot", ";ToF;Counts", 1000, MIN_TOF-gcenter, MAX_TOF-gcenter}, "newtof");
+	auto neutron_tof_plot_raw = monster_neutrons.Histo1D({"neutron_tof_plot_raw", ";ToF;Counts", 1000, MIN_TOF-gcenter, MAX_TOF-gcenter}, "newtof");
+	auto neutron_energy_plot = monster_neutrons_efiltered.Histo1D({"neutron_energy_plot", ";Energy (keV);Counts", 1000, 0, 10000}, "neutron_energy");
+	auto neutron_energy_plot_raw = monster_neutrons.Histo1D({"neutron_energy_plot_raw", ";Energy (keV);Counts", 1000, 0, 10000}, "neutron_energy");
 
 	auto gamma_flash = monster_gammas.Histo1D({"gamma_flash", ";ToF;Counts", GAMMA_FLASH_BINS_N, GMIN_TOF, GMAX_TOF}, "newtof");
-	auto neutron_response = monster_neutrons.Histo1D({"neutron_response", ";ToF;Counts", NEUTRON_RESPONSE_BINS_N, NMIN_TOF*distance, max_param_tof+distance/C/TOF_TO_S}, "newtof");
-	auto neutron_response_energy = monster_neutrons.Histo1D({"neutron_response_energy", ";Energy (keV);Counts", 1000, 0, 10000}, "neutron_energy");
+	auto neutron_response = monster_neutrons_efiltered.Histo1D({"neutron_response", ";ToF;Counts", NEUTRON_RESPONSE_BINS_N, NMIN_TOF*distance, max_param_tof+distance/C/TOF_TO_S}, "newtof");
+	auto neutron_response_raw = monster_neutrons.Histo1D({"neutron_response_raw", ";ToF;Counts", NEUTRON_RESPONSE_BINS_N, NMIN_TOF*distance, max_param_tof+distance/C/TOF_TO_S}, "newtof");
+	auto neutron_response_energy = monster_neutrons_efiltered.Histo1D({"neutron_response_energy", ";Energy (keV);Counts", 1000, 0, 10000}, "neutron_energy");
+	auto neutron_response_energy_raw = monster_neutrons.Histo1D({"neutron_response_energy_raw", ";Energy (keV);Counts", 1000, 0, 10000}, "neutron_energy");
 
 	TCanvas* myCanvas = new TCanvas("");
 
@@ -138,11 +144,15 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 
 	gamma_tof_plot->Write("", TObject::kOverwrite);
 	neutron_tof_plot->Write("", TObject::kOverwrite);
+	neutron_tof_plot_raw->Write("", TObject::kOverwrite);
 	neutron_energy_plot->Write("", TObject::kOverwrite);
+	neutron_energy_plot_raw->Write("", TObject::kOverwrite);
 
 	gamma_flash->Write("", TObject::kOverwrite);
 	neutron_response->Write("", TObject::kOverwrite);
+	neutron_response_raw->Write("", TObject::kOverwrite);
 	neutron_response_energy->Write("", TObject::kOverwrite);
+	neutron_response_energy_raw->Write("", TObject::kOverwrite);
 
 	//fit
 	pulse_fit_functor pulse_fit_obj = pulse_fit_functor((TH1D*)gDirectory->Get("gamma_flash"),GMIN_TOF,distance,min_param_tof,max_param_tof);
@@ -167,7 +177,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 		results[i][1] = fitresult->ParError(i);
 	}
 	TTree* results_tree = new TTree("results_tree", "Tree with pulsed results");
-	results_tree->Branch("results", results, "results[12][2]/D");	//PULSE_FIT_PARAMS_N
+	results_tree->Branch("results", results, "results[62][2]/D");	//PULSE_FIT_PARAMS_N
 	results_tree->SetBranchAddress("results", results);
 	results_tree->Fill();
 	results_tree->Write("", TObject::kOverwrite);
@@ -187,7 +197,7 @@ void pulsed(){
 	gDirectory->cd("Pulsed");
 
 	gDirectory->cd("pulsed_1");
-//	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GCENTER, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, PULSED1_PARMAX, 115, 1, 5500);
+	pulsed_per_file(pulsed_1, PULSED1_GMIN, PULSED1_GCENTER, PULSED1_GMAX, PULSED1_NMIN, PULSED1_NMAX, PULSED1_PARMAX, 115, 1, 5500);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_2");
@@ -195,15 +205,15 @@ void pulsed(){
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_3");
-//	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GCENTER, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, PULSED3_PARMAX, 155, 1, 7000);
+	pulsed_per_file(pulsed_3, PULSED3_GMIN, PULSED3_GCENTER, PULSED3_GMAX, PULSED3_NMIN, PULSED3_NMAX, PULSED3_PARMAX, 155, 1, 7000);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_4");
-//	pulsed_per_file(pulsed_4, PULSED4_GMIN, PULSED4_GCENTER, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, PULSED4_PARMAX, 45, 1, 8250);
+	pulsed_per_file(pulsed_4, PULSED4_GMIN, PULSED4_GCENTER, PULSED4_GMAX, PULSED4_NMIN, PULSED4_NMAX, PULSED4_PARMAX, 45, 1, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("pulsed_5");
-//	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GCENTER, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, PULSED5_PARMAX, 135, 2, 8250);
+	pulsed_per_file(pulsed_5, PULSED5_GMIN, PULSED5_GCENTER, PULSED5_GMAX, PULSED5_NMIN, PULSED5_NMAX, PULSED5_PARMAX, 135, 2, 8250);
 	gDirectory->cd("..");
 
 	gDirectory->cd("..");
@@ -238,7 +248,7 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 	TCanvas* myCanvas = new TCanvas("");
 	//represent results with neutron response
 	for(UShort_t i=0; i<PULSE_FIT_PARAMS_N; i++){
-		x[i] = min_param_tof+paramwidth_tof*i;
+		x[i] = paramwidth_tof*i+energy_to_tof(MAX_PARAM_E, distance)-distance/C/TOF_TO_S;
 		y[i] = p[i]*gammas_n;
 		y_err[i] = p_err[i]*gammas_n;
 	}
@@ -276,8 +286,13 @@ TGraph* pulsed_results_per_file(Double_t g_min, Double_t g_center, Double_t g_ma
 		}else{
 			eff = eff_100[18];
 		}
-		p[i] /= eff/100;
-		p_err[i] /= eff/100;
+		if(eff<MIN_EFF){
+			p[i] = 0;
+			p_err[i] = 0;
+		}else{
+			p[i] /= eff/100;
+			p_err[i] /= eff/100;
+		}
 	}
 
 
@@ -427,12 +442,26 @@ void pulsed_results(){
 		}else{
 			eff = eff_100[18];
 		}
-		energysimple_1->SetBinContent(i+1, energysimple_1->GetBinContent(i+1)*100/eff);
-		energysimple_2->SetBinContent(i+1, energysimple_2->GetBinContent(i+1)*100/eff);
-		energysimple_3->SetBinContent(i+1, energysimple_3->GetBinContent(i+1)*100/eff);
-		energysimple_4->SetBinContent(i+1, energysimple_4->GetBinContent(i+1)*100/eff);
-		energysimple_5->SetBinContent(i+1, energysimple_5->GetBinContent(i+1)*100/eff);
+		if(eff<MIN_EFF){
+			energysimple_1->SetBinContent(i+1, 0);
+			energysimple_2->SetBinContent(i+1, 0);
+			energysimple_3->SetBinContent(i+1, 0);
+			energysimple_4->SetBinContent(i+1, 0);
+			energysimple_5->SetBinContent(i+1, 0);
+		}else{
+			energysimple_1->SetBinContent(i+1, energysimple_1->GetBinContent(i+1)*100/eff);
+			energysimple_2->SetBinContent(i+1, energysimple_2->GetBinContent(i+1)*100/eff);
+			energysimple_3->SetBinContent(i+1, energysimple_3->GetBinContent(i+1)*100/eff);
+			energysimple_4->SetBinContent(i+1, energysimple_4->GetBinContent(i+1)*100/eff);
+			energysimple_5->SetBinContent(i+1, energysimple_5->GetBinContent(i+1)*100/eff);
+		}
 	}
+
+	TCanvas* myCanvas = new TCanvas("");
+	TGraph* efficiency_curve = new TGraph(19,eff_energy,eff_100);
+	efficiency_curve->SetTitle("Efficiency curve;Energy (keV);Efficiency (%)");
+	efficiency_curve->Draw("ALP");
+	myCanvas->Write("efficiency_curve", TObject::kOverwrite);
 
 	//Jacobs data
 	Double_t jacobs_energies[119];
@@ -450,12 +479,11 @@ void pulsed_results(){
 
 //	---------------------------------------------------
 
-	TCanvas* myCanvas = new TCanvas("");
 	TMultiGraph* energy_results = new TMultiGraph();
 	energy_1->SetTitle("5500keV");
 	energy_1->SetMarkerColor(kRed);
 	energy_1->SetLineColor(kRed);
-//	energy_results->Add(energy_1);
+	energy_results->Add(energy_1);
 	energy_2->SetTitle("5500keV");
 	energy_2->SetMarkerColor(kBlue);
 	energy_2->SetLineColor(kBlue);
@@ -463,15 +491,15 @@ void pulsed_results(){
 	energy_3->SetTitle("7000keV");
 	energy_3->SetMarkerColor(kViolet);
 	energy_3->SetLineColor(kViolet);
-//	energy_results->Add(energy_3);
+	energy_results->Add(energy_3);
 	energy_4->SetTitle("8250keV");
 	energy_4->SetMarkerColor(kGreen+1);
 	energy_4->SetLineColor(kGreen+1);
-//	energy_results->Add(energy_4);
+	energy_results->Add(energy_4);
 	energy_5->SetTitle("8250keV, 2m");
 	energy_5->SetMarkerColor(kGreen+0.2);
 	energy_5->SetLineColor(kGreen+0.2);
-//	energy_results->Add(energy_5);
+	energy_results->Add(energy_5);
 	energy_results->Add(jacobs_5500);
 
 	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha");
