@@ -434,17 +434,17 @@ void pulsed_results(){
 	energysimple_5->Scale(	2*2/detector_surface);
 	energy_5->Scale(	2*2/detector_surface);
 
-	//scale beacause of bonwidth to MeV
-	energysimple_1->Scale(	1000, "width");
-	energysimple_2->Scale(	1000, "width");
-	energysimple_3->Scale(	1000, "width");
-	energysimple_4->Scale(	1000, "width");
-	energysimple_5->Scale(	1000, "width");
-	energy_1->Scale(	1000 * NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
-	energy_2->Scale(	1000 * NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
-	energy_3->Scale(	1000 * NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
-	energy_4->Scale(	1000 * NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
-	energy_5->Scale(	1000 * NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
+	//scale beacause of binwidth
+	energysimple_1->Scale(	1, "width");
+	energysimple_2->Scale(	1, "width");
+	energysimple_3->Scale(	1, "width");
+	energysimple_4->Scale(	1, "width");
+	energysimple_5->Scale(	1, "width");
+	energy_1->Scale(	NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
+	energy_2->Scale(	NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
+	energy_3->Scale(	NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
+	energy_4->Scale(	NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
+	energy_5->Scale(	NEUTRON_RESPONSE_BINS_N/PULSE_FIT_PARAMS_N);
 
 
 	//scale because of efficiency
@@ -503,10 +503,10 @@ void pulsed_results(){
 	for(short i=0; i<24; i++){
 		jacobs_energies_2[i] = i*100;
 	}
-	Double_t jacobs_yield_5500_2[24] = {1.660E-8,1.660E-8,1.660E-8,1.660E-8,1.640E-8,3.240E-8,3.930E-8,2.870E-8,1.290E-8,1.660E-8,2.350E-8,3.02E-8,2.690E-8,2.910E-8,3.890E-8,3.370E-8,2.620E-8,2.210E-8,3.160E-8,2.600E-8,3.190E-8,4.480E-8,4.160E-8,1.820E-8};
+	Double_t jacobs_yield_5500_2[24] = {1.660E-11,1.660E-11,1.660E-11,1.660E-11,1.640E-11,3.240E-11,3.930E-11,2.870E-11,1.290E-11,1.660E-11,2.350E-11,3.02E-11,2.690E-11,2.910E-11,3.890E-11,3.370E-11,2.620E-11,2.210E-11,3.160E-11,2.600E-11,3.190E-11,4.480E-11,4.160E-11,1.820E-11};
 
 	TGraphErrors* jacobs_5500_2 = new TGraphErrors(24, jacobs_energies_2, jacobs_yield_5500_2, NULL, NULL);
-	jacobs_5500_2->SetTitle("Jacobs data, 5.5MeV at 60deg");
+	jacobs_5500_2->SetTitle("Jacobs data, 5500keV at 60deg");
 	jacobs_5500_2->SetMarkerStyle(21);
 	jacobs_5500_2->SetLineColor(kBlack);
 	jacobs_5500_2->SetMarkerColor(kBlack);
@@ -516,7 +516,7 @@ void pulsed_results(){
 //	---------------------------------------------------
 
 	TMultiGraph* energy_results = new TMultiGraph();
-	energy_results->SetTitle(";Energy (keV);Neutrons per alpha");
+	energy_results->SetTitle(";Energy (keV);Neutrons per alpha (sr^{-1} keV^{-1})");
 	energy_1->SetTitle("5500keV");
 	energy_1->SetMarkerColor(kRed);
 	energy_1->SetLineColor(kRed);
@@ -563,7 +563,7 @@ void pulsed_results(){
 	jacobs_5500_2->Draw("same");
 
 	myCanvas->BuildLegend();
-	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha");
+	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha (sr^{-1} keV^{-1})");
 	myCanvas->Write("energysimple", TObject::kOverwrite);
 
 //	------------------------------------
@@ -587,7 +587,7 @@ void pulsed_results(){
 	energy_line_1->Draw("same");
 	energy_line_2->Draw("same");
 	energy_line_3->Draw("same");
-	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha");
+	myCanvas->SetTitle(";Energy (keV);Neutrons per alpha (sr^{-1} keV^{-1})");
 	myCanvas->Write("energysimple_and_deconvolution", TObject::kOverwrite);
 
 	myCanvas->Close();
