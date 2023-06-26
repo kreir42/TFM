@@ -114,7 +114,7 @@ Detectors used are both organic and inorganic scintillators.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{overview_photo.jpg}
+	\includegraphics[width=0.75\textwidth]{overview_photo.jpg}
 	\caption{Overview picture of the experimental setup.
 	Detectors and the target are labeled.}
 	\label{overview_photo}
@@ -147,7 +147,15 @@ With a X frequency, it disengages the field and lets particles pass for X time.	
 After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerates the slower ones, making the pulse narrower in time (X) and gaussian shaped.	%TBD:poner valor
 \\
 
-·Difficulty of using alphas with the accelerator, with it being designed for deuterons. Graph of gamma flash highlighting assymetry and tail.\\
+\subsubsection{Difficulties with accelerating $\bm{\alpha}$ particles}
+Although it is used in this experiment to accelerate alphas, the CNA Tandem accelerator was not designed with them in mind.
+Rather, it was designed to accelerate deuterons, which have the same mass-to-charge ratio.
+This means that, while alphas can be also be accelerated, some problems arise when generating pulses.
+
+The reason is that the electric fields used by the buncher to shape pulses are not strong enough.
+This produces both wider and asymmetric pulses than with deuterons, as well as smaller overall currents; especially at higher energies (figure \ref{uneven_gflash}).
+\\
+
 ·Explain the different parts of the neutron line. Photos.\\
 
 \subsection{Target}
@@ -219,21 +227,21 @@ We then divide by the total number of emmited photons (given the source's activi
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{labr_na22_calibration.png}
+	\includegraphics[width=0.75\textwidth]{labr_na22_calibration.png}
 	\caption{LaBr1 response to \Na calibration source. In red is the fitting of the \qty{511}{\keV} peak to a gaussian plus a linear background.}
 	\label{labr_na22_calibration}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{labr_cs137_calibration.png}
+	\includegraphics[width=0.75\textwidth]{labr_cs137_calibration.png}
 	\caption{LaBr1 response to \textsuperscript{137}Cs calibration source.}
 	\label{labr_cs137_calibration}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{labr_co60_calibration.png}
+	\includegraphics[width=0.75\textwidth]{labr_co60_calibration.png}
 	\caption{LaBr1 response to \textsuperscript{60}Co calibration source.}
 	\label{labr_co60_calibration}
 \end{figure}
@@ -266,7 +274,7 @@ At high energies, the \textit{fast} portion saturates, causing the sahpe seen in
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_psd.png}
+	\includegraphics[width=0.75\textwidth]{example_psd.png}
 	\caption{2D histogram showing PSD separation between neutrons and gamma rays for a MONSTER measurement.
 	The separation line between the two is ahown in black and dotted.}
 	\label{example_psd}
@@ -277,19 +285,26 @@ Because it is organic, the cross-section for the photoelectric effect is much sm
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{monster_cs_calibration.png}
+	\includegraphics[width=0.75\textwidth]{monster_cs_calibration.png}
 	\caption{MONSTER response to \textsuperscript{137}Cs calibration source.}
 	\label{monster_cs_calibration}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{monster_co_calibration.png}
+	\includegraphics[width=0.75\textwidth]{monster_co_calibration.png}
 	\caption{MONSTER response to \textsuperscript{60}Co calibration source.}
 	\label{monster_co_calibration}
 \end{figure}
 
-·We use a theoretical curve to calibrate in efficiency. Show curve.\\
+To calibrate the MONSTER detector in energy, we use an efficiency curve obtained from simulations, shown in figure \ref{monster_efficiency}.	%TBD: referencia?
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{monster_efficiency.png}
+	\caption{MONSTER neutron efficiency curve.}
+	\label{monster_efficiency}
+\end{figure}
 
 \section{Procedure}
 Two different types of experiments are carried out, \textit{activation} ones to measure thick target yield; and \textit{time-of-flight} ones for neutron spectra.
@@ -323,7 +338,7 @@ The \Piso is then left to decay for several half-lifes.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_activation_energy_histogram.png}
+	\includegraphics[width=0.75\textwidth]{example_activation_energy_histogram.png}
 	\caption{Example activation spectrum.
 	The energy window used to generate the time histogram (figure \ref{example_activation_time_histogram}) is shown in red.}
 	\label{example_activation_energy_histogram}
@@ -336,7 +351,7 @@ The reason there are two peaks, instead of only one, is that the high rate of co
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_activation_energytime.png}
+	\includegraphics[width=0.75\textwidth]{example_activation_energytime.png}
 	\caption{Example activation spectrum over time.
 	The change in energy channel for the \qty{511}{\keV} peak is labelled in black.}
 	\label{example_activation_energytime}
@@ -344,7 +359,7 @@ The reason there are two peaks, instead of only one, is that the high rate of co
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_activation_time_histogram.png}
+	\includegraphics[width=0.75\textwidth]{example_activation_time_histogram.png}
 	\caption{Example activation time histogram.
 	The activation and decay periods are labeled and separated from the rest of the histogram by red lines.
 	The approximate size of the \textit{extra background} caused by the alpha stream is also shown.}
@@ -390,10 +405,11 @@ This is because the photons travel all at the same speed, and because we assume 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{uneven_gflash.png}
+	\includegraphics[width=0.75\textwidth]{uneven_gflash.png}
 	\caption{Superposition of all histograms of gamma flashes.
 	In red is a measurement taken at double the distance than the others.
-	It is displaced to the right because of the longer time photons take to travel the distance to the detector.}
+	It is displaced to the right because of the longer time photons take to travel the distance to the detector.
+	Their shape will be that of their corresponding alpha pulses, plus a background.}
 	\label{uneven_gflash}
 \end{figure}
 
@@ -467,7 +483,7 @@ But $N$\textsubscript{EOA} is not the number of \Piso nuclei created by \an reac
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_decay_fit.png}
+	\includegraphics[width=0.75\textwidth]{example_decay_fit.png}
 	\caption{Example decay fit.}
 	\label{example_decay_fit}
 \end{figure}
@@ -502,7 +518,7 @@ This is useful because the current is not constant, there are drops and rises in
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{current_histograms.png}
+	\includegraphics[width=0.75\textwidth]{current_histograms.png}
 	\caption{All current histograms, superimposed.
 	The one in red corresponds to measurement 4.}
 	\label{current_histograms}
@@ -520,14 +536,14 @@ with $2\cdot\num{1.60217646E-9}$ the charge of an alpha particle in tenths of na
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_unified_fit.png}
+	\includegraphics[width=0.75\textwidth]{example_unified_fit.png}
 	\caption{Example unified fit.}
 	\label{example_unified_fit}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{example_rise_fit.png}
+	\includegraphics[width=0.75\textwidth]{example_rise_fit.png}
 	\caption{Example rise fit.}
 	\label{example_rise_fit}
 \end{figure}
@@ -537,7 +553,7 @@ In addition, measurement number 4, in February, shows loss of data due to a prob
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{activation_4_time.png}
+	\includegraphics[width=0.75\textwidth]{activation_4_time.png}
 	\caption{Activation measurement number 4.}
 	\label{activation_4_time}
 \end{figure}
@@ -552,7 +568,7 @@ Measurements in February show negative values, indicating detector 2 is higher; 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{decay_errors_rel_per.png}
+	\includegraphics[width=0.75\textwidth]{decay_errors_rel_per.png}
 	\caption{Percentage difference in thick target yield results between detectors in each measurement.
 	The number shown is calculated as $\frac{\text{det}1-\text{det}2}{\left(\text{det}1+\text{det}2\right)/2}\cdot 100$, the difference over the average, in percentage.}
 	\label{decay_errors_rel_per}
@@ -570,7 +586,7 @@ The April 17th results are around \qty{30}{\percent}, and the \textit{outlier} f
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{decay_errors_per.png}
+	\includegraphics[width=0.75\textwidth]{decay_errors_per.png}
 	\caption{Percentage difference in thick target yield results between each \textit{decay} fit measurement and EXFOR.}
 	\label{decay_errors_per}
 \end{figure}
@@ -580,7 +596,7 @@ The ones done in April 17th are suspect, and the ones in February agree with eac
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{reactions_v_energy_decay.png}
+	\includegraphics[width=0.75\textwidth]{reactions_v_energy_decay.png}
 	\caption{Decay fit results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy_decay}
 \end{figure}
@@ -591,7 +607,7 @@ Because of the missing current data, however, fewer points exist for April.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{rise_errors_per.png}
+	\includegraphics[width=0.75\textwidth]{rise_errors_per.png}
 	\caption{Percentage difference in thick target yield results between each \textit{rise} fit measurement and EXFOR.}
 	\label{rise_errors_per}
 \end{figure}
@@ -601,14 +617,14 @@ Both February and April show, however, similar differences with respect to EXFOR
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{reactions_v_energy_rise.png}
+	\includegraphics[width=0.75\textwidth]{reactions_v_energy_rise.png}
 	\caption{Rise fit results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy_rise}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{unified_errors_per.png}
+	\includegraphics[width=0.75\textwidth]{unified_errors_per.png}
 	\caption{Percentage difference in thick target yield results between each \textit{unified} fit measurement and EXFOR.
 	\textit{Outlier} measurement (LaBr1, measurement 6) at \qty{-60}{\percent} is not shown.}
 	\label{unified_errors_per}
@@ -619,7 +635,7 @@ They are around \qty{10}{\percent} for April and \qty{20}{\percent} for February
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{reactions_v_energy_unified.png}
+	\includegraphics[width=0.75\textwidth]{reactions_v_energy_unified.png}
 	\caption{Unified fit results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy_unified}
 \end{figure}
@@ -630,7 +646,7 @@ We see that April 18th \textit{decay} measurements agree well with EXFOR data, w
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{reactions_v_energy.png}
+	\includegraphics[width=0.75\textwidth]{reactions_v_energy.png}
 	\caption{All activation thick target yield results and EXFOR data with a \qty{\pm 10}{\percent} error.}
 	\label{reactions_v_energy}
 \end{figure}
@@ -666,6 +682,7 @@ If we ignore the February and April 17th \textit{decay} results, the measurement
 \chapter{Conclusions}
 ·We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.\\
 ·We have managed to measure the corresponding neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.\\
+·Improvements.\\
 
 \begin{thebibliography}{5}
 	\bibitem{nucleardatasheets}Nuclear Data Sheets 111, 2331 (2010), M. Shamsuzzoha Basunia.
