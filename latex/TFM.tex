@@ -98,9 +98,22 @@ Abstract español.
 \tableofcontents
 
 \chapter{Introduction and motivation}
-·Explain what \an reactions are.\\
+\an are nuclear reactions, in which an alpha particle ($^4_2\text{He}^{2+}$) hits a target nucleus ($^\text{A}_\text{Z}\text{X}$) and a neutron is ejected.
+Generally, in the laboratory frame of reference, the $\alpha$ is fast-moving and the target is stationary.
+The produced neutron will also be fast, and the resulting nucleus ($^{\text{A}+3}_{\text{Z}+2}\text{Y}$) will be of a new element and have a small recoil.
 
-·Relevance of \an reactions for: dark matter search, astrophysics.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{anreaction.png}
+	\caption{Illustration of \an reaction.}
+	\label{anreaction}
+\end{figure}
+
+Underground experiments trying to detect dark matter WIMPs or other rare events have to deal with neutron backgrounds that are hard to distinguish from the desired particles.
+The main contribution to this background comes from \an reactions, produced by alphas coming from the radioactive decay of elements in the ground.\cite{neutron_in_an}.	%TBD:citas más relevantes, ésta lo da por sabido
+
+A good knowledge of the cross-section and neutron spectra of these reactions is thus useful to differentiate between background counts and rare events.
+\\
 
 ·Actual state of \an measurements.\\
 
@@ -414,6 +427,7 @@ This is because the photons travel all at the same speed, and because we assume 
 \end{figure}
 
 We can see that the pulses are not symmetrical: they have long tails; and some of them, several peaks.
+For the worst case, the tail contains \qty{30}{\percent} of the total counts.
 This means we cannot treat them as gaussians and the introduced error in ToF as their standard deviation.
 
 ·Show example ToF plot with and without PSD.\\
@@ -685,6 +699,9 @@ If we ignore the February and April 17th \textit{decay} results, the measurement
 ·Improvements.\\
 
 \begin{thebibliography}{5}
+	\bibitem{neutron_in_an}Neutron production in \an reactions, \url{https://doi.org/10.1016/j.nima.2020.164095}
+	\bibitem{}\url{https://doi.org/10.1016/j.nima.2009.04.032}
+	\bibitem{}\url{https://doi.org/10.1016/j.nima.2017.09.007}
 	\bibitem{nucleardatasheets}Nuclear Data Sheets 111, 2331 (2010), M. Shamsuzzoha Basunia.
 \end{thebibliography}
 
