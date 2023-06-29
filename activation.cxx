@@ -778,25 +778,76 @@ void activation_results(){
 	myCanvas->Write("rel_per_errors", TObject::kOverwrite);
 
 	unified_average[3] = unified_average_diff[3] = unified_average_diff_per[3] = 0;
+	unified_average[5] = unified_average_diff[5] = unified_average_diff_per[5] = 0;
 	unified_average[7] = unified_average_diff[7] = unified_average_diff_per[7] = 0;
 	unified_average[8] = unified_average_diff[8] = unified_average_diff_per[8] = 0;
 	unified_average[9] = unified_average_diff[9] = unified_average_diff_per[9] = 0;
 	rise_average[3] = rise_average_diff[3] = rise_average_diff_per[3] = 0;
+	rise_average[5] = rise_average_diff[5] = rise_average_diff_per[5] = 0;
 	rise_average[7] = rise_average_diff[7] = rise_average_diff_per[7] = 0;
 	rise_average[8] = rise_average_diff[8] = rise_average_diff_per[8] = 0;
 	rise_average[9] = rise_average_diff[9] = rise_average_diff_per[9] = 0;
+	decay_average[5] = decay_average_diff[5] = decay_average_diff_per[5] = 0;
 	cout << endl << "----- RESULTS -----" << endl;
 	Double_t exfor_result[ACTIVATION_N];
+	Double_t decay_exfor_diff[ACTIVATION_N];
+	Double_t unified_exfor_diff[ACTIVATION_N];
+	Double_t rise_exfor_diff[ACTIVATION_N];
 	for(short i=0; i<ACTIVATION_N; i++){
 		cout << "Activation N " << i+1 << endl;
 		cout << "Activation E: " << activation_energies[i] << endl;
 		exfor_result[i] = reactionsvenergy_exfor->Eval(activation_energies[i]);
 		cout << "exfor: " << exfor_result[i] << endl;
-		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << (decay_average[i] - exfor_result[i])/exfor_result[i]*100 << "%" << endl;
-		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << (unified_average[i] - exfor_result[i])/exfor_result[i]*100 << "%" << endl;
-		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << (rise_average[i] - exfor_result[i])/exfor_result[i]*100 << "%" << endl;
+		decay_exfor_diff[i] = (decay_average[i] - exfor_result[i])/exfor_result[i]*100;
+		unified_exfor_diff[i] = (unified_average[i] - exfor_result[i])/exfor_result[i]*100;
+		rise_exfor_diff[i] = (rise_average[i] - exfor_result[i])/exfor_result[i]*100;
+		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << decay_exfor_diff[i] << "%" << endl;
+		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << unified_exfor_diff[i] << "%" << endl;
+		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << rise_exfor_diff[i] << "%" << endl;
 		cout << endl;
 	}
+
+	TMultiGraph* final_exfor_diffs_multigraph = new TMultiGraph();
+	TGraph* unified_exfor_diffs_feb = new TGraph(4, activation_energies, unified_exfor_diff);
+	unified_exfor_diffs_feb->SetTitle("Unified diffs, feb");
+	unified_exfor_diffs_feb->SetMarkerColor(kRed);
+	unified_exfor_diffs_feb->SetMarkerStyle(34);
+	unified_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
+	TGraph* unified_exfor_diffs_apr = new TGraph(6, &activation_energies[4], &unified_exfor_diff[4]);
+	unified_exfor_diffs_apr->SetTitle("Unified diffs, apr");
+	unified_exfor_diffs_apr->SetMarkerColor(kRed);
+	unified_exfor_diffs_apr->SetMarkerStyle(47);
+	unified_exfor_diffs_apr->SetMarkerSize(MARKER_SIZE);
+	TGraph* rise_exfor_diffs_feb = new TGraph(4, activation_energies, rise_exfor_diff);
+	rise_exfor_diffs_feb->SetTitle("Rise diffs, feb");
+	rise_exfor_diffs_feb->SetMarkerColor(kGreen);
+	rise_exfor_diffs_feb->SetMarkerStyle(34);
+	rise_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
+	TGraph* rise_exfor_diffs_apr = new TGraph(6, &activation_energies[4], &rise_exfor_diff[4]);
+	rise_exfor_diffs_apr->SetTitle("Rise diffs, apr");
+	rise_exfor_diffs_apr->SetMarkerColor(kGreen);
+	rise_exfor_diffs_apr->SetMarkerStyle(47);
+	rise_exfor_diffs_apr->SetMarkerSize(MARKER_SIZE);
+	TGraph* decay_exfor_diffs_feb = new TGraph(4, activation_energies, decay_exfor_diff);
+	decay_exfor_diffs_feb->SetTitle("Decay diffs, feb");
+	decay_exfor_diffs_feb->SetMarkerColor(kBlue);
+	decay_exfor_diffs_feb->SetMarkerStyle(34);
+	decay_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
+	TGraph* decay_exfor_diffs_apr = new TGraph(6, &activation_energies[4], &decay_exfor_diff[4]);
+	decay_exfor_diffs_apr->SetTitle("Decay diffs, apr");
+	decay_exfor_diffs_apr->SetMarkerColor(kBlue);
+	decay_exfor_diffs_apr->SetMarkerStyle(47);
+	decay_exfor_diffs_apr->SetMarkerSize(MARKER_SIZE);
+	final_exfor_diffs_multigraph->Add(unified_exfor_diffs_feb);
+	final_exfor_diffs_multigraph->Add(rise_exfor_diffs_feb);
+	final_exfor_diffs_multigraph->Add(decay_exfor_diffs_feb);
+	final_exfor_diffs_multigraph->Add(unified_exfor_diffs_apr);
+	final_exfor_diffs_multigraph->Add(rise_exfor_diffs_apr);
+	final_exfor_diffs_multigraph->Add(decay_exfor_diffs_apr);
+	final_exfor_diffs_multigraph->SetTitle("Relative error with respect to EXFOR data");
+	final_exfor_diffs_multigraph->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("exfor_diffs", TObject::kOverwrite);
 
 	myCanvas->Close();
 	gDirectory->cd("..");
@@ -840,7 +891,7 @@ void activation(){
 
 	gDirectory->cd("activation_1");
 	cout << "activation_1" << endl;
-	per_file(filepath_1, results[0]);
+//	per_file(filepath_1, results[0]);
 	gDirectory->cd("..");
 
 	gDirectory->cd("activation_2");
@@ -853,7 +904,7 @@ void activation(){
 
 	gDirectory->cd("activation_3");
 	cout << "activation_3" << endl;
-	per_file(filepath_3, results[2]);
+//	per_file(filepath_3, results[2]);
 	gDirectory->cd("..");
 
 	activation_window_low=550;
@@ -861,7 +912,7 @@ void activation(){
 
 	gDirectory->cd("activation_4");
 	cout << "activation_4" << endl;
-	per_file(filepath_4, results[3]);
+//	per_file(filepath_4, results[3]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -869,7 +920,7 @@ void activation(){
 
 	gDirectory->cd("activation_5");
 	cout << "activation_5" << endl;
-	per_file(filepath_5, results[4]);
+//	per_file(filepath_5, results[4]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -877,7 +928,7 @@ void activation(){
 
 	gDirectory->cd("activation_6");
 	cout << "activation_6" << endl;
-	per_file(filepath_6, results[5]);
+//	per_file(filepath_6, results[5]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -885,7 +936,7 @@ void activation(){
 
 	gDirectory->cd("activation_7");
 	cout << "activation_7" << endl;
-	per_file(filepath_7, results[6]);
+//	per_file(filepath_7, results[6]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -893,7 +944,7 @@ void activation(){
 
 	gDirectory->cd("activation_8");
 	cout << "activation_8" << endl;
-	per_file(filepath_8, results[7]);
+//	per_file(filepath_8, results[7]);
 	gDirectory->cd("..");
 
 	activation_window_low=1150;
@@ -901,7 +952,7 @@ void activation(){
 
 	gDirectory->cd("activation_9");
 	cout << "activation_9" << endl;
-	per_file(filepath_9, results[8]);
+//	per_file(filepath_9, results[8]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
