@@ -50,3 +50,204 @@ Eficiencia Febrero LaBr1 para acuerdo: 0.0112023%
 Distancia equivalente a Pablo: 49.0939cm
 Eficiencia Abril3 LaBr2 para acuerdo: 0.0374432%
 Distancia equivalente a Pablo: 27.1259cm
+-----UNIFIED-----
+Activation N 1
+E: 5500
+detector 1: 5.89149e-07
+detector 2: 6.36582e-07
+Activation N 2
+E: 7000
+detector 1: 3.77509e-06
+detector 2: 4.06317e-06
+Activation N 3
+E: 8500
+detector 1: 1.3175e-05
+detector 2: 1.3994e-05
+Activation N 4
+E: 8500
+detector 1: 6.21645e-06
+detector 2: 6.56312e-06
+Activation N 5
+E: 5500
+detector 1: 7.62091e-07
+detector 2: 6.88127e-07
+Activation N 6
+E: 5500
+detector 1: 3.74841e-07
+detector 2: 7.04245e-07
+Activation N 7
+E: 8250
+detector 1: 1.45877e-05
+detector 2: 1.3919e-05
+Activation N 8
+E: 7000
+detector 1: 4.67626e-06
+detector 2: 4.00771e-06
+Activation N 9
+E: 5500
+detector 1: 4.67626e-06
+detector 2: 4.00771e-06
+Activation N 10
+E: 7500
+detector 1: 4.67626e-06
+detector 2: 4.00771e-06
+----- ----- -----
+
+-----RISE-----
+Activation N 1
+E: 5500
+detector 1: 6.85527e-07
+detector 2: 6.33996e-07
+Activation N 2
+E: 7000
+detector 1: 3.77667e-06
+detector 2: 4.02072e-06
+Activation N 3
+E: 8500
+detector 1: 1.31011e-05
+detector 2: 1.36498e-05
+Activation N 4
+E: 8500
+detector 1: 1.14607e-06
+detector 2: 1.19395e-06
+Activation N 5
+E: 5500
+detector 1: 9.24677e-07
+detector 2: 8.14118e-07
+Activation N 6
+E: 5500
+detector 1: 4.66832e-07
+detector 2: 9.24498e-07
+Activation N 7
+E: 8250
+detector 1: 1.65427e-05
+detector 2: 1.35796e-05
+Activation N 8
+E: 7000
+detector 1: 4.67626e-06
+detector 2: 4.00771e-06
+Activation N 9
+E: 5500
+detector 1: 4.67626e-06
+detector 2: 4.00771e-06
+Activation N 10
+E: 7500
+detector 1: 4.67626e-06
+detector 2: 4.00771e-06
+----- ----- -----
+
+-----DECAY-----
+Activation N 1
+E: 5500
+detector 1: 3.32934e-07
+detector 2: 3.59098e-07
+Activation N 2
+E: 7000
+detector 1: 1.93289e-06
+detector 2: 2.09326e-06
+Activation N 3
+E: 8500
+detector 1: 6.64584e-06
+detector 2: 7.11163e-06
+Activation N 4
+E: 8500
+detector 1: 6.13916e-06
+detector 2: 6.52157e-06
+Activation N 5
+E: 5500
+detector 1: 5.45493e-07
+detector 2: 4.97926e-07
+Activation N 6
+E: 5500
+detector 1: 3.00475e-07
+detector 2: 5.63654e-07
+Activation N 7
+E: 8250
+detector 1: 1.2741e-05
+detector 2: 1.22371e-05
+Activation N 8
+E: 7000
+detector 1: 4.57129e-06
+detector 2: 4.43603e-06
+Activation N 9
+E: 5500
+detector 1: 7.13696e-07
+detector 2: 6.94449e-07
+Activation N 10
+E: 7500
+detector 1: 7.52712e-06
+detector 2: 7.31275e-06
+----- ----- -----
+
+
+----- RESULTS -----
+Activation N 1
+Activation E: 5500
+exfor: 7.555e-07
+decay average : 3.46016e-07 (3.78088%) | -54.2004%
+unified average : 6.12866e-07 (3.86981%) | -18.8795%
+rise average : 6.59761e-07 (3.90529%) | -12.6722%
+
+Activation N 2
+Activation E: 7000
+exfor: 4.999e-06
+decay average : 2.01307e-06 (3.98315%) | -59.7305%
+unified average : 3.91913e-06 (3.67521%) | -21.6017%
+rise average : 3.8987e-06 (3.12978%) | -22.0105%
+
+Activation N 3
+Activation E: 8500
+exfor: 1.502e-05
+decay average : 6.87874e-06 (3.38572%) | -54.2028%
+unified average : 1.35845e-05 (3.01443%) | -9.55705%
+rise average : 1.33755e-05 (2.0513%) | -10.9489%
+
+Activation N 4
+Activation E: 8500
+exfor: 1.502e-05
+decay average : 6.33037e-06 (3.02039%) | -57.8538%
+unified average : 0 (0%) | -100%
+rise average : 0 (0%) | -100%
+
+Activation N 5
+Activation E: 5500
+exfor: 7.555e-07
+decay average : 5.21709e-07 (4.55873%) | -30.9451%
+unified average : 7.25109e-07 (5.10019%) | -4.02266%
+rise average : 8.69397e-07 (6.35836%) | 15.0758%
+
+Activation N 6
+Activation E: 5500
+exfor: 7.555e-07
+decay average : 4.32065e-07 (30.456%) | -42.8108%
+unified average : 5.39543e-07 (30.5262%) | -28.5847%
+rise average : 6.95665e-07 (32.8941%) | -7.91995%
+
+Activation N 7
+Activation E: 8250
+exfor: 1.2925e-05
+decay average : 1.24891e-05 (2.01727%) | -3.37281%
+unified average : 1.42533e-05 (2.34589%) | 10.2773%
+rise average : 1.50612e-05 (9.83682%) | 16.5273%
+
+Activation N 8
+Activation E: 7000
+exfor: 4.999e-06
+decay average : 4.50366e-06 (1.50164%) | -9.90877%
+unified average : 0 (0%) | -100%
+rise average : 0 (0%) | -100%
+
+Activation N 9
+Activation E: 5500
+exfor: 7.555e-07
+decay average : 7.04072e-07 (1.36682%) | -6.80711%
+unified average : 0 (0%) | -100%
+rise average : 0 (0%) | -100%
+
+Activation N 10
+Activation E: 7500
+exfor: 7.716e-06
+decay average : 7.41993e-06 (1.44455%) | -3.83706%
+unified average : 0 (0%) | -100%
+rise average : 0 (0%) | -100%
+

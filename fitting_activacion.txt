@@ -8,8 +8,8 @@ labr1 binwidth: 2.2423
 labr1 decay binwidth: 2.24715
 labr1 unified 30P per alpha: 1.44103e-10
 labr2 unified 30P per alpha: 1.45424e-10
-labr1 rise 30P per alpha: 1.6769e-10
-labr2 rise 30P per alpha: 1.44832e-10
+labr1 rise 30P per alpha: 1.67676e-10
+labr2 rise 30P per alpha: 1.44833e-10
 Decay factor: 1.01844
 
 LaBr1 initial activity (/s): 255.025
@@ -113,8 +113,8 @@ labr1 binwidth: 2.12626
 labr1 decay binwidth: 2.12922
 labr1 unified 30P per alpha: 1.03145e-09
 labr2 unified 30P per alpha: 2.77292e-10
-labr1 rise 30P per alpha: 1.28455e-09
-labr2 rise 30P per alpha: 3.64014e-10
+labr1 rise 30P per alpha: 1.28459e-09
+labr2 rise 30P per alpha: 3.64015e-10
 Decay factor: 1.06669
 
 LaBr1 initial activity (/s): 4158.57
@@ -126,24 +126,24 @@ LaBr2 decay 30P per alpha error: 2.21935e-10
 ---------------
 activation_7
 ***************
-*Number of alphas: 2.72299e+14
-Alphas per second: 6.02022e+11
-current (nA): 192.909
-Activation time: 452.308s
+*Number of alphas: 2.72298e+14
+Alphas per second: 6.04541e+11
+current (nA): 193.716
+Activation time: 450.421s
 labr1 binwidth: 1.80191
-labr1 decay binwidth: 1.805
-labr1 unified 30P per alpha: 5.02312e-09
-labr2 unified 30P per alpha: 5.59236e-09
-labr1 rise 30P per alpha: 5.01944e-09
-labr2 rise 30P per alpha: 5.39025e-09
-Decay factor: 1.1409
+labr1 decay binwidth: 1.80323
+labr1 unified 30P per alpha: 5.02314e-09
+labr2 unified 30P per alpha: 5.59239e-09
+labr1 rise 30P per alpha: 5.69633e-09
+labr2 rise 30P per alpha: 5.45605e-09
+Decay factor: 1.14231
 
-LaBr1 initial activity (/s): 9588.76
-LaBr2 initial activity (/s): 10747.6
-LaBr1 decay 30P per alpha: 4.36605e-09
-LaBr1 decay 30P per alpha error: 4.36605e-09
-LaBr2 decay 30P per alpha: 4.89368e-09
-LaBr2 decay 30P per alpha error: 4.89368e-09
+LaBr1 initial activity (/s): 9623.38
+LaBr2 initial activity (/s): 10784.6
+LaBr1 decay 30P per alpha: 4.38725e-09
+LaBr1 decay 30P per alpha error: 4.38725e-09
+LaBr2 decay 30P per alpha: 4.91666e-09
+LaBr2 decay 30P per alpha error: 4.91666e-09
 ---------------
 activation_8
 ***************

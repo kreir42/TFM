@@ -314,7 +314,19 @@ void activation_results(){
 	reactionsvenergy_exfor_apr->SetMarkerStyle(20);
 	reactionsvenergy_exfor_apr->SetLineColor(kBlack);
 
+	//medias
+	Double_t decay_average[ACTIVATION_N];
+	Double_t unified_average[ACTIVATION_N];
+	Double_t rise_average[ACTIVATION_N];
+	Double_t decay_average_diff[ACTIVATION_N];
+	Double_t unified_average_diff[ACTIVATION_N];
+	Double_t rise_average_diff[ACTIVATION_N];
+	Double_t decay_average_diff_per[ACTIVATION_N];
+	Double_t unified_average_diff_per[ACTIVATION_N];
+	Double_t rise_average_diff_per[ACTIVATION_N];
+
 	//unified_fit
+	cout << "-----UNIFIED-----" << endl;
 	for(short i=0; i<ACTIVATION_N; i++){
 		x1[i] = activation_energies[i];
 		x2[i] = activation_energies[i];
@@ -322,7 +334,15 @@ void activation_results(){
 		y2[i] = results[i][1][0];
 		yerr1[i] = results[i][0][1];
 		yerr2[i] = results[i][1][1];
+		cout << "Activation N " << i+1 << endl;
+		cout << "E: " << x1[i] << endl;
+		cout << "detector 1: " << y1[i] << endl;
+		cout << "detector 2: " << y2[i] << endl;
+		unified_average[i] = (y1[i]+y2[i])/2;
+		unified_average_diff[i] = abs(y1[i]-y2[i])/2;
+		unified_average_diff_per[i] = unified_average_diff[i]/unified_average[i]*100;
 	}
+	cout << "----- ----- -----" << endl << endl;
 	TGraph* reactionsvenergy_unified_feb_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_unified_feb_1->SetTitle("(a,n) reactions v a energy (unified fit, February);Energy of a (keV);Thick target (a,n) yield");
 	myCanvas->SetName("reactions_v_energy_unified_feb_1");
@@ -400,6 +420,7 @@ void activation_results(){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//rise fit
+	cout << "-----RISE-----" << endl;
 	for(short i=0; i<ACTIVATION_N; i++){
 		x1[i] = activation_energies[i];
 		x2[i] = activation_energies[i];
@@ -407,7 +428,15 @@ void activation_results(){
 		y2[i] = results[i][1][2];
 		yerr1[i] = results[i][0][3];
 		yerr2[i] = results[i][1][3];
+		cout << "Activation N " << i+1 << endl;
+		cout << "E: " << x1[i] << endl;
+		cout << "detector 1: " << y1[i] << endl;
+		cout << "detector 2: " << y2[i] << endl;
+		rise_average[i] = (y1[i]+y2[i])/2;
+		rise_average_diff[i] = abs(y1[i]-y2[i])/2;
+		rise_average_diff_per[i] = rise_average_diff[i]/rise_average[i]*100;
 	}
+	cout << "----- ----- -----" << endl << endl;
 	TGraph* reactionsvenergy_rise_feb_1 = new TGraphErrors(3, x1, y1, NULL, yerr1);
 	reactionsvenergy_rise_feb_1->SetTitle("(a,n) reactions v a energy (rise fit, February);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_rise_feb_1->SetMarkerStyle(22);
@@ -482,6 +511,7 @@ void activation_results(){
 	myCanvas->Write("", TObject::kOverwrite);
 
 	//decay fit
+	cout << "-----DECAY-----" << endl;
 	for(short i=0; i<ACTIVATION_N; i++){
 		x1[i] = activation_energies[i];
 		x2[i] = activation_energies[i];
@@ -489,7 +519,15 @@ void activation_results(){
 		y2[i] = results[i][1][4];
 		yerr1[i] = results[i][0][5];
 		yerr2[i] = results[i][1][5];
+		cout << "Activation N " << i+1 << endl;
+		cout << "E: " << x1[i] << endl;
+		cout << "detector 1: " << y1[i] << endl;
+		cout << "detector 2: " << y2[i] << endl;
+		decay_average[i] = (y1[i]+y2[i])/2;
+		decay_average_diff[i] = abs(y1[i]-y2[i])/2;
+		decay_average_diff_per[i] = decay_average_diff[i]/decay_average[i]*100;
 	}
+	cout << "----- ----- -----" << endl << endl;
 	TGraph* reactionsvenergy_decay_feb_1 = new TGraphErrors(4, x1, y1, NULL, yerr1);
 	reactionsvenergy_decay_feb_1->SetTitle("(a,n) reactions v a energy (decay fit, February);Energy of a (keV);Thick target (a,n) yield");
 	reactionsvenergy_decay_feb_1->SetMarkerStyle(22);
@@ -739,6 +777,27 @@ void activation_results(){
 	myCanvas->BuildLegend();
 	myCanvas->Write("rel_per_errors", TObject::kOverwrite);
 
+	unified_average[3] = unified_average_diff[3] = unified_average_diff_per[3] = 0;
+	unified_average[7] = unified_average_diff[7] = unified_average_diff_per[7] = 0;
+	unified_average[8] = unified_average_diff[8] = unified_average_diff_per[8] = 0;
+	unified_average[9] = unified_average_diff[9] = unified_average_diff_per[9] = 0;
+	rise_average[3] = rise_average_diff[3] = rise_average_diff_per[3] = 0;
+	rise_average[7] = rise_average_diff[7] = rise_average_diff_per[7] = 0;
+	rise_average[8] = rise_average_diff[8] = rise_average_diff_per[8] = 0;
+	rise_average[9] = rise_average_diff[9] = rise_average_diff_per[9] = 0;
+	cout << endl << "----- RESULTS -----" << endl;
+	Double_t exfor_result[ACTIVATION_N];
+	for(short i=0; i<ACTIVATION_N; i++){
+		cout << "Activation N " << i+1 << endl;
+		cout << "Activation E: " << activation_energies[i] << endl;
+		exfor_result[i] = reactionsvenergy_exfor->Eval(activation_energies[i]);
+		cout << "exfor: " << exfor_result[i] << endl;
+		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << (decay_average[i] - exfor_result[i])/exfor_result[i]*100 << "%" << endl;
+		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << (unified_average[i] - exfor_result[i])/exfor_result[i]*100 << "%" << endl;
+		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << (rise_average[i] - exfor_result[i])/exfor_result[i]*100 << "%" << endl;
+		cout << endl;
+	}
+
 	myCanvas->Close();
 	gDirectory->cd("..");
 
@@ -893,15 +952,18 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
 	auto integrator_signals = d.Filter("Channel==1");
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//exception for activation 7
+//		activation_start = 300.899E12;
+//		activation_end = 753.207E12;
+		integrator_signals = d.Filter("Channel==1 && Timestamp>299E12 && Timestamp<755E12");
+	}
+
 	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
 	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
 	Double_t current2alpha = 1/(2*1.60217646E-9); //10^-10C to number of alphas
 	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
-	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//7
-		activation_start = 300.899E12;
-		activation_end = 753.207E12;
-	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
 		number_of_alphas = current2alpha * 101.1E4;
 		activation_start= 364E12;
 		activation_end= 830E12;
