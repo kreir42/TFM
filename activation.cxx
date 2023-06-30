@@ -1,4 +1,4 @@
-#define ACTIVATION_NBINS 1000
+#define ACTIVATION_NBINS 500
 #define ACT1_AENERGY 5500
 #define ACT2_AENERGY 7000
 #define ACT3_AENERGY 8500
@@ -999,182 +999,204 @@ class unified_fit{
 static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "***************" << endl;
 	EnableImplicitMT();	//multithreading
-	RDataFrame d("Data", filepath);
+	RDataFrame d("Data", filepath);	//dataframe
+	
+	Double_t current2alpha = 1/(2*1.60217646E-9);	//10^-10C to number of alphas
 
-	Double_t measurement_end = d.Filter("(Channel==6||Channel==7) && Energy>0").Max("Timestamp").GetValue();
-	auto integrator_signals = d.Filter("Channel==1");
-	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//exception for activation 7
-//		activation_start = 300.899E12;
-//		activation_end = 753.207E12;
-		integrator_signals = d.Filter("Channel==1 && Timestamp>299E12 && Timestamp<755E12");
+	//nueva columna con tiempo en segundos
+	auto signals = d.Define("t", "Timestamp/1E12");
+
+	//filtrar señales correspondientes a detectores 1 y 2, y dentro de la ventana de energía
+	auto gamma_signals = signals.Filter("(Channel==6||Channel==7) && Energy>activation_window_low && Energy<activation_window_high");
+	Double_t measurement_end = gamma_signals.Max("t").GetValue();	//última señal
+	auto labr1_signals = gamma_signals.Filter("Channel==6");
+	auto labr2_signals = gamma_signals.Filter("Channel==7");
+	//histogramas correspondientes
+	auto labr1_histo = labr1_signals.Histo1D({"labr1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end}, "t");
+	auto labr2_histo = labr2_signals.Histo1D({"labr2", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end}, "t");
+	labr1_histo->Write("", TObject::kOverwrite);
+	labr2_histo->Write("", TObject::kOverwrite);
+
+
+	//integrador de corriente
+	auto current_integrator_signals = signals.Filter("Channel==1");
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2731kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//excepción para activación n7 (con cuentas expúreas)
+		current_integrator_signals = signals.Filter("Channel==1 && Timestamp>299E12 && Timestamp<755E12");
 	}
+	auto current_integrator_histo = current_integrator_signals.Histo1D({"current_integrator", ";Time (s);Alphas", ACTIVATION_NBINS, 0, measurement_end}, "t");
+	current_integrator_histo->Scale(current2alpha);	//de unidades de corriente a número de alfas por bin
+	current_integrator_histo->Write("", TObject::kOverwrite);
+	Double_t number_of_alphas = current_integrator_histo->Integral();	//número de alphas
 
-	auto current_integrator = integrator_signals.Define("t", "Timestamp/1E12").Histo1D({"current_integrator", ";Timestamp (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
-	Double_t activation_start = integrator_signals.Min("Timestamp").GetValue();	//TBD!:muy ineficiente!!
-	Double_t activation_end = integrator_signals.Max("Timestamp").GetValue();
-	Double_t current2alpha = 1/(2*1.60217646E-9); //10^-10C to number of alphas
-	Double_t number_of_alphas = current_integrator->Integral()*current2alpha;
-	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//8
+	//determinar comienzo y fin de la activación
+	Double_t activation_start = current_integrator_signals.Min("t").GetValue();
+	Double_t activation_end = current_integrator_signals.Max("t").GetValue();
+
+	//excepciones para las medidas sin datos de corriente
+	if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2310kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){       //8
 		number_of_alphas = current2alpha * 101.1E4;
-		activation_start= 364E12;
-		activation_end= 830E12;
-	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//9
+		activation_start= 364;
+		activation_end= 830;
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM1808kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){ //9
 		number_of_alphas = current2alpha * 67.96E4;
-		activation_start= 302E12;
-		activation_end= 753E12;
-	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){	//10
+		activation_start= 302;
+		activation_end= 753;
+	}else if(strcmp(filepath, "output/SData_aAl_J78keV_GVM2478kV_LaBr1_20cm-135deg_LaBr2_20cm135deg_activacion_20230418.root")==0){ //10
 		number_of_alphas = current2alpha * 81.82E4;
-		activation_start= 304E12;
-		activation_end= 752E12;
+		activation_start= 304;
+		activation_end= 752;
 	}
-	Double_t activation_time = activation_end-activation_start;
-	cout << "*Number of alphas: " << number_of_alphas << endl;
-	cout << "Alphas per second: " << number_of_alphas/(activation_time/1E12) << endl;
-//	cout << "Current integrator integral (nC): " << current_integrator->Integral()/10 << endl;
-//	cout << "current2alpha: " << current2alpha << endl;
-//	cout << "current (nA): " << current_integrator->Integral()/(activation_time/1E12)/10 << endl;
-	cout << "current (nA): " << (number_of_alphas/current2alpha)/(activation_time/1E12)/10 << endl;
 
-	//histogramas
-	auto rise_filter = [&](ULong64_t t){return t>=activation_start && t<=activation_end;};
-	auto decay_filter = [&](ULong64_t t){return t>activation_end;};
-	auto energy_window = d.Filter("Energy>activation_window_low && Energy<activation_window_high");
-	auto labr_1_filter = energy_window.Filter("Channel==6").Define("t", "Timestamp/1E12");
-	auto labr_2_filter = energy_window.Filter("Channel==7").Define("t", "Timestamp/1E12");
+	Double_t activation_time = activation_end-activation_start;	//tiempo de activación
 
-	auto labr_1 = labr_1_filter.Histo1D({"labr_1", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
-	auto labr_2 = labr_2_filter.Histo1D({"labr_2", ";Time (s);Counts", ACTIVATION_NBINS, 0, measurement_end/1E12}, "t");
 
-	int rise_nbins = activation_time/(labr_1->GetBinWidth(1)*1E12);
-	int decay_nbins = (measurement_end-activation_end)/(labr_1->GetBinWidth(1)*1E12);
-//	cout << "rise_nbins: " << rise_nbins << endl;
-//	cout << "decay_nbins: " << decay_nbins << endl;
-	auto labr_1_rise = labr_1_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_1_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
-	auto labr_1_decay = labr_1_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_1_decay", ";Time (s); Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
-	auto labr_2_rise = labr_2_filter.Filter(rise_filter, {"Timestamp"}).Histo1D({"labr_2_rise", ";Time (s);Counts", rise_nbins, activation_start/1E12, activation_end/1E12}, "t");
-	auto labr_2_decay = labr_2_filter.Filter(decay_filter, {"Timestamp"}).Histo1D({"labr_2_decay", ";Time (s);Counts", decay_nbins, activation_end/1E12, measurement_end/1E12}, "t");
+	//funciones lambda necesarias para filtrar dataframe y dividir el tiempo
+	auto rise_filter = [&](Double_t t){return t>=activation_start && t<=activation_end;};
+	auto decay_filter = [&](Double_t t){return t>activation_end;};
 
-	auto labr1_E_t_plot = d.Filter("Channel==6").Define("t", "Timestamp/1E12").Histo2D({"labr1_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
-	auto labr2_E_t_plot = d.Filter("Channel==7").Define("t", "Timestamp/1E12").Histo2D({"labr2_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end/1E12, 100, 0, 4096}, "t", "Energy");
+	//para que todos tengan el mismo bineado (approx), calcular número de bines para cada histograma
+	Double_t unified_binwidth = labr1_histo->GetBinWidth(1);
+	int rise_nbins = activation_time/unified_binwidth;
+	int decay_nbins = (measurement_end-activation_end)/unified_binwidth;
 
-	current_integrator->Write("", TObject::kOverwrite);
-	labr_1->Write("", TObject::kOverwrite);
-	labr_2->Write("", TObject::kOverwrite);
-	labr_1_rise->Write("", TObject::kOverwrite);
-	labr_1_decay->Write("", TObject::kOverwrite);
-	labr_2_rise->Write("", TObject::kOverwrite);
-	labr_2_decay->Write("", TObject::kOverwrite);
-	TCanvas* myCanvas = new TCanvas("myCanvas");
+	//crear y salvar histogramas
+	auto labr1_rise = labr1_signals.Filter(rise_filter, {"t"}).Histo1D({"labr1_rise", ";Time (s);Counts", rise_nbins, activation_start, activation_end}, "t");
+	auto labr2_rise = labr2_signals.Filter(rise_filter, {"t"}).Histo1D({"labr2_rise", ";Time (s);Counts", rise_nbins, activation_start, activation_end}, "t");
+	labr1_rise->Write("", TObject::kOverwrite);
+	labr2_rise->Write("", TObject::kOverwrite);
+	auto labr1_decay = labr1_signals.Filter(decay_filter, {"t"}).Histo1D({"labr1_decay", ";Time (s); Counts", decay_nbins, activation_end, measurement_end}, "t");
+	auto labr2_decay = labr2_signals.Filter(decay_filter, {"t"}).Histo1D({"labr2_decay", ";Time (s); Counts", decay_nbins, activation_end, measurement_end}, "t");
+	labr1_decay->Write("", TObject::kOverwrite);
+	labr2_decay->Write("", TObject::kOverwrite);
+	Double_t rise_binwidth = labr1_rise->GetBinWidth(1);
+	Double_t decay_binwidth = labr1_decay->GetBinWidth(1);
+
+	//histogramas 2D energía vs tiempo
+	auto labr1_E_t_plot = labr1_signals.Histo2D({"labr1_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end, 100, 0, 4096}, "t", "Energy");
+	auto labr2_E_t_plot = labr2_signals.Histo2D({"labr2_E_t_plot", ";Time (s);Energy (channel);Counts", 100, 0, measurement_end, 100, 0, 4096}, "t", "Energy");
+	TCanvas* myCanvas = new TCanvas("myCanvas");	//canvas a usar para dibujos más complejos
 	labr1_E_t_plot->Draw("COLZ");
 	myCanvas->Write("labr1_E_t_plot", TObject::kOverwrite);
 	labr2_E_t_plot->Draw("COLZ");
 	myCanvas->Write("labr2_E_t_plot", TObject::kOverwrite);
-	labr2_E_t_plot->Draw("COLZ");
 
-	activation_start/=1E12;
-	activation_end/=1E12;
-	activation_time/=1E12;
-	measurement_end/=1E12;
-//	cout << "Activation start: " << activation_start << "s" << endl;
-//	cout << "Activation end: " << activation_end << "s" << endl;
-	cout << "Activation time: " << activation_time << "s" << endl;
-//	cout << "Measurement end: " << measurement_end << "s" << endl;
-//	cout << "activation_window_low: " << activation_window_low << endl;
-//	cout << "activation_window_high: " << activation_window_high << endl;
 
-	Double_t labr1_binwidth = labr_1->GetBinWidth(1);
-	Double_t labr2_binwidth = labr_2->GetBinWidth(1);
-	Double_t labr1_decay_binwidth = labr_1_decay->GetBinWidth(1);
-	Double_t labr2_decay_binwidth = labr_2_decay->GetBinWidth(1);
-	cout << "labr1 binwidth: " << labr1_binwidth << endl;
-//	cout << "labr2 binwidth: " << labr2_binwidth << endl;
-	cout << "labr1 decay binwidth: " << labr1_decay_binwidth << endl;
-//	cout << "labr2 decay binwidth: " << labr2_decay_binwidth << endl;
+//	-------------------------------------------------------------------
+//		FITTINGS
+//	-------------------------------------------------------------------
 
-	//fittings
-	TFitResultPtr fitresult;
+	TFitResultPtr fitresult;	//puntero para guardar resultados de fittings
+	
+	//UNIFIED
 
-	//unified
-	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 5);
+	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 5);	//crea función para fittear
+	unified->SetParNames("Background activity", "(a,n) per alpha", "Decay constant", "extra bg", "initial number of 30P");	//nombres de los parámetros
+	//números de puntos a la hora de hacer el fitting
 	unified->SetNpx(ACTIVATION_NBINS);
 	unified->SetNumberFitPoints(ACTIVATION_NBINS);
+	//límites de los parámetros
 	unified->SetParLimits(0, 0, 1E5);
-	unified->SetParLimits(1, 0, 1E2);
+	unified->SetParLimits(1, 0, 1E-2);
 	unified->SetParLimits(2, 4E-3, 5E-3);
 	unified->SetParLimits(3, 0, 1E2);
 	unified->SetParLimits(4, 0, 1E8);
-	unified->SetParameters(15, 1, 4.62406E-3, 0, 0);
-	unified->FixParameter(2, 4.62406E-3);
-	unified->SetParNames("Background activity", "current to (a,n)", "Decay constant", "extra bg", "initial number of 30P");
+	unified->SetParameters(15, 1E-7, 4.62406E-3, 0, 0);	//valores iniciales
+	unified->FixParameter(2, 4.62406E-3);	//fijar constante de decaimiento
 
-	fitresult = labr_1->Fit("unified_fit", "SLEQ");
-	results[0][0] = fitresult->Parameter(1)/current2alpha/1.99;
-	results[0][1] = fitresult->ParError(1)/current2alpha/1.99;
-	myCanvas->SetName("labr_1_unified_fit");
-	myCanvas->Write("", TObject::kOverwrite);
+	fitresult = labr1_histo->Fit("unified_fit", "SLEQ");	//hacer el fit para labr1
+	//guardar resultado y error en array de resultados
+	results[0][0] = fitresult->Parameter(1)/1.99;	//dividir por la intensidad antes de guardar
+	results[0][1] = fitresult->ParError(1)/1.99;
+	myCanvas->Write("labr1_unified_fit", TObject::kOverwrite);
 
-	fitresult = labr_2->Fit("unified_fit", "SLEQ");
-	results[1][0] = fitresult->Parameter(1)/current2alpha/1.99;
-	results[1][1] = fitresult->ParError(1)/current2alpha/1.99;
-	myCanvas->SetName("labr_2_unified_fit");
-	myCanvas->Write("", TObject::kOverwrite);
+	fitresult = labr2_histo->Fit("unified_fit", "SLEQ");	//hacer el fit para labr2
+	results[1][0] = fitresult->Parameter(1)/1.99;
+	results[1][1] = fitresult->ParError(1)/1.99;
+	myCanvas->Write("labr2_unified_fit", TObject::kOverwrite);
 
-	cout << "labr1 unified 30P per alpha: " << results[0][0] << endl;
-	cout << "labr2 unified 30P per alpha: " << results[1][0] << endl;
-//	cout << "labr1 unified number of 30P: " << results[0][0]*number_of_alphas << endl;
-//	cout << "labr2 unified number of 30P: " << results[1][0]*number_of_alphas << endl;
 
-	//rise
+	//RISE
+
+	//se usa la misma función, sobre un histo distinto
 	unified->SetNpx(rise_nbins);
+	unified->SetNumberFitPoints(rise_nbins);
 
-	fitresult = labr_1_rise->Fit("unified_fit", "SLEQ");
-	results[0][2] = fitresult->Parameter(1)/current2alpha/1.99;
-	results[0][3] = fitresult->ParError(1)/current2alpha/1.99;
-	myCanvas->SetName("labr_1_rise_fit");
-	myCanvas->Write("", TObject::kOverwrite);
+	fitresult = labr1_rise->Fit("unified_fit", "SLEQ");	//labr1
+	results[0][2] = fitresult->Parameter(1)/1.99;
+	results[0][3] = fitresult->ParError(1)/1.99;
+	myCanvas->Write("labr1_rise_fit", TObject::kOverwrite);
+	
+	fitresult = labr2_rise->Fit("unified_fit", "SLEQ");	//labr2
+	results[1][2] = fitresult->Parameter(1)/1.99;
+	results[1][3] = fitresult->ParError(1)/1.99;
+	myCanvas->Write("labr2_rise_fit", TObject::kOverwrite);
 
-	fitresult = labr_2_rise->Fit("unified_fit", "SLEQ");
-	results[1][2] = fitresult->Parameter(1)/current2alpha/1.99;
-	results[1][3] = fitresult->ParError(1)/current2alpha/1.99;
-	myCanvas->SetName("labr_2_rise_fit");
-	myCanvas->Write("", TObject::kOverwrite);
 
-	cout << "labr1 rise 30P per alpha: " << results[0][2] << endl;
-	cout << "labr2 rise 30P per alpha: " << results[1][2] << endl;
-//	cout << "labr1 rise number of 30P: " << results[0][2]*number_of_alphas << endl;
-//	cout << "labr2 rise number of 30P: " << results[1][2]*number_of_alphas << endl;
+	//DECAY
 
-	//decay
-	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");
+	TF1* decay = new TF1("decay","[0]+[1]*exp(-[2]*(x[0]-[3]))");	//función a la que se va a ajustar
 	decay->SetNpx(decay_nbins);
-	decay->SetNumberFitPoints(ACTIVATION_NBINS);
+	decay->SetNumberFitPoints(decay_nbins);
+	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");	//nombres de parámetros
 	decay->SetParLimits(0, 0, 100);
 	decay->SetParLimits(2, 4E-3, 5E-3);
-	decay->SetParameters(15, 1000, 4.62406E-3, activation_end);
-	decay->FixParameter(3, activation_end);
+	decay->SetParameters(15, 1000, 4.62406E-3, activation_end);	//valores iniciales
+	//fijar constante de decaimiento y desplazamiento de la función en el eje x
 	decay->FixParameter(2, 4.62406E-3);
-	decay->SetParNames("Background activity", "Initial activiy", "Decay constant", "activation_end");
+	decay->FixParameter(3, activation_end);
 
-	fitresult = labr_1_decay->Fit("decay", "SLEQ");
-	Double_t decay_factor = 1/(1-exp(-fitresult->Parameter(2)*activation_time));
-	results[0][4] = fitresult->Parameter(1)*decay_factor/(labr1_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
-	results[0][5] = fitresult->ParError(1)*decay_factor/(labr1_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
-	myCanvas->SetName("labr_1_decay_fit");
-	myCanvas->Write("", TObject::kOverwrite);
-	cout << "Decay factor: " << decay_factor << endl << endl;
-	cout << "LaBr1 initial activity (/s): " << fitresult->Parameter(1)/labr1_decay_binwidth << endl;
+	//labr1
+	fitresult = labr1_decay->Fit("decay", "SLEQ");
+	myCanvas->Write("labr1_decay_fit", TObject::kOverwrite);
 
-	fitresult = labr_2_decay->Fit("decay", "SLEQ");
-	results[1][4] = fitresult->Parameter(1)*decay_factor/(labr2_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
-	results[1][5] = fitresult->ParError(1)*decay_factor/(labr2_decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
-	myCanvas->SetName("labr_2_decay_fit");
-	myCanvas->Write("", TObject::kOverwrite);
-	cout << "LaBr2 initial activity (/s): " << fitresult->Parameter(1)/labr2_decay_binwidth << endl;
+	Double_t decay_factor = 1/(1-exp(-fitresult->Parameter(2)*activation_time));	//factor de decaimiento
+	
+	//guardar resultados en array, aplicando fómula para convertir en TTY
+	results[0][4] = fitresult->Parameter(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+	results[0][5] = fitresult->ParError(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
 
-	cout << "LaBr1 decay 30P per alpha: " << results[0][4] << endl;
-	cout << "LaBr1 decay 30P per alpha error: " << results[0][4] << endl;
-	cout << "LaBr2 decay 30P per alpha: " << results[1][4] << endl;
-	cout << "LaBr2 decay 30P per alpha error: " << results[1][4] << endl;
+	//labr2
+	fitresult = labr2_decay->Fit("decay", "SLEQ");
+	myCanvas->Write("labr2_decay_fit", TObject::kOverwrite);
+
+	results[1][4] = fitresult->Parameter(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+	results[1][5] = fitresult->ParError(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+
+
+
+	//DECAY alternativo, usando función de unified
+	unified->SetNpx(decay_nbins);
+	unified->SetNumberFitPoints(decay_nbins);
+
+	//usamos la misma función, pero nos interesa el parámetro 4, número inicial de 30P
+	fitresult = labr1_decay->Fit("unified_fit", "SLEQ");	//labr1
+	Double_t decayalt_1 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	myCanvas->Write("labr1_decayalt", TObject::kOverwrite);
+	fitresult = labr2_decay->Fit("unified_fit", "SLEQ");	//labr2
+	Double_t decayalt_2 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	myCanvas->Write("labr2_decayalt", TObject::kOverwrite);
+
+
+	cout << "activation start: " << activation_start << endl;
+	cout << "activation end: " << activation_end << endl;
+	cout << "activation time: " << activation_time << endl;
+	cout << "measurement end: " << measurement_end << endl;
+	cout << "number of alphas: " << number_of_alphas << endl;
+	cout << "rise_nbins: " << rise_nbins<< endl;
+	cout << "decay_nbins: " << decay_nbins<< endl;
+	cout << "unified binwidth: " << unified_binwidth << endl;
+	cout << "rise binwidth: " << rise_binwidth << endl;
+	cout << "decay binwidth: " << decay_binwidth << endl;
+	cout << endl;
+	cout << "unified 1: " << results[0][0] << endl;
+	cout << "unified 2: " << results[1][0] << endl;
+	cout << "rise 1: " << results[0][2] << endl;
+	cout << "rise 2: " << results[1][2] << endl;
+	cout << "decay 1: " << results[0][4] << endl;
+	cout << "decay 2: " << results[1][4] << endl;
+	cout << "decayalt 1: " << decayalt_2 << endl;
+	cout << "decayalt 2: " << decayalt_2 << endl;
+	cout<<"------------"<<endl;
 
 	myCanvas->Close();
 	DisableImplicitMT();	//multithreading
