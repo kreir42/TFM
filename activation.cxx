@@ -1,4 +1,4 @@
-#define ACTIVATION_NBINS 500
+#define ACTIVATION_NBINS 1000
 #define ACT1_AENERGY 5500
 #define ACT2_AENERGY 7000
 #define ACT3_AENERGY 8500
@@ -1105,13 +1105,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	fitresult = labr1_histo->Fit("unified_fit", "SLEQ");	//hacer el fit para labr1
 	//guardar resultado y error en array de resultados
-	results[0][0] = fitresult->Parameter(1)/1.99;	//dividir por la intensidad antes de guardar
-	results[0][1] = fitresult->ParError(1)/1.99;
+	results[0][0] = unified_binwidth*fitresult->Parameter(1)/(1.99);	//dividir por la intensidad antes de guardar
+	results[0][1] = unified_binwidth*fitresult->ParError(1)/(1.99);
 	myCanvas->Write("labr1_unified_fit", TObject::kOverwrite);
 
 	fitresult = labr2_histo->Fit("unified_fit", "SLEQ");	//hacer el fit para labr2
-	results[1][0] = fitresult->Parameter(1)/1.99;
-	results[1][1] = fitresult->ParError(1)/1.99;
+	results[1][0] = unified_binwidth*fitresult->Parameter(1)/(1.99);
+	results[1][1] = unified_binwidth*fitresult->ParError(1)/(1.99);
 	myCanvas->Write("labr2_unified_fit", TObject::kOverwrite);
 
 
@@ -1122,13 +1122,13 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetNumberFitPoints(rise_nbins);
 
 	fitresult = labr1_rise->Fit("unified_fit", "SLEQ");	//labr1
-	results[0][2] = fitresult->Parameter(1)/1.99;
-	results[0][3] = fitresult->ParError(1)/1.99;
+	results[0][2] = rise_binwidth*fitresult->Parameter(1)/(1.99);
+	results[0][3] = rise_binwidth*fitresult->ParError(1)/(1.99);
 	myCanvas->Write("labr1_rise_fit", TObject::kOverwrite);
 	
 	fitresult = labr2_rise->Fit("unified_fit", "SLEQ");	//labr2
-	results[1][2] = fitresult->Parameter(1)/1.99;
-	results[1][3] = fitresult->ParError(1)/1.99;
+	results[1][2] = rise_binwidth*fitresult->Parameter(1)/(1.99);
+	results[1][3] = rise_binwidth*fitresult->ParError(1)/(1.99);
 	myCanvas->Write("labr2_rise_fit", TObject::kOverwrite);
 
 
@@ -1170,10 +1170,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	//usamos la misma función, pero nos interesa el parámetro 4, número inicial de 30P
 	fitresult = labr1_decay->Fit("unified_fit", "SLEQ");	//labr1
-	Double_t decayalt_1 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	Double_t decayalt_1 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
 	myCanvas->Write("labr1_decayalt", TObject::kOverwrite);
 	fitresult = labr2_decay->Fit("unified_fit", "SLEQ");	//labr2
-	Double_t decayalt_2 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	Double_t decayalt_2 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
 	myCanvas->Write("labr2_decayalt", TObject::kOverwrite);
 
 
