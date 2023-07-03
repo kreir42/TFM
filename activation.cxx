@@ -1,4 +1,4 @@
-#define ACTIVATION_NBINS 1000
+#define ACTIVATION_NBINS 500
 #define ACT1_AENERGY 5500
 #define ACT2_AENERGY 7000
 #define ACT3_AENERGY 8500
@@ -896,7 +896,7 @@ void activation(){
 
 	gDirectory->cd("activation_2");
 	cout << "activation_2" << endl;
-	per_file(filepath_2, results[1]);
+//	per_file(filepath_2, results[1]);
 	gDirectory->cd("..");
 
 	activation_window_low=550;
@@ -904,7 +904,7 @@ void activation(){
 
 	gDirectory->cd("activation_3");
 	cout << "activation_3" << endl;
-	per_file(filepath_3, results[2]);
+//	per_file(filepath_3, results[2]);
 	gDirectory->cd("..");
 
 	activation_window_low=550;
@@ -912,7 +912,7 @@ void activation(){
 
 	gDirectory->cd("activation_4");
 	cout << "activation_4" << endl;
-	per_file(filepath_4, results[3]);
+//	per_file(filepath_4, results[3]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -920,7 +920,7 @@ void activation(){
 
 	gDirectory->cd("activation_5");
 	cout << "activation_5" << endl;
-	per_file(filepath_5, results[4]);
+//	per_file(filepath_5, results[4]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -928,7 +928,7 @@ void activation(){
 
 	gDirectory->cd("activation_6");
 	cout << "activation_6" << endl;
-	per_file(filepath_6, results[5]);
+//	per_file(filepath_6, results[5]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -936,7 +936,7 @@ void activation(){
 
 	gDirectory->cd("activation_7");
 	cout << "activation_7" << endl;
-	per_file(filepath_7, results[6]);
+//	per_file(filepath_7, results[6]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -944,7 +944,7 @@ void activation(){
 
 	gDirectory->cd("activation_8");
 	cout << "activation_8" << endl;
-	per_file(filepath_8, results[7]);
+//	per_file(filepath_8, results[7]);
 	gDirectory->cd("..");
 
 	activation_window_low=1150;
@@ -960,7 +960,7 @@ void activation(){
 
 	gDirectory->cd("activation_10");
 	cout << "activation_10" << endl;
-	per_file(filepath_10, results[9]);
+//	per_file(filepath_10, results[9]);
 	gDirectory->cd("..");
 
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
@@ -979,6 +979,7 @@ class unified_fit{
 	public:
 		TH1F* current_histogram;
 		Double_t stepsize;
+		Double_t t0;
 		unified_fit(TH1F* histo):current_histogram(histo){
 			stepsize = current_histogram->GetBinWidth(1);
 		}
@@ -987,8 +988,9 @@ class unified_fit{
 			Double_t decay = exp(-p[2]*stepsize);
 			Double_t helper_ratio = p[1]/p[2];
 			Double_t I = 0;	//created nuclei per time over lambda
-			unsigned long steps = x[0]/stepsize;
-			for(unsigned long i=0; i<=steps; i++){
+			unsigned long steps = (x[0]-t0)/stepsize;
+			unsigned long bin0 = current_histogram->FindBin(t0);
+			for(unsigned long i=bin0; i<=bin0+steps; i++){
 				I = (current_histogram->GetBinContent(i))*helper_ratio;
 				n = I + (n-I)*decay;
 			}
@@ -1088,8 +1090,10 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	TFitResultPtr fitresult;	//puntero para guardar resultados de fittings
 	
 	//UNIFIED
+	unified_fit* unified_functor = new unified_fit((TH1F*)gDirectory->Get("current_integrator"));
+	unified_functor->t0 = 0;	//inicio de la función
 
-	TF1* unified = new TF1("unified_fit", unified_fit((TH1F*)gDirectory->Get("current_integrator")), 0, measurement_end, 5);	//crea función para fittear
+	TF1* unified = new TF1("unified_fit", unified_functor, 0, measurement_end, 5);	//crea función para fittear
 	unified->SetParNames("Background activity", "(a,n) per alpha", "Decay constant", "extra bg", "initial number of 30P");	//nombres de los parámetros
 	//números de puntos a la hora de hacer el fitting
 	unified->SetNpx(ACTIVATION_NBINS);
@@ -1098,7 +1102,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	unified->SetParLimits(0, 0, 1E5);
 	unified->SetParLimits(1, 0, 1E-2);
 	unified->SetParLimits(2, 4E-3, 5E-3);
-	unified->SetParLimits(3, 0, 1E2);
+	unified->SetParLimits(3, 0, 1E0);
 	unified->SetParLimits(4, 0, 1E8);
 	unified->SetParameters(15, 1E-7, 4.62406E-3, 0, 0);	//valores iniciales
 	unified->FixParameter(2, 4.62406E-3);	//fijar constante de decaimiento
@@ -1118,6 +1122,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	//RISE
 
 	//se usa la misma función, sobre un histo distinto
+	unified_functor->t0 = activation_start;	//inicio de la función
 	unified->SetNpx(rise_nbins);
 	unified->SetNumberFitPoints(rise_nbins);
 
@@ -1165,15 +1170,27 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 
 	//DECAY alternativo, usando función de unified
+	unified_functor->t0 = activation_end;	//inicio de la función
+	unified->SetParLimits(0, 0, 1E5);
+	unified->SetParLimits(1, 0, 1E-2);
+	unified->SetParLimits(2, 4E-3, 5E-3);
+	unified->SetParLimits(3, 0, 1E2);
+	unified->SetParLimits(4, 1E4, 1E10);
+	unified->SetParameters(15, 1E-7, 4.62406E-3, 0, 2E6);	//valores iniciales
+	unified->FixParameter(1, 0);
+	unified->FixParameter(2, 4.62406E-3);	//fijar constante de decaimiento
+	unified->FixParameter(3, 0);
+//	unified->SetParNames("Background activity", "(a,n) per alpha", "Decay constant", "extra bg", "initial number of 30P");	//nombres de los parámetros
 	unified->SetNpx(decay_nbins);
 	unified->SetNumberFitPoints(decay_nbins);
 
 	//usamos la misma función, pero nos interesa el parámetro 4, número inicial de 30P
 	fitresult = labr1_decay->Fit("unified_fit", "SLEQ");	//labr1
-	Double_t decayalt_1 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	Double_t decayalt_1 = fitresult->Parameter(4)*decay_factor/(number_of_alphas*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
 	myCanvas->Write("labr1_decayalt", TObject::kOverwrite);
+
 	fitresult = labr2_decay->Fit("unified_fit", "SLEQ");	//labr2
-	Double_t decayalt_2 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(number_of_alphas*fitresult->Parameter(2)*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	Double_t decayalt_2 = fitresult->Parameter(4)*decay_factor/(number_of_alphas*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
 	myCanvas->Write("labr2_decayalt", TObject::kOverwrite);
 
 
@@ -1194,7 +1211,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "rise 2: " << results[1][2] << endl;
 	cout << "decay 1: " << results[0][4] << endl;
 	cout << "decay 2: " << results[1][4] << endl;
-	cout << "decayalt 1: " << decayalt_2 << endl;
+	cout << "decayalt 1: " << decayalt_1 << endl;
 	cout << "decayalt 2: " << decayalt_2 << endl;
 	cout<<"------------"<<endl;
 
