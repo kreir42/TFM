@@ -24,12 +24,180 @@ decayalt 2: 3.32694e-10
 ------------
 ---------------
 activation_2
+***************
+activation start: 451.767
+activation end: 1433.59
+activation time: 981.819
+measurement end: 2305.26
+number of alphas: 3.10677e+14
+rise_nbins: 425
+decay_nbins: 378
+unified binwidth: 2.30526
+rise binwidth: 2.31016
+decay binwidth: 2.30601
+
+decay factor: 1.01079
+
+unified 1: 2.15779e-09
+unified 2: 2.16908e-09
+rise 1: 2.13444e-09
+rise 2: 2.12215e-09
+decay 1: 2.14642e-09
+decay 2: 2.17099e-09
+decayalt 1: 2.1698e-09
+decayalt 2: 2.19463e-09
+------------
+---------------
 activation_3
+***************
+activation start: 263.389
+activation end: 1173.34
+activation time: 909.95
+measurement end: 2062.85
+number of alphas: 3.64098e+14
+rise_nbins: 441
+decay_nbins: 431
+unified binwidth: 2.06285
+rise binwidth: 2.06338
+decay binwidth: 2.06382
+
+decay factor: 1.01511
+
+unified 1: 6.73479e-09
+unified 2: 6.67949e-09
+rise 1: 9.11119e-09
+rise 2: 6.49921e-09
+decay 1: 6.83971e-09
+decay 2: 6.83582e-09
+decayalt 1: 6.90696e-09
+decayalt 2: 6.90302e-09
+------------
+---------------
 activation_4
+***************
+activation start: 384.615
+activation end: 1284.04
+activation time: 899.426
+measurement end: 2480.29
+number of alphas: 5.39115e+14
+rise_nbins: 362
+decay_nbins: 482
+unified binwidth: 2.48029
+rise binwidth: 2.4846
+decay binwidth: 2.48185
+
+decay factor: 1.01587
+
+unified 1: 5.35102e-09
+unified 2: 5.27307e-09
+rise 1: 7.83953e-09
+rise 2: 7.56928e-09
+decay 1: 8.68151e-09
+decay 2: 8.61336e-09
+decayalt 1: 8.78315e-09
+decayalt 2: 8.71423e-09
+------------
+---------------
 activation_5
+***************
+activation start: 129.279
+activation end: 734.505
+activation time: 605.226
+measurement end: 1946.57
+number of alphas: 2.3219e+14
+rise_nbins: 310
+decay_nbins: 622
+unified binwidth: 1.94657
+rise binwidth: 1.95234
+decay binwidth: 1.94866
+
+decay factor: 1.06484
+
+unified 1: 5.15546e-10
+unified 2: 5.43227e-10
+rise 1: 6.3292e-10
+rise 2: 6.56623e-10
+decay 1: 5.25658e-10
+decay 2: 5.59845e-10
+decayalt 1: 5.30513e-10
+decayalt 2: 5.65011e-10
+------------
+---------------
 activation_6
+***************
+activation start: 302.437
+activation end: 901.957
+activation time: 599.52
+measurement end: 2126.25
+number of alphas: 5.83036e+14
+rise_nbins: 281
+decay_nbins: 575
+unified binwidth: 2.12625
+rise binwidth: 2.13352
+decay binwidth: 2.1292
+
+decay factor: 1.06669
+
+unified 1: 2.21724e-09
+unified 2: 5.95792e-10
+rise 1: 2.54385e-09
+rise 2: 7.7734e-10
+decay 1: 2.29214e-09
+decay 2: 6.15252e-10
+decayalt 1: 2.31518e-09
+decayalt 2: 6.2145e-10
+------------
+---------------
 activation_7
+***************
+activation start: 302.013
+activation end: 752.434
+activation time: 450.421
+measurement end: 1801.91
+number of alphas: 2.72298e+14
+rise_nbins: 249
+decay_nbins: 582
+unified binwidth: 1.80191
+rise binwidth: 1.80892
+decay binwidth: 1.80323
+
+decay factor: 1.14231
+
+unified 1: 9.14452e-09
+unified 2: 1.01805e-08
+rise 1: 9.08644e-09
+rise 2: 9.77694e-09
+decay 1: 9.13764e-09
+decay 2: 1.02403e-08
+decayalt 1: 9.2166e-09
+decayalt 2: 1.03289e-08
+------------
+---------------
 activation_8
+***************
+activation start: 364
+activation end: 830
+activation time: 466
+measurement end: 2006.11
+number of alphas: 3.15508e+14
+rise_nbins: 232
+decay_nbins: 586
+unified binwidth: 2.00611
+rise binwidth: 2.00862
+decay binwidth: 2.00702
+
+decay factor: 1.13113
+
+unified 1: 1.0081e-07
+unified 2: 1.0081e-07
+rise 1: 1.00936e-07
+rise 2: 1.00936e-07
+decay 1: 3.39186e-09
+decay 2: 3.84055e-09
+decayalt 1: 3.42392e-09
+decayalt 2: 3.87686e-09
+------------
+---------------
 activation_9
 ***************
 activation start: 302
@@ -56,3 +224,27 @@ decayalt 2: 5.86896e-10
 ------------
 ---------------
 activation_10
+***************
+activation start: 304
+activation end: 752
+activation time: 448
+measurement end: 1804.33
+number of alphas: 2.5534e+14
+rise_nbins: 248
+decay_nbins: 583
+unified binwidth: 1.80433
+rise binwidth: 1.80645
+decay binwidth: 1.80503
+
+decay factor: 1.14415
+
+unified 1: 9.06699e-08
+unified 2: 9.06699e-08
+rise 1: 9.07765e-08
+rise 2: 9.07765e-08
+decay 1: 5.36933e-09
+decay 2: 6.08657e-09
+decayalt 1: 5.41508e-09
+decayalt 2: 6.13846e-09
+------------
+---------------

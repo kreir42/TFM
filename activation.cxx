@@ -896,7 +896,7 @@ void activation(){
 
 	gDirectory->cd("activation_2");
 	cout << "activation_2" << endl;
-//	per_file(filepath_2, results[1]);
+	per_file(filepath_2, results[1]);
 	gDirectory->cd("..");
 
 	activation_window_low=550;
@@ -904,7 +904,7 @@ void activation(){
 
 	gDirectory->cd("activation_3");
 	cout << "activation_3" << endl;
-//	per_file(filepath_3, results[2]);
+	per_file(filepath_3, results[2]);
 	gDirectory->cd("..");
 
 	activation_window_low=550;
@@ -912,7 +912,7 @@ void activation(){
 
 	gDirectory->cd("activation_4");
 	cout << "activation_4" << endl;
-//	per_file(filepath_4, results[3]);
+	per_file(filepath_4, results[3]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -920,7 +920,7 @@ void activation(){
 
 	gDirectory->cd("activation_5");
 	cout << "activation_5" << endl;
-//	per_file(filepath_5, results[4]);
+	per_file(filepath_5, results[4]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -928,7 +928,7 @@ void activation(){
 
 	gDirectory->cd("activation_6");
 	cout << "activation_6" << endl;
-//	per_file(filepath_6, results[5]);
+	per_file(filepath_6, results[5]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -936,7 +936,7 @@ void activation(){
 
 	gDirectory->cd("activation_7");
 	cout << "activation_7" << endl;
-//	per_file(filepath_7, results[6]);
+	per_file(filepath_7, results[6]);
 	gDirectory->cd("..");
 
 	activation_window_low=1200;
@@ -944,7 +944,7 @@ void activation(){
 
 	gDirectory->cd("activation_8");
 	cout << "activation_8" << endl;
-//	per_file(filepath_8, results[7]);
+	per_file(filepath_8, results[7]);
 	gDirectory->cd("..");
 
 	activation_window_low=1150;
@@ -960,7 +960,7 @@ void activation(){
 
 	gDirectory->cd("activation_10");
 	cout << "activation_10" << endl;
-//	per_file(filepath_10, results[9]);
+	per_file(filepath_10, results[9]);
 	gDirectory->cd("..");
 
 	TTree* tree = new TTree("activation_results_tree", "Tree with activation results");
