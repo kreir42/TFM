@@ -1,4 +1,4 @@
-#define ACTIVATION_NBINS 500
+#define ACTIVATION_NBINS 1000
 #define ACT1_AENERGY 5500
 #define ACT2_AENERGY 7000
 #define ACT3_AENERGY 8500
@@ -42,13 +42,13 @@ void activation_results(){
 	cout << "Na22 intensity: " << NA22_511_INTENSITY << endl;
 	cout << "Na22 lambda (s^-1): " << na22_lambda << endl;
 	cout << "Na22 original activity (decays/s): " << NA22_ORIGINAL_ACTIVITY << endl;
-	cout << "Na22 activity Feb (decays/s): " << na22_calibration_activity_feb << endl;
-	cout << "Na22 activity Apr (decays/s): " << na22_calibration_activity_apr << endl;
+	cout << "Na22 activity Feb (counts/s): " << na22_calibration_activity_feb << endl;
+	cout << "Na22 activity Apr (counts/s): " << na22_calibration_activity_apr << endl;
 	cout << "--------------" << endl;
 	cout << "Cs137 intensity: " << CS137_INTENSITY << endl;
 	cout << "Cs137 lambda (s^-1): " << cs137_lambda << endl;
-	cout << "Cs137 original activity (decays/s): " << CS137_ORIGINAL_ACTIVITY << endl;
-	cout << "Cs137 activity (decays/s): " << cs137_calibration_activity << endl;
+	cout << "Cs137 original activity (counts/s): " << CS137_ORIGINAL_ACTIVITY << endl;
+	cout << "Cs137 activity (counts/s): " << cs137_calibration_activity << endl;
 	cout << endl;
 
 	//calibración con na22
@@ -1157,15 +1157,15 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	Double_t decay_factor = 1/(1-exp(-fitresult->Parameter(2)*activation_time));	//factor de decaimiento
 	
 	//guardar resultados en array, aplicando fómula para convertir en TTY
-	results[0][4] = fitresult->Parameter(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
-	results[0][5] = fitresult->ParError(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+	results[0][4] = fitresult->Parameter(1)*decay_factor/(decay_binwidth*number_of_alphas/activation_time*1.99);
+	results[0][5] = fitresult->ParError(1)*decay_factor/(decay_binwidth*number_of_alphas/activation_time*1.99);
 
 	//labr2
 	fitresult = labr2_decay->Fit("decay", "SLEQ");
 	myCanvas->Write("labr2_decay_fit", TObject::kOverwrite);
 
-	results[1][4] = fitresult->Parameter(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
-	results[1][5] = fitresult->ParError(1)*decay_factor/(decay_binwidth*number_of_alphas*fitresult->Parameter(2)*1.99);
+	results[1][4] = fitresult->Parameter(1)*decay_factor/(decay_binwidth*number_of_alphas/activation_time*1.99);
+	results[1][5] = fitresult->ParError(1)*decay_factor/(decay_binwidth*number_of_alphas/activation_time*1.99);
 
 
 
@@ -1186,11 +1186,11 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 
 	//usamos la misma función, pero nos interesa el parámetro 4, número inicial de 30P
 	fitresult = labr1_decay->Fit("unified_fit", "SLEQ");	//labr1
-	Double_t decayalt_1 = fitresult->Parameter(4)*decay_factor/(number_of_alphas*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	Double_t decayalt_1 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(number_of_alphas/activation_time*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
 	myCanvas->Write("labr1_decayalt", TObject::kOverwrite);
 
 	fitresult = labr2_decay->Fit("unified_fit", "SLEQ");	//labr2
-	Double_t decayalt_2 = fitresult->Parameter(4)*decay_factor/(number_of_alphas*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
+	Double_t decayalt_2 = fitresult->Parameter(4)*fitresult->Parameter(2)*decay_factor/(number_of_alphas/activation_time*1.99);	//tras multiplicar el número de núcleos por lambda, lo tratamos igual que en decay
 	myCanvas->Write("labr2_decayalt", TObject::kOverwrite);
 
 
@@ -1204,6 +1204,8 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 	cout << "unified binwidth: " << unified_binwidth << endl;
 	cout << "rise binwidth: " << rise_binwidth << endl;
 	cout << "decay binwidth: " << decay_binwidth << endl;
+	cout << endl;
+	cout << "decay factor: " << decay_factor << endl;
 	cout << endl;
 	cout << "unified 1: " << results[0][0] << endl;
 	cout << "unified 2: " << results[1][0] << endl;
