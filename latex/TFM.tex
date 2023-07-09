@@ -98,14 +98,14 @@ Abstract español.
 \tableofcontents
 
 \chapter{Introduction and motivation}
-\an are nuclear reactions, in which an alpha particle ($^4_2\text{He}^{2+}$) hits a target nucleus ($^\text{A}_\text{Z}\text{X}$) and a neutron is ejected.
+In \an nuclear reactions, an alpha particle ($^4_2\text{He}^{2+}$) hits a target nucleus ($^\text{A}_\text{Z}\text{X}$) and a neutron is ejected.
 Generally, in the laboratory frame of reference, the $\alpha$ is fast-moving and the target is stationary.
 The produced neutron will also be fast, and the resulting nucleus ($^{\text{A}+3}_{\text{Z}+2}\text{Y}$) will be of a new element and have a small recoil.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{anreaction.png}
-	\caption{Illustration of \an reaction.}
+	\caption{Illustration of an \an reaction.}
 	\label{anreaction}
 \end{figure}
 
@@ -120,8 +120,7 @@ A good knowledge of the cross-section and neutron spectra of these reactions is 
 ·The objective of the measurements at CNA are to check the viability for carrying out more \an measurements.\\
 
 
-\chapter{Experimental setup and procedure}
-\section{Setup}
+\chapter{Experimental setup}
 The source of alphas for the experiment is the \qty{3}{\mega\volt} tandem accelerator at CNA, which fires alphas at a \Aliso target.
 Detectors used are both organic and inorganic scintillators.
 
@@ -133,7 +132,7 @@ Detectors used are both organic and inorganic scintillators.
 	\label{overview_photo}
 \end{figure}
 
-\subsection{Tandem 3MV accelerator}
+\section{Tandem 3MV accelerator}
 A tandem is a type of linear particle accelerator whose main characteristic is that particles are accelerated twice by the same terminal voltage.
 Particles are injected with negative charge from a source situated outside the tank, and accelerated toward the terminal.
 
@@ -145,7 +144,7 @@ In the case of alpha particles, they are injected with charge -1, and then strip
 Given that the maximum voltage of the CNA tandem accelerator is \qty{3}{\mega\volt}, alphas can be accelerated to a maximum of $3\cdot\left(1+2\right) = \qty{9}{\mega\eV}$.	%TBD:añadir injection energy
 \\
 
-\subsubsection{Pulsed beam mode}
+\subsection{Pulsed beam mode}
 For most applications, the accelerator generates a continuous stream of particles.
 But it can also be operated in a \textit{pulsed beam} manner, where particles are emitted in groups, or \textit{pulses}.
 
@@ -160,7 +159,7 @@ With a X frequency, it disengages the field and lets particles pass for X time.	
 After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerates the slower ones, making the pulse narrower in time (X) and gaussian shaped.	%TBD:poner valor
 \\
 
-\subsubsection{Difficulties with accelerating $\bm{\alpha}$ particles}
+\subsection{Difficulties with accelerating alpha particles}	%TBD:replace with bold symbol
 Although it is used in this experiment to accelerate alphas, the CNA Tandem accelerator was not designed with them in mind.
 Rather, it was designed to accelerate deuterons, which have the same mass-to-charge ratio.
 This means that, while alphas can be also be accelerated, some problems arise when generating pulses.
@@ -171,7 +170,7 @@ This produces both wider and asymmetric pulses than with deuterons, as well as s
 
 ·Explain the different parts of the neutron line. Photos.\\
 
-\subsection{Target}
+\section{Target}
 The target is a sheet of \qty{95}{\percent} purity \Aliso.	%TBD:confirmar porcentaje
 This metal was chosen because it is relatively well known compared to others, with the best available measurements of \an reactions to compare to.
 \\
@@ -198,7 +197,7 @@ It is important that the target does not accumulate too much positive charge, as
 	\label{target_photo}
 \end{figure}
 
-\subsection{Radiation detectors}
+\section{Radiation detectors}
 The thick target yield (number of \an reactions per number of incident alphas) will be measured by using gamma detectors, while the \an neutron spectra will be done via time of flight measurements with a neutron detector.
 \\
 
@@ -216,7 +215,7 @@ The thick target yield (number of \an reactions per number of incident alphas) w
 \label{distances_angles_table}
 \end{table}
 
-\subsubsection{LaBr}
+\subsection{LaBr}
 To measure gammas, we use two LaBr\textsubscript{3} (lanthanum bromide) detectors, which we refer to as "LaBr1" and "LaBr2".
 They are inorganic scitillators, meaning they produce light when hit by ionizing radiation.
 This can be used to detect gamma rays by the following process:
@@ -259,13 +258,13 @@ We then divide by the total number of emmited photons (given the source's activi
 	\label{labr_co60_calibration}
 \end{figure}
 
-\subsubsection{MONSTER}
+\subsection{MONSTER}
 To measure the time of flight of neutrons produced by \an reactions, we use MONSTER, a liquid organic scintillator.
 Two smaller, liquid organic TADEO scintillators were also used, but their data has not been analyzed due to their poorer efficiency.
 \\
 
-Their operating principle is the similar to that of inorganic scintillators described before, except that the excited stated that emit the \textit{scintillating} light are molecular in nature, not atomical.
-Organic scintillators have a higher efficiency for detecting neutrons than inorganic ones, as neutrons excite the material mostly through $\left( \text{n},\text{p}  \right)$ reactions (unlike gamma rays), which have a higher cross-section with Hydrogen atoms.
+Their operating principle is the similar to that of inorganic scintillators described before, except that the excited stated that emit the \textit{scintillating} light are molecular in nature, not atomic.
+Organic scintillators have a higher efficiency when for detecting neutrons than inorganic ones, as neutrons excite the material mostly through $\left( \text{n},\text{p}  \right)$ reactions (unlike gamma rays), which have a higher cross-section with hydrogen atoms.
 
 Because the molecules are being excited by different charged particles, different states are populated and scintillating light is emmited with longer half-lifes.
 This means that the resulting electric pulse is wider, which allow us to differentiate between pulses caused by photons and those caused by neutrons.
@@ -284,6 +283,7 @@ By integrating the charge in a scintillation pulse in two parts, between the ini
 \end{equation}
 that we can use to separate counts corresponding to neutrons from those that correspond to gammas.
 At high energies, the \textit{fast} portion saturates, causing the sahpe seen in figure \ref{example_psd}.
+This saturation can be caused either by a voltage limit in the detector or by the software in the data acquisition system.
 
 \begin{figure}[H]
 	\centering
@@ -319,10 +319,16 @@ To calibrate the MONSTER detector in energy, we use an efficiency curve obtained
 	\label{monster_efficiency}
 \end{figure}
 
-\section{Procedure}
+\section{DAQ}
+
+%%%
+%%%	ACTIVATION
+%%%
+
+\chapter{Activation}
 Two different types of experiments are carried out, \textit{activation} ones to measure thick target yield; and \textit{time-of-flight} ones for neutron spectra.
 
-\subsection{Activation measurements}
+\section{Procedure}
 For the \textit{activation} measurements, the beam is operated in continuous mode, launching a stream of alpha particles of a certain energy, $E_\alpha$.
 When the alpha particles hit the target, \an reactions (among others) occur.
 Because the target is thick, these reaction will happen at alpha energies equal to or smaller than $E_\alpha$, as the particles lose energy in the target.
@@ -390,54 +396,7 @@ They affect the histogram because, even if the emitted gammas are outside of the
 
 After activation ends, we get the counts corresponding to the decay of \Piso nuclei.
 
-\subsection{Time of flight measurements}
-For the time of flight measurements, the beam is operated in pulsed mode.
-This means that, ideally, alphas arrive all at the same time, in groups, spaced with a certain frequency.	%TBD: especificar anchura, frecuencia.
-Because of that, all of the \an reactions occur, and all of the neutrons are produced, in pulses.
-\\
-
-Both gammas and neutrons are produced at the same time by the \an reactions.	%TBD:mirar tiempo de producción de gammas
-Gamma rays move at the speed of light, and thus all arrive at the detector $d/c$ time later, with $d$ the distance to the target.
-This is called the \textit{gamma flash}.
-
-Neutrons, however, have different speeds depending on their energy, and arrive at the detector different amounts of time later.
-This time is called the \textit{time-of-flight}, or ToF; and from it we can get the energy of the produced neutrons as $E=\frac{1}{2} m_\text{n} \left( \frac{d}{\text{ToF}} \right)^2$, with $m_\text{n}$ the mass of a neutron.
-\\
-
-\subsubsection{Timing of the pulses}
-Each time the accelerator's chopper acts, an electric signal is emitted.	%TBD:chopper o buncher?
-This signal is what we use to time every detection in relation to a pulse.
-It doesn't correspond to when the pulse arrives at the target, as the time the particles take to cover the distance is not the same as the time taken by the electric signal to travel along the cable and be registered.
-Regardless, all of the pulses arrive with the same time delay with respect to their corresponding electric signal from the chopper.
-\\
-
-In practice, alphas do not arrive all at the same time: the pulses always have a certain width.
-Generally, the time the particles hit the target can be approximated by a gaussian distribution.
-This introduces uncertainty in the ToF, and thus energy, measurements.
-
-The width and shape of the alpha pulses will be the same as that of the gamma flash.
-This is because the photons travel all at the same speed, and because we assume that the production of gammas is the same for all alphas in a pulse.
-\\
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.75\textwidth]{uneven_gflash.png}
-	\caption{Superposition of all histograms of gamma flashes.
-	In red is a measurement taken at double the distance than the others.
-	It is displaced to the right because of the longer time photons take to travel the distance to the detector.
-	Their shape will be that of their corresponding alpha pulses, plus a background.}
-	\label{uneven_gflash}
-\end{figure}
-
-We can see that the pulses are not symmetrical: they have long tails; and some of them, several peaks.
-For the worst case, the tail contains \qty{30}{\percent} of the total counts.
-This means we cannot treat them as gaussians and the introduced error in ToF as their standard deviation.
-
-·Show example ToF plot with and without PSD.\\
-
-\chapter{Measurements, analysis and results}
-
-\section{Activation}
+\section{Measurements}
 Activation measurements were carried out in two sessions of two consecutive days, in February and April.
 Table \ref{activation_measurements_table} summarises the different measurement conditions.
 
@@ -462,7 +421,7 @@ Because detectors were unmounted in between both sessions, calibration measureme
 \label{activation_measurements_table}
 \end{table}
 
-\subsection{Data analysis}
+\section{Data analysis}
 We can describe the number of \Piso nuclei in the target, $N$, using the differential equation:
 \begin{equation}
 	\ddt{N} = P(t) -\lambda N
@@ -486,7 +445,7 @@ This means that, in order to get the activity in decays per second, we must divi
 \end{equation}
 We use three different methods to get $P(t)$, depending on wether $P(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
 
-\subsubsection{Decay fit}
+\subsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
 For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t} + B$ to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
 
@@ -529,7 +488,7 @@ All that is left is to correct for the efficiency of the detector, and the final
 	\text{yield} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
 \end{equation}
 
-\subsubsection{Unified and rise fit}
+\subsection{Unified and rise fit}
 Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step.
 This is useful because the current is not constant, there are drops and rises in many of the measurements (figure \ref{current_histograms}) and this will make the \textit{decay} fit less precise, as the assumption of constant current is incorrect.
 
@@ -578,7 +537,7 @@ In addition, measurement number 4, in February, shows loss of data due to a prob
 These problems prevent the \textit{unified} and \textit{rise} fits to be used for all measurements.
 \\
 
-\subsection{Results}
+\section{Results}
 Figure \ref{decay_errors_rel_per} shows that the relative difference in measurements between LaBr detectors 1 and 2 is under \qty{10}{\percent}.
 The numbers are for decay fit measurements, but are similar for the other methods.
 Measurements in February show negative values, indicating detector 2 is higher; while those in April are positive, meaning the opposite is true.
@@ -671,11 +630,67 @@ We see that April 18th \textit{decay} measurements agree well with EXFOR data, w
 This discrepancy of the \textit{decay} February measurements is unexplained.
 If we ignore the February and April 17th \textit{decay} results, the measurements are around \qty{\pm 20}{\percent} of EXFOR.
 
-\section{Time of Flight}
+%%%
+%%%	TOF
+%%%
+
+\chapter{Time of flight}
+
+\section{Procedure}
+For the time of flight measurements, the beam is operated in pulsed mode.
+This means that, ideally, alphas arrive all at the same time, in groups, spaced with a certain frequency.	%TBD: especificar anchura, frecuencia.
+Because of that, all of the \an reactions occur, and all of the neutrons are produced, in pulses.
+
+The time radiation takes to get to the detector since it is produced is called the \textit{time-of-flight}, or ToF.
+\\
+
+Both gammas and neutrons are produced at the same time by the \an reactions.	%TBD:mirar tiempo de producción de gammas
+Gamma rays move at the speed of light, and thus all arrive at the detector $d/c$ time later, with $d$ the distance to the target.
+This is called the \textit{gamma flash}.
+
+Neutrons, however, have different speeds depending on their energy, and arrive at the detector different amounts of time later.
+We call the resulting continuum of neutrons the \textit{neutron response}.
+\\
+
+\subsubsection{Pulse shape}
+In practice, alphas do not arrive all at the same time: the pulses always have a certain width.
+Generally, the time the particles hit the target can be approximated by a gaussian distribution.
+This introduces uncertainty in the ToF, and thus energy, measurements.
+
+The width and shape of the alpha pulses will be the same as that of the gamma flash.
+This is because the photons travel all at the same speed, and because we assume that the production of gammas is the same for all alphas in a pulse.
+\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{uneven_gflash.png}
+	\caption{Superposition of all histograms of gamma flashes.
+	In red is a measurement taken at double the distance than the others.
+	It is displaced to the right because of the longer time photons take to travel the distance to the detector.
+	Their shape will be that of their corresponding alpha pulses, plus a background.}
+	\label{uneven_gflash}
+\end{figure}
+
+We can see that the pulses are not symmetrical: they have long tails; and some of them, several peaks.
+For the worst case, the tail contains \qty{30}{\percent} of the total counts.
+This means we cannot treat them as gaussians and the introduced error in ToF as their standard deviation.
+
+\subsubsection{Timing of the pulses}
+Each time the accelerator's chopper acts, an electric signal is emitted.	%TBD:chopper o buncher?
+This signal is what we use to time every detection in relation to a pulse.
+It doesn't correspond to when the pulse arrives at the target, as the time the particles take to cover the distance is not the same as the time taken by the electric signal to travel along the cable and be registered.
+Regardless, all of the pulses arrive with the same time delay with respect to their corresponding electric signal from the chopper.
+
+From the timing relative to the signal, we get the time of flight by identifying the center of the gamma flash and knowing that it corresponds to a ToF of $d/c$.
+\\
+
+%·Show example ToF plot with and without PSD.\\
+
+\section{Measurements}
 Time of flight measurements all took place on April 17th and 18th.
-The single measurement done on the 17th had a very low current, with the highest percentage of counts in the gamma flash tail (\qty{30}{\percent}).
+The single measurement done on the 17th had a very low current, and the highest percentage of counts in the gamma flash tail (\qty{30}{\percent}).
 This translates to a very low number of neutron detections, making the analysis much harder.
-Because of that, the first measurement is discarded, and the results presented are only for measurements 2 to 5.
+Because of that, we discarded the first measurement, and the results presented are only for measurements 2 to 5.
 
 \begin{table}[H]	%Tabla con datos de las medidas de haz pulsado
 \centering
@@ -691,14 +706,63 @@ Because of that, the first measurement is discarded, and the results presented a
 \label{pulsed_measurements_table}
 \end{table}
 
-·We separate gamma flash and neutron response. Show tof histograms.\\
+\section{Data analysis}
+First, we separate the gammas from the neutrons by using PSD.
+We thus get the gamma flash and the neutron response for each measurement.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{xxxx.png}
+	\caption{}
+	\label{}
+\end{figure}
+
+To get the neutron energy spectra, we use two different methods.
+
+\subsection{Simple method}
+From each time-of-flight, we can get the energy of the neutron as:
+\begin{equation}
+	E=\frac{1}{2} m_\text{n} \left( \frac{d}{\text{ToF}} \right)^2
+\end{equation}
+with $m_\text{n}$ the mass of the neutron.
+
+Representing the calculated energy of every count in the neutron response in a histogram, we get the energy spectrum of the detected neutrons.
+We correct it by dividing every bin by the geometric efficiency of the detector and by its efficiency in energy (given by figure \ref{monster_efficiency}).
+
+The resulting histogram is the energy spectrum of the neutrons produced in the \an reactions.
+\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{xxxx.png}
+	\caption{Energy spectrum.}
+	\label{}
+\end{figure}
+
+This method doesn't consider the shape of the alpha pulse, rather it assumes all of the neutrons are created at the same time, $d/c$ time before the center of the gamma flash.
+
+\subsection{Deconvolution}
+We can take the shape of the alpha pulse into account by doing a deconvolution.
+In order to do so, we fit the neutron response ToF histogram to a function that takes the gamma flash histogram as an input.
+
+The function holds 50 parameters to be adjusted by the fitting, each associated with a certain time-of-flight.
+Their values correspond to the number of neutrons of a certain ToF, per gamma ray in the gamma flash.
+If we multiply them by the total number of gammas in the gamma flash, and divide by the number of incident alphas, they get units of number of neutrons per alpha:
+\begin{equation}
+	\frac{\text{number of neutrons}}{\text{number of gammas}}\cdot \frac{\text{number of gammas}}{\text{number of alphas}} = \frac{\text{number of neutrons}}{\text{number of alphas}}
+\end{equation}
+
+Together, they form the neutron energy spectrum of the reaction, but in time-of-flight.
+That is, the neutron response that would be generated by all of the alphas arriving at the same time, over the total number of alphas.
+\\
+
+The function goes through every bin in the gamma flash histogram.
+
 ·Explain deconvolution:\\
 ·We fit the neutron response histogram to a function that takes as input the gamma flash histogram and 50 parameters corresponding to the neutron spectra in time of flight. The function loops through the gamma histogram to add the contribution of each bin.\\
 ·The result is to remove the effect of the width and assymetry of the gamma flash. Show plot of neutron response+response to delta.\\
 
-·We convert the resulting parameters from time of flight to energy. Show energy spectra plot.\\
-·We correct considering the efficiency of the detector. Show final plot.\\
-
+\section{Results}
 
 \chapter{Conclusions}
 ·We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.\\
