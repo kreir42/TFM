@@ -43,7 +43,7 @@ Eficiencia cesio labr1 abril: 0.343271%
 Eficiencia cesio labr2 abril: 0.052721%
 
 Factor febrero: 1.83733
-Error febrero: 7.56832%
+Error febrero: 7.56831%
 Factor abril: 1.9435
 Error abril: 2.73694%
 Eficiencia Febrero LaBr1 para acuerdo: 0.0449402%
@@ -186,26 +186,26 @@ Activation E: 5500
 exfor: 7.555e-07
 decay average : 1.38811e-06 (3.78416%) | 83.7334%
 unified average : 1.39108e-06 (3.88346%) | 84.1267%
-rise average : 1.66518e-06 (4.00546%) | 120.407%
+rise average : 1.66518e-06 (4.00545%) | 120.407%
 
 Activation N 2
 Activation E: 7000
 exfor: 4.999e-06
 decay average : 9.13938e-06 (3.98242%) | 82.8242%
 unified average : 9.15845e-06 (3.6748%) | 83.2057%
-rise average : 9.00801e-06 (3.12571%) | 80.1963%
+rise average : 9.00802e-06 (3.12571%) | 80.1963%
 
 Activation N 3
 Activation E: 8500
 exfor: 1.502e-05
 decay average : 2.89434e-05 (3.38572%) | 92.6991%
-unified average : 2.83868e-05 (3.00234%) | 88.9931%
+unified average : 2.83868e-05 (3.00233%) | 88.9931%
 rise average : 3.285e-05 (13.3947%) | 118.708%
 
 Activation N 4
 Activation E: 8500
 exfor: 1.502e-05
-decay average : 2.6328e-05 (3.02053%) | 75.2861%
+decay average : 2.6328e-05 (3.02052%) | 75.2861%
 unified average : 0 (0%) | -100%
 rise average : 0 (0%) | -100%
 
