@@ -43,7 +43,7 @@ Eficiencia cesio labr1 abril: 0.343271%
 Eficiencia cesio labr2 abril: 0.052721%
 
 Factor febrero: 1.83733
-Error febrero: 7.56831%
+Error febrero: 7.56832%
 Factor abril: 1.9435
 Error abril: 2.73694%
 Eficiencia Febrero LaBr1 para acuerdo: 0.0449402%
@@ -53,7 +53,7 @@ Distancia equivalente a Pablo: 18.7838cm
 -----UNIFIED-----
 Activation N 1
 E: 5500
-detector 1: 1.33706e-06
+detector 1: 1.33705e-06
 detector 2: 1.4451e-06
 Activation N 2
 E: 7000
@@ -100,11 +100,11 @@ detector 1: 1.59848e-06
 detector 2: 1.73188e-06
 Activation N 2
 E: 7000
-detector 1: 8.72645e-06
+detector 1: 8.72644e-06
 detector 2: 9.28958e-06
 Activation N 3
 E: 8500
-detector 1: 3.72501e-05
+detector 1: 3.72502e-05
 detector 2: 2.84499e-05
 Activation N 4
 E: 8500
@@ -116,12 +116,12 @@ detector 1: 1.83806e-06
 detector 2: 1.63428e-06
 Activation N 6
 E: 5500
-detector 1: 9.24458e-07
-detector 2: 1.96299e-06
+detector 1: 9.2446e-07
+detector 2: 1.97423e-06
 Activation N 7
 E: 8250
-detector 1: 2.63811e-05
-detector 2: 2.43505e-05
+detector 1: 2.63879e-05
+detector 2: 2.43339e-05
 Activation N 8
 E: 7000
 detector 1: 0.000293127
@@ -185,15 +185,15 @@ Activation N 1
 Activation E: 5500
 exfor: 7.555e-07
 decay average : 1.38811e-06 (3.78416%) | 83.7334%
-unified average : 1.39108e-06 (3.88346%) | 84.1267%
-rise average : 1.66518e-06 (4.00545%) | 120.407%
+unified average : 1.39108e-06 (3.88347%) | 84.1267%
+rise average : 1.66518e-06 (4.00548%) | 120.408%
 
 Activation N 2
 Activation E: 7000
 exfor: 4.999e-06
 decay average : 9.13938e-06 (3.98242%) | 82.8242%
 unified average : 9.15845e-06 (3.6748%) | 83.2057%
-rise average : 9.00802e-06 (3.12571%) | 80.1963%
+rise average : 9.00801e-06 (3.12577%) | 80.1962%
 
 Activation N 3
 Activation E: 8500
@@ -205,7 +205,7 @@ rise average : 3.285e-05 (13.3947%) | 118.708%
 Activation N 4
 Activation E: 8500
 exfor: 1.502e-05
-decay average : 2.6328e-05 (3.02052%) | 75.2861%
+decay average : 2.6328e-05 (3.02053%) | 75.2861%
 unified average : 0 (0%) | -100%
 rise average : 0 (0%) | -100%
 
@@ -228,7 +228,7 @@ Activation E: 8250
 exfor: 1.2925e-05
 decay average : 2.60119e-05 (2.01717%) | 101.253%
 unified average : 2.59474e-05 (2.34774%) | 100.754%
-rise average : 2.53658e-05 (4.00255%) | 96.2538%
+rise average : 2.53609e-05 (4.04952%) | 96.2161%
 
 Activation N 8
 Activation E: 7000
