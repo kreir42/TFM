@@ -329,20 +329,29 @@ To calibrate the MONSTER detector in energy, we use an efficiency curve obtained
 Two different types of experiments are carried out, \textit{activation} ones to measure thick target yield; and \textit{time-of-flight} ones for neutron spectra.
 
 \section{Procedure}
-For the \textit{activation} measurements, the beam is operated in continuous mode, launching a stream of alpha particles of a certain energy, $E_\alpha$.
-When the alpha particles hit the target, \an reactions (among others) occur.
+
+\subsection{Principle}
+\textit{Activation} measurements are a way of measuring the yield of a reaction in a material by measuring the decay of a resulting isotope.
+For \an \textit{activation} measurements, the beam is operated in continuous mode, launching a stream of alpha particles of a certain energy, $E_\alpha$.
+When the particles hit the target, \an reactions (among others) occur.
 Because the target is thick, these reaction will happen at alpha energies equal to or smaller than $E_\alpha$, as the particles lose energy in the target.
 
 The number of \an reactions will be proportional to the number of incident alpha particles, and the proportionality constant is the \textbf{thick target yield}.
+This is different from the regular yield, which considers reactions at a single energy.
 \begin{equation}
 	\text{thick target yield} = \frac{\text{number of \an reactions}}{\text{number of incident alphas}}
 \end{equation}
 
-Each \an reaction creates a \Piso nuclei, with a \qty{2.498}{\minute} half-life.
-It decays to \textsuperscript{30}Si by $\beta +$, emitting \qty{511}{\keV} annihilation gamma-rays with an intensity of \num{1.9971}.\cite{nucleardatasheets}
+Because we cannot directly observe the reactions, activation measurements will instead count the number of produced nuclei by measuring their decay radiation.
+For that, the reaction must produce an isotope that decays with an appropiately long half-life (not too long nor too short), and emitting radiation that we can easily detect.
 
-We can thus indirectly measure the number of \an reactions by measuring the number of created \Piso nuclei.
-\\
+The target is to be bombarded for at least a few half-lifes, and then left to decay for several more, while we measure the decay radiation with detectors.
+We can calculate the number of produced nuclei, and thus the number of reactions that occured, by analysing the rate of detections of that radiation over time and the rate of incident particles.
+
+\subsection{At CNA}
+At the CNA, we use a thick \Aliso target with \qty{95}{\percent} purity.
+Each \an reaction creates a single \Piso nuclei, with a \qty{2.498}{\minute} half-life.
+We measure its decay to \textsuperscript{30}Si by $\beta +$, emitting \qty{511}{\keV} annihilation gamma-rays with an intensity of \num{1.9971}.\cite{nucleardatasheets}
 
 \begin{figure}[H]
 	\centering
@@ -352,7 +361,8 @@ We can thus indirectly measure the number of \an reactions by measuring the numb
 	\label{Piso_decay_scheme}
 \end{figure}
 
-The \Aliso target is irradiated for several \Piso half-lifes, then the current is cut.
+We irradiate the \Aliso target for several half-lifes, then the current in the accelerator is cut.
+All the while the number of alphas hitting the target over time is being measured and sent to the DAQ by the current integrator (figure \ref{target_photo}).
 The \Piso is then left to decay for several half-lifes.
 
 \begin{figure}[H]
@@ -366,7 +376,7 @@ The \Piso is then left to decay for several half-lifes.
 To measure the decay of \Piso nuclei, we look at the \qty{511}{\keV} gamma rays emmited from the target.
 Figure \ref{example_activation_energy_histogram} shows the spectrum of one of the LaBr detectors during an activation measurement.
 To represent the time histogram (figure \ref{example_activation_time_histogram}), we take only the counts whose energy fall inside the energy window shown in figure \ref{example_activation_energy_histogram}.
-The reason there are two peaks, instead of only one, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}), shifting the channel the peak corresponds to.
+The reason there are two peaks, instead of the single \qty{511}{\keV} peak we would expect, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}), shifting the channel the peak corresponds to.
 
 \begin{figure}[H]
 	\centering
@@ -394,9 +404,9 @@ They are proportional to the alpha current, and correspond to gamma rays created
 They can also be seen in figure \ref{example_activation_energytime}, as the large number of counts appearing during activation well outside of the \qty{511}{\keV} peak.
 They affect the histogram because, even if the emitted gammas are outside of the energy window, their Compton continuum still falls inside.
 
-After activation ends, we get the counts corresponding to the decay of \Piso nuclei.
+After activation ends, the counts we get correspond to the decay of the created \Piso nuclei.
 
-\section{Measurements}
+\subsection{Measurements}
 Activation measurements were carried out in two sessions of two consecutive days, in February and April.
 Table \ref{activation_measurements_table} summarises the different measurement conditions.
 
@@ -634,32 +644,85 @@ If we ignore the February and April 17th \textit{decay} results, the measurement
 %%%	TOF
 %%%
 
-\chapter{Time of flight}
+\chapter{Measuring neutron energy by time-of-flight}
 
-\section{Procedure}
-For the time of flight measurements, the beam is operated in pulsed mode.
-This means that, ideally, alphas arrive all at the same time, in groups, spaced with a certain frequency.	%TBD: especificar anchura, frecuencia.
-Because of that, all of the \an reactions occur, and all of the neutrons are produced, in pulses.
-
-The time radiation takes to get to the detector since it is produced is called the \textit{time-of-flight}, or ToF.
+\section{The time-of-flight experiments}
+\subsection{The time-of-flight principle} 
+The most accurate. and sometimes the only, method for determining the kinetic energy energy of a neutron is by time-of-flight.
+This method requires that the beam of particles producing the neutrons features a pulsed beam structure: the alphas should arrive in narrow pulses spaced with a certain period, producing as a results neutrons also in the form of pulses.
 \\
 
-Both gammas and neutrons are produced at the same time by the \an reactions.	%TBD:mirar tiempo de producción de gammas
-Gamma rays move at the speed of light, and thus all arrive at the detector $d/c$ time later, with $d$ the distance to the target.
-This is called the \textit{gamma flash}.
+The time that the radiation needs to reach the detector since it is produced is called the \textit{time-of-flight}, or ToF.
+In the case of $\gamma$-rays, they move at the speed of light $c$, and thus all arrive at the detector at $\text{ToF}=L/c$, with $L$ the distance to the target, forming the so-called  \textit{gamma flash}.
+Neutrons, however, have different speeds depending on their kinetic energy and therefore arrive at the detector with a ToF distribution from which the neutron energy distribution produced by the \an reaction can be extracted.
+For each neutron:
+\begin{equation}
+	E_n = \frac{1}{2}m_nv^2= \left ( \frac{\alpha \cdot L}{\text{ToF}} \right)^2=
+	\left (\frac{\alpha \cdot L}{t_n-t_{flash}+L/c} \right)^2
+	\label{Eq_ToF2En}
+\end{equation}
+\begin{equation}
+	E_n=\frac{1}{2} m_n \left( \frac{L}{\text{ToF}} \right)^2 = \frac{1}{2} m_n \left( \frac{L}{t_n - t_{flash} + L/c} \right)^2
+\end{equation}
+where $L$ is the distance between the target and the detector, and where the ToF of the neutrons is calculated in reference to the time of the $\gamma$-flash $t_{flash}$ and of the neutron $t_n$ in reference to some other point in time.
+In the case that $L$ is expressed in meters and the time in ??, $\alpha$ takes the numerical value 72.29. 
 
-Neutrons, however, have different speeds depending on their energy, and arrive at the detector different amounts of time later.
-We call the resulting continuum of neutrons the \textit{neutron response}.
+The neutron energy resolution that can be achieved can be calculated through propagation of errors as:
+\begin{equation}
+    \frac{\Delta E_n}{E_n} =
+    \label{Eq_Enresolution}
+\end{equation}
+
+Hence, the resolution is better as the detector is placed further from the target and as the beam pulses become narrower (as this is it what causes  $\Delta$t$_{flash}$, the fact the alphas do not arrive all at the same time).
+The beam pulses always have a certain width that generally can be approximated by a Gaussian distribution.
+
+In order to study the time structure of the beam pulse, the shape of the observed $\gamma$-flash is a good proxy, because the photons travel all at the same speed and are directly caused by the alphas in the beam.
+The gamma-flash will thus have the same shape as the alpha pulse, simply scaled by a factor and with an added background from other sources.
+
+\subsection{Time-of-flight implementation at HISPANOS} 
+In order to measure the ToF distribution, each time the accelerator's chopper acts, its internal clock emits an electric signal that is sent through a long cable to the DAQ, which takes it as a reference signal, from wich to determine $t_{flash}$ and $t_n$.
+It doesn't correspond to when the pulse arrives at the target, as the time the particles take to cover the distance is not the same as the time taken by the electric signal to travel along the cable and be registered.
+
+The detector signals from photons and neutrons are registered and marked with the timestamp relative to the chopper clock.
+The result is a ToF distribution of signals that, in order to have physical meaning, needs just to be shifted so that the $\gamma$-flash falls in the $ToF=L/c$ position.
 \\
 
-\subsubsection{Pulse shape}
-In practice, alphas do not arrive all at the same time: the pulses always have a certain width.
-Generally, the time the particles hit the target can be approximated by a gaussian distribution.
-This introduces uncertainty in the ToF, and thus energy, measurements.
+An example of the observed $\gamma$-flash is displayed in figure \ref{example_gflash}.	%YO ENSEñARÍA SOLO UNA PARA PODER DESCRIBIRLA BIEN, Y LUEGO TODAS EN LA SIGUIENTE SECCION PARA DISCUTIR LA CASUÍSTICA
+The time structure of the $\gamma$-flash is far from the ideal Dirac delta function.
+First, it features a quasi-Gaussian profile with a FWHM of \qty{1.5}{\nano\second}, which will certainly affect the neutron energy resolution (see equation \ref{Eq_Enresolution}).
+Then, it also features a tail with a bump at longer ToF values, and a constant background.
+This is related to the fact the buncher is not optimized for protons and deuterons but not for alpha particles.
 
-The width and shape of the alpha pulses will be the same as that of the gamma flash.
-This is because the photons travel all at the same speed, and because we assume that the production of gammas is the same for all alphas in a pulse.
-\\
+In the worst case (measurement 1), the tail contains up to \qty{30}{\percent} of the overall $\gamma$-flash, which means that the time of arrival of the alpha beam is not very well determined.
+We cannot really treat the $\gamma$-flashes as simple Gaussians when considering their effect in the neutron energy and its resolution.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.80\textwidth]{example_gflash.png}
+	\caption{Gamma flash of measurement number 3, in semi-logarithmic scale.}
+	\label{example_gflash}
+\end{figure}
+
+\subsection{Measurements} 
+The time-of-flight measurements carried out to study the \Aliso \an reaction took place on April 17th and 18th.
+The details of the dates, beam energies, flight path distances and accumulated beam (charge) on target of each experiment are listed in Table \ref{pulsed_measurements_table}.
+
+\begin{table}[H]	%Tabla con datos de las medidas de haz pulsado
+\centering
+\begin{tabular}[c]{>{\bfseries}r||c|c|c|c}
+	N& Energy (\unit{\keV}) & Distance (\unit{\cm}) & Charge (\unit{\micro\coulomb}) & Date\tablefootnote{All took place in 2023} \\ \hline	%TBD?incertidumbre en distancia?
+	1&\num{5500}&\num{100.0(25)}&?? &April 17\textsuperscript{th}\\ \hline
+	2&\num{5500}&\num{100.0(25)}&?? &April 18\textsuperscript{th}\\ \hline
+	3&\num{7000}&\num{100.0(25)}&?? &April 18\textsuperscript{th}\\ \hline
+	4&\num{8250}&\num{100.0(25)}&?? &April 18\textsuperscript{th}\\ \hline
+	5&\num{8250}&\num{200.0(25)}&?? &April 18\textsuperscript{th}\\ \hline
+\end{tabular}
+\caption{Summary of the time-of-flight experiments carried out.}
+\label{pulsed_measurements_table}
+\end{table}
+
+The single measurement on the 17th was a test and had a very low current, featuring also the highest tail in its $\gamma$-flash (\qty{30}{\percent} of counts), thus it was discarded in the analysis.
+On the other hand, the experiments with the maximum beam energy was repeated at two different distances, in order to assess the expected improvement in neutron energy resolution.
 
 \begin{figure}[H]
 	\centering
@@ -670,41 +733,6 @@ This is because the photons travel all at the same speed, and because we assume 
 	Their shape will be that of their corresponding alpha pulses, plus a background.}
 	\label{uneven_gflash}
 \end{figure}
-
-We can see that the pulses are not symmetrical: they have long tails; and some of them, several peaks.
-For the worst case, the tail contains \qty{30}{\percent} of the total counts.
-This means we cannot treat them as gaussians and the introduced error in ToF as their standard deviation.
-
-\subsubsection{Timing of the pulses}
-Each time the accelerator's chopper acts, an electric signal is emitted.	%TBD:chopper o buncher?
-This signal is what we use to time every detection in relation to a pulse.
-It doesn't correspond to when the pulse arrives at the target, as the time the particles take to cover the distance is not the same as the time taken by the electric signal to travel along the cable and be registered.
-Regardless, all of the pulses arrive with the same time delay with respect to their corresponding electric signal from the chopper.
-
-From the timing relative to the signal, we get the time of flight by identifying the center of the gamma flash and knowing that it corresponds to a ToF of $d/c$.
-\\
-
-%·Show example ToF plot with and without PSD.\\
-
-\section{Measurements}
-Time of flight measurements all took place on April 17th and 18th.
-The single measurement done on the 17th had a very low current, and the highest percentage of counts in the gamma flash tail (\qty{30}{\percent}).
-This translates to a very low number of neutron detections, making the analysis much harder.
-Because of that, we discarded the first measurement, and the results presented are only for measurements 2 to 5.
-
-\begin{table}[H]	%Tabla con datos de las medidas de haz pulsado
-\centering
-\begin{tabular}[c]{>{\bfseries}r||c|c|c}
-	N& Energy (\unit{\keV}) & Distance (\unit{\meter}) & Date\tablefootnote{All took place in 2023} \\ \hline	%TBD?incertidumbre en distancia?
-	1&\num{5500}&\num{1.0}&April 17th\\ \hline
-	2&\num{5500}&\num{1.0}&April 18th\\ \hline
-	3&\num{7000}&\num{1.0}&April 18th\\ \hline
-	4&\num{8250}&\num{1.0}&April 18th\\ \hline
-	5&\num{8250}&\num{2.0}&April 18th\\ \hline
-\end{tabular}
-\caption{Pulsed measurements}
-\label{pulsed_measurements_table}
-\end{table}
 
 \section{Data analysis}
 First, we separate the gammas from the neutrons by using PSD.
