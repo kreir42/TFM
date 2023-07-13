@@ -340,6 +340,7 @@ The number of \an reactions will be proportional to the number of incident alpha
 This is different from the regular yield, which considers reactions at a single energy.
 \begin{equation}
 	\text{thick target yield} = \frac{\text{number of \an reactions}}{\text{number of incident alphas}}
+	\label{tty_def}
 \end{equation}
 
 Because we cannot directly observe the reactions, activation measurements will instead count the number of produced nuclei by measuring their decay radiation.
@@ -373,7 +374,7 @@ The \Piso is then left to decay for several half-lifes.
 	\label{example_activation_energy_histogram}
 \end{figure}
 
-To measure the decay of \Piso nuclei, we look at the \qty{511}{\keV} gamma rays emmited from the target.
+To measure the decay of \Piso nuclei, we use the two Lanthanum Bromide scintillators and look at the \qty{511}{\keV} gamma rays emmited from the target.
 Figure \ref{example_activation_energy_histogram} shows the spectrum of one of the LaBr detectors during an activation measurement.
 To represent the time histogram (figure \ref{example_activation_time_histogram}), we take only the counts whose energy fall inside the energy window shown in figure \ref{example_activation_energy_histogram}.
 The reason there are two peaks, instead of the single \qty{511}{\keV} peak we would expect, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}), shifting the channel the peak corresponds to.
@@ -439,35 +440,53 @@ We can describe the number of \Piso nuclei in the target, $N$, using the differe
 	\ddt{N} = P(t) -\lambda N
 	\label{activation_diffeq}
 \end{equation}
-where $\lambda$ is the decay constant of \Piso and $P(t)$ is the number of \Piso nuclei created (by \an reactions) per unit of time.
-$P(t)$ will be proportional to the current of alphas hitting the target.
-If expressed in number of alphas per second, the proportionality constant will be the thick target yield of the reaction: the number of \an reactions per incident $\alpha$ particle.
+where $\lambda$ is the decay constant of \Piso and $P(t)$ is the number of \Piso nuclei produced (by \an reactions) per unit of time, and will be proportional to the current of alphas hitting the target.
+If expressed in number of alphas per second, the proportionality constant will be the thick target yield of the reaction: the number of \an reactions per incident $\alpha$ particle:
+\begin{equation}
+	P(t) = \text{\an reactions per unit of time} = \text{thick target yield} \cdot \text{incident alphas per unit of time}
+\end{equation}
+or, for an activation of duration $\Delta t$:
+\begin{equation}
+	\int_{\Delta t}P(t) \dif t = \text{total \an reactions} = \text{thick target yield} \cdot \text{total incident alphas}
+\end{equation}
+and thus:
+\begin{equation}
+	\text{thick target yield} =
+	\frac{P(t)}{\text{incident alphas per unit of time}} =
+	\frac{\int_{\Delta t}P(t) \dif t}{\text{total incident alphas}}
+	\label{tty_fromP}
+\end{equation}
 \\
 
-In order to get $P(t)$, we analyze the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
-We don't measure the activity directly, but rather the activity times $1.99$: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
+Our goal being to get the thick target yield from $P(t)$, what we will actually analyze is the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
+We don't actually measure the activity directly, but rather the activity times \num{1.99}: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
 
-To do that, we use the two LaBr scintillators to detect \qty{511}{\keV} gamma rays.
-Some counts will be noise, corresponding not to \Piso decays, but to the Compton continuum of other emissions either in the environment or due to other reactions caused by the alphas.
+In order to do that, we use the two LaBr scintillators to detect \qty{511}{\keV} gamma rays.
+Some counts will be noise, corresponding not to \Piso decays, but to the Compton continuum of higher energy emissions either in the environment or due to other reactions caused by the alphas in the target.
 
-Furthermore, when representing the counts in a histogram, the number shown is dependent on the width of the bins.
-This means that, in order to get the activity in decays per second, we must divide the counts shown in a histogram by 1.99 and by the histogram binwidth.
+We must take into account that, when representing the counts in a histogram, the number shown is dependent on the width of the bins.
+This means that, in order to get the activity in decays per second, we must divide the \qty{511}{\keV} counts shown in a histogram by \num{1.99} and by the histogram binwidth.
+We must also remove a certain background, which the different fitting methods will determine:
 \begin{equation}
-	A = \text{\Piso decays per second} = \frac{\text{counts per bin}}{\text{binwidth}\cdot\num{1.99}} - \text{background}
+	A = \text{\Piso decays per second} = \frac{\text{\qty{511}{\keV} counts per bin}}{\text{binwidth in seconds}\cdot\num{1.99}} - \text{background}
 \end{equation}
 We use three different methods to get $P(t)$, depending on wether $P(t)$ is considered constant during the activation period or not; and on the part of the histogram being looked at.
 
 \subsection{Decay fit}
 After the activation period is over, we are left with a certain number of \Piso nuclei that will decay following a radioactive decay law.
-For the \textit{decay} fit, we fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t} + B$ to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
+For the \textit{decay} fit, we simply fit this part of the activation histogram to a negative exponential, $A(t) = A\textsubscript{EOA} e^{-\lambda t} + B$ to get the \Piso activity at the end of activation, $A$\textsubscript{EOA}.
 
 The fit also considers a constant background $B$, coming from the environment.
+
+It is implemented using the ROOT \textit{fit} method, with $A$\textsubscript{EOA}, $\lambda$ and $B$ as fit parameters.
 The value of the decay constant $\lambda$ is fixed to that of \Piso, and not determined by the fit.
-Thus, the fit returns only two values: the constant background $B$, and the initial activity $A$\textsubscript{EOA}.
+However, it can be unfixed so that ROOT calculates its value, both to make sure that no other isotope is being produced at significant quantities, and as a sanity check.
+Because that test was successful, the parameter is fixed to the known value of $\lambda$ and following fits only return two values: the constant background $B$, and the initial activity $A$\textsubscript{EOA}.
 \\
 
-We divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
-But $N$\textsubscript{EOA} is not the number of \Piso nuclei created by \an reactions, as some decay during the activation period.
+We then divide $A$\textsubscript{EOA} by $\lambda$ to get the number of \Piso nuclei at the end of activation, $N$\textsubscript{EOA}.
+However $N$\textsubscript{EOA} is not the number of \Piso nuclei created by \an reactions, as some will have decayed during the activation period.
+\[ \frac{A_\text{EOA}}{\lambda} = N_\text{EOA} \neq \int_{\Delta t}P(t) \dif t \]
 
 \begin{figure}[H]
 	\centering
@@ -490,15 +509,28 @@ $N$\textsubscript{EOA} will then be equal to:
 	P = \frac{A\textsubscript{EOA}}{1 - e^{-\lambda \Delta t}}
 \end{equation}
 with $\Delta t$ the total activation time.
-As $P$ is the number of \Piso created per second, we can get the yield of the reaction by dividing over the number of incident alpha particles per unit of time:
+%As $P$ is the number of \Piso created per second, we can get the yield of the reaction by dividing over the number of incident alpha particles per unit of time:
+%\begin{equation}
+%	\text{yield} = \frac{P}{\text{alphas per second}} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \left(1 - e^{-\lambda \Delta t} \right)}
+%\end{equation}
+We can now get the thick target yield, according to equation \ref{tty_fromP}, as:
 \begin{equation}
-	\text{yield} = \frac{P}{\text{alphas per second}} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \left(1 - e^{-\lambda \Delta t} \right)}
+	\text{thick target yield} = \frac{P\cdot \Delta t}{\text{total incident alphas}} = \frac{A_\text{EOA}\cdot \Delta t}{\text{total incident alphas} \cdot \left( 1-e^{-\lambda \Delta t}  \right)}
 \end{equation}
 
 All that is left is to correct for the efficiency of the detector, and the final formula for the thick target yield is:
 \begin{equation}
-	\text{yield} = \frac{A\textsubscript{EOA}}{\text{alphas per second} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
+	\text{thick target yield} = \frac{A_\text{EOA}\cdot\Delta t}{\text{total incident alphas} \cdot \text{detector efficiency} \cdot \left(1 - e^{-\lambda \Delta t} \right) \cdot 1.99}	%TBD? use symbols instead?
 \end{equation}
+\\
+
+The advantages for this method are:
+\begin{itemize}
+	\item Only the total number of incident alphas is needed, not information of current over time.
+	\item The \textit{extra background} doesn't bother us, as we only care about the counts once activation ends.
+	\item It is the standard way to carry out activation measurements.
+\end{itemize}
+The main disadvantage is that, because it assumes $P(t)$ to be constant, the method won't work if the alpha current is not approximately constant over time.
 
 \subsection{Unified and rise fit}
 Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step.
