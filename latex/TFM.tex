@@ -672,7 +672,7 @@ We will, then, discard the \textit{rise} results and use the \textit{decay} and 
 Representing their average would restrict us to only 4 measurements, so we will represent \textit{decay} results for all 8\footnote{Measurements 5 and 6 were removed.} measurements and \textit{unified} results where they are available.
 
 \subsection{Disagreement with EXFOR data}
-When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of 1.9.
+When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of \num{1.9}.
 Figure \ref{activation_result_diffs} shows the relative difference with respect to EXFOR in the same fashion as previously.
 
 \begin{figure}[H]
@@ -683,8 +683,16 @@ Figure \ref{activation_result_diffs} shows the relative difference with respect 
 	\label{activation_result_diffs}
 \end{figure}
 
+We can see that the results are almost double the expected, and also that they deviate more for energies higher than \qty{7}{\MeV}; meaning their shape is also not completely the same (although the difference is not as severe), the curve grows somewhat faster.
+The lower point at \qty{8.5}{\MeV} corresponds to measurement 4, done on February but on the second day, unlike the others.
+The difficulties with the Tandem at higher energies might explain the diverging results there.
+For measurement 4 specifically, some other change from one day to the next might be a possible explanation for it decreasing instead of increasing.
+
 We can also see that results for April are consistently higher that for February, but not by much.
-For the two energies where we can compare \textit{decay} results, de difference is of \qty{2.8}{\percent} for \qty{5.5}{\MeV} and \qty{3.0}{\percent} for \qty{7.0}{\MeV}.
+For the two energies where we can compare \textit{decay} results, de difference is of \qty{2.8}{\percent} for \qty{5.5}{\MeV} and \qty{3.0}{\percent} for \qty{7.0}{\MeV} (compared to their average).
+\\
+
+In figure \ref{activation_final_results} we plot the absolute results for the thick target yield, along with EXFOR.
 
 \begin{figure}[H]
 	\centering
@@ -692,6 +700,14 @@ For the two energies where we can compare \textit{decay} results, de difference 
 	\caption{}
 	\label{activation_final_results}
 \end{figure}
+
+In conclusion, although the activation measurements are consistent with each other and their shape is consistent with EXFOR; they are all too high, multiplied by a factor of around \num{1.9}.
+This is most likely due to an unidentified error in the data analysis, whose cause remains a mistery.
+Other possible causes, like errors in the measurement process, are not consistent with the results being in accord with each other so well.
+The error must also, by necessity, affect all methods employed to arrive at the results equally; which remove the possiblity of it being specific to any one fitting method.
+
+In the end, it could not be found.
+
 
 %%%
 %%%	TOF
