@@ -76,7 +76,7 @@
 	\centering
 	\Huge Inter-University Master's degree in Nuclear Physics\par
 	\vspace*{3cm}
-	\HUGE \textbf{Measurements of ($\bm{\alpha}$,n) reactions in CNA/HISPANOS}\par	%TBD? más largo?
+	\HUGE \textbf{Measurements of ($\bm{\alpha}$,n) reactions in CNA/HiSPANoS}\par	%TBD? más largo?
 	\vspace{1cm}
 	\includegraphics[width=0.35\textwidth]{us.png}\\
 	\vspace{1cm}
@@ -666,8 +666,32 @@ The difference between \textit{decay} and the average between \textit{unified} a
 This disagreement with \textit{rise} seems to correlate with the current being less constant for measurements 1 and 3 (energies \num{5.5} and \num{8.5} in figure \ref{activation_method_comparison}) and, more noticeably, having abrupt changes compared to measurements 2 and 7.
 More measurements are needed to make sure, but a sudden change in current mostly means a change in the \textit{extra background}.
 It makes sense that the results are worse, as \textit{unified} is able to give a better fit for the proportionality constant that determines the \textit{extra background}, by virtue of also analyzing the sudden change at the beginning and end of activation.
+\\
 
+We will, then, discard the \textit{rise} results and use the \textit{decay} and \textit{unified} results moving forward.
+Representing their average would restrict us to only 4 measurements, so we will represent \textit{decay} results for all 8\footnote{Measurements 5 and 6 were removed.} measurements and \textit{unified} results where they are available.
 
+\subsection{Disagreement with EXFOR data}
+When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of 1.9.
+Figure \ref{activation_result_diffs} shows the relative difference with respect to EXFOR in the same fashion as previously.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.80\textwidth]{activation_result_diffs.eps}
+	\caption{Relative difference of different methods with respect to EXFOR data.
+	\qty{+100}{\percent} difference means the result is double the expected.}
+	\label{activation_result_diffs}
+\end{figure}
+
+We can also see that results for April are consistently higher that for February, but not by much.
+For the two energies where we can compare \textit{decay} results, de difference is of \qty{2.8}{\percent} for \qty{5.5}{\MeV} and \qty{3.0}{\percent} for \qty{7.0}{\MeV}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.80\textwidth]{activation_final_results.eps}
+	\caption{}
+	\label{activation_final_results}
+\end{figure}
 
 %%%
 %%%	TOF
