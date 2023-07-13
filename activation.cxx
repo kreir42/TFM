@@ -670,7 +670,7 @@ void activation_results(){
 		per_errors_feb_labr1[i] = abs_errors_feb_labr1[i]/reactionsvenergy_exfor->Eval(activation_energies[i]) * 100;
 		per_errors_feb_labr2[i] = abs_errors_feb_labr2[i]/reactionsvenergy_exfor->Eval(activation_energies[i]) * 100;
 		rel_abs_errors_feb[i] = results[i][0][ERROR_I] - results[i][1][ERROR_I];
-		rel_per_errors_feb[i] = rel_abs_errors_feb[i] / ((results[i][0][ERROR_I]+results[i][1][ERROR_I])/2) * 100;
+		rel_per_errors_feb[i] = rel_abs_errors_feb[i] / (results[i][0][ERROR_I]+results[i][1][ERROR_I]) * 100;
 	}
 	for(short i=0; i<6; i++){
 		abs_errors_apr_labr1[i] = results[4+i][0][ERROR_I] - reactionsvenergy_exfor->Eval(activation_energies[4+i]);
@@ -678,7 +678,7 @@ void activation_results(){
 		per_errors_apr_labr1[i] = abs_errors_apr_labr1[i]/reactionsvenergy_exfor->Eval(activation_energies[4+i]) * 100;
 		per_errors_apr_labr2[i] = abs_errors_apr_labr2[i]/reactionsvenergy_exfor->Eval(activation_energies[4+i]) * 100;
 		rel_abs_errors_apr[i] = results[4+i][0][ERROR_I] - results[4+i][1][ERROR_I];
-		rel_per_errors_apr[i] = rel_abs_errors_apr[i] / ((results[4+i][0][ERROR_I]+results[4+i][1][ERROR_I])/2) * 100;
+		rel_per_errors_apr[i] = rel_abs_errors_apr[i] / (results[4+i][0][ERROR_I]+results[4+i][1][ERROR_I]) * 100;
 	}
 	TGraph* abs_errors_feb_labr1_graph = new TGraph(4, activation_energies, abs_errors_feb_labr1);
 	abs_errors_feb_labr1_graph->SetTitle("Absolute error, February, LaBr1");
@@ -690,12 +690,12 @@ void activation_results(){
 	abs_errors_feb_labr2_graph->SetMarkerColor(kRed);
 	abs_errors_feb_labr2_graph->SetMarkerStyle(34);
 	abs_errors_feb_labr2_graph->SetMarkerSize(MARKER_SIZE);
-	TGraph* abs_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], abs_errors_apr_labr1);
+	TGraph* abs_errors_apr_labr1_graph = new TGraph(4, &activation_energies[6], abs_errors_apr_labr1[2]);
 	abs_errors_apr_labr1_graph->SetTitle("Absolute error, April, LaBr1");
 	abs_errors_apr_labr1_graph->SetMarkerColor(kBlue);
 	abs_errors_apr_labr1_graph->SetMarkerStyle(23);
 	abs_errors_apr_labr1_graph->SetMarkerSize(MARKER_SIZE);
-	TGraph* abs_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], abs_errors_apr_labr2);
+	TGraph* abs_errors_apr_labr2_graph = new TGraph(4, &activation_energies[6], abs_errors_apr_labr2[2]);
 	abs_errors_apr_labr2_graph->SetTitle("Absolute error, April, LaBr2");
 	abs_errors_apr_labr2_graph->SetMarkerColor(kBlue);
 	abs_errors_apr_labr2_graph->SetMarkerStyle(47);
@@ -710,12 +710,12 @@ void activation_results(){
 	per_errors_feb_labr2_graph->SetMarkerColor(kRed);
 	per_errors_feb_labr2_graph->SetMarkerStyle(34);
 	per_errors_feb_labr2_graph->SetMarkerSize(MARKER_SIZE);
-	TGraph* per_errors_apr_labr1_graph = new TGraph(6, &activation_energies[4], per_errors_apr_labr1);
+	TGraph* per_errors_apr_labr1_graph = new TGraph(4, &activation_energies[6], per_errors_apr_labr1[2]);
 	per_errors_apr_labr1_graph->SetTitle("Relative error, April, LaBr1");
 	per_errors_apr_labr1_graph->SetMarkerColor(kBlue);
 	per_errors_apr_labr1_graph->SetMarkerStyle(23);
 	per_errors_apr_labr1_graph->SetMarkerSize(MARKER_SIZE);
-	TGraph* per_errors_apr_labr2_graph = new TGraph(6, &activation_energies[4], per_errors_apr_labr2);
+	TGraph* per_errors_apr_labr2_graph = new TGraph(4, &activation_energies[6], per_errors_apr_labr2[2]);
 	per_errors_apr_labr2_graph->SetTitle("Relative error, April, LaBr2");
 	per_errors_apr_labr2_graph->SetMarkerColor(kBlue);
 	per_errors_apr_labr2_graph->SetMarkerStyle(47);
@@ -725,7 +725,7 @@ void activation_results(){
 	rel_abs_errors_feb_graph->SetMarkerColor(kRed);
 	rel_abs_errors_feb_graph->SetMarkerStyle(20);
 	rel_abs_errors_feb_graph->SetMarkerSize(MARKER_SIZE);
-	TGraph* rel_abs_errors_apr_graph = new TGraph(6, &activation_energies[4], rel_abs_errors_apr);
+	TGraph* rel_abs_errors_apr_graph = new TGraph(4, &activation_energies[6], &rel_abs_errors_apr[2]);
 	rel_abs_errors_apr_graph->SetTitle("Absolute difference, April");
 	rel_abs_errors_apr_graph->SetMarkerColor(kBlue);
 	rel_abs_errors_apr_graph->SetMarkerStyle(21);
@@ -735,7 +735,7 @@ void activation_results(){
 	rel_per_errors_feb_graph->SetMarkerColor(kRed);
 	rel_per_errors_feb_graph->SetMarkerStyle(20);
 	rel_per_errors_feb_graph->SetMarkerSize(MARKER_SIZE);
-	TGraph* rel_per_errors_apr_graph = new TGraph(6, &activation_energies[4], rel_per_errors_apr);
+	TGraph* rel_per_errors_apr_graph = new TGraph(4, &activation_energies[6], &rel_per_errors_apr[2]);
 	rel_per_errors_apr_graph->SetTitle("Percentage difference, April");
 	rel_per_errors_apr_graph->SetMarkerColor(kBlue);
 	rel_per_errors_apr_graph->SetMarkerStyle(21);
@@ -777,6 +777,10 @@ void activation_results(){
 	myCanvas->BuildLegend();
 	myCanvas->Write("rel_per_errors", TObject::kOverwrite);
 
+//
+//	DIFERENCIAS
+//
+
 	unified_average[3] = unified_average_diff[3] = unified_average_diff_per[3] = 0;
 	unified_average[5] = unified_average_diff[5] = unified_average_diff_per[5] = 0;
 	unified_average[7] = unified_average_diff[7] = unified_average_diff_per[7] = 0;
@@ -787,12 +791,19 @@ void activation_results(){
 	rise_average[7] = rise_average_diff[7] = rise_average_diff_per[7] = 0;
 	rise_average[8] = rise_average_diff[8] = rise_average_diff_per[8] = 0;
 	rise_average[9] = rise_average_diff[9] = rise_average_diff_per[9] = 0;
+	decay_average[4] = decay_average_diff[4] = decay_average_diff_per[4] = 0;
 	decay_average[5] = decay_average_diff[5] = decay_average_diff_per[5] = 0;
 	cout << endl << "----- RESULTS -----" << endl;
 	Double_t exfor_result[ACTIVATION_N];
 	Double_t decay_exfor_diff[ACTIVATION_N];
 	Double_t unified_exfor_diff[ACTIVATION_N];
 	Double_t rise_exfor_diff[ACTIVATION_N];
+	Double_t unirise_diff[ACTIVATION_N];
+	Double_t unirise_diff_per[ACTIVATION_N];
+	Double_t unidecay_diff[ACTIVATION_N];
+	Double_t unidecay_diff_per[ACTIVATION_N];
+	Double_t unirise_decay_diff[ACTIVATION_N];
+	Double_t unirise_decay_diff_per[ACTIVATION_N];
 	for(short i=0; i<ACTIVATION_N; i++){
 		cout << "Activation N " << i+1 << endl;
 		cout << "Activation E: " << activation_energies[i] << endl;
@@ -804,8 +815,65 @@ void activation_results(){
 		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << decay_exfor_diff[i] << "%" << endl;
 		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << unified_exfor_diff[i] << "%" << endl;
 		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << rise_exfor_diff[i] << "%" << endl;
+
+		cout << endl;
+
+		unirise_diff[i] = unified_average[i]-rise_average[i];
+		cout << "unirise_diff : " << unirise_diff[i] << " (" << "?" << "%)" << endl;
+		unirise_diff_per[i] = unirise_diff[i]/(unified_average[i]+rise_average[i])*100;
+		cout << "unirise_diff_per : " << unirise_diff_per[i] << "% (" << "?" << "%)" << endl;
+		unidecay_diff[i] = unified_average[i]-decay_average[i];
+		cout << "unidecay_diff : " << unidecay_diff[i] << " (" << "?" << "%)" << endl;
+		unidecay_diff_per[i] = unidecay_diff[i]/(unified_average[i]+decay_average[i])*100;
+		cout << "unidecay_diff_per : " << unidecay_diff_per[i] << "% (" << "?" << "%)" << endl;
+		unirise_decay_diff[i] = decay_average[i]-(unified_average[i]+rise_average[i])/2;
+		cout << "unirise_decay_diff : " << unirise_decay_diff[i] << " (" << "?" << "%)" << endl;
+		unirise_decay_diff_per[i] = unirise_decay_diff[i]/(decay_average[i]+(unified_average[i]+rise_average[i])/2)*100;
+		cout << "unirise_decay_diff_per : " << unirise_decay_diff[i] << "% (" << "?" << "%)" << endl;
 		cout << endl;
 	}
+
+	TMultiGraph* method_rel_diffs_multigraph = new TMultiGraph();
+	TGraph* unirise_rel_diffs_feb = new TGraph(3, activation_energies, unirise_diff_per);
+	unirise_rel_diffs_feb->SetTitle("Unified-Rise, February");
+	unirise_rel_diffs_feb->SetMarkerColor(kRed);
+	unirise_rel_diffs_feb->SetMarkerStyle(34);
+	unirise_rel_diffs_feb->SetMarkerSize(MARKER_SIZE);
+	TGraph* unirise_rel_diffs_apr = new TGraph(1, &activation_energies[6], &unirise_diff_per[6]);
+	unirise_rel_diffs_apr->SetTitle("Unified-Rise, April");
+	unirise_rel_diffs_apr->SetMarkerColor(kBlue);
+	unirise_rel_diffs_apr->SetMarkerStyle(34);
+	unirise_rel_diffs_apr->SetMarkerSize(MARKER_SIZE);
+	TGraph* unidecay_rel_diffs_feb = new TGraph(3, activation_energies, unidecay_diff_per);
+	unidecay_rel_diffs_feb->SetTitle("Unified-Decay, February");
+	unidecay_rel_diffs_feb->SetMarkerColor(kRed);
+	unidecay_rel_diffs_feb->SetMarkerStyle(47);
+	unidecay_rel_diffs_feb->SetMarkerSize(MARKER_SIZE);
+	TGraph* unidecay_rel_diffs_apr = new TGraph(1, &activation_energies[6], &unidecay_diff_per[6]);
+	unidecay_rel_diffs_apr->SetTitle("Unified-Decay, April");
+	unidecay_rel_diffs_apr->SetMarkerColor(kBlue);
+	unidecay_rel_diffs_apr->SetMarkerStyle(47);
+	unidecay_rel_diffs_apr->SetMarkerSize(MARKER_SIZE);
+	TGraph* unirise_decay_rel_diffs_feb = new TGraph(3, activation_energies, unirise_decay_diff_per);
+	unirise_decay_rel_diffs_feb->SetTitle("Decay-UnifiedRise, February");
+	unirise_decay_rel_diffs_feb->SetMarkerColor(kRed);
+	unirise_decay_rel_diffs_feb->SetMarkerStyle(21);
+	unirise_decay_rel_diffs_feb->SetMarkerSize(MARKER_SIZE);
+	TGraph* unirise_decay_rel_diffs_apr = new TGraph(1, &activation_energies[6], &unirise_decay_diff_per[6]);
+	unirise_decay_rel_diffs_apr->SetTitle("Decay-UnifiedRise, April");
+	unirise_decay_rel_diffs_apr->SetMarkerColor(kBlue);
+	unirise_decay_rel_diffs_apr->SetMarkerStyle(21);
+	unirise_decay_rel_diffs_apr->SetMarkerSize(MARKER_SIZE);
+	method_rel_diffs_multigraph->Add(unirise_rel_diffs_apr);
+	method_rel_diffs_multigraph->Add(unirise_rel_diffs_feb);
+	method_rel_diffs_multigraph->Add(unidecay_rel_diffs_apr);
+	method_rel_diffs_multigraph->Add(unidecay_rel_diffs_feb);
+	method_rel_diffs_multigraph->Add(unirise_decay_rel_diffs_apr);
+	method_rel_diffs_multigraph->Add(unirise_decay_rel_diffs_feb);
+	method_rel_diffs_multigraph->SetTitle("Relative errors between methods;Energy (keV);Relative difference (%)");
+	method_rel_diffs_multigraph->Draw("AP");
+	myCanvas->BuildLegend();
+	myCanvas->Write("method_rel_diffs", TObject::kOverwrite);
 
 	TMultiGraph* final_exfor_diffs_multigraph = new TMultiGraph();
 	TGraph* unified_exfor_diffs_feb = new TGraph(4, activation_energies, unified_exfor_diff);
@@ -813,7 +881,7 @@ void activation_results(){
 	unified_exfor_diffs_feb->SetMarkerColor(kRed);
 	unified_exfor_diffs_feb->SetMarkerStyle(34);
 	unified_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* unified_exfor_diffs_apr = new TGraph(6, &activation_energies[4], &unified_exfor_diff[4]);
+	TGraph* unified_exfor_diffs_apr = new TGraph(4, &activation_energies[6], &unified_exfor_diff[6]);
 	unified_exfor_diffs_apr->SetTitle("Unified diffs, apr");
 	unified_exfor_diffs_apr->SetMarkerColor(kRed);
 	unified_exfor_diffs_apr->SetMarkerStyle(47);
@@ -823,7 +891,7 @@ void activation_results(){
 	rise_exfor_diffs_feb->SetMarkerColor(kGreen);
 	rise_exfor_diffs_feb->SetMarkerStyle(34);
 	rise_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* rise_exfor_diffs_apr = new TGraph(6, &activation_energies[4], &rise_exfor_diff[4]);
+	TGraph* rise_exfor_diffs_apr = new TGraph(4, &activation_energies[6], &rise_exfor_diff[6]);
 	rise_exfor_diffs_apr->SetTitle("Rise diffs, apr");
 	rise_exfor_diffs_apr->SetMarkerColor(kGreen);
 	rise_exfor_diffs_apr->SetMarkerStyle(47);
@@ -833,7 +901,7 @@ void activation_results(){
 	decay_exfor_diffs_feb->SetMarkerColor(kBlue);
 	decay_exfor_diffs_feb->SetMarkerStyle(34);
 	decay_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* decay_exfor_diffs_apr = new TGraph(6, &activation_energies[4], &decay_exfor_diff[4]);
+	TGraph* decay_exfor_diffs_apr = new TGraph(4, &activation_energies[6], &decay_exfor_diff[6]);
 	decay_exfor_diffs_apr->SetTitle("Decay diffs, apr");
 	decay_exfor_diffs_apr->SetMarkerColor(kBlue);
 	decay_exfor_diffs_apr->SetMarkerStyle(47);
@@ -848,6 +916,8 @@ void activation_results(){
 	final_exfor_diffs_multigraph->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->Write("exfor_diffs", TObject::kOverwrite);
+
+
 
 	myCanvas->Close();
 	gDirectory->cd("..");
