@@ -533,9 +533,11 @@ The advantages for this method are:
 The main disadvantage is that, because it assumes $P(t)$ to be constant, the method won't work if the alpha current is not approximately constant over time.
 
 \subsection{Unified and rise fit}
-Instead of taking $P(t)$ as a constant, we can fit either the whole histogram or the activation period (\textit{unified} and \textit{rise} fits, respectively) to a function that integrates equation \ref{activation_diffeq} by taking $P(t)$ as proportional to the current step by step.
-This is useful because the current is not constant, there are drops and rises in many of the measurements (figure \ref{current_histograms}) and this will make the \textit{decay} fit less precise, as the assumption of constant current is incorrect.
+Instead of taking $P(t)$ as constant and integrating \ref{activation_diffeq} analitically, another option is to fit either the whole histogram or the activation period (\textit{unified} or \textit{rise} fits, respectively) to a function that numerically integrates equation \ref{activation_diffeq} step by step.
 
+The function takes the data of current over time as input, and calculates $P(t)$ every step as $P(t) = \text{thick target yield}\cdot\text{alphas}$, with 'alphas' the number of incident alphas during the step.
+This is useful because the current is not perfectly constant, there are drops and rises in many of the measurements (figure \ref{current_histograms}) and this could make the \textit{decay} fit less precise, as the assumption of constant current could be incorrect.
+\\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{current_histograms.png}
@@ -544,29 +546,38 @@ This is useful because the current is not constant, there are drops and rises in
 	\label{current_histograms}
 \end{figure}
 
-This function also considers a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to gamma rays being produced by reactions other than \an.	%TBD:like?
+The function is implemented using a C++ functor, and the fitting using ROOT's \textit{fit} method.
+It outputs counts over time, so that ROOT can compare it to the histogram of \qty{511}{\keV} counts over time for fitting.
+The thick target yield is one of the parameters adjusted by the fitting, and so it is outputted by ROOT directly and only the binwidth of the histogram needs to be acounted for.
 
-The fit returns the \an yield directly, but in units of number of reactions per \qty{0.1}{\nano\coulomb} per binwidth.
-Thus the yield, corrected by the detector efficiency, in \an per alpha, is:
-\begin{equation}
-	\text{yield} = \frac{\text{fit result}}{2\cdot1.60217646\cdot10^{-9}\cdot 1.99 \cdot \text{detector efficiency}}
-\end{equation}
-with $2\cdot\num{1.60217646E-9}$ the charge of an alpha particle in tenths of nanocoulombs.
+This function also considers a constant background, an initial number of \Piso (from previous activation runs); and a number of counts proportional to the current, which correspond to the \textit{extra background}.
+All of those are also parameters for the fitting, and also adjusted by ROOT.
 \\
+
+The thick target yield, corrected by the detector efficiency, in units of \an per alpha, is:
+\begin{equation}
+	\text{thick target yield} = \frac{\text{result of the fitting}}{1.99 \cdot \text{detector efficiency}}
+\end{equation}
+with \num{1.99} the intensity of the \qty{511}{\keV} decay radiation, which we need to divide by because the histograms involved are in counts, not \Piso decays.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{example_unified_fit.png}
-	\caption{Example unified fit.}
+	\caption{Example unified fit (red) and data (blue).}
 	\label{example_unified_fit}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{example_rise_fit.png}
-	\caption{Example rise fit.}
+	\caption{Example rise fit (red) and data (blue).}
 	\label{example_rise_fit}
 \end{figure}
+
+Figures \ref{example_unified_fit} and \ref{example_rise_fit} show the fits (red) to the data (blue).
+We can see that they adjust very well.
+In figure \ref{example_unified_fit}, we can see that it also correctly accounts for an initial amount of \Piso from a previous activation, as well as the \textit{rise} and \textit{decay} periods.
+\\
 
 Data of current over time was not recorded in half of the measurements in April (numbers 8, 9 and 10).	%TBD: por qué razón?
 In addition, measurement number 4, in February, shows loss of data due to a problem with the DAQ.
@@ -578,7 +589,7 @@ In addition, measurement number 4, in February, shows loss of data due to a prob
 	\label{activation_4_time}
 \end{figure}
 
-These problems prevent the \textit{unified} and \textit{rise} fits to be used for all measurements.
+These problems prevent the \textit{unified} and \textit{rise} fits from being used for all measurements.
 \\
 
 \section{Results}
