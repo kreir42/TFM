@@ -168,6 +168,7 @@ The reason is that the electric fields used by the buncher to shape pulses are n
 This produces both wider and asymmetric pulses than with deuterons, as well as smaller overall currents; especially at higher energies (figure \ref{uneven_gflash}).
 \\
 
+\subsection{Neutron line}
 ·Explain the different parts of the neutron line. Photos.\\
 
 \section{Target}
@@ -675,7 +676,7 @@ It makes sense that the results are worse, as \textit{unified} is able to give a
 \\
 
 We will, then, discard the \textit{rise} results and use only the \textit{decay} results moving forward.
-Representing their average would restrict us to only 4 measurements, so we will represent \textit{decay} results for all 8\footnote{Measurements 5 and 6 were removed.}, knowing they agree within \qty{1}{\percent}.
+Representing the \textit{decay-unified} average would restrict us to only 4 measurements, so we will represent \textit{decay} results for all 8\footnote{Measurements 5 and 6 were removed.}, knowing they agree within \qty{1}{\percent}.
 
 \subsection{Disagreement with EXFOR data}
 When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of \num{1.9}.
@@ -756,17 +757,17 @@ In order to measure the ToF distribution, each time the accelerator's chopper ac
 It doesn't correspond to when the pulse arrives at the target, as the time the particles take to cover the distance is not the same as the time taken by the electric signal to travel along the cable and be registered.
 
 The detector signals from photons and neutrons are registered and marked with the timestamp relative to the chopper clock.
-The result is a ToF distribution of signals that, in order to have physical meaning, needs just to be shifted so that the $\gamma$-flash falls in the $ToF=L/c$ position.
+The result is a ToF distribution of signals that, in order to have physical meaning, need just to be shifted so that the $\gamma$-flash falls in the $\text{ToF}=L/c$ position.
 \\
 
 An example of the observed $\gamma$-flash is displayed in figure \ref{example_gflash}.	%YO ENSEñARÍA SOLO UNA PARA PODER DESCRIBIRLA BIEN, Y LUEGO TODAS EN LA SIGUIENTE SECCION PARA DISCUTIR LA CASUÍSTICA
 The time structure of the $\gamma$-flash is far from the ideal Dirac delta function.
 First, it features a quasi-Gaussian profile with a FWHM of \qty{1.5}{\nano\second}, which will certainly affect the neutron energy resolution (see equation \ref{Eq_Enresolution}).
 Then, it also features a tail with a bump at longer ToF values, and a constant background.
-This is related to the fact the buncher is not optimized for protons and deuterons but not for alpha particles.
+This is related to the fact that the buncher is optimized for protons and deuterons, but not for alpha particles.
 
 In the worst case (measurement 1), the tail contains up to \qty{30}{\percent} of the overall $\gamma$-flash, which means that the time of arrival of the alpha beam is not very well determined.
-We cannot really treat the $\gamma$-flashes as simple Gaussians when considering their effect in the neutron energy and its resolution.
+Because of all this, we cannot really treat the $\gamma$-flashes as simple Gaussians when considering their effect in the neutron energy and its resolution.
 
 \begin{figure}[H]
 	\centering
