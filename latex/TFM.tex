@@ -604,13 +604,15 @@ These problems prevent the \textit{unified} and \textit{rise} fits from being us
 
 \section{Results}
 Because all measurements were carried out with two detectors, we can start by comparing them.
+Afterwards, we can compare the different methods with each other, to find out wether they agree.
+Then, we can compare the final results with data from EXFOR.
 
 \subsection{Agreement between detectors}
-In theory, both should give the exact same result.
+In theory, both detectors should give the exact same result.
 Figure \ref{decay_errors_rel_per} shows that the relative difference in measurements between LaBr detectors 1 and 2 is around \qty{4}{\percent} for February and \qty{8}{\percent} for April.
-The points shown are for decay fit measurements only, but are similar for the other methods.
+The points shown are for \textit{decay} fit measurements only (for the sake of brevity), but are similar for the other methods.
 The percentage is calculated as the difference between LaBr 1 and the mean, over the mean of both detectors: $\frac{\text{LaBr}_1-\text{mean}}{\text{mean}}\cdot 100 = \frac{\text{LaBr}_1-\text{LaBr}_2}{\text{LaBr}_1+\text{LaBr}_2}\cdot 100$.
-This is so that it corresponds to the uncertainty of the mean.
+This is so that it roughly corresponds to the uncertainty of the mean.
 
 Measurements in February show negative values, indicating detector 2 is higher; while those in April are positive, meaning the opposite is true.
 
@@ -624,8 +626,8 @@ Measurements in February show negative values, indicating detector 2 is higher; 
 
 The outlier, with \qty{-30}{\percent}, corresponds to measurement number 6.
 For this measurement, LaBr detector number 1 was placed much closer to the target, and at \qty{0}{\degree}.
-The corresponding \Na calibration measurement may not correspond to that exact configuration, and so the results from this measurement and detector are probably unreliable.
-The measurements \emph{before} the change in position can also not be trusted, as the calibration was done on the 18th, after the position change.
+The corresponding \Na calibration measurement does not correspond to that configuration, and so the results from this measurement and detector are unreliable.
+The measurements \emph{before} the change in position can also not be trusted, as the calibration was done on the 18th, after the position was changed back; and the distances and angles were not carefully measured.
 
 Going forward, measurements 5 and 6 will be discarded, and their results not shown.
 \\
@@ -638,7 +640,11 @@ Going forward, measurements 5 and 6 will be discarded, and their results not sho
 \end{figure}
 
 The best agreements between detectors are for the measurements at higher energies, in both months.
+The differences barely changing at energies under \qty{8}{\MeV}, and we can see at \qty{8.5}{\MeV}, where we have two measurements, that they give very similar numbers.
 All of this tells us that this difference is due to a systemic error, and that it is likely dependent on the energy of the accelerator.
+
+Regardless, agreement between detectors is good and consistent, and going forward we will represent, for each measurement and method, the average between both detectors.
+Their error bars will be $\pm$ the relative differences calculated above.
 
 \subsection{Agreement between fit methods}
 To determine the agreement between the different fit methods, we can calculate the relative difference between the results given by each, with the same formula as in the previous point.
@@ -673,7 +679,16 @@ Representing their average would restrict us to only 4 measurements, so we will 
 
 \subsection{Disagreement with EXFOR data}
 When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of \num{1.9}.
-Figure \ref{activation_result_diffs} shows the relative difference with respect to EXFOR in the same fashion as previously.
+In figure \ref{activation_final_results}, we plot the absolute results for the thick target yield, along with EXFOR.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.80\textwidth]{activation_final_results.eps}
+	\caption{Final results for thick target yield, next to the data from EXFOR.}
+	\label{activation_final_results}
+\end{figure}
+
+Figure \ref{activation_result_diffs} shows the relative difference with respect to EXFOR, as in $\left(\text{result}-\text{EXFOR}\right)/\text{EXFOR}\cdot 100$.
 
 \begin{figure}[H]
 	\centering
@@ -691,15 +706,6 @@ For measurement 4 specifically, some other change from one day to the next might
 We can also see that results for April are consistently higher that for February, but not by much.
 For the two energies where we can compare \textit{decay} results, de difference is of \qty{2.8}{\percent} for \qty{5.5}{\MeV} and \qty{3.0}{\percent} for \qty{7.0}{\MeV} (compared to their average).
 \\
-
-In figure \ref{activation_final_results} we plot the absolute results for the thick target yield, along with EXFOR.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.80\textwidth]{activation_final_results.eps}
-	\caption{}
-	\label{activation_final_results}
-\end{figure}
 
 In conclusion, although the activation measurements are consistent with each other and their shape is consistent with EXFOR; they are all too high, multiplied by a factor of around \num{1.9}.
 This is most likely due to an unidentified error in the data analysis, whose cause remains a mistery.

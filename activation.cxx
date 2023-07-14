@@ -796,7 +796,9 @@ void activation_results(){
 	cout << endl << "----- RESULTS -----" << endl;
 	Double_t exfor_result[ACTIVATION_N];
 	Double_t decay_exfor_diff[ACTIVATION_N];
+	Double_t decay_exfor_diff_err[ACTIVATION_N];
 	Double_t unified_exfor_diff[ACTIVATION_N];
+	Double_t unified_exfor_diff_err[ACTIVATION_N];
 	Double_t rise_exfor_diff[ACTIVATION_N];
 	Double_t unirise_diff[ACTIVATION_N];
 	Double_t unirise_diff_per[ACTIVATION_N];
@@ -812,6 +814,8 @@ void activation_results(){
 		decay_exfor_diff[i] = (decay_average[i] - exfor_result[i])/exfor_result[i]*100;
 		unified_exfor_diff[i] = (unified_average[i] - exfor_result[i])/exfor_result[i]*100;
 		rise_exfor_diff[i] = (rise_average[i] - exfor_result[i])/exfor_result[i]*100;
+		decay_exfor_diff_err[i] = (decay_average[i] - exfor_result[i])/exfor_result[i]*100;
+		unified_exfor_diff_err[i] = (unified_average[i] - exfor_result[i])/exfor_result[i]*100;
 		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << decay_exfor_diff[i] << "%" << endl;
 		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << unified_exfor_diff[i] << "%" << endl;
 		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << rise_exfor_diff[i] << "%" << endl;
@@ -918,37 +922,37 @@ void activation_results(){
 	myCanvas->Write("exfor_diffs", TObject::kOverwrite);
 
 	TMultiGraph* final_exfor_results_multigraph = new TMultiGraph();
-	TGraph* unified_exfor_results_feb = new TGraph(4, activation_energies, unified_average);
+	TGraphErrors* unified_exfor_results_feb = new TGraphErrors(4, activation_energies, unified_average, NULL, unified_average_diff);
 	unified_exfor_results_feb->SetTitle("Unified, February");
 	unified_exfor_results_feb->SetMarkerColor(kRed);
 	unified_exfor_results_feb->SetMarkerStyle(34);
 	unified_exfor_results_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* unified_exfor_results_apr = new TGraph(4, &activation_energies[6], &unified_average[6]);
+	TGraphErrors* unified_exfor_results_apr = new TGraphErrors(4, &activation_energies[6], &unified_average[6], NULL, &unified_average_diff[6]);
 	unified_exfor_results_apr->SetTitle("Unified, April");
 	unified_exfor_results_apr->SetMarkerColor(kBlue);
 	unified_exfor_results_apr->SetMarkerStyle(34);
 	unified_exfor_results_apr->SetMarkerSize(MARKER_SIZE);
-	TGraph* rise_exfor_results_feb = new TGraph(4, activation_energies, rise_average);
+	TGraphErrors* rise_exfor_results_feb = new TGraphErrors(4, activation_energies, rise_average, NULL, rise_average_diff);
 	rise_exfor_results_feb->SetTitle("Rise, February");
 	rise_exfor_results_feb->SetMarkerColor(kRed);
 	rise_exfor_results_feb->SetMarkerStyle(21);
 	rise_exfor_results_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* rise_exfor_results_apr = new TGraph(4, &activation_energies[6], &rise_average[6]);
+	TGraphErrors* rise_exfor_results_apr = new TGraphErrors(4, &activation_energies[6], &rise_average[6], NULL, &rise_average_diff[6]);
 	rise_exfor_results_apr->SetTitle("Rise, April");
 	rise_exfor_results_apr->SetMarkerColor(kBlue);
 	rise_exfor_results_apr->SetMarkerStyle(21);
 	rise_exfor_results_apr->SetMarkerSize(MARKER_SIZE);
-	TGraph* decay_exfor_results_feb = new TGraph(4, activation_energies, decay_average);
+	TGraphErrors* decay_exfor_results_feb = new TGraphErrors(4, activation_energies, decay_average, NULL, decay_average_diff);
 	decay_exfor_results_feb->SetTitle("Decay, February");
 	decay_exfor_results_feb->SetMarkerColor(kRed);
 	decay_exfor_results_feb->SetMarkerStyle(47);
 	decay_exfor_results_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* decay_exfor_results_apr = new TGraph(4, &activation_energies[6], &decay_average[6]);
+	TGraphErrors* decay_exfor_results_apr = new TGraphErrors(4, &activation_energies[6], &decay_average[6], NULL, &decay_average_diff[6]);
 	decay_exfor_results_apr->SetTitle("Decay, April");
 	decay_exfor_results_apr->SetMarkerColor(kBlue);
 	decay_exfor_results_apr->SetMarkerStyle(47);
 	decay_exfor_results_apr->SetMarkerSize(MARKER_SIZE);
-	TGraph* exfor_graph = new TGraphErrors(63, exfor_energies, exfor_data);	//TBD:hardcoded number
+	TGraph* exfor_graph = new TGraph(63, exfor_energies, exfor_data);	//TBD:hardcoded number
 	exfor_graph->SetTitle("EXFOR yield data;Energy of a (keV);Thick target (a,n) yield");
 	exfor_graph->SetMarkerStyle(20);
 	exfor_graph->SetMarkerColor(kBlack);
@@ -965,8 +969,6 @@ void activation_results(){
 	final_exfor_results_multigraph->Draw("AP");
 	myCanvas->BuildLegend();
 	myCanvas->Write("final_exfor_results", TObject::kOverwrite);
-
-
 
 
 	myCanvas->Close();
