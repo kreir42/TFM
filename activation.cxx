@@ -814,8 +814,8 @@ void activation_results(){
 		decay_exfor_diff[i] = (decay_average[i] - exfor_result[i])/exfor_result[i]*100;
 		unified_exfor_diff[i] = (unified_average[i] - exfor_result[i])/exfor_result[i]*100;
 		rise_exfor_diff[i] = (rise_average[i] - exfor_result[i])/exfor_result[i]*100;
-		decay_exfor_diff_err[i] = (decay_average[i] - exfor_result[i])/exfor_result[i]*100;
-		unified_exfor_diff_err[i] = (unified_average[i] - exfor_result[i])/exfor_result[i]*100;
+		decay_exfor_diff_err[i] = (decay_average_diff[i] - exfor_result[i])/exfor_result[i]*100;
+		unified_exfor_diff_err[i] = (unified_average_diff[i] - exfor_result[i])/exfor_result[i]*100;
 		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << decay_exfor_diff[i] << "%" << endl;
 		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << unified_exfor_diff[i] << "%" << endl;
 		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << rise_exfor_diff[i] << "%" << endl;
@@ -880,12 +880,12 @@ void activation_results(){
 	myCanvas->Write("method_rel_diffs", TObject::kOverwrite);
 
 	TMultiGraph* final_exfor_diffs_multigraph = new TMultiGraph();
-	TGraph* unified_exfor_diffs_feb = new TGraph(4, activation_energies, unified_exfor_diff);
+	TGraphErrors* unified_exfor_diffs_feb = new TGraphErrors(4, activation_energies, unified_exfor_diff, NULL, unified_exfor_diff_err);
 	unified_exfor_diffs_feb->SetTitle("Unified, February");
 	unified_exfor_diffs_feb->SetMarkerColor(kRed);
 	unified_exfor_diffs_feb->SetMarkerStyle(34);
 	unified_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* unified_exfor_diffs_apr = new TGraph(4, &activation_energies[6], &unified_exfor_diff[6]);
+	TGraphErrors* unified_exfor_diffs_apr = new TGraphErrors(4, &activation_energies[6], &unified_exfor_diff[6], NULL, &unified_exfor_diff_err[6]);
 	unified_exfor_diffs_apr->SetTitle("Unified, April");
 	unified_exfor_diffs_apr->SetMarkerColor(kBlue);
 	unified_exfor_diffs_apr->SetMarkerStyle(34);
@@ -900,12 +900,12 @@ void activation_results(){
 	rise_exfor_diffs_apr->SetMarkerColor(kBlue);
 	rise_exfor_diffs_apr->SetMarkerStyle(21);
 	rise_exfor_diffs_apr->SetMarkerSize(MARKER_SIZE);
-	TGraph* decay_exfor_diffs_feb = new TGraph(4, activation_energies, decay_exfor_diff);
+	TGraphErrors* decay_exfor_diffs_feb = new TGraphErrors(4, activation_energies, decay_exfor_diff, NULL, decay_exfor_diff_err);
 	decay_exfor_diffs_feb->SetTitle("Decay, February");
 	decay_exfor_diffs_feb->SetMarkerColor(kRed);
 	decay_exfor_diffs_feb->SetMarkerStyle(47);
 	decay_exfor_diffs_feb->SetMarkerSize(MARKER_SIZE);
-	TGraph* decay_exfor_diffs_apr = new TGraph(4, &activation_energies[6], &decay_exfor_diff[6]);
+	TGraphErrors* decay_exfor_diffs_apr = new TGraphErrors(4, &activation_energies[6], &decay_exfor_diff[6], NULL, &decay_exfor_diff_err[6]);
 	decay_exfor_diffs_apr->SetTitle("Decay, April");
 	decay_exfor_diffs_apr->SetMarkerColor(kBlue);
 	decay_exfor_diffs_apr->SetMarkerStyle(47);
