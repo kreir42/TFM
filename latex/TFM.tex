@@ -12,8 +12,8 @@
 \usepackage{bm}	%bold para math
 
 \usepackage{titlesec}
-\titleformat{\chapter}[display]
-{\normalfont\bfseries}{}{0pt}{\Huge}	%quitar header de chapter
+%\titleformat{\chapter}[display]
+%{\normalfont\bfseries}{}{12pt}{\Huge}	%quitar header de chapter
 
 \usepackage{siunitx}	%support for units, numbers
 \sisetup{output-decimal-marker={.}, separate-uncertainty}
@@ -674,23 +674,22 @@ More measurements are needed to make sure, but a sudden change in current mostly
 It makes sense that the results are worse, as \textit{unified} is able to give a better fit for the proportionality constant that determines the \textit{extra background}, by virtue of also analyzing the sudden change at the beginning and end of activation.
 \\
 
-We will, then, discard the \textit{rise} results and use the \textit{decay} and \textit{unified} results moving forward.
-Representing their average would restrict us to only 4 measurements, so we will represent \textit{decay} results for all 8\footnote{Measurements 5 and 6 were removed.} measurements and \textit{unified} results where they are available.
+We will, then, discard the \textit{rise} results and use only the \textit{decay} results moving forward.
+Representing their average would restrict us to only 4 measurements, so we will represent \textit{decay} results for all 8\footnote{Measurements 5 and 6 were removed.}, knowing they agree within \qty{1}{\percent}.
 
 \subsection{Disagreement with EXFOR data}
 When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of \num{1.9}.
-In figure \ref{activation_final_results}, we plot the absolute results for the thick target yield, along with EXFOR.
-
-It shows that the results agree with each other and follow the same shape as EXFOR, but displaced to higher values.
+In figure \ref{activation_final_results}, we plot the absolute results for the thick target yield, along with the raw data from EXFOR.
+We also plot the EXFOR data scale up by \num{1.9}, to show that the results follow the same shape, but higher.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{activation_final_results.eps}
-	\caption{Final results for thick target yield, next to the data from EXFOR.}
+	\caption{Final results for thick target yield, next to the data from EXFOR and a scaled up version.}
 	\label{activation_final_results}
 \end{figure}
 
-Figure \ref{activation_result_diffs} shows the relative difference with respect to EXFOR, in percentage.
+Figure \ref{activation_result_diffs} shows the ratio of results over EXFOR.
 
 \begin{figure}[H]
 	\centering
@@ -700,13 +699,13 @@ Figure \ref{activation_result_diffs} shows the relative difference with respect 
 	\label{activation_result_diffs}
 \end{figure}
 
-We can see that the results are almost double the expected, and also that they deviate more for energies higher than \qty{7}{\MeV}; meaning their shape is also not completely the same (although the difference is not as severe), the curve grows somewhat faster.
+We can see that the results are almost double the expected, and also that they deviate more for energies higher than \qty{7}{\MeV}; meaning their shape is also not completely the same (although the difference is small), the curve grows somewhat faster.
 The lower point at \qty{8.5}{\MeV} corresponds to measurement 4, done on February but on the second day, unlike the others.
 The difficulties with the Tandem at higher energies might explain the diverging results there.
-For measurement 4 specifically, some other change from one day to the next might be a possible explanation for it decreasing instead of increasing.
+For measurement 4 specifically, some other change from one day to the next might be a possible explanation for it decreasing instead of increasing, the same way measurements change from February to April.
 
-We can also see that results for April are consistently higher that for February, but not by much.
-For the two energies where we can compare \textit{decay} results, de difference is of \qty{2.8}{\percent} for \qty{5.5}{\MeV} and \qty{3.0}{\percent} for \qty{7.0}{\MeV} (compared to their average).
+We can compare the results by month and see that, for April, they are consistently higher than for February, but not by much.
+For the two energies where we can compare \textit{decay} results, the difference is of \qty{2.8}{\percent} for \qty{5.5}{\MeV} and \qty{3.0}{\percent} for \qty{7.0}{\MeV} (compared to their average).
 \\
 
 In conclusion, although the activation measurements are consistent with each other and their shape is consistent with EXFOR; they are all too high, multiplied by a factor of around \num{1.9}.
@@ -838,7 +837,7 @@ with $m_\text{n}$ the mass of the neutron.
 Representing the calculated energy of every count in the neutron response in a histogram, we get the energy spectrum of the detected neutrons.
 We correct it by dividing every bin by the geometric efficiency of the detector and by its efficiency in energy (given by figure \ref{monster_efficiency}).
 
-After dividing by the number of alphas and the width of the bins, the resulting plot is the energy spectrum of the neutrons produced in the \an reactions.
+After dividing by the number of alphas and the width of the bins, the resulting plot (figure \ref{pulsed_energysimple}) is the energy spectrum of the neutrons produced in the \an reactions.
 
 \begin{figure}[H]
 	\centering

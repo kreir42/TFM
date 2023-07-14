@@ -184,9 +184,9 @@ detector 2: 1.51489e-05
 Activation N 1
 Activation E: 5500
 exfor: 7.555e-07
-decay average : 1.38811e-06 (3.78416%) | 83.7334%
-unified average : 1.39108e-06 (3.88347%) | 84.1267%
-rise average : 1.66518e-06 (4.00548%) | 120.408%
+decay average : 1.38811e-06 (3.78416%) | 1.83733%
+unified average : 1.39108e-06 (3.88347%) | 1.84127%
+rise average : 1.66518e-06 (4.00548%) | 2.20408%
 
 unirise_diff : -2.74102e-07 (?%)
 unirise_diff_per : -8.96855% (?%)
@@ -198,9 +198,9 @@ unirise_decay_diff_per : -1.40022e-07% (?%)
 Activation N 2
 Activation E: 7000
 exfor: 4.999e-06
-decay average : 9.13938e-06 (3.98242%) | 82.8242%
-unified average : 9.15845e-06 (3.6748%) | 83.2057%
-rise average : 9.00801e-06 (3.12577%) | 80.1962%
+decay average : 9.13938e-06 (3.98242%) | 1.82824%
+unified average : 9.15845e-06 (3.6748%) | 1.83206%
+rise average : 9.00801e-06 (3.12577%) | 1.80196%
 
 unirise_diff : 1.50443e-07 (?%)
 unirise_diff_per : 0.828137% (?%)
@@ -212,9 +212,9 @@ unirise_decay_diff_per : 5.61507e-08% (?%)
 Activation N 3
 Activation E: 8500
 exfor: 1.502e-05
-decay average : 2.89434e-05 (3.38572%) | 92.6991%
-unified average : 2.83868e-05 (3.00233%) | 88.9931%
-rise average : 3.285e-05 (13.3947%) | 118.708%
+decay average : 2.89434e-05 (3.38572%) | 1.92699%
+unified average : 2.83868e-05 (3.00233%) | 1.88993%
+rise average : 3.285e-05 (13.3947%) | 2.18708%
 
 unirise_diff : -4.46324e-06 (?%)
 unirise_diff_per : -7.2885% (?%)
@@ -226,9 +226,9 @@ unirise_decay_diff_per : -1.67498e-06% (?%)
 Activation N 4
 Activation E: 8500
 exfor: 1.502e-05
-decay average : 2.6328e-05 (3.02052%) | 75.2861%
-unified average : 0 (0%) | -100%
-rise average : 0 (0%) | -100%
+decay average : 2.6328e-05 (3.02052%) | 1.75286%
+unified average : 0 (0%) | 0%
+rise average : 0 (0%) | 0%
 
 unirise_diff : 0 (?%)
 unirise_diff_per : -nan% (?%)
@@ -240,9 +240,9 @@ unirise_decay_diff_per : 2.6328e-05% (?%)
 Activation N 5
 Activation E: 5500
 exfor: 7.555e-07
-decay average : 0 (0%) | -100%
-unified average : 1.42462e-06 (5.09449%) | 88.5666%
-rise average : 1.73617e-06 (5.86884%) | 129.804%
+decay average : 0 (0%) | 0%
+unified average : 1.42462e-06 (5.09449%) | 1.88567%
+rise average : 1.73617e-06 (5.86884%) | 2.29804%
 
 unirise_diff : -3.11548e-07 (?%)
 unirise_diff_per : -9.85666% (?%)
@@ -254,9 +254,9 @@ unirise_decay_diff_per : -1.58039e-06% (?%)
 Activation N 6
 Activation E: 5500
 exfor: 7.555e-07
-decay average : 0 (0%) | -100%
-unified average : 0 (0%) | -100%
-rise average : 0 (0%) | -100%
+decay average : 0 (0%) | 0%
+unified average : 0 (0%) | 0%
+rise average : 0 (0%) | 0%
 
 unirise_diff : 0 (?%)
 unirise_diff_per : -nan% (?%)
@@ -268,9 +268,9 @@ unirise_decay_diff_per : 0% (?%)
 Activation N 7
 Activation E: 8250
 exfor: 1.2925e-05
-decay average : 2.60119e-05 (2.01717%) | 101.253%
-unified average : 2.59474e-05 (2.34774%) | 100.754%
-rise average : 2.53609e-05 (4.04952%) | 96.2161%
+decay average : 2.60119e-05 (2.01717%) | 2.01253%
+unified average : 2.59474e-05 (2.34774%) | 2.00754%
+rise average : 2.53609e-05 (4.04952%) | 1.96216%
 
 unirise_diff : 5.86479e-07 (?%)
 unirise_diff_per : 1.14305% (?%)
@@ -282,9 +282,9 @@ unirise_decay_diff_per : 3.57739e-07% (?%)
 Activation N 8
 Activation E: 7000
 exfor: 4.999e-06
-decay average : 9.70455e-06 (1.50191%) | 94.1298%
-unified average : 0 (0%) | -100%
-rise average : 0 (0%) | -100%
+decay average : 9.70455e-06 (1.50191%) | 1.9413%
+unified average : 0 (0%) | 0%
+rise average : 0 (0%) | 0%
 
 unirise_diff : 0 (?%)
 unirise_diff_per : -nan% (?%)
@@ -296,9 +296,9 @@ unirise_decay_diff_per : 9.70455e-06% (?%)
 Activation N 9
 Activation E: 5500
 exfor: 7.555e-07
-decay average : 1.46832e-06 (1.36847%) | 94.3502%
-unified average : 0 (0%) | -100%
-rise average : 0 (0%) | -100%
+decay average : 1.46832e-06 (1.36847%) | 1.9435%
+unified average : 0 (0%) | 0%
+rise average : 0 (0%) | 0%
 
 unirise_diff : 0 (?%)
 unirise_diff_per : -nan% (?%)
@@ -310,9 +310,9 @@ unirise_decay_diff_per : 1.46832e-06% (?%)
 Activation N 10
 Activation E: 7500
 exfor: 7.716e-06
-decay average : 1.5371e-05 (1.44476%) | 99.2094%
-unified average : 0 (0%) | -100%
-rise average : 0 (0%) | -100%
+decay average : 1.5371e-05 (1.44476%) | 1.99209%
+unified average : 0 (0%) | 0%
+rise average : 0 (0%) | 0%
 
 unirise_diff : 0 (?%)
 unirise_diff_per : -nan% (?%)

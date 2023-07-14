@@ -806,16 +806,21 @@ void activation_results(){
 	Double_t unidecay_diff_per[ACTIVATION_N];
 	Double_t unirise_decay_diff[ACTIVATION_N];
 	Double_t unirise_decay_diff_per[ACTIVATION_N];
+	Double_t exfor_data_scaled[63];
+	Double_t scale_factor = 1.9;
+	for(int i=0; i<63; i++){
+		exfor_data_scaled[i]=exfor_data[i]*scale_factor;
+	}
 	for(short i=0; i<ACTIVATION_N; i++){
 		cout << "Activation N " << i+1 << endl;
 		cout << "Activation E: " << activation_energies[i] << endl;
 		exfor_result[i] = reactionsvenergy_exfor->Eval(activation_energies[i]);
 		cout << "exfor: " << exfor_result[i] << endl;
-		decay_exfor_diff[i] = (decay_average[i] - exfor_result[i])/exfor_result[i]*100;
-		unified_exfor_diff[i] = (unified_average[i] - exfor_result[i])/exfor_result[i]*100;
-		rise_exfor_diff[i] = (rise_average[i] - exfor_result[i])/exfor_result[i]*100;
-		decay_exfor_diff_err[i] = (decay_average_diff[i] - exfor_result[i])/exfor_result[i]*100;
-		unified_exfor_diff_err[i] = (unified_average_diff[i] - exfor_result[i])/exfor_result[i]*100;
+		decay_exfor_diff[i] = (decay_average[i])/exfor_result[i];
+		unified_exfor_diff[i] = (unified_average[i])/exfor_result[i];
+		rise_exfor_diff[i] = (rise_average[i])/exfor_result[i];
+		decay_exfor_diff_err[i] = (decay_average_diff[i])/exfor_result[i];
+		unified_exfor_diff_err[i] = (unified_average_diff[i])/exfor_result[i];
 		cout << "decay average : " << decay_average[i] << " (" << decay_average_diff_per[i] << "%) | " << decay_exfor_diff[i] << "%" << endl;
 		cout << "unified average : " << unified_average[i] << " (" << unified_average_diff_per[i] << "%) | " << unified_exfor_diff[i] << "%" << endl;
 		cout << "rise average : " << rise_average[i] << " (" << rise_average_diff_per[i] << "%) | " << rise_exfor_diff[i] << "%" << endl;
@@ -910,14 +915,14 @@ void activation_results(){
 	decay_exfor_diffs_apr->SetMarkerColor(kBlue);
 	decay_exfor_diffs_apr->SetMarkerStyle(47);
 	decay_exfor_diffs_apr->SetMarkerSize(MARKER_SIZE);
-	final_exfor_diffs_multigraph->Add(unified_exfor_diffs_feb);
+//	final_exfor_diffs_multigraph->Add(unified_exfor_diffs_feb);
 //	final_exfor_diffs_multigraph->Add(rise_exfor_diffs_feb);
 	final_exfor_diffs_multigraph->Add(decay_exfor_diffs_feb);
-	final_exfor_diffs_multigraph->Add(unified_exfor_diffs_apr);
+//	final_exfor_diffs_multigraph->Add(unified_exfor_diffs_apr);
 //	final_exfor_diffs_multigraph->Add(rise_exfor_diffs_apr);
 	final_exfor_diffs_multigraph->Add(decay_exfor_diffs_apr);
-	final_exfor_diffs_multigraph->SetTitle("Relative errors between methods and EXFOR;Energy (keV);Relative difference (%)");
-	final_exfor_diffs_multigraph->Draw("AP");
+	final_exfor_diffs_multigraph->SetTitle("Ratio between results and EXFOR;Energy (keV);Relative difference (%)");
+	final_exfor_diffs_multigraph->Draw("APE1");
 	myCanvas->BuildLegend();
 	myCanvas->Write("exfor_diffs", TObject::kOverwrite);
 
@@ -958,15 +963,22 @@ void activation_results(){
 	exfor_graph->SetMarkerColor(kBlack);
 	exfor_graph->SetMarkerSize(MARKER_SIZE/2);
 	exfor_graph->SetLineColor(kBlack);
-	final_exfor_results_multigraph->Add(unified_exfor_results_feb);
+	TGraph* exfor_graph_scaled = new TGraph(63, exfor_energies, exfor_data_scaled);	//TBD:hardcoded number
+	exfor_graph_scaled->SetTitle("EXFOR yield data, scaled;Energy of a (keV);Thick target (a,n) yield");
+	exfor_graph_scaled->SetMarkerStyle(22);
+	exfor_graph_scaled->SetMarkerColor(kBlack);
+	exfor_graph_scaled->SetMarkerSize(MARKER_SIZE/2);
+	exfor_graph_scaled->SetLineColor(kBlack);
+//	final_exfor_results_multigraph->Add(unified_exfor_results_feb);
 //	final_exfor_results_multigraph->Add(rise_exfor_results_feb);
 	final_exfor_results_multigraph->Add(decay_exfor_results_feb);
-	final_exfor_results_multigraph->Add(unified_exfor_results_apr);
+//	final_exfor_results_multigraph->Add(unified_exfor_results_apr);
 //	final_exfor_results_multigraph->Add(rise_exfor_results_apr);
 	final_exfor_results_multigraph->Add(decay_exfor_results_apr);
 	final_exfor_results_multigraph->Add(exfor_graph, "PL");
+	final_exfor_results_multigraph->Add(exfor_graph_scaled, "PL");
 	final_exfor_results_multigraph->SetTitle("Different methods and EXFOR;Energy (keV);Thick target yield (reactions/incident particle)");
-	final_exfor_results_multigraph->Draw("AP");
+	final_exfor_results_multigraph->Draw("APE1");
 	myCanvas->BuildLegend();
 	myCanvas->Write("final_exfor_results", TObject::kOverwrite);
 
