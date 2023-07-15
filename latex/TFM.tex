@@ -132,6 +132,11 @@ Detectors used are both organic and inorganic scintillators.
 	\label{overview_photo}
 \end{figure}
 
+During the measurements, the particle accelerator fires $\alpha$ particles at the target, which is thick enough to stop all of them.
+The \an reactions are observed by a series of radiation detectors placed around the target, at different distances and angles.
+They are all connected to a data acquisition system (DAQ), that records everything for later analysis.
+The current hitting the target also monitored, by a charge integrator also connected to the DAQ.
+
 \section{Tandem 3MV accelerator}
 A tandem is a type of linear particle accelerator whose main characteristic is that particles are accelerated twice by the same terminal voltage.
 Particles are injected with negative charge from a source situated outside the tank, and accelerated toward the terminal.
@@ -141,7 +146,7 @@ Now with a positive charge, they are accelerated the rest of the way by the same
 \\
 
 In the case of alpha particles, they are injected with charge -1, and then stripped of all electrons, to charge +2.
-Given that the maximum voltage of the CNA tandem accelerator is \qty{3}{\mega\volt}, alphas can be accelerated to a maximum of $3\cdot\left(1+2\right) = \qty{9}{\mega\eV}$.	%TBD:añadir injection energy
+Given that the maximum voltage of the CNA tandem accelerator is \qty{3}{\mega\volt}, alphas can be accelerated to a theoretical maximum of $3\cdot\left(1+2\right) = \qty{9}{\mega\eV}$.	%TBD:añadir injection energy
 \\
 
 \subsection{Pulsed beam mode}
@@ -154,9 +159,9 @@ In reality, they are approximated by a gaussian distribution, with a certain wid
 
 To achieve pulsed operations, the accelerator uses two devices: the \textit{chopper} and the \textit{buncher}.
 The \textit{chopper} generates an electric field that deflects all particles coming from the accelerator.
-With a X frequency, it disengages the field and lets particles pass for X time.	%TBD: poner valores
+With a X frequency, it disengages the field and lets particles pass for 40 to \qty{250}{\nano\second}.	%TBD: poner valores
 
-After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerates the slower ones, making the pulse narrower in time (X) and gaussian shaped.	%TBD:poner valor
+After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerate the slower ones, making the pulse narrower in time (1 to \qty{2}{\nano\second}) and gaussian shaped.	%TBD:poner valor
 \\
 
 \subsection{Difficulties with accelerating alpha particles}	%TBD:replace with bold symbol
@@ -164,31 +169,45 @@ Although it is used in this experiment to accelerate alphas, the CNA Tandem acce
 Rather, it was designed to accelerate deuterons, which have the same mass-to-charge ratio.
 This means that, while alphas can be also be accelerated, some problems arise when generating pulses.
 
-The reason is that the electric fields used by the buncher to shape pulses are not strong enough.
-This produces both wider and asymmetric pulses than with deuterons, as well as smaller overall currents; especially at higher energies (figure \ref{uneven_gflash}).
+The reason is that the electric fields used by the buncher to shape pulses are not strong enough for alphas.
+This produces both wider and asymmetric pulses than with deuterons, as well as smaller overall currents; especially at higher energies (Figure \ref{uneven_gflash}).
+In practive, it limits the energy that can be achived for $\alpha$ particles with the accelerator in pulsed mode, to around \qty{8.5}{\MeV}.
 \\
 
 \subsection{Neutron line}
-·Explain the different parts of the neutron line. Photos.\\
+After the particles are accelerated, they pass through the neutron line before hitting the target.
+
+It is placed after the accelerator's \qty{90}{\degree} analyzing magnet, typically used to deflect particles toward the other experimental lines.
+Because the neutron line is parallel to the accelerator, we cannot use the magnet to select particles (discard particles that do not have the desired charge state/speed ratio).
+This is not a problem in our case, as the amount of alphas with charge +1 (not all electrons are stripped by the \textit{stripper}) is negligible.
+
+Figure \ref{tandemdiagrama} shows all of the valves, collimators, filters, etc... placed along the line.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.90\textwidth]{tandemdiagrama.eps}
+	\caption{Diagram of the accelerator system and HiSPANoS neutron line, with all components.
+	The detectors shown do not correspond to the angles they were placed in.}
+	\label{tandemdiagrama}
+\end{figure}
 
 \section{Target}
-The target is a sheet of \qty{95}{\percent} purity \Aliso.	%TBD:confirmar porcentaje
-This metal was chosen because it is relatively well known compared to others, with the best available measurements of \an reactions to compare to.
+The target is a sheet of \qty{95}{\percent} purity \Aliso.
+Being a few milimeters thick, it is enough to be considered a thick target, meaning it will stop all incoming $\alpha$ particles.
 \\
+%Because the target is thick (more than a few micrometers), all of the alphas will be completely stopped by it.
+%This means that, for some of the \an reactions, the alpha particles will have lost part of their energy in the material.
 
-Because the target is thick (more than a few micrometers), all of the alphas will be completely stopped by it.
-This means that, for some of the \an reactions, the alpha particles will have lost part of their energy in the material.
-
-Any measurements taken with a thick target are thus integrated measurements, for energies up to the one the alphas were accelerated to.
-If we wanted to measure only \an reactions at a specific energy, we would have to use a very thin sheet of aluminium, so as to stop the alphas from being slowed down.
-\\
+%Any measurements taken with a thick target are thus integrated measurements, for energies up to the one the alphas were accelerated to.
+%If we wanted to measure only \an reactions at a specific energy, we would have to use a very thin sheet of aluminium, so as to stop the alphas from being slowed down.
+%\\
 
 It is important, in order to obtain quantitative results, to know how many alphas hit the target.
 Because they are stripped of all their electrons, they have charge +2 when they arrive at the target.\footnote{Because the neutron line is aligned with the accelerator, using the \qty{90}{\degree} electromagnet to eliminate other charge states is not possible. Nontheless, the number of alpha particles with charge +1 is considered small enough as to be ignored.}
-The target is not grounded, and so it charges up positively as alphas impact it.
+The target is isolated from the rest of the neutron line by insulators (Figure \ref{tandemdiagrama}), and so it charges up positively as alphas impact it.
 By measuring the charge on the target, we can know how many alphas have hit it.
 
-To do so, we connect the target via a copper wire to a \emph{charge integrator}, a device that emits a pulse and discharges the target each time it reaches \qty{0.1}{\nano\coulomb}, or approximately \num{3E8} alphas.
+To do so, we connect the target via a cable to a \emph{charge integrator}, a device that emits a pulse and discharges the target each time it reaches \qty{0.1}{\nano\coulomb}, or approximately \num{3E8} alphas.
 It is important that the target does not accumulate too much positive charge, as that could slow down or deflect incoming particles.
 
 \begin{figure}[H]
@@ -202,22 +221,22 @@ It is important that the target does not accumulate too much positive charge, as
 The thick target yield (number of \an reactions per number of incident alphas) will be measured by using gamma detectors, while the \an neutron spectra will be done via time of flight measurements with a neutron detector.
 \\
 
-·Drawing with distances and angles of all relevant detectors.\\
+%·Drawing with distances and angles of all relevant detectors.\\
 
 \begin{table}[H]	%Tabla con distancias y ángulos de detectores
 \centering
 \begin{tabular}[c]{>{\bfseries}l||c|c}
-	Detector		&Distances\tablefootnote{Detectors were moved in order to get measurements at different distances.} (\unit{\cm})& Angle\\ \hline
-	\textbf{MONSTER}	&\num{100}, \num{200}			&\qty{60}{\degree}	\\ \hline
-	\textbf{LaBr1}		&\num{20}, \num{10}, \num{30}		&\qty{150}{\degree}	\\ \hline
-	\textbf{LaBr2}		&\num{20}, \num{30}			&\qty{210}{\degree}	\\ \hline
+	Detector		&Distances\tablefootnote{Detectors were moved in order to get measurements at different distances. For the LaBr\textsubscript{3} detectors, their distance was not measured with precision.} (\unit{\cm})& Angle\\ \hline
+	\textbf{MONSTER}	&\num{100}, \num{200}		&\qty{60}{\degree}	\\ \hline
+	\textbf{LaBr1}		&\num{20} to \num{30}		&\qty{150}{\degree}	\\ \hline
+	\textbf{LaBr2}		&\num{20} to \num{30}		&\qty{210}{\degree}	\\ \hline
 \end{tabular}
 \caption{Angles and distances of detectors.}
 \label{distances_angles_table}
 \end{table}
 
 \subsection{LaBr}
-To measure gammas, we use two LaBr\textsubscript{3} (lanthanum bromide) detectors, which we refer to as "LaBr1" and "LaBr2".
+To measure $\gamma$-rays, we use two LaBr\textsubscript{3} (lanthanum bromide) detectors, which we refer to as "LaBr1" and "LaBr2".
 They are inorganic scitillators, meaning they produce light when hit by ionizing radiation.
 This can be used to detect gamma rays by the following process:
 
@@ -231,11 +250,12 @@ These \textit{photo-electrons} are multiplied in a \textit{photomultiplier tube}
 Because proportionality is maintained in each of those conversions, we get a spectroscopic response, where more energetic gammas generate proportionately bigger pulses.
 \\
 
-To calculate the detectors' efficiency to \qty{511}{\keV} gammas, we use a \Na source that we stick on the target, at the end of the neutron line.
+To calculate the detectors' efficiency to \qty{511}{\keV} gammas, we use a \Na source that we tape to the target, at the end of the neutron line.
+This is pictured in Figure \ref{target_photo}.
 By fitting the resulting peak to a gaussian, we get the number of detected photons per second.
 We then divide by the total number of emmited photons (given the source's activity) to get the efficiency.
 \begin{equation}
-	\text{detector efficiency} = \frac{\text{counts per second}}{\text{total source emissions}}
+	\text{detector efficiency} = \frac{\text{counts per second}-\text{background}}{\text{total source emissions}}
 \end{equation}
 
 \begin{figure}[H]
@@ -258,6 +278,8 @@ We then divide by the total number of emmited photons (given the source's activi
 	\caption{LaBr1 response to \textsuperscript{60}Co calibration source.}
 	\label{labr_co60_calibration}
 \end{figure}
+
+They are placed close to the target, in order to get as many counts as possible; and behind it, so as not to be in front of the other detectors.
 
 \subsection{MONSTER}
 To measure the time of flight of neutrons produced by \an reactions, we use MONSTER, a liquid organic scintillator.
@@ -283,8 +305,8 @@ By integrating the charge in a scintillation pulse in two parts, between the ini
 	\text{PSD} = \frac{\text{slow}}{\text{fast}+\text{slow}}	%TBD:check
 \end{equation}
 that we can use to separate counts corresponding to neutrons from those that correspond to gammas.
-At high energies, the \textit{fast} portion saturates, causing the sahpe seen in figure \ref{example_psd}.
-This saturation can be caused either by a voltage limit in the detector or by the software in the data acquisition system.
+At high energies, the \textit{fast} portion saturates, causing the shape of the gamma tail seen in Figure \ref{example_psd}.
+This saturation can be caused by a voltage limit either in the detector or in the software in the data acquisition system.
 
 \begin{figure}[H]
 	\centering
@@ -311,7 +333,7 @@ Because it is organic, the cross-section for the photoelectric effect is much sm
 	\label{monster_co_calibration}
 \end{figure}
 
-To calibrate the MONSTER detector in energy, we use an efficiency curve obtained from simulations, shown in figure \ref{monster_efficiency}.	%TBD: referencia?
+To calibrate the MONSTER detector in energy, we use an efficiency curve obtained from simulations, shown in Figure \ref{monster_efficiency}.	%TBD: referencia?
 
 \begin{figure}[H]
 	\centering
@@ -321,21 +343,23 @@ To calibrate the MONSTER detector in energy, we use an efficiency curve obtained
 \end{figure}
 
 \section{DAQ}
+All of the data from the detectors, as well as from the charge integrator, are connected to a \textit{data acquisition system}, or DAQ.
+The one used consists of a single digitizer, a card that takes all of the incoming signals and saves the timestamp, energy and psd components (for neutron detectors), among other data, of every count.
+The data from each measurement is saved in separate \textit{.root} files in the computer it is connected to, to be later analyzed by ROOT.
 
 %%%
 %%%	ACTIVATION
 %%%
 
-\chapter{Activation}
-Two different types of experiments are carried out, \textit{activation} ones to measure thick target yield; and \textit{time-of-flight} ones for neutron energy spectra.
+\chapter{Neutron emission Thick Target Yield (TTY) by activation}
 
-\section{Procedure}
+\section{Activation experiments}
+
+\subsection{The activation principle}
 \textit{Activation} measurements are a way of measuring the yield of a reaction in a material by measuring the decay of a resulting isotope.
-
-\subsection{Principle}
-For \an \textit{activation} measurements, the beam is operated in continuous mode, launching a stream of alpha particles of a certain energy, $E_\alpha$.
-When the particles hit the target, \an reactions (among others) occur.
-Because the target is thick, meaning thick enough that all alphas will be stopped, these reaction will happen at alpha energies equal to or smaller than $E_\alpha$, as the particles lose energy in the target.
+For \an measurements, the beam is operated in continuous mode, launching towards the target a stream of alpha particles of a certain energy, $E_\alpha$.
+When the particles hit the target, there is a certain probability \an reactions (among others) occur.
+Because the target is thick enough that all alphas will be stopped, these reaction will take place at any alpha energy between $E_\alpha$ and, as the particles lose energy in the target, the reaction threshol of \qty{3}{\MeV}.
 
 The number of \an reactions will be proportional to the number of incident alpha particles, and the proportionality constant is the \textbf{thick target yield}.
 This is different from the regular \textit{yield}, which considers reactions at a single energy.
@@ -344,16 +368,15 @@ This is different from the regular \textit{yield}, which considers reactions at 
 	\label{tty_def}
 \end{equation}
 
-Because we cannot directly observe the reactions, activation measurements will instead count the number of produced nuclei by measuring their decay radiation.
-For that, the reaction must produce an isotope that decays with an appropiately long half-life (not too long nor too short), and emitting radiation that we can easily detect.
+In \textit{activation} measurements, the number of \an reactions will be determined from the number of reaction product nuclei, by measuring their decay radiation.
+For this, the reaction must produce an isotope that decays with an appropriately long half-life (not too long nor too short), and emitting radiation that we can easily detect.
 
-The target is to be bombarded for at least a few half-lifes, and then left to decay for several more, while we measure the decay radiation with detectors.
-We can calculate the number of produced nuclei, and thus the number of reactions that occured, by analysing the rate of detections of that radiation over time and the rate of incident particles.
+Ideally, the target is to be bombarded for a period of at least a few half-lifes, and then left to decay for several more, while we measure the decay radiation.
 
-\subsection{At CNA}
-At the CNA, we use a thick \Aliso target with \qty{95}{\percent} purity.
-Each \an reaction creates a single \Piso nuclei, with a \qty{2.498}{\minute} half-life.
-We measure its decay to \textsuperscript{30}Si by $\beta +$, emitting \qty{511}{\keV} annihilation gamma-rays with an intensity of \num{1.9971}.\cite{nucleardatasheets}
+\subsection{\Aliso\an activation at CNA HiSPANoS}
+At the HiSPANoS, we have used a thick \Aliso target with \qty{95}{\percent} purity.
+Each \an reaction creates a single \Piso nuclei, which is a radioactive isotope with a \qty{2.498(4)}{\minute} half-life.
+We measure its $\beta +$ decay into \textsuperscript{30}Si by observing the \qty{511}{\keV} annihilation $\gamma$-rays, emmited with an intensity of \num{1.99710(8)} \cite{nucleardatasheets}.
 
 \begin{figure}[H]
 	\centering
@@ -363,27 +386,27 @@ We measure its decay to \textsuperscript{30}Si by $\beta +$, emitting \qty{511}{
 	\label{Piso_decay_scheme}
 \end{figure}
 
-We irradiate the \Aliso target for several half-lifes, then the current in the accelerator is cut.
-All the while the number of alphas hitting the target over time is being measured and sent to the DAQ by the current integrator (figure \ref{target_photo}).
-The \Piso is then left to decay for several half-lifes.
+We irradiate the \Aliso target for several (3 to 6) half-lifes, and then let the produced \Piso decay for about 6 half-lives, so its activity becomes negligible.
+During the irradiation, the number of alphas hitting the target is being measured by connecting a cable from the target to the current integrator, and then sent to the DAQ (setup pictured in Figure \ref{target_photo}).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{example_activation_energy_histogram.png}
 	\caption{Example activation spectrum.
-	The energy window used to generate the time histogram (figure \ref{example_activation_time_histogram}) is shown in red.}
+	The energy window used to generate the time histogram (Figure \ref{example_activation_time_histogram}) is shown in red.}	%TBD: calibrar en energía o poner "canales"
 	\label{example_activation_energy_histogram}
 \end{figure}
 
-To measure the decay of \Piso nuclei, we use the two Lanthanum Bromide scintillators and look at the \qty{511}{\keV} gamma rays emmited from the target.
-Figure \ref{example_activation_energy_histogram} shows the spectrum of one of the LaBr detectors during an activation measurement.
-To represent the time histogram (figure \ref{example_activation_time_histogram}), we take only the counts whose energy fall inside the energy window shown in figure \ref{example_activation_energy_histogram}.
-The reason there are two peaks, instead of the single \qty{511}{\keV} peak we would expect, is that the high rate of counts during activation changes the gain of the detectors (figure \ref{example_activation_energytime}), shifting the channel the peak corresponds to.
+To measure the decay of \Piso nuclei, we use the two LaBr\textsubscript{3} scintillators and look at the $\gamma$-rays emitted from the target.
+Figure \ref{example_activation_energy_histogram} shows the energy deposited spectrum of one of the LaBr\textsubscript{3} detectors during an activation measurement.
+The reason there are two peaks, instead of the single \qty{511}{\keV} peak we would expect, is that the high rate of counts during activation affects the gain of the detectors, shifting the channel the peak corresponds to.
+This is illustrated in Figure \ref{example_activation_energytime}, corresponding to an irradiation between 360 and \qty{820}{\s}.
+To represent the counting rate as a function of time that allows studying the decay of \Piso, displayed in Figure \ref{example_activation_time_histogram}), we take only the counts whose energy fall inside the energy window shown in Figure \ref{example_activation_energy_histogram}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{example_activation_energytime.png}
-	\caption{Example activation spectrum over time.
+	\caption{Example activation spectrum over time.	%TBD: calibrar en energía o poner "canales"
 	The change in energy channel for the \qty{511}{\keV} peak is labelled in black.}
 	\label{example_activation_energytime}
 \end{figure}
@@ -397,77 +420,69 @@ The reason there are two peaks, instead of the single \qty{511}{\keV} peak we wo
 	\label{example_activation_time_histogram}
 \end{figure}
 
-The time histogram in figure \ref{example_activation_time_histogram} shows initial counts before the activation starts, corresponding to decay of \Piso from the previous measurement.
-When the activation starts, \num{\approx 11000} counts per bin appear very quickly.
-These counts go away as soon as the activation period ends.
-
+The time distribution shown in Figure \ref{example_activation_time_histogram} shows initial counts before the activation starts, corresponding to decay of \Piso from the previous irradiation.
+When the activation starts, \num{\approx 11000} counts per bin appear very quickly, going away as soon as the irradiation ends.
 We call these counts the \textit{extra background}.
-They are proportional to the alpha current, and correspond to gamma rays created by reactions other than \an.
-They can also be seen in figure \ref{example_activation_energytime}, as the large number of counts appearing during activation well outside of the \qty{511}{\keV} peak.
-They affect the histogram because, even if the emitted gammas are outside of the energy window, their Compton continuum still falls inside.
+They are proportional to the beam current and correspond to $\gamma$-rays from \an and other reactions.
 
-After activation ends, the counts we get correspond to the decay of the created \Piso nuclei.
+They can also be seen in Figure \ref{example_activation_energytime} as the large number of counts appearing during activation well outside of the \qty{511}{\keV} peak.
+They affect the time distribution because, even if the emitted $\gamma$-rays are outside of the selected energy window, their Compton continuum may still fall inside.
+
+After irradiation, the counts correspond to the decay of the created \Piso nuclei.
 
 \subsection{Measurements}
-Activation measurements were carried out in two sessions of two consecutive days, in February and April.
+The \Aliso\an activation measurements were carried out in two sessions of two consecutive days, in February and April.
 Table \ref{activation_measurements_table} summarises the different measurement conditions.
 
-Because detectors were unmounted in between both sessions, calibration measurements with \Na to determine detector efficiency (for activation measurements) were done for each detector configuration.
-However, only one set of calibration measurements were done each month.
-This caused problems for the April measurements, as the calibrations were done on the 18\textsuperscript{th}, but one of the detectors was moved closer for number 6, then back the following day.
+Because detectors were unmounted in between both sessions, calibration measurements with \Na to determine the detector efficiency were done once for each month.
 
 \begin{table}[H]	%Tabla con datos de las medidas de activación
 \centering
 \begin{tabular}[c]{>{\bfseries}r||c|c|c|c}
 	N & Energy (\unit{\keV}) & Current (\unit{\nano\A}) & Activation time (\unit{\s}) & Date\tablefootnote{All took place in 2023.} \\ \hline
-	1	&\num{5500}&\num{128}&\num{867}&Feb 22nd\\ \hline
-	2	&\num{7000}&\num{101}&\num{981}&Feb 22nd\\ \hline
-	3	&\num{8500}&\num{128}&\num{909}&Feb 22nd\\ \hline
-	4	&\num{8500}&\num{192}&\num{899}&Feb 23rd\\ \hline
-	5	&\num{5500}&\num{123}&\num{605}&Apr 17th\\ \hline
-	6	&\num{5500}&\num{312}&\num{599}&Apr 17th\\ \hline
-	7	&\num{8250}&\num{193}&\num{452}&Apr 18th\\ \hline
-	8	&\num{7000}&\num{216}&\num{466}&Apr 18th\\ \hline
-	9	&\num{5500}&\num{151}&\num{451}&Apr 18th\\ \hline
-	10	&\num{7500}&\num{183}&\num{448}&Apr 18th\\ \hline
+	1	&\num{5500}&\num{128}&\num{867}&Feb 22\textsuperscript{nd}\\ \hline
+	2	&\num{7000}&\num{101}&\num{981}&Feb 22\textsuperscript{nd}\\ \hline
+	3	&\num{8500}&\num{128}&\num{909}&Feb 22\textsuperscript{nd}\\ \hline
+	4	&\num{8500}&\num{192}&\num{899}&Feb 23\textsuperscript{rd}\\ \hline
+%	5	&\num{5500}&\num{123}&\num{605}&Apr 17\textsuperscript{th}\\ \hline
+%	6	&\num{5500}&\num{312}&\num{599}&Apr 17\textsuperscript{th}\\ \hline
+	5	&\num{8250}&\num{193}&\num{452}&Apr 18\textsuperscript{th}\\ \hline%7
+	6	&\num{7000}&\num{216}&\num{466}&Apr 18\textsuperscript{th}\\ \hline%8
+	7	&\num{5500}&\num{151}&\num{451}&Apr 18\textsuperscript{th}\\ \hline%9
+	8	&\num{7500}&\num{183}&\num{448}&Apr 18\textsuperscript{th}\\ \hline%10
 \end{tabular}
 \caption{Activation measurements}
 \label{activation_measurements_table}
 \end{table}
 
 \section{Data analysis}
-We can describe the number of \Piso nuclei in the target, $N$, using the differential equation:
+We can determine the activity from \Piso nuclei in the target using the differential equation:
 \begin{equation}
-	\ddt{N} = P(t) -\lambda N
+	A(t) = \ddt{N(t)} = P(t) -\lambda N(t)
 	\label{activation_diffeq}
 \end{equation}
-where $\lambda$ is the decay constant of \Piso and $P(t)$ is the number of \Piso nuclei produced (by \an reactions) per unit of time, and will be proportional to the current of alphas hitting the target.
-If expressed in number of alphas per second, the proportionality constant will be the thick target yield of the reaction: the number of \an reactions per incident $\alpha$ particle:
+where $\lambda$ is the decay constant of \Piso, $N(t)$ is the number of \Piso at time $t$, and $P(t)$ is the \Piso production rate.
+The Thick Target Yield of the reaction (TTY) can then be calculated from the production rate and the beam current:
 \begin{equation}
-	P(t) = \text{\an reactions per unit of time} = \text{thick target yield} \cdot \text{incident alphas per unit of time}
-\end{equation}
-or, for an activation of duration $\Delta t$:
-\begin{equation}
-	\int_{\Delta t}P(t) \dif t = \text{total \an reactions} = \text{thick target yield} \cdot \text{total incident alphas}
-\end{equation}
-and thus:
-\begin{equation}
-	\text{thick target yield} =
-	\frac{P(t)}{\text{incident alphas per unit of time}} =
-	\frac{\int_{\Delta t}P(t) \dif t}{\text{total incident alphas}}
-	\label{tty_fromP}
+	\text{TTY} = \frac{P(t)}{I_\alpha(t)}
 \end{equation}
 \\
+%or, for an activation of duration $\Delta t$:
+%\begin{equation}
+%	\int_{\Delta t}P(t) \dif t = \text{total \an reactions} = \text{thick target yield} \cdot \text{total incident alphas}
+%\end{equation}
+%and thus:
+%\begin{equation}
+%	\text{thick target yield} =
+%	\frac{P(t)}{\text{incident alphas per unit of time}} =
+%	\frac{\int_{\Delta t}P(t) \dif t}{\text{total incident alphas}}
+%	\label{tty_fromP}
+%\end{equation}
 
-Our goal being to get the thick target yield from $P(t)$, what we will actually analyze is the activity of \Piso nuclei as they decay by $\beta +$, which will be $A = \lambda N$.
-We don't actually measure the activity directly, but rather the activity times \num{1.99}: the intensity of the \qty{511}{\keV} emission.	%TBD: referencia para intensidad, tipo de decay
-
-In order to do that, we use the two LaBr scintillators to detect \qty{511}{\keV} gamma rays.
-Some counts will be noise, corresponding not to \Piso decays, but to the Compton continuum of higher energy emissions either in the environment or due to other reactions caused by the alphas in the target.
-This background will have to be removed, and its value determined by the different fitting methods below.
-
-We must take into account that, when representing the counts in a histogram, the number shown is dependent on the width of the bins.
-This means that, in order to get the activity in decays per second, we must divide the \qty{511}{\keV} counts shown in a histogram by \num{1.99} and by the histogram binwidth:
+Our goal being to get the thick target yield from $P(t)$, what we will actually analyze is the activity of \Piso nuclei as they decay by $\beta +$, which will be $A(t) = \lambda N(t)$.
+In order to do that, we use the two LaBr\textsubscript{3} scintillators to detect \qty{511}{\keV} $\gamma$-rays.
+Some counts will be background, corresponding not to \Piso decays, but to the Compton continuum of higher energy emissions either in the environment or due to other reactions caused by the alphas in the target.
+In order to get the activity in decays per second, we must subtract the background $b(t)$ from the \qty{511}{\keV} counts $c(t)$ shown and then divide by the intensity of the mission ($I_{511}=\num{1.99}$), the histogram binwidth ($b_{\Delta t}$) and the detection efficiency ($\varepsilon_{511}$):
 \begin{equation}
 	A = \text{\Piso decays per second} = \frac{\text{\qty{511}{\keV} counts per bin}}{\text{binwidth in seconds}\cdot\num{1.99}} - \text{background}
 \end{equation}
@@ -539,7 +554,7 @@ The main disadvantage is that, because it assumes $P(t)$ to be constant, the met
 Instead of taking $P(t)$ as constant and integrating \ref{activation_diffeq} analitically, another option is to fit either the whole histogram or the activation period (\textit{unified} or \textit{rise} fits, respectively) to a function that numerically integrates equation \ref{activation_diffeq} step by step.
 
 The function takes the data of current over time as input, and calculates $P(t)$ every step as $P(t) = \text{thick target yield}\cdot\text{alphas}$, with 'alphas' the number of incident alphas during the step.
-This is useful because the current is not perfectly constant, there are drops and rises in many of the measurements (figure \ref{current_histograms}) and this could make the \textit{decay} fit less precise, as the assumption of constant current could be incorrect.
+This is useful because the current is not perfectly constant, there are drops and rises in many of the measurements (Figure \ref{current_histograms}) and this could make the \textit{decay} fit less precise, as the assumption of constant current could be incorrect.
 \\
 \begin{figure}[H]
 	\centering
@@ -586,7 +601,7 @@ with \num{1.99} the intensity of the \qty{511}{\keV} decay radiation, which we n
 
 Figures \ref{example_unified_fit} and \ref{example_rise_fit} show the fits (red) to the data (blue).
 We can see that they adjust very well.
-In figure \ref{example_unified_fit}, we can see that it also correctly accounts for an initial amount of \Piso from a previous activation, as well as the \textit{rise} and \textit{decay} periods.
+In Figure \ref{example_unified_fit}, we can see that it also correctly accounts for an initial amount of \Piso from a previous activation, as well as the \textit{rise} and \textit{decay} periods.
 \\
 
 Data of current over time was not recorded in half of the measurements in April (numbers 8, 9 and 10).	%TBD: por qué razón?
@@ -636,7 +651,7 @@ Going forward, measurements 5 and 6 will be discarded, and their results not sho
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{decay_errors_rel_per_fixed.eps}
-	\caption{Same as figure \ref{decay_errors_rel_per}, but without measurements 5 and 6.}
+	\caption{Same as Figure \ref{decay_errors_rel_per}, but without measurements 5 and 6.}
 	\label{decay_errors_rel_per_fixed}
 \end{figure}
 
@@ -649,7 +664,7 @@ Their error bars will be $\pm$ the relative differences calculated above.
 
 \subsection{Agreement between fit methods}
 To determine the agreement between the different fit methods, we can calculate the relative difference between the results given by each, with the same formula as in the previous point.
-In figure \ref{activation_method_comparison} are represented the relative difference when comparing:
+In Figure \ref{activation_method_comparison} are represented the relative difference when comparing:
 \begin{itemize}
 	\item \textit{Unified} with \textit{rise}, drawn with crosses.
 	\item \textit{Unified} with \textit{decay}, drawn with Xs.
@@ -670,7 +685,7 @@ We can see that the agreement is under \qty{9}{\percent} between \textit{unified
 It seems from the results that the \textit{rise} method is the one in most disagreement with the others.
 The difference between \textit{decay} and the average between \textit{unified} and \textit{rise} is thus mostly due to the \textit{rise} results being more discordant.
 
-This disagreement with \textit{rise} seems to correlate with the current being less constant for measurements 1 and 3 (energies \num{5.5} and \num{8.5} in figure \ref{activation_method_comparison}) and, more noticeably, having abrupt changes compared to measurements 2 and 7.
+This disagreement with \textit{rise} seems to correlate with the current being less constant for measurements 1 and 3 (energies \num{5.5} and \num{8.5} in Figure \ref{activation_method_comparison}) and, more noticeably, having abrupt changes compared to measurements 2 and 7.
 More measurements are needed to make sure, but a sudden change in current mostly means a change in the \textit{extra background}.
 It makes sense that the results are worse, as \textit{unified} is able to give a better fit for the proportionality constant that determines the \textit{extra background}, by virtue of also analyzing the sudden change at the beginning and end of activation.
 \\
@@ -680,7 +695,7 @@ Representing the \textit{decay-unified} average would restrict us to only 4 meas
 
 \subsection{Disagreement with EXFOR data}
 When comparing the results we have obtained with EXFOR data, the disagreement is very large, around a factor of \num{1.9}.
-In figure \ref{activation_final_results}, we plot the absolute results for the thick target yield, along with the raw data from EXFOR.
+In Figure \ref{activation_final_results}, we plot the absolute results for the thick target yield, along with the raw data from EXFOR.
 We also plot the EXFOR data scale up by \num{1.9}, to show that the results follow the same shape, but higher.
 
 \begin{figure}[H]
@@ -761,7 +776,7 @@ The detector signals from photons and neutrons are registered and marked with th
 The result is a ToF distribution of signals that, in order to have physical meaning, need just to be shifted so that the $\gamma$-flash falls in the $\text{ToF}=L/c$ position.
 \\
 
-An example of the observed $\gamma$-flash is displayed in figure \ref{example_gflash}.	%YO ENSEñARÍA SOLO UNA PARA PODER DESCRIBIRLA BIEN, Y LUEGO TODAS EN LA SIGUIENTE SECCION PARA DISCUTIR LA CASUÍSTICA
+An example of the observed $\gamma$-flash is displayed in Figure \ref{example_gflash}.	%YO ENSEñARÍA SOLO UNA PARA PODER DESCRIBIRLA BIEN, Y LUEGO TODAS EN LA SIGUIENTE SECCION PARA DISCUTIR LA CASUÍSTICA
 The time structure of the $\gamma$-flash is far from the ideal Dirac delta function.
 First, it features a quasi-Gaussian profile with a FWHM of \qty{1.5}{\nano\second}, which will certainly affect the neutron energy resolution (see equation \ref{Eq_Enresolution}).
 Then, it also features a tail with a bump at longer ToF values, and a constant background.
@@ -810,7 +825,7 @@ On the other hand, the experiments with the maximum beam energy was repeated at 
 
 \section{Data analysis}
 The objective of our analysis is to obtain the energy spectra of the neutrons generated by the \an reactions.
-To that end, we must first separate the gammas from the neutrons by using PSD, creating a figure such as \ref{example_psd}.
+To that end, we must first separate the gammas from the neutrons by using PSD, creating a Figure such as \ref{example_psd}.
 We thus get the gamma flash and the neutron response for each measurement.
 
 \begin{figure}[H]
@@ -837,12 +852,12 @@ From each time-of-flight, we can then get the energy of the neutron as:
 with $m_\text{n}$ the mass of the neutron.
 
 Representing the calculated energy of every count in the neutron response in a histogram, we get the energy spectrum of the detected neutrons.
-We correct it by dividing every bin by the detector's efficiency in energy (given by figure \ref{monster_efficiency}).
+We correct it by dividing every bin by the detector's efficiency in energy (given by Figure \ref{monster_efficiency}).
 
 To get the result per steradian, we divide by the number of steradians covered by the detector:
 \[ \frac{\pi \cdot \text{detector radius}^2}{\cancel{4 \pi} \cdot \text{distance to target}^2}\cdot \cancel{4\pi}\unit{sr}  \]
 We further correct it by dividing by the number of alphas (which we get from the current integrator) and the width of the bins.
-The resulting plot (figure \ref{pulsed_energysimple}) is the energy spectrum of the neutrons produced in the \an reactions.
+The resulting plot (Figure \ref{pulsed_energysimple}) is the energy spectrum of the neutrons produced in the \an reactions.
 
 \begin{figure}[H]
 	\centering
@@ -856,7 +871,7 @@ This means that neutrons of the same energy generated by alphas arriving later w
 
 Also, an excess of neutrons with very long ToF, that are deflected off the walls and take a longer path, will be detected.
 This will create an excess of detections of low energy neutrons.
-For the results (like figure \ref{pulsed_energysimple}), we simply remove all counts for which efficiency would be under \qty{15}{\percent}.
+For the results (like Figure \ref{pulsed_energysimple}), we simply remove all counts for which efficiency would be under \qty{15}{\percent}.
 A better solution would be to carry out the experiments with a shadow cone, which would absorb neutrons coming from directions other than the target's and allow us to study lower energies.
 
 \subsection{Deconvolution}
@@ -883,7 +898,7 @@ After multiplying by that factor, the parameters are independent of the efficien
 Together, they form the neutron energy spectrum of the reaction, but in time-of-flight.
 That is, the neutron response that would be generated by a single alpha particle.
 
-If we multiply them by the total number of alphas and plot each parameter at their corresponding ToF, we get figure \ref{pulsed_deconvolution_delta}, the neutron response that would be generated by a perfectly narrow alpha pulse.
+If we multiply them by the total number of alphas and plot each parameter at their corresponding ToF, we get Figure \ref{pulsed_deconvolution_delta}, the neutron response that would be generated by a perfectly narrow alpha pulse.
 The result is to remove the effect of the width and assymetry of the gamma flash.
 We can see that the peaks become higher and more well defined; and the tail, lower.
 This is because some of the neutrons detected later are actually faster, but just produced later by the tail of the alpha pulse.
@@ -920,7 +935,7 @@ Because of that, when converting the parameters from ToF to energy, the distance
 \\
 
 Converted from ToF to energy, the parameters will form the energy spectra of neutrons generated by a Dirac delta alpha pulse.
-Once corrected by the efficiency of the detector using figure \ref{monster_efficiency}, we get figure \ref{pulsed_deconvolution}.
+Once corrected by the efficiency of the detector using Figure \ref{monster_efficiency}, we get Figure \ref{pulsed_deconvolution}.
 As with the \textit{simple method}, we have removed all counts for which MONSTER's efficiency would be under \qty{15}{\percent}.
 The problem of scattered neutrons is inherent to the measurements and not due to the alpha pulse shape, so the deconvolution does nothing to alleviate it.
 
@@ -932,7 +947,7 @@ The problem of scattered neutrons is inherent to the measurements and not due to
 \end{figure}
 
 Figure \ref{pulsed_deconvolution} is the equivalent of \ref{pulsed_energysimple}, with the effects caused by the shape of the alpha pulse removed.
-Both are plotted together in figure \ref{pulsed_5mev}.
+Both are plotted together in Figure \ref{pulsed_5mev}.
 
 \section{Results}
 Both the simple method and the deconvolution agree with each other quite well for all measurements, with expected differences:
@@ -944,7 +959,7 @@ Both the simple method and the deconvolution agree with each other quite well fo
 \end{itemize}
 
 EXFOR data to compare to only exists for the \qty{5.5}{\MeV} thick target yield spectrum.
-We can see that the deconvolution matches quite well, while the simple method overestimates it, specially for low energies (figure \ref{pulsed_5mev}).
+We can see that the deconvolution matches quite well, while the simple method overestimates it, specially for low energies (Figure \ref{pulsed_5mev}).
 This is expected, because of the simple method taking neutrons with longer trajectories as having lower energies.
 
 \begin{figure}[H]
@@ -967,7 +982,7 @@ In order to study the low energy part of neutron spectra at CNA, we would requir
 
 For higher \an energies, there is no data to compare to.
 However, we can calculate the maximum possible energy for neutrons, given the Q of the reaction and the cinematics.
-We can see (figure \ref{pulsed_results}) that that energy is surpassed in all cases, by several hundreds of \unit{\keV}.
+We can see (Figure \ref{pulsed_results}) that that energy is surpassed in all cases, by several hundreds of \unit{\keV}.
 This is probably because of the limited resolution of the detector.
 
 We can compare both measurements at \qty{8.5}{\MeV} and see that, for lower energies, the higher distance seems to have improved the resolution: the peak at around \qty{1800}{\keV} is higher and narrower.
@@ -995,9 +1010,39 @@ The low energy part of the spectra cannot be seen due to noise, but it could be 
 Where we can compare, the deconvolution measurements agree well with EXFOR, while the \textit{simple method} ones overestimate.
 
 \chapter{Conclusions}
-·We have managed to measure \an reaction yield in \Aliso with X uncertainty (given different detectors, days or months) and X agreement with previous measurements.\\
-·We have managed to measure the corresponding neutron energy spectra with X uncertainty/resolution and X agreement with previous measurements.\\
-·Improvements.\\
+\section{Thick target yield}
+For the \Aliso\an thick target yield activation measurements, results from the two analysis methods employed agree within \qty{1}{\percent}, meaning we can stick with the more standard \textit{decay} method.
+Detectors agree with eachother within \qty{8}{\percent} for April and within \qty{4}{\percent} for February, with one detector (LaBr1 and LaBr2, respectively) being consistently higher than the other.
+This tells us there is a systematic error when dealing with multiple detectors, that changes when repeating measurements.
+
+When comparing measurements of the same energy in different months the agreement is good, within around \qty{3}{\percent}, which tells us the results are consistent with each other.
+The comparison with the literature, however, shows a large disagreement, with our results being higher by a factor of approximately \num{1.9}, a systematic error.
+Because the shape shown by our data matches the one of the literature, the error must be a multiplicative factor, and most likely an error in the data analysis that remains undiscovered.
+
+To solve this problem, the data analysis must either be checked for errors in the code (again) or redone from scratch.
+If the error still cannot be found, repeating the measurements could be warranted.
+\\
+
+\section{Neutron energy spectra}
+For the \Aliso\an neutron energy spectra measurements through time-of-flight, the deconvolution results show good agreement with the previous measurement in the literature, and an improvement over the more straightforward, \textit{simple method}.
+However, such data to compare to exists only for the lowest \an energy measured, \qty{5.5}{\MeV}.
+
+The deconvolution succeeds in correcting for the long tail and other assymetries in the $\alpha$ pulses created by the accelerator, but doesn't improve the energy resolution much.
+Increasing the distance of the MONSTER detector from 1 to \qty{2}{\m} also does not improve resolution by a lot, and is probably not worth the decreased statistics.
+\\
+
+Due to the large background of scattered neutrons, the low energy part of the spectra (under approximately \qty{1000}{\keV}) has a large excess of counts and cannot be properly measured.
+A clear improvement would be to do following measurements with a shadow cone, able to absorb scattered neutrons coming from directions other than the target's.
+
+\section{Viability of an measurements at CNA/HiSPANoS}
+The results show that measurement of \an reactions are viable with the CNA accelerator.
+Activation measurements are in good agreement with each other, and if the systematic error can be found, could be done at more energies and for other materials without any changes to the procedure or equipment.
+
+For time-of-flight measurements, a shadow cone or other system for eliminating scattered neutrons is necessary in order to be able to measure the lower energy parts of spectra.
+As for the assymetry of the pulses, results could be improved with either a more sofisticated deconvolution system or by adapting the accelerator to better support $\alpha$ particles.
+However, the setup is able to give reasonable measurements as-is by using a very simple deconvolution process.
+
+
 
 \begin{thebibliography}{5}
 	\bibitem{neutron_in_an}Neutron production in \an reactions, \url{https://doi.org/10.1016/j.nima.2020.164095}
