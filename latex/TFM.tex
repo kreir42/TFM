@@ -50,7 +50,7 @@
 \renewcommand{\contentsname}{Table of Contents}
 \renewcommand{\appendixname}{Appendix}
 \renewcommand{\bibname}{References}
-\renewcommand{\chaptername}{Part}
+\renewcommand{\chaptername}{Chapter}
 
 %%% COMANDOS COMUNES
 \newcommand{\dif}{\text{d}}
@@ -92,7 +92,7 @@
 
 \begin{abstract}
 \an reactions are the main contribution to the neutron background in deep underground experiments, like those trying to detect WIMPs, dark matter candidates.
-In the context of the Measurement of Alpha Neutron Yields (MANY) collaboration, an effort to carry out measurements of \an reactions, this work studies the viability of using the HiSPANoS neutron line at the Centro Nacional de Aceleradores (CNA).
+In the context of the Measurement of Alpha Neutron Yields (MANY) collaboration, an effort to carry out measurements of \an reactions, this work asseses the viability of using the HiSPANoS neutron line at the Centro Nacional de Aceleradores (CNA).
 
 To that end, we measure \an thick target yields at 5.5, 7.0, 7.5, 8.25 and \qty{8.5}{\MeV} energies and obtain a large systematic error, a factor \num{1.90(9)} that remains unexplained.
 We also measure the energy spectra of the neutrons produced by \an reactions of 5.5, 7.0 and \qty{8.25}{\MeV} by time-of-flight, and find good agreement with data from the literature where it is available, if we apply a simple deconvolution algorithm.
@@ -112,9 +112,9 @@ También hemos medido los espectros de energía de neutrones producidos por reac
 \section{\an reactions}
 In \an nuclear reactions, an $\alpha$ particle ($^4_2\text{He}^{2+}$) hits a target nucleus ($^\text{A}_\text{Z}\text{X}$) and a neutron is ejected.
 Generally speaking, in the laboratory frame of reference, the $\alpha$ is fast-moving (4 to \qty{9}{\MeV} is the typical range for $\alpha$ particles coming from decay of natural isotopes) and the target is stationary.
-The produced neutron will also be fast, and the resulting nucleus ($^{\text{A}+3}_{\text{Z}+2}\text{Y}$) will be of a new element and have a small recoil.
+The produced neutron will also be fast, and the resulting nucleus ($^{\text{A}+3}_{\text{Z}+2}\text{Y}$) will be of a new element and have a small recoil energy.
 
-The yield of the reaction and the energy of the produced neutrons are dependent on the nuclear structure of the target nucleus, and thus they cannot be easily predicted: measurements are necessary.
+The yield of the reaction and the energy of the produced neutrons are dependent on the nuclear structure of the target nucleus and the energy of the incoming $\alpha$ particle, and thus they cannot be easily predicted: measurements are necessary.
 
 \begin{figure}[H]
 	\centering
@@ -124,19 +124,18 @@ The yield of the reaction and the energy of the produced neutrons are dependent 
 \end{figure}
 
 \section{Relevance of \an reactions}
-Underground experiments trying to detect dark matter WIMPs or other rare events have to deal with neutron backgrounds that are hard to distinguish from the desired particles.
+Underground experiments trying to detect dark matter WIMPs or other rare events have to deal with neutron backgrounds that are hard to distinguish from the desired particle interactions.
 
-This is because, in the case of WIMPs, they are hypothetical neutral particles, that interact with matter exclusively through nuclear reactions (and gravity).
-A successful WIMP detection could easily be confused with neutrons.
-In order to reduce this background, such experiments go deep underground, where cosmic rays and the particles they create are absorbed by the earth.
+This is because, in the case of WIMPs, they are hypothetical neutral particles that interact with matter exclusively through nuclear reactions (and gravity).
+Hence, a successful WIMP detection could easily be confused with neutrons.
 \\
 
-However, neutrons are still produced underground, both by spontaneous fissions and by \an reactions (from $\alpha$ decay), and so they still have to deal with a background, albeit smaller.
+In order to reduce this background, such experiments go deep underground, where cosmic rays and the particles they create are absorbed by the Earth's crust.
+However, neutrons are still produced underground, both by spontaneous fission and by \an reactions (from $\alpha$ decay), and so they still have to deal with a background, albeit smaller.
 This background dominates over the one produced by cosmic rays at depths higher than \qty{1}{\kilo\meter}.
-The main contribution to \textbf{this} background comes from \an reactions, produced by $\alpha$ particles coming from the radioactive decay of elements in the ground and in the detectors themselves.\cite{neutron_in_an}
+The main contribution to \textbf{this} background comes from \an reactions, produced by $\alpha$ particles coming from the radioactive decay of elements in the ground and in the detectors themselves \cite{neutron_in_an}.
 
-A good knowledge of the yield of these reactions and of the neutron spectra they produce is thus useful to differentiate between background counts and rare events.
-Better data can improve monte carlo simulations, and lead to more sensitive detectors.
+A good knowledge of the yield of these \an reactions and of the corresponding neutron energy spectra they produce is thus useful as it can be implemented in the Monte Carlo simulations used for the estimation of the neutron background \cite{angeant4}.
 \\
 
 \begin{figure}[H]
@@ -147,20 +146,22 @@ Better data can improve monte carlo simulations, and lead to more sensitive dete
 	\label{sanford}
 \end{figure}
 
-\an reactions are also of interest in astrophysics, as they are the main source of neutrons for the s-process and very important for the synthesis of elements.\cite{astro1}\cite{astro2}
-Other fields of interest include fission and fusion reactors and assays for non-proliferation and spent fuel management.\cite{INDC}
+\an reactions are also of interest in astrophysics, as they are the main source of neutrons for the s-process and very important for the synthesis of elements \cite{astro1, astro2}.
+Other fields of interest include fission and fusion reactors and assays for non-proliferation and spent fuel management \cite{INDC}.
 
-\section{Actual state of \an measurements and objective at CNA/HiSPANoS}
+\section{Actual state of \an measurements and objective of this work}
 Most of the \an reactions data was measured decades ago, is incomplete, and/or the uncentainties in cross sections and produced neutron spectra are very large.
-Previous measurements were carried out mostly through \textit{activation} measurements or with moderated neutron counters, meaning there is little data on the energy spectra of produced neutrons.
-Improved data is needed, and many groups are in the process of doing measurements.\cite{INDC}
+Furthermore, most previous measurements were carried out mostly through \textit{activation} measurements or with moderated neutron counters, meaning there is little data on the energy spectra of produced neutrons.
+Improved data is needed, and many groups are in the process of developing better techniques and performing new measurements \cite{INDC}.
 \\
 
-The purpose of this work is to study the viability of doing measurements of \an reactions using the neutron line at the CNA's \qty{3}{\mega\volt} acelerator, as part of the MANY collaboration \cite{MANY}\cite{hispanos}.
-It can achieve $\alpha$ particles of up to \qty{9}{\mega\eV} (more details in the next chapter), which covers the range of interest for underground experiments.\cite{CNA}
+The purpose of this work is to assess the viability of \an measurements of using the neutron beam line HiSPANoS at the CNA \cite{CNA}.
+The CNA hosts a \qty{3}{\mega\volt} accelerator that can produced continuous and pulsed beams of $\alpha$ particles up to \qty{9}{\MeV}, which covers the range of interest for underground experiments \cite{hispanos}.
+This is done in the context of the MANY collaboration \cite{MANY}, formed by researchers from U. Sevilla, CIEMAT, CSIC-IFIC, UPC, UPM, UCM, CSIC-IEM and the accelerator laboratories CNA (Sevilla) and CMAM (Madrid).
+\\
 
-In order to carry out this test, this work will study \an reactions in \Aliso: which is the standard material for such measurements and has the best yield data to compare to.
-If successfull, measurements of \an reactions in other materials can be carried out in the future.
+In order to carry out this test, this work will study \an reactions in \Aliso: which is well known and can be used as a reference to compare with.
+If successfull, new measurements of \an reactions will be carried out in the future within the MANY collaboration.
 \\
 
 \begin{figure}[H]
@@ -170,17 +171,16 @@ If successfull, measurements of \an reactions in other materials can be carried 
 	\label{neutronline_foto}
 \end{figure}
 
-We will measure both the \textit{thick target yield} of the reaction, as well as the energy spectra of the produced neutrons.
-For the yield, we will do \textit{activation} measurements, where we measure the decay of the radioactive product produced by the reaction.
-Lastly, for the energy spectra, we will do \textit{pulsed beam} measurements, and determine the produced neutron's energies via \textit{time-of-flight}.
+We will measure both the \textit{Thick Target Yield} of the reaction, as well as the energy spectra of the produced neutrons.
+For the yield, we will use the \textit{activation} technique, where we measure the decay of the radioactive product produced by the reaction.
+Then, for the energy spectra, we will use \textit{pulsed beam} measurements, and determine the produced neutron energies via \textit{time-of-flight}.
 \\
 
-The literature data we will compare our results to come from \textit{G. J. H. Jacobs and H. Liskien}, from 1983.\cite{jacobs}
-It presents thick target yield data for a larger energy range than this work will study, and agrees well with other measurements in the literature.\cite{jacobssupport1}\cite{jacobssupport2}
+The literature data we will compare our results to come from \textit{G. J. H. Jacobs and H. Liskien}, from 1983 \cite{jacobs}.
+It presents thick target yield data for a larger energy range than this work will study, and agrees well with other measurements in the literature \cite{jacobssupport1, jacobssupport2}.
 The data is shown in a table, but also uploaded to the EXFOR database.
 
 It also gives the energy spectra of the produced neutrons at \qty{5.5}{\MeV} at \qty{60}{\degree}, the only available prior measurement of \Aliso\an neutron spectra we can compare to.
-The data is presented in the form of a plot, from which numbers were obtained.
 
 
 \chapter{Experimental setup}
@@ -224,7 +224,7 @@ To achieve pulsed operation, the accelerator uses two devices: the \textit{chopp
 The \textit{chopper} generates an electric field that deflects all particles coming from the accelerator.
 With a frequency of choice between \qty{32}{\kilo\Hz} and \qty{2}{\mega\Hz}, it disengages the field and lets particles pass for a time period of choice, between 40 and \qty{250}{\nano\second}.
 
-After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerate the slower ones, making the pulse narrower in time (\qty{2}{\nano\second}) and Gaussian shaped.\cite{hispanos}
+After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerate the slower ones, making the pulse narrower in time (\qty{2}{\nano\second}) and Gaussian shaped \cite{hispanos}.
 \\
 
 \subsection{Difficulties with accelerating $\alpha$ particles}
@@ -249,7 +249,7 @@ Figure \ref{tandemdiagrama} shows an schematic view of all the beam components a
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.90\textwidth]{tandemdiagrama.eps}
+	\includegraphics[width=0.95\textwidth]{tandemdiagrama.eps}
 	\caption{Diagram of the accelerator system and HiSPANoS neutron line, with all components.}
 	\label{tandemdiagrama}
 \end{figure}
@@ -302,7 +302,7 @@ When these decay back to the valence bad, they go trough the intermediate states
 This \textit{scintillating} light is directed to a photocathode, where it emits electrons via the photoelectric effect.
 These \textit{photo-electrons} are multiplied in a \textit{photomultiplier tube} (PMT), and finally turned into an electric pulse, which is registered as a detection.
 
-Because proportionality is maintained in each of those conversions, the result is a spectroscopic response, where more energetic gammas generate proportionately bigger pulses.\cite{labr}
+Because proportionality is maintained in each of those conversions, the result is a spectroscopic response, where more energetic gammas generate proportionately bigger pulses \cite{labr}.
 \\
 
 To calculate the detectors' efficiency to the \qty{511}{\keV} $\gamma$-rays following the $\beta^+$ decay from \Piso, we use a \Na source that we tape to the target, at the end of the neutron line and in contact with the aluminum target.
@@ -337,8 +337,8 @@ Also pictured are the responses to \textsuperscript{137}Cs and \textsuperscript{
 \end{figure}
 
 \subsection{The MONSTER neutron detector}
-To measure the time of flight of neutrons produced by \an reactions, we use one of the modules of the MONSTER array of CIEMAT.\cite{MONSTER}
-It is cylindrical, with a radius of \qty{10}{\cm} and is made out of EJ301 liquid organic scintillator.\cite{ej301}
+To measure the time of flight of neutrons produced by \an reactions, we use one of the modules of the MONSTER array of CIEMAT \cite{MONSTER}.
+It is cylindrical, with a radius of \qty{10}{\cm} and is made out of EJ301 liquid organic scintillator \cite{ej301}.
 Two smaller, liquid organic 'TADEO' scintillators were also used, but their efficiency was too low and their data too poor, hence they were not analyzed in this work.
 \\
 
@@ -353,7 +353,7 @@ This is called \textit{pulse shape discrimination}, or PSD.
 	\centering
 	\includegraphics[width=0.65\textwidth]{psd_explanation.png}
 	\caption{Scintillation pulses generated by different radiation types.
-	Figure from C. Guerrero et al.\cite{guerrero2008}}
+	Figure from C. Guerrero et al. \cite{guerrero2008}}.
 	\label{psd_explanation}
 \end{figure}
 
@@ -402,9 +402,9 @@ The efficiency curve is shown in Figure \ref{monster_efficiency}.
 
 \section{DAQ}
 All of the data from the detectors, as well as from the charge integrator, are connected to a \textit{data acquisition system}, or DAQ.
-The one used is a CAEN 751, which has 8 channels with 10 bits resolution and sampling rate of 1 GS/s.\cite{CAEN}
+The one used is a CAEN 751, which has 8 channels with 10 bits resolution and sampling rate of 1 GS/s \cite{CAEN}.
 It takes all of the incoming signals and saves for each one the timestamp, energy and PSD.
-The data from each measurement is saved in separate ROOT files in the computer it is connected to, to be later analyzed by ROOT.\cite{ROOT}
+The data from each measurement is saved in separate ROOT files in the computer it is connected to, to be later analyzed by ROOT \cite{ROOT}.
 
 %%%
 %%%	ACTIVATION
@@ -645,7 +645,7 @@ The TTY is one of the parameters adjusted by the fitting (it is used to calculat
 
 Figure \ref{example_unified_fit} show the fit (red) to the counts (blue).
 We can see that it adjusts very well to the data.
-In Figure \ref{example_unified_fit}, we can see that it also correctly accounts for an initial amount of \Piso from a previous activation, as well as the \textit{rise} and \textit{decay} periods.
+In Figure \ref{example_unified_fit}, we can see that it also correctly accounts for an initial amount of \Piso from a previous activation, as well as the irradiation and \textit{decay} periods.
 \\
 
 Data of current over time was not recorded in half of the measurements in April (numbers 6, 7 and 8) because the current measuring cable was, by mistake, not connected to the DAQ.
@@ -664,7 +664,7 @@ These issues prevent the \textit{unified} fit from being used for all measuremen
 Because all measurements were carried out with two detectors, we can start by comparing them.
 Afterwards, we can compare the different methods with each other, to find out whether they agree.
 These comparison will give some information about the systematic uncertainty of the results.
-Then, we can compare our results with the literature published in the EXFOR database.\cite{jacobs}
+Then, we can compare our results with the literature published in the EXFOR database \cite{jacobs}.
 
 \subsection{Comparison between detectors}
 In principle, both detectors should give the exact same result.
@@ -677,7 +677,7 @@ Measurements in February show negative values, indicating detector 2 is higher; 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{decay_errors_rel_per_fixed.eps}	%TBD:poner eje y de -10 a 10
+	\includegraphics[width=0.80\textwidth]{decay_errors_rel_per_fixed.eps}
 	\caption{Percentage difference in thick target yield results between detectors in each measurement.
 	The number shown is calculated as $\frac{\text{LaBr}_1-\text{LaBr}_2}{\text{LaBr}_1+\text{LaBr}_2}\cdot 100$: half the difference, over the average, in percentage.}
 	\label{decay_errors_rel_per_fixed}
@@ -699,7 +699,7 @@ Luckily, they are each at a different alpha energy and so the study is complete.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{activation_method_comparison.eps}	%TBD:dejar solo decay y unified y poner eje y de 2 a -2
+	\includegraphics[width=0.80\textwidth]{activation_method_comparison.eps}
 	\caption{Relative difference between the different fitting methods, with different symbols for each comparison; and color for each month.}
 	\label{activation_method_comparison}
 \end{figure}
@@ -712,18 +712,18 @@ In the following, all the data shown correspond to the decay fit results.
 \\
 
 \subsection{Comparison with data from the literature}
-The Thick Target Yield (TTY) obtained experimentally in this work have been compared with the results from G. J. H. Jacobs and H. Liskien\cite{jacobs}, extracted from the EXFOR database.
+The Thick Target Yield (TTY) obtained experimentally in this work have been compared with the results from G. J. H. Jacobs and H. Liskien \cite{jacobs}, extracted from the EXFOR database.
 In figure \ref{activation_final_results} we show this comparison, evidencing that the disagreement is very large, nearly a factor of \num{2}.
 The agreement becomes really good when scaling the EXFOR data by 1.9, which is the upper curve shown in the same figure.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{activation_final_results.eps}	%TBD:añadir nombre de referencia en leyenda, y neutrons/alpha en el eje y
-	\caption{Final results for thick target yield, next to the data from G. J. H. Jacobs and H. Liskien\cite{jacobs} and a scaled up version.}	%TBD:poner referencia
+	\caption{Final results for thick target yield, next to the data from G. J. H. Jacobs and H. Liskien \cite{jacobs} and a scaled up version.}	%TBD:poner referencia
 	\label{activation_final_results}
 \end{figure}
 
-Figure \ref{activation_result_diffs} shows the ratio of results from this work over G. J. H. Jacobs and H. Liskien.\cite{jacobs}
+Figure \ref{activation_result_diffs} shows the ratio of results from this work over G. J. H. Jacobs and H. Liskien \cite{jacobs}.
 The mean difference and the standard deviation between all measurements is \num{1.90(9)}, which means that the energy dependence of the TTY is reproduced within \qty{5}{\percent}, which is very good considering that the level of agreement between the two detectors is of the same order.
 Looking carefully at the dates of the experiments, the ratio in February is \num{1.84(6)} while that of April is \num{1.98(3)}.
 This \qty{7}{\percent} difference should only be related by the fact that the measurements took place in different period and hence the accelerator and detection set-up may have an influence up to about that level in the results.
@@ -732,7 +732,7 @@ This should be to be studied further.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{activation_result_diffs.eps}	%TBD: cambiar eje y a TTY (This work/G. J. H. Jacobs and H. Liskien)
-	\caption{Ratio of TTY values from this work and from G. J. H. Jacobs and H. Liskien\cite{jacobs} as a function of the beam energy.}	%TBD:añadir nombre referencia
+	\caption{Ratio of TTY values from this work and from G. J. H. Jacobs and H. Liskien \cite{jacobs} as a function of the beam energy.}	%TBD:añadir nombre referencia
 	\label{activation_result_diffs}
 \end{figure}
 
@@ -880,7 +880,7 @@ This means that neutrons of the same energy generated by $\alpha$ particles arri
 Also, an excess of neutrons with very long ToF, that are deflected off the walls and take a longer path, will be detected.
 This will create an excess of detections of low energy neutrons.
 For the results (like Figure \ref{pulsed_energysimple}), we simply remove all counts for which efficiency would be under \qty{15}{\percent}.
-A better solution would be to carry out the experiments with a shadow cone, which would absorb neutrons coming from directions other than the target's and allow us to study lower energies.
+A better solution would be to carry out the experiments with a shadow cone, which would absorb neutrons coming directly from the target and allow us to detect only scattered neutrons, to be able to remove that contribution.
 
 \subsection{Deconvolution}
 We can take the shape of the alpha pulse into account by doing a deconvolution.
@@ -1018,59 +1018,63 @@ The low energy part of the spectra cannot be seen due to noise, but it could be 
 Where we can compare, the deconvolution measurements agree well with the literature, while the \textit{simple method} ones overestimate.
 
 \chapter{Conclusions}
-\section{Thick target yield}
-For the \Aliso\an thick target yield activation measurements, results from the two analysis methods employed agree within \qty{1}{\percent}, meaning we can stick with the more standard \textit{decay} method.
-Detectors agree with eachother within \qty{8}{\percent} for April and within \qty{4}{\percent} for February, with one detector (LaBr\textsubscript{3}(1) and LaBr\textsubscript{3}(2), respectively) being consistently higher than the other.
-This tells us there is a systematic error when dealing with multiple detectors, that changes when repeating measurements.
+In the framework of the MANY Collaboration, a first test experiment has been carried out at the CNA HiSPANoS facility to study the \Aliso\an nuclear reaction by both activation and time-of-flight.
+
+\section{Thick Target Yield}
+For the \Aliso\an Thick Target Yield activation measurements, results from the two analysis methods employed agree within \qty{1}{\percent}, meaning we can stick with the more standard \textit{decay} method.
+The pair of detectors agree with each other within \qty{8}{\percent} for April and within \qty{4}{\percent} for February, with one detector (LaBr\textsubscript{3}(1) and LaBr\textsubscript{3}(2), respectively) being consistently higher than the other.
+This tells us there is a systematic error when dealing with multiple detectors, that changes when repeating measurements; which is most probably associated with the detector calibration, as the \Na source could not be placed exactly at the position of the \Aliso target.
 
 When comparing measurements of the same energy in different months the agreement is good, within around \qty{3}{\percent}, which tells us the results are consistent with each other.
-The comparison with the literature, however, shows a large disagreement, with our results being higher by a factor of \num{1.90(9)}, a systematic error.
-Because the shape shown by our data matches the one of the literature, the error must be a multiplicative factor, and most likely an error in the data analysis that remains undiscovered.
+\\
 
-To solve this problem, the data analysis must either be checked for errors in the code (again) or redone from scratch.
-If the error still cannot be found, repeating the measurements could be warranted.
+The comparison with the literature, however, shows a large disagreement, with our results being higher by a factor of \num{1.90(9)}, which indicates a systematic error in the data analysis.
+Because the shape of the TTY with energy of our data matches the one of the literature, the error must be a scaling factor, but it has remaines undiscovered for the duration of this work.
+Further quality checks in the activation analysis code are thus in order.
 \\
 
 \section{Neutron energy spectra}
-For the \Aliso\an neutron energy spectra measurements through time-of-flight, the deconvolution results show good agreement with the previous measurement in the literature, and an improvement over the more straightforward, \textit{simple method}.
+For the \Aliso\an neutron energy spectra measurements through time-of-flight, the results from the deconvolution algorithm developed show good agreement with the previous measurement in the literature, and an improvement over the more straightforward, \textit{simple method}.
 However, such data to compare to exists only for the lowest \an energy measured, \qty{5.5}{\MeV}.
 
-The deconvolution succeeds in correcting for the long tail and other assymetries in the $\alpha$ pulses created by the accelerator, but doesn't improve the energy resolution much.
-Increasing the distance of the MONSTER detector from 1 to \qty{2}{\m} also does not improve resolution by a lot, and is probably not worth the decreased statistics.
+The deconvolution succeeds in correcting for the long tail and other asymmetries in the $\alpha$ pulses created by the buncher.
+However, the effect is not very visible when compared to the results assuming a perfect Dirac delta shape for the $\gamma$-flash, i.e.e the $\alpha$ pulse.
+As the energy distribution of the neutron emitted from the \Aliso\an reaction does not feature narrow structures, it is observed that increasing the distance of the MONSTER detector from 1 to \qty{2}{\m} also does not improve resolution significantly.
+Therefore, it is probably not worth the reduction by a factor of 4 in statistics.
 \\
 
-Due to the large background of scattered neutrons, the low energy part of the spectra (under approximately \qty{1000}{\keV}) has a large excess of counts and cannot be properly measured.
-A clear improvement would be to do following measurements with a shadow cone, able to absorb scattered neutrons coming from directions other than the target's.
+Due to the large background of scattered neutrons, the low energy part of the spectra (below approximately \qty{1000}{\keV}) has a sizable excess of background counts that cannot be properly measured.
+This means that it is necessary to perform measurements with a shadow cone, which would show only the contribution from scattered neutrons.
 
 \section{Viability of \an measurements at CNA/HiSPANoS}
-The results show that measurement of \an reactions are viable with the CNA accelerator.
-Activation measurements are in good agreement with each other, and if the systematic error can be found, could be done at more energies and for other materials without any changes to the procedure or equipment.
+The results show that measurement of \an reactions are viable with the CNA accelerator at HiSPANoS.
+Activation measurements are in reasonable (but to be improved) agreement with each other, and if the systematic error (a scale factor of \num{1.90(9)}) can be found, could be done at more energies and for other materials without any changes to the procedure or equipment.
 
 For time-of-flight measurements, a shadow cone or other system for eliminating scattered neutrons is necessary in order to be able to measure the lower energy parts of spectra.
-As for the assymetry of the pulses, results could be improved with either a more sofisticated deconvolution system or by adapting the accelerator to better support $\alpha$ particles.
+As for the assymetry of the pulses, results could be improved with either a more sofisticated deconvolution system or by adapting the buncher to better support $\alpha$ particles, which would require an expensive and lengthy upgrade.
 However, the setup is able to give reasonable measurements as-is by using a very simple deconvolution process.
 
 
 
 \begin{thebibliography}{5}
 	\bibitem{jacobs}G. J. H. Jacobs and H. Liskien, Energy Spectra of Neutrons produced by $\alpha$ particles in thick targets of light elements, Annals of Nuclear Energy 10, 541 (1983), \url{https://doi.org/10.1016/0306-4549(83)90003-8}
-	\bibitem{hispanos}B Fernández et al 2020 J. Phys.: Conf. Ser. 1643 012033, HiSPANoS facility and the new neutron beam line for TOF measurements at the Spanish National Accelerator Lab (CNA), \url{https://doi.org/10.1088/1742-6596/1643/1/012033}
+	\bibitem{hispanos}B. Fernández et al.,HiSPANoS facility and the new neutron beam line for TOF measurements at the Spanish National Accelerator Lab (CNA), 2020 J. Phys.: Conf. Ser. 1643 012033, \url{https://doi.org/10.1088/1742-6596/1643/1/012033}
 	\bibitem{guerrero2008}C. Guerrero et al., Analysis of the BC501A neutron detector signals using the true pulse shape, Nuclear Instruments and Methods in Physics Research A 597 (2008) 212–218, \url{https://doi.org/10.1016/j.nima.2008.09.017}
-	\bibitem{astro1}F. Käppeler et al., Rev. Mod. Phys. 83, 157 – 193 (2011), The \textit{s} process: Nuclear physics, stellar models, and observations, \url{https://doi.org/10.1103/RevModPhys.83.157}
-	\bibitem{astro2}J. Pereira and F. Montes, Phys. Rev. C 93, 034611 (2016), Theoretical uncertainty of \an reactions relevant for the nucleosynthesis of light r-process nuclei in neutrino-driven winds, \url{https://doi.org/10.1103/PhysRevC.93.034611}
+	\bibitem{astro1}F. Käppeler et al., The \textit{s} process: Nuclear physics, stellar models, and observations, Rev. Mod. Phys. 83, 157 – 193 (2011), \url{https://doi.org/10.1103/RevModPhys.83.157}
+	\bibitem{astro2}J. Pereira and F. Montes, Theoretical uncertainty of \an reactions relevant for the nucleosynthesis of light r-process nuclei in neutrino-driven winds, Phys. Rev. C 93, 034611 (2016), \url{https://doi.org/10.1103/PhysRevC.93.034611}
 	\bibitem{neutron_in_an}NV.A. Kudryavtsev, P. Zakhary. B. Easeman, Neutron production in \an reactions, Nucl. Instrum. Methods Phys. Res. A 972 (2020), \url{https://doi.org/10.1016/j.nima.2020.164095}
 	\bibitem{MANY}N. Mont-Geli et al., miniBELEN: A modular neutron counter for \an reactions, EPJ Web of Conf., 284 (2023) 06004, \url{https://doi.org/10.1051/epjconf/202328406004}
-%	\bibitem{}\url{https://doi.org/10.1016/j.nima.2009.04.032}
 	\bibitem{nucleardatasheets}M. Shamsuzzoha Basunia, Nuclear Data Sheets 111, 2331 (2010)
-	\bibitem{INDC}S. S. Westerdale et al., Technical Report, INDC(NDS)-0836 (2022), \url{https://www-nds.iaea.org/publications/indc/indc-nds-0836.pdf}
+	\bibitem{INDC}S. S. Westerdale et al., (alpha,n) Nuclear Data Evaluations and Data Needs, Technical Report, INDC(NDS)-0836 (2022), \url{https://www-nds.iaea.org/publications/indc/indc-nds-0836.pdf}
 	\bibitem{CNA}Gómez-Camacho, J., García López, J., Guerrero, C. et al., Research facilities and highlights at the Centro Nacional de Aceleradores (CNA). Eur. Phys. J. Plus 136, 273 (2021), \url{https://doi.org/10.1140/epjp/s13360-021-01253-x}
 	\bibitem{labr}Alain Iltis et al., Lanthanum halide scintillators: Properties and applications, Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment, Volume 563, Issue 2 (2006), \url{https://doi.org/10.1016/j.nima.2006.02.192.}
 	\bibitem{MONSTER}A R Garcia et al., MONSTER: a time of flight spectrometer for $\beta$-delayed neutron emission measurements, 2012 JINST 7 C05012, \url{http://dx.doi.org/10.1088/1748-0221/7/05/C05012}
 	\bibitem{ej301}NEUTRON/GAMMA PSD EJ-301, EJ-309, \url{https://eljentechnology.com/products/liquid-scintillators/ej-301-ej-309}
-	\bibitem{jacobssupport1}R. Heaton et al., Nuclear Instruments and Methods A 276, 529 (1989)
+	\bibitem{jacobssupport1}R. Heaton et al., Neutron production from thick-target \an reactions, Nuclear Instruments and Methods A 276, 529 (1989)
 	\bibitem{jacobssupport2}J. K. Bair and J. Gomez del Campo, Neutron Yields from Alpha-Particle Bombardment, Nuclear Science and Engineering 71, 18 (1979), \url{https://doi.org/10.13182/NSE71-18}
 	\bibitem{CAEN}CAEN 751 Waveform Digitizer Family, CAEN SpA, \url{https://www.caen.it/subfamilies/751-digitizer-family/}
 	\bibitem{ROOT}Rene Brun and Fons Rademakers, ROOT - An Object Oriented Data Analysis Framework, Proceedings AIHENP'96 Workshop, Lausanne, Sep. 1996, Nucl. Inst. \& Meth. in Phys. Res. A 389 (1997) 81-86. See also "ROOT" [software], Release 6.28/04, \url{https://doi.org/10.5281/zenodo.848818}
+	\bibitem{angeant4}E. Mendoza et al., Neutron production induced by $\alpha$-decay with Geant4, Nuclear Inst. and Methods in Physics Research, A 960 (2020) 163659, \url{https://doi.org/10.1016/j.nima.2020.163659}
 \end{thebibliography}
 
 \end{document}
