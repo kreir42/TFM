@@ -1160,6 +1160,7 @@ static void per_file(Char_t filepath[500], Double_t results[2][6]){
 		current_integrator_signals = signals.Filter("Channel==1 && Timestamp>299E12 && Timestamp<755E12");
 	}
 	auto current_integrator_histo = current_integrator_signals.Histo1D({"current_integrator", ";Time (s);Alphas", ACTIVATION_NBINS, 0, measurement_end}, "t");
+	current_integrator_histo->Write("current_integrator_histo", TObject::kOverwrite);
 	current_integrator_histo->Scale(current2alpha);	//de unidades de corriente a número de alfas por bin
 	current_integrator_histo->Write("", TObject::kOverwrite);
 	Double_t number_of_alphas = current_integrator_histo->Integral();	//número de alphas

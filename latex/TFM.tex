@@ -74,6 +74,7 @@
 \begin{document}
 \begin{titlepage}
 	\centering
+	\Large Master's Thesis\par
 	\Huge Inter-University Master's degree in Nuclear Physics\par
 	\vspace*{3cm}
 	\HUGE \textbf{Measurements of ($\bm{\alpha}$,n) reactions in CNA/HiSPANoS}\par	%TBD? más largo?
@@ -86,13 +87,22 @@
 	Carlos Guerrero Sánchez\\
 	María Begoña Fernández Martínez\par
 	\vfill
-	26/06/2023
+	17/07/2023
 \end{titlepage}
 
 \begin{abstract}
-English abstract.
+\an reactions are the main contribution to the neutron background in deep underground experiments, like those trying to detect WIMPs, dark matter candidates.
+In the context of the Measurement of Alpha Neutron Yields (MANY) collaboration, an effort to carry out measurements of \an reactions, this work studies the viability of using the HiSPANoS neutron line at the Centro Nacional de Aceleradores (CNA).
+
+To that end, we measure \an thick target yields at 5.5, 7.0, 7.5, 8.25 and \qty{8.5}{\MeV} energies and obtain a large systematic error, a factor \num{1.90(9)} that remains unexplained.
+We also measure the energy spectra of the neutrons produced by \an reactions of 5.5, 7.0 and \qty{8.25}{\MeV} by time-of-flight, and find good agreement with data from the literature where it is available, if we apply a simple deconvolution algorithm.
 \\
-Abstract español.
+
+Las reacciones \an son la principal contribución al fondo de neutrones en experimentos subterráneos de alta profundidad, como aquellos tratando de detectar WIMPs, candidatos a materia oscura.
+En el contexto de la colaboración Measurement of Alpha Neutron Yields (MANY), un esfuerzo para llevar a cabo medidas de reacciones \an, este trabajo estudia la viabilidad de usar la línea de neutrones HiSPANoS en el Centro Nacional de Aceleradores (CNA).
+
+Para ello, medimos el Thick Target Yield (TTY) de reacciones \an a energías de 5.5, 7.0, 7.5, 8.25 y \qty{8.5}{\MeV} y obtenemos un error sistemático grande, un factor \num{1.90(9)} que permanece sin explicación.
+También hemos medido los espectros de energía de neutrones producidos por reacciones \an de 5.5, 7.0 y \qty{8.25}{\MeV} por tiempo de vuelo, y conseguimos un buen acuerdo con datos de la literatura donde está disponible, si aplicamos un algoritmo de deconvolución simple.
 \end{abstract}
 
 \tableofcontents
@@ -146,7 +156,7 @@ Previous measurements were carried out mostly through \textit{activation} measur
 Improved data is needed, and many groups are in the process of doing measurements.\cite{INDC}
 \\
 
-The purpose of this work is to study the viability of doing measurements of \an reactions using the neutron line at the CNA's \qty{3}{\mega\volt} acelerator, as part of the MANY collaboration \cite{MANY}.
+The purpose of this work is to study the viability of doing measurements of \an reactions using the neutron line at the CNA's \qty{3}{\mega\volt} acelerator, as part of the MANY collaboration \cite{MANY}\cite{hispanos}.
 It can achieve $\alpha$ particles of up to \qty{9}{\mega\eV} (more details in the next chapter), which covers the range of interest for underground experiments.\cite{CNA}
 
 In order to carry out this test, this work will study \an reactions in \Aliso: which is the standard material for such measurements and has the best yield data to compare to.
@@ -214,7 +224,7 @@ To achieve pulsed operation, the accelerator uses two devices: the \textit{chopp
 The \textit{chopper} generates an electric field that deflects all particles coming from the accelerator.
 With a frequency of choice between \qty{32}{\kilo\Hz} and \qty{2}{\mega\Hz}, it disengages the field and lets particles pass for a time period of choice, between 40 and \qty{250}{\nano\second}.
 
-After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerate the slower ones, making the pulse narrower in time (\qty{2}{\nano\second}) and Gaussian shaped.
+After the chopper, the \textit{buncher} uses further electric fields to slow down the faster particles and accelerate the slower ones, making the pulse narrower in time (\qty{2}{\nano\second}) and Gaussian shaped.\cite{hispanos}
 \\
 
 \subsection{Difficulties with accelerating $\alpha$ particles}
@@ -239,7 +249,7 @@ Figure \ref{tandemdiagrama} shows an schematic view of all the beam components a
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.90\textwidth]{tandemdiagrama.eps}	%TBD:poner detectores
+	\includegraphics[width=0.90\textwidth]{tandemdiagrama.eps}
 	\caption{Diagram of the accelerator system and HiSPANoS neutron line, with all components.}
 	\label{tandemdiagrama}
 \end{figure}
@@ -273,15 +283,15 @@ The Thick Target Yield (number of \an reactions per number of incident $\alpha$ 
 \begin{tabular}[c]{>{\bfseries}l||c|c}
 	Detector		& Distances\tablefootnote{Detectors were moved in order to get measurements at different distances. For the LaBr\textsubscript{3} detectors, their distance was not measured with precision.} (\unit{\cm})& Angle\\ \hline
 	\textbf{MONSTER}	&\num{100}, \num{200}		&\qty{60}{\degree}	\\ \hline
-	\textbf{LaBr\textsubscrip{3}(1)}		&\num{20} to \num{30}		&\qty{150}{\degree}	\\ \hline
-	\textbf{LaBr\textsubscrip{3}(2)}		&\num{20} to \num{30}		&\qty{-150}{\degree}	\\ \hline
+	\textbf{LaBr\textsubscript{3}(1)}		&\num{20} to \num{30}		&\qty{150}{\degree}	\\ \hline
+	\textbf{LaBr\textsubscript{3}(2)}		&\num{20} to \num{30}		&\qty{-150}{\degree}	\\ \hline
 \end{tabular}
 \caption{Angles and distances of detectors.}
 \label{distances_angles_table}
 \end{table}
 
 \subsection{LaBr\textsubscript{3} detectors}
-To measure $\gamma$-rays, we use two LaBr\textsubscript{3} (lanthanum bromide) detectors, which we refer to as LaBr\textsubscrip{3}(1) and LaBr\textsubscrip{3}(2).
+To measure $\gamma$-rays, we use two LaBr\textsubscript{3} (lanthanum bromide) detectors, which we refer to as LaBr\textsubscript{3}(1) and LaBr\textsubscript{3}(2).
 They are inorganic scitillators, meaning they produce light when hit by ionizing radiation.
 This can be used to detect gamma rays by the following process:
 
@@ -307,22 +317,22 @@ Also pictured are the responses to \textsuperscript{137}Cs and \textsuperscript{
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{labr_na22_calibration.png}
-	\caption{LaBr\textsubscrip{3}(1) response to \Na source. In red is the fitting of the \qty{511}{\keV} peak to a Gaussian plus a linear background.}
+	\includegraphics[width=0.80\textwidth]{labr_na22_calibration.eps}
+	\caption{LaBr\textsubscript{3}(1) response to \Na source. In red is the fitting of the \qty{511}{\keV} peak to a Gaussian plus a linear background.}
 	\label{labr_na22_calibration}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{labr_cs137_calibration.png}
-	\caption{LaBr\textsubscrip{3}(1) response to \textsuperscript{137}Cs source.}
+	\includegraphics[width=0.80\textwidth]{labr_cs137_calibration.eps}
+	\caption{LaBr\textsubscript{3}(1) response to \textsuperscript{137}Cs source.}
 	\label{labr_cs137_calibration}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{labr_co60_calibration.png}
-	\caption{LaBr\textsubscrip{3}(1) response to \textsuperscript{60}Co source.}
+	\includegraphics[width=0.80\textwidth]{labr_co60_calibration.eps}
+	\caption{LaBr\textsubscript{3}(1) response to \textsuperscript{60}Co source.}
 	\label{labr_co60_calibration}
 \end{figure}
 
@@ -356,25 +366,25 @@ At high energies, the \textit{fast} portion saturates because the digitizer has 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_psd.png}
+	\includegraphics[width=0.80\textwidth]{example_psd.eps}
 	\caption{2D histogram showing PSD separation between neutrons and $\gamma$-rays for a MONSTER measurement.
 	The separation line between the two is ahown in black and dotted.}
 	\label{example_psd}
 \end{figure}
 
-MONSTER's response to photons is different than the LaBr\textsubscrip{3} detectors.
+MONSTER's response to photons is different than the LaBr\textsubscript{3} detectors.
 Because it is organic, the cross-section for the photoelectric effect is much smaller; and so photopeaks are not visible, only the Compton continuum is.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{monster_cs_calibration.png}
+	\includegraphics[width=0.80\textwidth]{monster_cs_calibration.eps}
 	\caption{MONSTER response to \textsuperscript{137}Cs source.}
 	\label{monster_cs_calibration}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{monster_co_calibration.png}
+	\includegraphics[width=0.80\textwidth]{monster_co_calibration.eps}
 	\caption{MONSTER response to \textsuperscript{60}Co source.}
 	\label{monster_co_calibration}
 \end{figure}
@@ -440,7 +450,7 @@ During the irradiation, the number of $\alpha$ particles hitting the target is b
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_activation_energy_histogram.png}
+	\includegraphics[width=0.80\textwidth]{example_activation_energy_histogram.eps}
 	\caption{Example activation spectrum.
 	The energy window used to generate the time histogram (Figure \ref{example_activation_time_histogram}) is shown in red.}	%TBD: calibrar en energía o poner "canales"
 	\label{example_activation_energy_histogram}
@@ -454,7 +464,7 @@ To represent the counting rate as a function of time that allows studying the de
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_activation_energytime.png}
+	\includegraphics[width=0.80\textwidth]{example_activation_energytime.png} %TBD:eps
 	\caption{Example activation spectrum over time.	%TBD: calibrar en energía o poner "canales"
 	The change in energy channel for the \qty{511}{\keV} peak is labelled in black.}
 	\label{example_activation_energytime}
@@ -462,7 +472,7 @@ To represent the counting rate as a function of time that allows studying the de
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_activation_time_histogram.png}
+	\includegraphics[width=0.80\textwidth]{example_activation_time_histogram.eps}
 	\caption{Example activation time histogram.
 	The activation and decay periods are labeled and separated from the rest of the histogram by red lines.
 	The approximate size of the \textit{extra background} caused by the $\alpha$ particle stream is also shown.}
@@ -470,7 +480,7 @@ To represent the counting rate as a function of time that allows studying the de
 \end{figure}
 
 The time distribution shown in Figure \ref{example_activation_time_histogram} shows initial counts before the activation starts, corresponding to decay of \Piso from the previous irradiation.
-When the activation starts, \num{\approx 11000} counts per bin appear very quickly, going away as soon as the irradiation ends.
+When the activation starts, \num{\approx 80000} counts per bin appear very quickly, going away as soon as the irradiation ends.
 We call these counts the \textit{extra background}.
 They are proportional to the beam current and correspond to $\gamma$-rays from \an and other reactions.
 
@@ -550,8 +560,8 @@ However $N$\textsubscript{EOA} is not all of the \Piso nuclei created by \an rea
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_decay_fit.png}
-	\caption{Example decay fit.}
+	\includegraphics[width=0.80\textwidth]{example_decay_fit.eps}
+	\caption{Example decay fit (red) to the data (blue).}
 	\label{example_decay_fit}
 \end{figure}
 
@@ -600,9 +610,10 @@ This is particularly useful because the current is not perfectly constant, there
 \\
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{current_histograms.png}
+	\includegraphics[width=0.80\textwidth]{current_histograms.eps}
 	\caption{All current histograms, superimposed.
-	The one in red corresponds to measurement 4.}
+	Most different in number 4, which has periodic losses of information due to a failure of the DAQ.
+	Although current data is lost, the total charge was still recorded.}
 	\label{current_histograms}
 \end{figure}
 
@@ -627,7 +638,7 @@ The TTY is one of the parameters adjusted by the fitting (it is used to calculat
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_unified_fit.png}
+	\includegraphics[width=0.80\textwidth]{example_unified_fit.eps}
 	\caption{Example unified fit (red) and data (blue).}
 	\label{example_unified_fit}
 \end{figure}
@@ -643,7 +654,7 @@ These issues prevent the \textit{unified} fit from being used for all measuremen
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{activation_4_time.png}
+	\includegraphics[width=0.80\textwidth]{activation_4_time.eps}
 	\caption{Activation measurement number 4.
 	We can see the loss of signal to the DAQ periodically for most of the activation period.}
 	\label{activation_4_time}
@@ -653,7 +664,7 @@ These issues prevent the \textit{unified} fit from being used for all measuremen
 Because all measurements were carried out with two detectors, we can start by comparing them.
 Afterwards, we can compare the different methods with each other, to find out whether they agree.
 These comparison will give some information about the systematic uncertainty of the results.
-Then, we can compare our results with previous experiments published in the EXFOR database.	%TBD:añadir referencia
+Then, we can compare our results with the literature published in the EXFOR database.\cite{jacobs}
 
 \subsection{Comparison between detectors}
 In principle, both detectors should give the exact same result.
@@ -683,12 +694,6 @@ To determine the agreement between the different fit methods, we can calculate t
 \\
 
 In Figure \ref{activation_method_comparison} are represented the relative difference when comparing the \textit{unified} and \textit{decay} methods.
-%\begin{itemize}
-%	\item \textit{Unified} with \textit{rise}, drawn with crosses.
-%	\item \textit{Unified} with \textit{decay}, drawn with Xs.
-%	\item \textit{Decay} with the average between \textit{rise} and \textit{unified}, drawn with squares.
-%		This one is to compare the most conventional way of doing activation measurements with the more numerial method.
-%\end{itemize}
 Because we don't have current data (and thus \textit{unified} results) for mesurements 4, 6, 7, and 8; we only have 4 measurements to do this comparison with.
 Luckily, they are each at a different alpha energy and so the study is complete.
 
@@ -707,18 +712,18 @@ In the following, all the data shown correspond to the decay fit results.
 \\
 
 \subsection{Comparison with data from the literature}
-The Thick Target Yield (TTY) obtained experimentally in this work have been compared with the results from XXXXX et al. [referencia], extracted from the EXFOR database. %TBD: añadir referencia
+The Thick Target Yield (TTY) obtained experimentally in this work have been compared with the results from G. J. H. Jacobs and H. Liskien\cite{jacobs}, extracted from the EXFOR database.
 In figure \ref{activation_final_results} we show this comparison, evidencing that the disagreement is very large, nearly a factor of \num{2}.
-The agreement becomes really good when scaling the EXFOT data by 1.9, which is the upper curve shown in the same figure.
+The agreement becomes really good when scaling the EXFOR data by 1.9, which is the upper curve shown in the same figure.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\textwidth]{activation_final_results.eps}	%TBD:añadir nombre de referencia en leyenda, y neutrons/alpha en el eje y
-	\caption{Final results for thick target yield, next to the data from XXX et.al and a scaled up version.}	%TBD:poner referencia
+	\caption{Final results for thick target yield, next to the data from G. J. H. Jacobs and H. Liskien\cite{jacobs} and a scaled up version.}	%TBD:poner referencia
 	\label{activation_final_results}
 \end{figure}
 
-Figure \ref{activation_result_diffs} shows the ratio of results from this work over XX et al.
+Figure \ref{activation_result_diffs} shows the ratio of results from this work over G. J. H. Jacobs and H. Liskien.\cite{jacobs}
 The mean difference and the standard deviation between all measurements is \num{1.90(9)}, which means that the energy dependence of the TTY is reproduced within \qty{5}{\percent}, which is very good considering that the level of agreement between the two detectors is of the same order.
 Looking carefully at the dates of the experiments, the ratio in February is \num{1.84(6)} while that of April is \num{1.98(3)}.
 This \qty{7}{\percent} difference should only be related by the fact that the measurements took place in different period and hence the accelerator and detection set-up may have an influence up to about that level in the results.
@@ -726,8 +731,8 @@ This should be to be studied further.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{activation_result_diffs.eps}	%TBD: cambiar eje y a TTY (This work/XXXX et al.)
-	\caption{Ratio of TTY values from this work and from XXXX et al. as a function of the beam energy.}	%TBD:añadir nombre referencia
+	\includegraphics[width=0.80\textwidth]{activation_result_diffs.eps}	%TBD: cambiar eje y a TTY (This work/G. J. H. Jacobs and H. Liskien)
+	\caption{Ratio of TTY values from this work and from G. J. H. Jacobs and H. Liskien\cite{jacobs} as a function of the beam energy.}	%TBD:añadir nombre referencia
 	\label{activation_result_diffs}
 \end{figure}
 
@@ -791,7 +796,7 @@ Because of all this, we cannot really treat the $\gamma$-flashes as simple Gauss
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{example_gflash.png}
+	\includegraphics[width=0.80\textwidth]{example_gflash.eps}
 	\caption{Gamma flash of measurement number 3, in semi-logarithmic scale.}
 	\label{example_gflash}
 \end{figure}
@@ -819,11 +824,10 @@ On the other hand, the experiments with the maximum beam energy was repeated at 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{uneven_gflash.png}
-	\caption{Superposition of all histograms of gamma flashes.
-	In red is a measurement taken at double the distance than the others.
-	It is displaced to the right because of the longer time photons take to travel the distance to the detector.
-	Their shape will be that of their corresponding alpha pulses, plus a background.}
+	\includegraphics[width=0.80\textwidth]{uneven_gflash.eps}
+	\caption{Particularly uneven gamma flash, corresponding to measurement 5.
+	The bump after the first peak reaches \qty{10}{\percent} of the height.
+	The tail is also long and clearly visible.}
 	\label{uneven_gflash}
 \end{figure}
 
@@ -834,8 +838,8 @@ We thus get the gamma flash and the neutron response for each measurement.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{separated_tof.png}
-	\caption{Gamma flash (blue) and neutron response (red) for measurement number 2.}
+	\includegraphics[width=0.80\textwidth]{separated_tof.eps}
+	\caption{Gamma flash (blue) and neutron response (red), along with all counts (black) measurement number 2.}
 	\label{separated_tof}
 \end{figure}
 
@@ -865,7 +869,7 @@ The resulting plot (Figure \ref{pulsed_energysimple}) is the energy spectrum of 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{pulsed_energysimple.png}
+	\includegraphics[width=0.80\textwidth]{pulsed_energysimple.eps}
 	\caption{Resulting energy spectrum for measurement number 2 using the simple method.}
 	\label{pulsed_energysimple}
 \end{figure}
@@ -913,7 +917,7 @@ Looking at it the other way around, we could say that the effect of the alpha pu
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{pulsed_deconvolution_delta.png}
+	\includegraphics[width=0.80\textwidth]{pulsed_deconvolution_delta.eps}
 	\caption{Measured neutron response histogram (blue), result of the fitted deconvolution function (red) and response to a Dirac delta pulse (black) for measurement number 4.}
 	\label{pulsed_deconvolution_delta}
 \end{figure}
@@ -945,7 +949,7 @@ The problem of scattered neutrons is inherent to the measurements and not due to
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{pulsed_deconvolution.png}
+	\includegraphics[width=0.80\textwidth]{pulsed_deconvolution.eps}
 	\caption{Parameters resulting from the deconvolution, forming the energy spectrum for measurement number 2.}
 	\label{pulsed_deconvolution}
 \end{figure}
@@ -962,25 +966,25 @@ Both the simple method and the deconvolution agree with each other quite well fo
 		This is could in theory be improved with more parameters, but we run into problems with computing time and overfitting to noise.
 \end{itemize}
 
-EXFOR data to compare to only exists for the \qty{5.5}{\MeV} thick target yield spectrum.
+Data to compare to only exists for the \qty{5.5}{\MeV} thick target yield spectrum, in the G. J. H. Jacobs and H. Liskien paper \cite{jacobs}.
 We can see that the deconvolution matches quite well, while the simple method overestimates it, specially for low energies (Figure \ref{pulsed_5mev}).
 This is expected, because of the simple method taking neutrons with longer trajectories as having lower energies.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{pulsed_5mev.png}
+	\includegraphics[width=0.80\textwidth]{pulsed_5mev.eps}
 	\caption{Neutron spectra for \qty{5500}{\keV}.
-	EXFOR data (black), simple method (blue histogram) and deconvolution (blue squares).}
+	G. J. H. Jacobs and H. Liskien data (black), simple method (blue histogram) and deconvolution (blue squares).}
 	\label{pulsed_5mev}
 \end{figure}
 
 The error bars shown for the deconvolution are those automatically calculated by ROOT when doing the fitting.
-Calculating the uncertainty of a deconvolution method is complicated, and the good agreement with EXFOR shows that it is an improvement over the simple method.
-The fact that the error bars mostly cover EXFOR indicates that they are a reasonable enough estimate of uncertainty for showing where the true values might be at higher energies (where we have no data to compare to).
+Calculating the uncertainty of a deconvolution method is complicated, and the good agreement with the literature shows that it is an improvement over the simple method.
+The fact that the error bars mostly cover the literature data indicates that they are a reasonable enough estimate of uncertainty for showing where the true values might be at higher energies (where we have no data to compare to).
 \\
 
 Because of the high amount of noise, we are ignoring all neutrons for which the detector's efficiency would be under \qty{15}{\percent}.
-This means that we cannot see the structure under \qty{1000}{\keV} reported by EXFOR.
+This means that we cannot see the structure under \qty{1000}{\keV} reported by the literature.
 In order to study the low energy part of neutron spectra at CNA, we would require a shadow cone, or some other means of removing scattered neutrons.
 \\
 
@@ -999,8 +1003,8 @@ Comparing their \textit{simple method} histograms, the measurement at higher ene
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.80\textwidth]{pulsed_results.png}
-	\caption{EXFOR data (black) and results for all of the time-of-flight measurements.
+	\includegraphics[width=0.80\textwidth]{pulsed_results.eps}
+	\caption{G. J. H. Jacobs and H. Liskien data (black) and results for all of the time-of-flight measurements.
 	The histograms are the simple method, the connected squares are the results of deconvolution, and the vertical dotted lines are the theoretical maximum neutron energies.}
 	\label{pulsed_results}
 \end{figure}
@@ -1011,16 +1015,16 @@ Raising the cutoff further would remove them, but deprive us of a large part of 
 
 In summary, the deconvolution succeeds in moving low energy counts created by the tail of the alpha pulses to high energies, but only somewhat seems to improve the energy definition of the experiment.
 The low energy part of the spectra cannot be seen due to noise, but it could be reduced with a shadow cone or other such system.
-Where we can compare, the deconvolution measurements agree well with EXFOR, while the \textit{simple method} ones overestimate.
+Where we can compare, the deconvolution measurements agree well with the literature, while the \textit{simple method} ones overestimate.
 
 \chapter{Conclusions}
 \section{Thick target yield}
 For the \Aliso\an thick target yield activation measurements, results from the two analysis methods employed agree within \qty{1}{\percent}, meaning we can stick with the more standard \textit{decay} method.
-Detectors agree with eachother within \qty{8}{\percent} for April and within \qty{4}{\percent} for February, with one detector (LaBr\textsubscrip{3}(1) and LaBr\textsubscrip{3}(2), respectively) being consistently higher than the other.
+Detectors agree with eachother within \qty{8}{\percent} for April and within \qty{4}{\percent} for February, with one detector (LaBr\textsubscript{3}(1) and LaBr\textsubscript{3}(2), respectively) being consistently higher than the other.
 This tells us there is a systematic error when dealing with multiple detectors, that changes when repeating measurements.
 
 When comparing measurements of the same energy in different months the agreement is good, within around \qty{3}{\percent}, which tells us the results are consistent with each other.
-The comparison with the literature, however, shows a large disagreement, with our results being higher by a factor of approximately \num{1.9}, a systematic error.
+The comparison with the literature, however, shows a large disagreement, with our results being higher by a factor of \num{1.90(9)}, a systematic error.
 Because the shape shown by our data matches the one of the literature, the error must be a multiplicative factor, and most likely an error in the data analysis that remains undiscovered.
 
 To solve this problem, the data analysis must either be checked for errors in the code (again) or redone from scratch.
@@ -1050,13 +1054,14 @@ However, the setup is able to give reasonable measurements as-is by using a very
 
 \begin{thebibliography}{5}
 	\bibitem{jacobs}G. J. H. Jacobs and H. Liskien, Energy Spectra of Neutrons produced by $\alpha$ particles in thick targets of light elements, Annals of Nuclear Energy 10, 541 (1983), \url{https://doi.org/10.1016/0306-4549(83)90003-8}
+	\bibitem{hispanos}B Fernández et al 2020 J. Phys.: Conf. Ser. 1643 012033, HiSPANoS facility and the new neutron beam line for TOF measurements at the Spanish National Accelerator Lab (CNA), \url{https://doi.org/10.1088/1742-6596/1643/1/012033}
 	\bibitem{guerrero2008}C. Guerrero et al., Analysis of the BC501A neutron detector signals using the true pulse shape, Nuclear Instruments and Methods in Physics Research A 597 (2008) 212–218, \url{https://doi.org/10.1016/j.nima.2008.09.017}
-	\bibitem{astro1}The \textit{s} process: Nuclear physics, stellar models, and observations, F. Käppeler et al., Rev. Mod. Phys. 83, 157 – 193 (2011), \url{https://doi.org/10.1103/RevModPhys.83.157}
-	\bibitem{astro2}Theoretical uncertainty of \an reactions relevant for the nucleosynthesis of light r-process nuclei in neutrino-driven winds, J. Pereira and F. Montes, Phys. Rev. C 93, 034611 (2016), \url{https://doi.org/10.1103/PhysRevC.93.034611}
-	\bibitem{neutron_in_an}Neutron production in \an reactions, \url{https://doi.org/10.1016/j.nima.2020.164095}
-	\bibitem{MANY}miniBELEN: A modular neutron counter for \an reactions, N. Mont-Geli et al., EPJ Web of Conf., 284 (2023) 06004, \url{https://doi.org/10.1051/epjconf/202328406004}
+	\bibitem{astro1}F. Käppeler et al., Rev. Mod. Phys. 83, 157 – 193 (2011), The \textit{s} process: Nuclear physics, stellar models, and observations, \url{https://doi.org/10.1103/RevModPhys.83.157}
+	\bibitem{astro2}J. Pereira and F. Montes, Phys. Rev. C 93, 034611 (2016), Theoretical uncertainty of \an reactions relevant for the nucleosynthesis of light r-process nuclei in neutrino-driven winds, \url{https://doi.org/10.1103/PhysRevC.93.034611}
+	\bibitem{neutron_in_an}NV.A. Kudryavtsev, P. Zakhary. B. Easeman, Neutron production in \an reactions, Nucl. Instrum. Methods Phys. Res. A 972 (2020), \url{https://doi.org/10.1016/j.nima.2020.164095}
+	\bibitem{MANY}N. Mont-Geli et al., miniBELEN: A modular neutron counter for \an reactions, EPJ Web of Conf., 284 (2023) 06004, \url{https://doi.org/10.1051/epjconf/202328406004}
 %	\bibitem{}\url{https://doi.org/10.1016/j.nima.2009.04.032}
-	\bibitem{nucleardatasheets}Nuclear Data Sheets 111, 2331 (2010), M. Shamsuzzoha Basunia.
+	\bibitem{nucleardatasheets}M. Shamsuzzoha Basunia, Nuclear Data Sheets 111, 2331 (2010)
 	\bibitem{INDC}S. S. Westerdale et al., Technical Report, INDC(NDS)-0836 (2022), \url{https://www-nds.iaea.org/publications/indc/indc-nds-0836.pdf}
 	\bibitem{CNA}Gómez-Camacho, J., García López, J., Guerrero, C. et al., Research facilities and highlights at the Centro Nacional de Aceleradores (CNA). Eur. Phys. J. Plus 136, 273 (2021), \url{https://doi.org/10.1140/epjp/s13360-021-01253-x}
 	\bibitem{labr}Alain Iltis et al., Lanthanum halide scintillators: Properties and applications, Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment, Volume 563, Issue 2 (2006), \url{https://doi.org/10.1016/j.nima.2006.02.192.}
@@ -1064,8 +1069,8 @@ However, the setup is able to give reasonable measurements as-is by using a very
 	\bibitem{ej301}NEUTRON/GAMMA PSD EJ-301, EJ-309, \url{https://eljentechnology.com/products/liquid-scintillators/ej-301-ej-309}
 	\bibitem{jacobssupport1}R. Heaton et al., Nuclear Instruments and Methods A 276, 529 (1989)
 	\bibitem{jacobssupport2}J. K. Bair and J. Gomez del Campo, Neutron Yields from Alpha-Particle Bombardment, Nuclear Science and Engineering 71, 18 (1979), \url{https://doi.org/10.13182/NSE71-18}
-	\bibitem{CAEN}751 Digitizer Family, CAEN, \url{https://www.caen.it/subfamilies/751-digitizer-family/}
-	\bibitem{ROOT}Rene Brun and Fons Rademakers, ROOT - An Object Oriented Data Analysis Framework, Proceedings AIHENP'96 Workshop, Lausanne, Sep. 1996, Nucl. Inst. \& Meth. in Phys. Res. A 389 (1997) 81-86. See also "ROOT" [software], Release 6.28/04,\url{https://doi.org/10.5281/zenodo.848818}
+	\bibitem{CAEN}CAEN 751 Waveform Digitizer Family, CAEN SpA, \url{https://www.caen.it/subfamilies/751-digitizer-family/}
+	\bibitem{ROOT}Rene Brun and Fons Rademakers, ROOT - An Object Oriented Data Analysis Framework, Proceedings AIHENP'96 Workshop, Lausanne, Sep. 1996, Nucl. Inst. \& Meth. in Phys. Res. A 389 (1997) 81-86. See also "ROOT" [software], Release 6.28/04, \url{https://doi.org/10.5281/zenodo.848818}
 \end{thebibliography}
 
 \end{document}

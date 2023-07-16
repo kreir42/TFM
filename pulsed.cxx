@@ -107,6 +107,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	Double_t gcenter = gammaflash_center-distance/C/TOF_TO_S;
 	auto monster = d.Filter("Channel==4").Define("newtof",[gcenter](const RVec<Double_t>& tof) {return tof-gcenter;},{"tof"}).Define("neutron_energy",[distance](const RVec<Double_t>& newtof) {Double_t v=distance/(newtof[0]*TOF_TO_S);return NEUTRON_MASS/2*v*v*J_TO_KEV;},{"newtof"});
 	auto tof_plot = monster.Histo1D({"tof_plot", ";ToF (ns);Counts", 3000, MIN_TOF, MAX_TOF}, "tof");
+	auto alt_tof_plot = monster.Histo1D({"alt_tof_plot", ";ToF (ns);Counts", 1000, MIN_TOF-gcenter, MAX_TOF-gcenter}, "newtof");
 	auto psd_plot = monster.Histo1D({"psd_plot", ";psd;Counts", 1000, 0, 1}, "psd");
 	auto tof_id_plot = monster.Histo2D({"tof_id_plot", ";ToF (ns);PSD;Counts", 100, MIN_TOF-gcenter, MAX_TOF-gcenter, 100, 0, 1}, "newtof", "psd");
 	auto energy_id_plot = monster.Histo2D({"energy_id_plot", ";Energy;PSD;Counts", 4096/4, 0, 4096, 100, 0, 1}, "Energy", "psd");
@@ -135,6 +136,7 @@ void pulsed_per_file(char filepath[500], Double_t gammaflash_min, Double_t gamma
 	TCanvas* myCanvas = new TCanvas("");
 
 	tof_plot->Write("", TObject::kOverwrite);
+	alt_tof_plot->Write("", TObject::kOverwrite);
 	psd_plot->Write("", TObject::kOverwrite);
 	tof_id_plot->Draw("COLZ");
 	myCanvas->Write("tof_id_plot", TObject::kOverwrite);
