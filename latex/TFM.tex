@@ -628,7 +628,7 @@ This integrates equation \ref{activation_diffeq} numerically, using the analytic
 
 The function needs to output the counts over time $c(t)$ every step calculating it from $N(t)$, so that ROOT can compare it to the histogram of \qty{511}{\keV} counts over time for fitting.
 To that end, we make the function return:
-\[ c(t) = A(t)I_{511}b_{\Delta t}\varepsilon_{511} - B = \lambda N(t) I_{511}b_{\Delta t}\varepsilon_{511} - B\]
+\[ c(t) = A(t)I_{511}b_{\Delta t}\varepsilon_{511} + B = \lambda N(t) I_{511}b_{\Delta t}\varepsilon_{511} + B\]
 where $B$ is a constant background that the function also fits.
 The function also considers an initial number of \Piso (from previous activation runs) and a number of counts proportional to the current (by adding that to $c(t)$), which correspond to the \textit{extra background}.
 All of those are also parameters for the fitting, and also adjusted by ROOT.
