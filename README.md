@@ -1,6 +1,6 @@
 ## Measurements of (alpha,n) reactions in CNA/HISPANOS
 Master's thesis for the [Inter-University Master's Degree in Nuclear Physics](https://master.us.es/fisicanuclear/), carried out in the [CNA](https://cna.us.es/index.php/es) in Seville, Spain, during the 2022-2023 academic year.
-The thesis can be compiled from latex/TFM.tex or downloaded from the [latest release](https://github.com/kreir42/TFM/releases).
+The thesis can be compiled from latex/TFM.tex or downloaded from the [latest release](https://github.com/kreir42/TFM/releases/latest).
 
 All files are original, except for "process_ToF.cxx" and "process_filelist.cxx", which were provided by my supervisor and later modified.
 
