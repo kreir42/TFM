@@ -125,14 +125,12 @@
 
 \begin{frame}{Objective of the thesis}
 	\begin{itemize}
-		\item Available \an measurements are old, incomplete, and/or have large error margins
-		\item Few energy spectra measurements
-		\item As part of the MANY colaboration, study the viability of \an measurements at CNA/HiSPANoS
+		\item Study the viability of \an measurements at CNA/HiSPANoS
 		\item To that end, carry out TTY (activation) and energy spectra (ToF) measurements of \Aliso\an
 	\end{itemize}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.35\textwidth]{neutronline_foto.jpg}
+		\includegraphics[width=0.50\textwidth]{neutronline_foto.jpg}
 		\caption{Neutron line HiSPANoS.}
 		\label{}
 	\end{figure}
@@ -141,48 +139,17 @@
 \begin{frame}{Experimental setup}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.75\textwidth]{tandemdiagrama.eps}
+		\includegraphics[width=0.80\textwidth]{tandemdiagrama.eps}
 		\caption{Diagram of the CNA's Tandem accelerator}
 		\label{}
 	\end{figure}
 	\begin{itemize}
 		\item For $\alpha$, max energy of \qty{9}{\MeV}
 		\item \textit{Buncher} not designed for $\alpha$ particles
-		\item Thick target
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Experimental setup: Detectors}
-	\begin{table}[H]
-		\centering
-		\begin{tabular}[c]{>{\bfseries}l||c|c}
-			Detector                & Distances (\unit{\cm})& Angle\\ \hline
-			\textbf{MONSTER}        &\num{100}, \num{200}           &\qty{60}{\degree}      \\ \hline
-			\textbf{LaBr\textsubscript{3}(1)}               &\num{20} to \num{30}           &\qty{150}{\degree}     \\ \hline
-			\textbf{LaBr\textsubscript{3}(2)}               &\num{20} to \num{30}           &\qty{-150}{\degree}    \\ \hline
-		\end{tabular}
-		\caption{Detector angles and distances}
-		\label{distances_angles_table}
-	\end{table}
-	\begin{columns}
-	\column{0.5\textwidth}
-	LaBr\textsubscript{3}:
-	\begin{itemize}
-		\item Inorganic scintillator
-		\item $\gamma\longrightarrow\text{e}^-\longrightarrow$ scintillating light
-		\item Efficiency measurement with \Na
-	\end{itemize}
-	\column{0.5\textwidth}
-	MONSTER:
-	\begin{itemize}
-		\item EJ301 liquid organic scintillator
-		\item $\text{n}\longrightarrow\text{p}^+\longrightarrow$ scintillating light
-		\item Efficiency obtained through simulations
-	\end{itemize}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Experimental setup: Detectors - PSD}
+\begin{frame}{Experimental setup: PSD}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.45\textwidth]{psd_explanation.png}
@@ -194,7 +161,7 @@
 	\end{equation}
 \end{frame}
 
-\begin{frame}{Experimental setup: Detectors - PSD}
+\begin{frame}{Experimental setup: PSD}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.85\textwidth]{example_psd.eps}
@@ -291,7 +258,7 @@
 		\caption{Results obtained along with those from G. J. H. Jacobs and H. Liskien \cite{jacobs} and a version scaled by \num{1.9}.}
 		\label{activation_final_results}
 	\end{figure}
-	Great disagreement, but same shape of TTY against energy.
+	Great systematic error, but same shape of TTY against energy.
 \end{frame}
 
 
@@ -318,31 +285,9 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Energy spectra by ToF: Measurements}
-	\begin{table}[H]
-	\centering
-	\begin{tabular}[c]{>{\bfseries}r||c|c|c}
-		N& Energy (\unit{\keV}) & Distance (\unit{\cm}) & Date \\ \hline
-		1&\num{5500}&\num{100.0(25)}&17/04/2023\\ \hline
-		2&\num{5500}&\num{100.0(25)}&18/04/2023\\ \hline
-		3&\num{7000}&\num{100.0(25)}&18/04/2023\\ \hline
-		4&\num{8250}&\num{100.0(25)}&18/04/2023\\ \hline
-		5&\num{8250}&\num{200.0(25)}&18/04/2023\\ \hline
-	\end{tabular}
-	\caption{Pulsed beam measurements.}
-	\end{table}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.50\textwidth]{uneven_gflash.eps}
-		\caption{\textit{Gamma flash} for measurements 5.}
-		\label{uneven_gflash}
-	\end{figure}
-\end{frame}
-
 \begin{frame}{Energy spectra by ToF: Simple analysis}
 	\[E_n=\frac{1}{2} m_n \left( \frac{L}{\text{ToF}} \right)^2 = \frac{1}{2} m_n \left( \frac{L}{t_n - t_{flash} + L/c} \right)^2\]
 	\begin{itemize}
-		\item Eliminate energies under \qty{15}{\percent} of MONSTER's efficiency
 		\item Correct by efficiency
 		\item Present results per $\alpha$, solid angle and energy
 	\end{itemize}
@@ -351,6 +296,15 @@
 		\includegraphics[width=0.60\textwidth]{pulsed_energysimple.eps}
 		\caption{Energy spectra for measurement 2.}
 		\label{}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Energy spectra by ToF: Deconvolution analysis}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.95\textwidth]{uneven_gflash.eps}
+		\caption{\textit{Gamma flash} for measurement 5.}
+		\label{uneven_gflash}
 	\end{figure}
 \end{frame}
 
@@ -394,9 +348,7 @@
 \begin{frame}{Conclusions}
 	\begin{itemize}
 		\item TTY: agreement between measurements, but big systematic error
-		\item \textit{Decay} method sufficient: current can be taken as constant
 		\item Energy spectra: good agreement when using a simple deconvolution
-		\item For low neutron energies, need to use a \textit{shadow cone} to eliminate scattered neutrons
 		\item CNA/HiSPANoS capable of reasonably good activation and pulsed beam measurements
 	\end{itemize}
 \end{frame}
